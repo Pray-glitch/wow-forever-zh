@@ -105,7 +105,7 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js"></script>
+<script src="data.js?v=d20e597b"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -119,6 +119,8 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
   const DMAP = {};
   (window.DUNGEONS || []).forEach(d => { DMAP[d.en] = d.slug; DMAP[d.en.split(':')[0].trim()] = d.slug; DMAP[d.en.replace(/^The /, '')] = d.slug; });
   function widget(txt){
+    // 星號配錯對、把一整句包成粗體的（含句讀又很長）→ 當一般文字
+    if (txt.length > 18 && /[，。；]/.test(txt) && !/（[A-Za-z][^）]*）\s*$/.test(txt)) return txt;
     // 粗體裡的「中文（English）」或純英文 → 查圖示表
     const m = txt.match(/（([^（）]+)）\s*$/) || txt.match(/\(([^()]+)\)\s*$/);
     const key = (m ? m[1] : txt).trim();
