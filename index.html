@@ -54,13 +54,30 @@ main blockquote{border-left:3px solid var(--accent);margin:10px 0;padding:4px 14
 .toc a{text-decoration:none}
 nav a.cls{font-weight:600}
 nav .sub .sub{margin-left:10px}
-main b.w{font-weight:600;white-space:nowrap}
+main b.w,main a.w{font-weight:600;white-space:nowrap}
+main a.it{text-decoration:none;border-bottom:1px dotted currentColor}
+main a.it:hover{border-bottom-style:solid}
 main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-radius:3px;border:1px solid #000}
 .tabs{margin:12px 0 18px}
 .tabbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:10px}
 .tabbar .tab{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer}
 .tabbar .tab.on{border-color:var(--accent);color:var(--accent);font-weight:600}
 .pane{display:none}.pane.on{display:block}
+.rp-btn{position:fixed;right:16px;bottom:18px;z-index:20;display:none;background:var(--accent);color:#111;border:0;border-radius:999px;padding:11px 16px;font:600 14px system-ui,"Noto Sans TC",sans-serif;box-shadow:0 6px 18px #0008;cursor:pointer}
+.rp-btn.show{display:block}
+.rp-mask{position:fixed;inset:0;background:#000a;z-index:30;display:none;align-items:center;justify-content:center;padding:16px}
+.rp-mask.show{display:flex}
+.rp-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:100%;max-width:520px;padding:18px;max-height:90vh;overflow:auto}
+.rp-box h3{margin:0 0 4px;color:var(--accent);font-size:17px}
+.rp-box .sub{color:var(--muted);font-size:13px;margin-bottom:10px}
+.rp-box label{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+.rp-box textarea,.rp-box input{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px;font:14px/1.6 system-ui,"Noto Sans TC",sans-serif}
+.rp-box textarea.q{border-left:3px solid var(--accent)}
+.rp-row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;align-items:center}
+.rp-row .msg{margin-right:auto;font-size:13px;color:var(--muted)}
+.rp-row button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
+.rp-row button.go{background:var(--accent);color:#111;border-color:var(--accent);font-weight:700}
+.meta a.rp-link{cursor:pointer}
 @media (max-width:820px){nav{position:fixed;left:-280px;transition:left .2s;z-index:6}nav.open{left:0}.top button{display:block}main{padding:18px 16px}}
 </style>
 </head>
@@ -70,6 +87,14 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
 <nav id="nav"></nav>
 <main id="main"></main>
 </div>
+<button class="rp-btn" id="rpBtn">📝 回報這段翻譯</button>
+<div class="rp-mask" id="rpMask"><div class="rp-box">
+<h3>回報翻譯問題</h3><div class="sub" id="rpWhere"></div>
+<label>有問題的段落（可修改）</label><textarea class="q" id="rpQuote" rows="3"></textarea>
+<label>哪裡錯／建議怎麼翻</label><textarea id="rpNote" rows="4" placeholder="例如：「一次打多個敵人」玩家都說「多目標」"></textarea>
+<label>你的名字（選填）</label><input id="rpName" maxlength="40">
+<div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
+</div></div>
 <script src="data.js"></script>
 <script>
 (function(){
@@ -79,25 +104,27 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
   G.forEach(g => { (cats[g.cat] = cats[g.cat] || []).push(g); });
   const nav = document.getElementById('nav'), main = document.getElementById('main');
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  let ICONS = {};
+  let ICONS = {}, ITEMS = {};
   function widget(txt){
     // 粗體裡的「中文（English）」或純英文 → 查圖示表
     const m = txt.match(/（([^（）]+)）\s*$/) || txt.match(/\(([^()]+)\)\s*$/);
     const key = (m ? m[1] : txt).trim();
-    const v = ICONS[key] || ICONS[txt.trim()];
-    if (!v) return '<b>' + txt + '</b>';
+    const v = ICONS[key] || ICONS[txt.trim()] || '';
+    const item = ITEMS[key] || ITEMS[txt.trim()];
+    if (!v && !item) return '<b>' + txt + '</b>';
     const [icon, col] = v.split('|');
     // 圖示直接引用 Wowhead 圖庫（不存到本站）
     const img = icon ? '<img class="ic" src="https://wow.zamimg.com/images/wow/icons/small/' + icon + '.jpg" onerror="this.style.display=\'none\'" alt="">' : '';
+    if (item) return '<a class="w it" href="https://foreverchanges.pro/zh-tw/item/' + item + '" target="_blank" rel="noopener" title="查看物品資料"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</a>';
     return '<b class="w"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</b>';
   }
   // 沒標粗體的「中文（English）」也套圖示：只處理不在標籤裡、不在 b.w 裡的純文字
   function autoWidget(html){
     const parts = html.split(/(<[^>]+>)/); let inW = 0, out = '';
     for (const p of parts) {
-      if (p.startsWith('<')) { if (/^<b class="w"/.test(p)) inW++; else if (p === '</b>' && inW) inW--; out += p; continue; }
+      if (p.startsWith('<')) { if (/^<(b class="w"|a )/.test(p)) inW++; else if ((p === '</b>' || p === '</a>') && inW) inW--; out += p; continue; }
       if (inW) { out += p; continue; }
-      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] ? widget(zh + '（' + en + '）') : m));
+      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] || ITEMS[en] ? widget(zh + '（' + en + '）') : m));
     }
     return out;
   }
@@ -108,7 +135,8 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
     return autoWidget(s);
   }
   function render(md, g){
-    ICONS = g.icons || {};
+    ICONS = g.icons || {}; ITEMS = g.items || {};
+    md = md.replace(/<([a-z_]*reminder|system[a-z_]*)>[\s\S]*?<\/([a-z_]*reminder|system[a-z_]*)>/g, '');
     // 修掉抓取時誤判的小標題：「### ### X」「- ### X」「| ### X |」
     md = md.replace(/^(#{1,3}) (?:#{1,3} )+/gm, '$1 ').replace(/^(\s*(?:-|\*) )#{1,3} (.+)$/gm, '$1**$2**').replace(/#{1,3} ([^|\n]+?)\s*\|/g, '**$1** |');
     const lines = md.split('\n'); let html = '', inList = false, inTable = false, para = [];
@@ -196,6 +224,7 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
       {t:'團本', i:'🐉', cat:'團本', ext:M+'raids'},
       {t:'任務', i:'📜', cat:'任務', ext:M+'quests'},
       {t:'專業技能', i:'⚒️', cat:'專業技能', ext:M+'professions'},
+      {t:'新手指南', i:'🧭', cat:'新手指南', ext:M+'guides'},
       {t:'其他攻略', i:'📚', cat:'其他攻略', ext:M+'guides'}
     ];
     const curG = cur ? G.find(x=>x.slug===cur) : null;
@@ -206,7 +235,7 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
     menu.forEach(m => {
       if (m.home) { h += '<a href="#" class="top ' + (cur ? '' : 'on') + '">' + m.i + ' ' + m.t + '</a>'; return; }
       const list = m.cat ? (cats[m.cat] || []) : [];
-      if (!list.length) { h += '<a href="' + m.ext + '" class="top ext" target="_blank" rel="noopener">' + m.i + ' ' + m.t + ' <span class="d">英文 ↗</span></a>'; return; }
+      if (!list.length) { if (!m.cat) h += '<a href="' + m.ext + '" class="top ext" target="_blank" rel="noopener">' + m.i + ' ' + m.t + ' <span class="d">英文 ↗</span></a>'; return; }
       const open = m.cat === curCat;
       h += '<a href="#" class="top grp' + (open ? ' open' : '') + '">' + m.i + ' ' + m.t + ' <span class="d">' + list.length + '</span></a><div class="sub' + (open ? ' open' : '') + '">';
       if (m.byClass) {
@@ -241,19 +270,73 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
     buildNav(g ? slug : (slug.startsWith('c:') ? slug : ''));
     if (slug.startsWith('c:')) { main.innerHTML = classPage(slug.slice(2)); }
     else if (!g) {
-      let h = '<div class="home"><h1>永恆攻略中文版</h1><p class="meta">Progress 公會在 Mobalytics 的 WoW Forever 攻略，自動翻成中文；更新時間 ' + esc(window.GENERATED||'') + '。</p><h2>職業</h2><div class="grid">';
+      let h = '<div class="home"><h1>永恆攻略中文版</h1><p class="meta">Progress 公會在 Mobalytics 的 WoW Forever 攻略，自動翻成中文；更新時間 ' + esc(window.GENERATED||'') + '。看到翻錯的地方，反白那段文字就會出現「回報這段翻譯」按鈕。</p><h2>職業</h2><div class="grid">';
       CLASS_ORDER.forEach(c => { const n = (cats['職業攻略']||[]).filter(g=>classOf(g)===c).length; if (!n) return; const ci = CLASS[c]; h += '<div class="card cc" onclick="location.hash=\'c:' + c + '\'" style="border-color:' + ci.c + '55"><b style="color:' + ci.c + '">' + ci.i + ' ' + c + '</b><div class="c">' + n + ' 個專精攻略</div></div>'; });
       h += '</div><h2>最近更新</h2>';
       G.slice().sort((a,b)=>(b.updated||'').localeCompare(a.updated||'')).slice(0,8).forEach(g => { h += '<div class="card" onclick="location.hash=\'' + g.slug + '\'"><b>' + esc(g.title) + '</b><div class="c">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · ' + esc(g.date||'') + '</div></div>'; });
       main.innerHTML = h + '</div>';
     } else {
       const body = render(g.md, g);
-      main.innerHTML = '<div class="meta">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · 更新 ' + esc(g.date||'') + ' · ' + esc(g.en||'') + ' · <a href="' + g.url + '" target="_blank" rel="noopener">原文 ↗</a></div>' + body;
+      main.innerHTML = '<div class="meta">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · 更新 ' + esc(g.date||'') + (g.author ? ' · 作者：' + esc(g.author) : '') + ' · <a href="' + g.url + '" target="_blank" rel="noopener">原文 ↗</a> · <a class="rp-link" onclick="window.__openRp()">📝 回報翻譯問題</a>' + (g.authorUrl ? ' · <a href="' + g.authorUrl + '" target="_blank" rel="noopener">' + esc(g.author) + ' 的 Bilibili 國漫 Reaction ↗</a>' : '') + '</div>' + (g.author && g.author.indexOf('Progress') < 0 ? '<p class="meta">本篇經作者 ' + esc(g.author) + ' 同意翻譯，機器翻譯僅供參考，以原文為準。</p>' : '') + body;
       wireTabs();
       const hs = main.querySelectorAll('h2'); if (hs.length > 1) { let t = '<div class="toc"><b>目錄</b>'; hs.forEach((x,i) => { x.id = 's' + i; t += '<a href="#' + slug + '" onclick="event.preventDefault();document.getElementById(\'s' + i + '\').scrollIntoView({behavior:\'smooth\'})">' + x.textContent + '</a>'; }); main.querySelector('h1').insertAdjacentHTML('afterend', t + '</div>'); }
     }
     window.scrollTo(0,0); nav.classList.remove('open');
   }
+
+  // ===== 回報翻譯 =====
+  const rpBtn = document.getElementById('rpBtn'), rpMask = document.getElementById('rpMask');
+  const $ = id => document.getElementById(id);
+  let rpSel = '', rpSec = '', rpCurSec = '', lastSend = 0;
+  function curGuide(){ const slug = decodeURIComponent(location.hash.replace('#','')); return G.find(x => x.slug === slug); }
+  function secOf(node){
+    let el = node && (node.nodeType === 1 ? node : node.parentElement);
+    while (el && el !== main) { let p = el.previousElementSibling; while (p) { if (/^H[123]$/.test(p.tagName)) return p.textContent.trim(); p = p.previousElementSibling; } el = el.parentElement; }
+    return '';
+  }
+  function checkSel(){
+    const s = window.getSelection(); const t = s ? s.toString().trim() : '';
+    if (t.length >= 2 && t.length <= 600 && curGuide() && s.anchorNode && main.contains(s.anchorNode)) { rpSel = t; rpSec = secOf(s.anchorNode); rpBtn.classList.add('show'); }
+    else rpBtn.classList.remove('show');
+  }
+  document.addEventListener('selectionchange', () => { clearTimeout(checkSel.t); checkSel.t = setTimeout(checkSel, 250); });
+  function openRp(quote, sec){
+    const g = curGuide(); if (!g) return;
+    rpCurSec = sec || ''; $('rpWhere').textContent = g.title + (sec ? '　／　' + sec : '');
+    $('rpQuote').value = quote || ''; $('rpNote').value = ''; $('rpMsg').textContent = '';
+    try { $('rpName').value = localStorage.getItem('rpName') || ''; } catch (e) {}
+    rpMask.classList.add('show'); setTimeout(() => $('rpNote').focus(), 50);
+  }
+  rpBtn.onclick = () => { openRp(rpSel, rpSec); rpBtn.classList.remove('show'); };
+  window.__openRp = () => openRp('', '');
+  $('rpCancel').onclick = () => rpMask.classList.remove('show');
+  rpMask.onclick = e => { if (e.target === rpMask) rpMask.classList.remove('show'); };
+  $('rpSend').onclick = async () => {
+    const g = curGuide(), note = $('rpNote').value.trim(), quote = $('rpQuote').value.trim(), name = $('rpName').value.trim();
+    if (!g) return;
+    if (!note) { $('rpMsg').textContent = '請寫一下哪裡有問題'; return; }
+    if (!window.REPORT_HOOK) { $('rpMsg').textContent = '回報功能暫時無法使用'; return; }
+    if (Date.now() - lastSend < 20000) { $('rpMsg').textContent = '剛送過，請稍等 20 秒'; return; }
+    try { localStorage.setItem('rpName', name); } catch (e) {}
+    const cut = (s, n) => s.length > n ? s.slice(0, n) + '…' : s;
+    const page = location.href.split('#')[0] + '#' + g.slug;
+    const embed = { title: cut('📝 ' + g.title, 250), url: page, color: 0xE8B500,
+      description: cut((quote ? '> ' + quote.replace(/\n/g, '\n> ') + '\n\n' : '') + '**意見：** ' + note, 3900),
+      fields: [{ name: '段落', value: cut(rpCurSec || '（未指定）', 200), inline: true },
+               { name: '回報人', value: cut(name || '匿名', 80), inline: true },
+               { name: '原文', value: '[Mobalytics](' + g.url + ')', inline: true }],
+      footer: { text: 'slug: ' + g.slug } };
+    const fd = new FormData();
+    fd.append('payload_json', JSON.stringify({ username: '翻譯回報', embeds: [embed], allowed_mentions: { parse: [] } }));
+    $('rpSend').disabled = true; $('rpMsg').textContent = '送出中…';
+    try {
+      const r = await fetch(window.REPORT_HOOK, { method: 'POST', body: fd });
+      if (!r.ok) throw new Error(r.status);
+      lastSend = Date.now(); $('rpMsg').textContent = '已送出，謝謝！';
+      setTimeout(() => rpMask.classList.remove('show'), 1200);
+    } catch (e) { $('rpMsg').textContent = '送出失敗（' + e.message + '），請稍後再試'; }
+    $('rpSend').disabled = false;
+  };
   document.getElementById('menu').onclick = () => nav.classList.toggle('open');
   window.addEventListener('hashchange', show); show();
 })();
