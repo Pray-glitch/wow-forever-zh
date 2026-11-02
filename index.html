@@ -48,6 +48,8 @@ main blockquote{border-left:3px solid var(--accent);margin:10px 0;padding:4px 14
 .home .card .c{color:var(--muted);font-size:13px}
 .home .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
 .home .grid .card{margin:0}
+.home a.dcard{display:block;text-decoration:none;color:var(--text)}
+.home .grid.dg{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
 .home .tip{background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:10px 14px;font-size:14px;color:var(--muted);margin:10px 0}
 .home .tip b{color:var(--text)}
 .home .grid.sec{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
@@ -144,6 +146,10 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
   }
   function render(md, g){
     ICONS = g.icons || {}; ITEMS = g.items || {};
+    // 清掉原網站的雜訊：重複日期、頁面自帶的「目錄」「最新攻略」等區塊、作者／更新於那行（上方已顯示）
+    md = md.replace(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2}, \d{4})\1/g, '$1');
+    md = md.replace(/^.*(作者|By)[：:].*(更新於|Updated).*$/gm, '');
+    md = md.replace(/^#{1,3}\s*(目錄|目次|Table of Contents|最新攻略|熱門攻略|相關攻略|推薦攻略|Trending Guides|Related Guides|Latest Guides|留言|評論|Comments)\s*$[\s\S]*?(?=^#{1,2}\s|$(?![\s\S]))/gmi, '');
     md = md.replace(/<([a-z_]*reminder|system[a-z_]*)>[\s\S]*?<\/([a-z_]*reminder|system[a-z_]*)>/g, '');
     // 修掉抓取時誤判的小標題：「### ### X」「- ### X」「| ### X |」
     md = md.replace(/^(#{1,3}) (?:#{1,3} )+/gm, '$1 ').replace(/^(\s*(?:-|\*) )#{1,3} (.+)$/gm, '$1**$2**').replace(/#{1,3} ([^|\n]+?)\s*\|/g, '**$1** |');
@@ -273,11 +279,22 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
     {cat:'專業技能', t:'專業技能', i:'⚒️', d:'專業練法、訓練師、配方'},
     {cat:'新手指南', t:'新手指南', i:'🧭', d:'種族、職業組合、路線圖、露營'},
     {cat:'地城', t:'地城', i:'🏰', d:'地城與團本總覽'},
-    {cat:'任務', t:'任務', i:'📜', d:'重要任務流程'},
+    {cat:'任務', t:'任務', i:'📜', d:'任務流程攻略'},
     {cat:'其他攻略', t:'其他攻略', i:'📚', d:''}
   ];
   function catPage(cat){
     if (cat === '職業攻略') return classGrid('<h1>⚔️ 職業攻略</h1><p class="meta">選一個職業：</p>');
+    if (cat === '地城') {
+      let h = '<div class="home"><h1>🏰 地城</h1>';
+      if ((cats['地城']||[]).length) { h += '<h2>攻略</h2><div class="grid">'; cats['地城'].forEach(g => { h += '<div class="card" onclick="location.hash=\'' + g.slug + '\'"><b>' + esc(g.title) + '</b><div class="c">' + (g.author ? esc(g.author) + ' · ' : '') + dates(g) + '</div></div>'; }); h += '</div>'; }
+      const D = window.DUNGEONS || [];
+      if (D.length) {
+        h += '<h2>副本首領與掉落（繁中）</h2><p class="meta">資料來源：ForeverChanges（點了開新分頁）</p><div class="grid dg">';
+        D.forEach(d => { h += '<a class="card dcard" href="https://foreverchanges.pro/zh-tw/dungeons/' + d.slug + '" target="_blank" rel="noopener"><b>' + esc(d.zh) + '</b><div class="c">' + esc(d.en) + ' ↗</div></a>'; });
+        h += '</div>';
+      }
+      return h + '</div>';
+    }
     const sec = SECTIONS.find(x => x.cat === cat) || {t:cat, i:''};
     let h = '<div class="home"><h1>' + sec.i + ' ' + esc(sec.t) + '</h1><div class="grid">';
     (cats[cat] || []).forEach(g => { h += '<div class="card" onclick="location.hash=\'' + g.slug + '\'"><b>' + esc(g.title) + '</b><div class="c">' + (g.author ? esc(g.author) + ' · ' : '') + dates(g) + '</div></div>'; });
@@ -305,7 +322,7 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
       let h = '<div class="home"><h1>永恆攻略中文版</h1><p class="meta">WoW Forever 攻略中文版（Progress 公會與經作者同意的攻略），更新於 ' + esc(window.GENERATED||'') + '</p>';
       h += '<div class="tip">📌 先選分類 → 再點攻略。看到翻錯，<b>反白那段文字</b>，右下角會出現「回報這段翻譯」。</div>';
       h += '<h2>攻略分類</h2><div class="grid sec">';
-      SECTIONS.forEach(x => { const n = (cats[x.cat]||[]).length; if (!n) return; h += '<div class="card tile" onclick="location.hash=\'k:' + x.cat + '\'"><span class="ti">' + x.i + '</span><b>' + esc(x.t) + '</b><span class="n">' + n + ' 篇</span>' + (x.d ? '<div class="c">' + esc(x.d) + '</div>' : '') + '</div>'; });
+      SECTIONS.forEach(x => { const n = (cats[x.cat]||[]).length + (x.cat === '地城' ? (window.DUNGEONS||[]).length : 0); if (!n) return; h += '<div class="card tile" onclick="location.hash=\'k:' + x.cat + '\'"><span class="ti">' + x.i + '</span><b>' + esc(x.t) + '</b><span class="n">' + (x.cat === '地城' && (window.DUNGEONS||[]).length ? (window.DUNGEONS||[]).length + ' 副本' : n + ' 篇') + '</span>' + (x.d ? '<div class="c">' + esc(x.d) + '</div>' : '') + '</div>'; });
       h += '</div></div>';
       h += classGrid('<h2>依職業找攻略</h2>');
       h += '<div class="home"><h2>最近更新</h2>';
@@ -357,11 +374,11 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
     const cut = (s, n) => s.length > n ? s.slice(0, n) + '…' : s;
     const page = location.href.split('#')[0] + '#' + g.slug;
     const embed = { title: cut('📝 ' + g.title, 250), url: page, color: 0xE8B500,
-      description: cut((quote ? '> ' + quote.replace(/\n/g, '\n> ') + '\n\n' : '') + '**意見：** ' + note, 3900),
-      fields: [{ name: '段落', value: cut(rpCurSec || '（未指定）', 200), inline: true },
+      description: cut((quote ? '**錯誤的翻譯：**\n> ' + quote.replace(/\n/g, '\n> ') + '\n\n' : '') + '**正確應該翻：** ' + note, 3900),
+      fields: [{ name: '所在章節', value: cut(rpCurSec || '（未指定）', 200), inline: true },
                { name: '回報人', value: cut(name || '匿名', 80), inline: true },
                { name: '原文', value: '[Mobalytics](' + g.url + ')', inline: true }],
-      footer: { text: 'slug: ' + g.slug } };
+      footer: { text: '攻略代號 ' + g.slug } };
     const fd = new FormData();
     fd.append('payload_json', JSON.stringify({ username: '翻譯回報', embeds: [embed], allowed_mentions: { parse: [] } }));
     $('rpSend').disabled = true; $('rpMsg').textContent = '送出中…';
