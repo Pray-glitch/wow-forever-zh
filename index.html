@@ -115,12 +115,17 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
   const nav = document.getElementById('nav'), main = document.getElementById('main');
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   let ICONS = {}, ITEMS = {};
+  // 副本英文名 → foreverchanges 繁中頁（「挖掘場：濕地」這種也用冒號前的部分比對）
+  const DMAP = {};
+  (window.DUNGEONS || []).forEach(d => { DMAP[d.en] = d.slug; DMAP[d.en.split(':')[0].trim()] = d.slug; DMAP[d.en.replace(/^The /, '')] = d.slug; });
   function widget(txt){
     // 粗體裡的「中文（English）」或純英文 → 查圖示表
     const m = txt.match(/（([^（）]+)）\s*$/) || txt.match(/\(([^()]+)\)\s*$/);
     const key = (m ? m[1] : txt).trim();
     const v = ICONS[key] || ICONS[txt.trim()] || '';
     const item = ITEMS[key] || ITEMS[txt.trim()];
+    const dung = DMAP[key] || DMAP[key.replace(/^The /, '')];
+    if (dung) return '<a class="w it" href="https://foreverchanges.pro/zh-tw/dungeons/' + dung + '" target="_blank" rel="noopener" title="首領與掉落">' + txt + '</a>';
     if (!v && !item) return '<b>' + txt + '</b>';
     const [icon, col] = v.split('|');
     // 圖示直接引用 Wowhead 圖庫（不存到本站）
@@ -134,7 +139,7 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
     for (const p of parts) {
       if (p.startsWith('<')) { if (/^<(b class="w"|a )/.test(p)) inW++; else if ((p === '</b>' || p === '</a>') && inW) inW--; out += p; continue; }
       if (inW) { out += p; continue; }
-      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] || ITEMS[en] ? widget(zh + '（' + en + '）') : m));
+      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] || ITEMS[en] || DMAP[en] ? widget(zh + '（' + en + '）') : m));
     }
     return out;
   }
