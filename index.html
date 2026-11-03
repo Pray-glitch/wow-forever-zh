@@ -111,7 +111,7 @@ main code{white-space:pre-wrap}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=3f048ae0"></script>
+<script src="data.js?v=5ca5fed7"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -121,7 +121,7 @@ main code{white-space:pre-wrap}
   if (cats['官方情報']) cats['官方情報'].sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0) || (b.updated || '').localeCompare(a.updated || ''));
   const nav = document.getElementById('nav'), main = document.getElementById('main');
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  let ICONS = {}, ITEMS = {};
+  let ICONS = {}, ITEMS = {}, WHQ = new Set();
   // 副本英文名 → foreverchanges 繁中頁（「挖掘場：濕地」這種也用冒號前的部分比對）
   const DMAP = {};
   (window.DUNGEONS || []).forEach(d => { DMAP[d.en] = d.slug; DMAP[d.en.split(':')[0].trim()] = d.slug; DMAP[d.en.replace(/^The /, '')] = d.slug; });
@@ -147,14 +147,16 @@ main code{white-space:pre-wrap}
     if (m && /[\u4e00-\u9fff]/.test(m[1]) && /^[A-Za-z]/.test(txt)) key = txt.slice(0, txt.indexOf(m[0])).trim();
     const v = ICONS[key] || ICONS[txt.trim()] || '';
     const item = ITEMS[key] || ITEMS[txt.trim()];
+    const whq = !item && (WHQ.has(key) || WHQ.has(txt.trim())) ? (WHQ.has(key) ? key : txt.trim()) : '';
     const dh = dungeonHref(key);
     if (dh) return aTag(dh, txt, 'w zone');
-    if (!v && !item) return '<b>' + txt + '</b>';
+    if (!v && !item && !whq) return '<b>' + txt + '</b>';
     let [icon, col] = v.split('|');
     col = kindColor(key, txt) || col;
     // 圖示直接引用 Wowhead 圖庫（不存到本站）
     const img = icon ? '<img class="ic" src="https://wow.zamimg.com/images/wow/icons/small/' + icon + '.jpg" onerror="this.style.display=\'none\'" alt="">' : '';
     if (item) return '<a class="w it" href="https://foreverchanges.pro/zh-tw/item/' + item + '" target="_blank" rel="noopener" title="查看物品資料"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</a>';
+    if (whq) return '<a class="w it" href="https://www.wowhead.com/forever/search?q=' + encodeURIComponent(whq) + '" target="_blank" rel="noopener" title="在 Wowhead 查這個物品"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</a>';
     return '<b class="w"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</b>';
   }
   // 沒標粗體的「中文（English）」也套圖示：只處理不在標籤裡、不在 b.w 裡的純文字
@@ -163,7 +165,7 @@ main code{white-space:pre-wrap}
     for (const p of parts) {
       if (p.startsWith('<')) { if (/^<(b class="w"|a )/.test(p)) inW++; else if ((p === '</b>' || p === '</a>') && inW) inW--; out += p; continue; }
       if (inW) { out += p; continue; }
-      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] || ITEMS[en] || DMAP[en] ? widget(zh + '（' + en + '）') : m))
+      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] || ITEMS[en] || DMAP[en] || WHQ.has(en) ? widget(zh + '（' + en + '）') : m))
         .replace(/(^|[^A-Za-z'])([A-Z][A-Za-z' :\-]{1,40})（([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})）/g, (m, pre, en, zh) => (ICONS[en.trim()] ? pre + widget(en + '（' + zh + '）') : m));
     }
     return out;
@@ -195,7 +197,7 @@ main code{white-space:pre-wrap}
     return autoWidget(s).replace(/\u0002(\d+)\u0003/g, (_, i) => '<code>' + codes[+i] + '</code>');
   }
   function render(md, g){
-    ICONS = g.icons || {}; ITEMS = g.items || {}; KINDS = g.kinds || {};
+    ICONS = g.icons || {}; ITEMS = g.items || {}; KINDS = g.kinds || {}; WHQ = new Set(g.whq || []);
     // 清掉原網站的雜訊：重複日期、頁面自帶的「目錄」「最新攻略」等區塊、作者／更新於那行（上方已顯示）
     md = md.replace(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2}, \d{4})\1/g, '$1');
     md = md.replace(/^.*(作者|By)[：:].*(更新於|Updated).*$/gm, '');
