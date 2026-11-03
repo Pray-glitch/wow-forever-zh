@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>永恆攻略中文版</title>
 <style>
-:root{--bg:#0f1115;--panel:#171a21;--panel2:#1f232c;--line:#2a2f3a;--text:#e6e8ee;--muted:#9aa3b2;--accent:#e8b500;--link:#7cc4ff}
+:root{--zone:#4fd1c5;--bg:#0f1115;--panel:#171a21;--panel2:#1f232c;--line:#2a2f3a;--text:#e6e8ee;--muted:#9aa3b2;--accent:#e8b500;--link:#7cc4ff}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.7 system-ui,"Noto Sans TC","Microsoft JhengHei",sans-serif}
 a{color:var(--link)}
@@ -65,6 +65,7 @@ main blockquote{border-left:3px solid var(--accent);margin:10px 0;padding:4px 14
 nav a.cls{font-weight:600}
 nav .sub .sub{margin-left:10px}
 main b.w,main a.w{font-weight:600;white-space:nowrap}
+main a.zone,main a.w.zone{color:var(--zone)}
 main a.it{text-decoration:none;border-bottom:1px dotted currentColor}
 main a.it:hover{border-bottom-style:solid}
 main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-radius:3px;border:1px solid #000}
@@ -105,7 +106,7 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=8050a8f3"></script>
+<script src="data.js?v=f78227b7"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -118,6 +119,18 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
   // 副本英文名 → foreverchanges 繁中頁（「挖掘場：濕地」這種也用冒號前的部分比對）
   const DMAP = {};
   (window.DUNGEONS || []).forEach(d => { DMAP[d.en] = d.slug; DMAP[d.en.split(':')[0].trim()] = d.slug; DMAP[d.en.replace(/^The /, '')] = d.slug; });
+  // 統一配色（照遊戲）：物品依品質、技能天賦金黃、職業依職業色、地點副本青色
+  const QCOL = ['#9d9d9d', '#ffffff', '#1eff00', '#3d8bff', '#b154ff', '#ff8000'];
+  const CLSCOL = {Warrior:'#c69b6d', Paladin:'#f48cba', Hunter:'#aad372', Rogue:'#fff468', Priest:'#ffffff', Shaman:'#0070dd', Mage:'#3fc7eb', Warlock:'#8788ee', Druid:'#ff7c0a'};
+  let KINDS = {};
+  function kindColor(key, txt){
+    const k = KINDS[key] || KINDS[(txt||'').trim()] || '';
+    if (k[0] === 'i') return QCOL[+k.slice(1)] || QCOL[1];
+    if (k === 's') return '#ffd100';
+    if (k === 'c') return CLSCOL[key] || '';
+    if (ITEMS[key] || ITEMS[(txt||'').trim()]) return QCOL[1];
+    return '';
+  }
   function widget(txt){
     // 星號配錯對、把一整句包成粗體的（含句讀又很長）→ 當一般文字
     if (txt.length > 18 && /[，。；]/.test(txt) && !/（[A-Za-z][^）]*）\s*$/.test(txt)) return txt;
@@ -127,9 +140,10 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
     const v = ICONS[key] || ICONS[txt.trim()] || '';
     const item = ITEMS[key] || ITEMS[txt.trim()];
     const dh = dungeonHref(key);
-    if (dh) return aTag(dh, txt, 'w it');
+    if (dh) return aTag(dh, txt, 'w zone');
     if (!v && !item) return '<b>' + txt + '</b>';
-    const [icon, col] = v.split('|');
+    let [icon, col] = v.split('|');
+    col = kindColor(key, txt) || col;
     // 圖示直接引用 Wowhead 圖庫（不存到本站）
     const img = icon ? '<img class="ic" src="https://wow.zamimg.com/images/wow/icons/small/' + icon + '.jpg" onerror="this.style.display=\'none\'" alt="">' : '';
     if (item) return '<a class="w it" href="https://foreverchanges.pro/zh-tw/item/' + item + '" target="_blank" rel="noopener" title="查看物品資料"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</a>';
@@ -164,12 +178,12 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
   const aTag = (href, text, cls) => '<a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + href + '"' + (href.startsWith('#') ? '' : ' target="_blank" rel="noopener"') + '>' + text + '</a>';
   function inline(s){
     s = esc(s);
-    s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, h) => aTag(linkFor(t, h.replace(/&amp;/g, '&')), t));
+    s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, h) => { const href = linkFor(t, h.replace(/&amp;/g, '&')); const isZone = /\/dungeons\//.test(href) || (href[0] === '#' && (G.find(x => '#' + x.slug === href) || {}).cat === '地城'); return aTag(href, t, isZone ? 'zone' : ''); });
     s = s.replace(/\*\*([^*]+)\*\*/g, (_, t) => widget(t)).replace(/\*\*+/g, '').replace(/\*([^*]+)\*/g, '<i>$1</i>').replace(/`([^`]+)`/g, '<code>$1</code>');
     return autoWidget(s);
   }
   function render(md, g){
-    ICONS = g.icons || {}; ITEMS = g.items || {};
+    ICONS = g.icons || {}; ITEMS = g.items || {}; KINDS = g.kinds || {};
     // 清掉原網站的雜訊：重複日期、頁面自帶的「目錄」「最新攻略」等區塊、作者／更新於那行（上方已顯示）
     md = md.replace(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2}, \d{4})\1/g, '$1');
     md = md.replace(/^.*(作者|By)[：:].*(更新於|Updated).*$/gm, '');
@@ -359,7 +373,7 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
       const body = render(g.md, g);
       main.innerHTML = '<div class="meta">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · ' + dates(g) + (g.author ? ' · 作者：' + esc(g.author) : '') + ' · <a href="' + g.url + '" target="_blank" rel="noopener">原文 ↗</a> · <a class="rp-link" onclick="window.__openRp()">📝 回報翻譯問題</a>' + (g.authorUrl ? ' · <a href="' + g.authorUrl + '" target="_blank" rel="noopener">' + esc(g.author) + ' 的 Bilibili 國漫 Reaction ↗</a>' : '') + '</div>' + (g.author && g.author.indexOf('Progress') < 0 ? '<p class="meta">本篇經作者 ' + esc(g.author) + ' 同意翻譯，機器翻譯僅供參考，以原文為準。</p>' : '') + body;
       wireTabs();
-      const hs = main.querySelectorAll('h2'); if (hs.length > 1) { let t = '<div class="toc"><b>目錄</b>'; hs.forEach((x,i) => { x.id = 's' + i; t += '<a href="#' + slug + '" onclick="event.preventDefault();document.getElementById(\'s' + i + '\').scrollIntoView({behavior:\'smooth\'})">' + x.textContent + '</a>'; }); main.querySelector('h1').insertAdjacentHTML('afterend', t + '</div>'); }
+      const hs = main.querySelectorAll('h2'); if (hs.length > 1) { let t = '<div class="toc"><b>目錄</b>'; hs.forEach((x,i) => { x.id = 's' + i; t += '<a href="#' + slug + '" onclick="event.preventDefault();document.getElementById(\'s' + i + '\').scrollIntoView({behavior:\'smooth\'})">' + x.textContent + '</a>'; }); const h1 = main.querySelector('h1'); if (h1) h1.insertAdjacentHTML('afterend', t + '</div>'); else main.insertAdjacentHTML('afterbegin', t + '</div>'); }
     }
     window.scrollTo(0,0); nav.classList.remove('open');
   }
