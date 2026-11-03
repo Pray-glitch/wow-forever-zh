@@ -111,7 +111,7 @@ main code{white-space:pre-wrap}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=bc3a4557"></script>
+<script src="data.js?v=b9502e30"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -200,7 +200,7 @@ main code{white-space:pre-wrap}
     const codes = [];
     s = s.replace(/`([^`]+)`/g, (_, c) => { codes.push(c); return '\u0002' + (codes.length - 1) + '\u0003'; });
     s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, h) => { const href = linkFor(t, h.replace(/&amp;/g, '&')); const isZone = /\/dungeons\//.test(href) || (href[0] === '#' && (G.find(x => '#' + x.slug === href) || {}).cat === '地城'); return aTag(href, t, isZone ? 'zone' : ''); });
-    s = s.replace(/\*\*([^*]+)\*\*/g, (_, t) => widget(t)).replace(/\*\*+/g, '').replace(/\*([^*]+)\*/g, '<i>$1</i>').replace(/`([^`]+)`/g, '<code>$1</code>');
+    s = s.replace(/\*\*([^*]+)\*\*/g, (_, t) => widget(t)).replace(/\*\*+/g, '').replace(/\*([^*]+)\*/g, '<i>$1</i>').replace(/\*/g, '').replace(/`([^`]+)`/g, '<code>$1</code>');
     return autoWidget(s).replace(/\u0002(\d+)\u0003/g, (_, i) => '<code>' + codes[+i] + '</code>');
   }
   function render(md, g){
