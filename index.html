@@ -69,6 +69,8 @@ main a.zone,main a.w.zone{color:var(--zone)}
 main a.it{text-decoration:none;border-bottom:1px dotted currentColor}
 main a.it:hover{border-bottom-style:solid}
 main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-radius:3px;border:1px solid #000}
+main h2 img.ic,main h3 img.ic,main h4 img.ic{width:1.1em;height:1.1em;vertical-align:-.15em;margin-right:6px}
+main code{white-space:pre-wrap}
 .tabs{margin:12px 0 18px}
 .tabbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:10px}
 .tabbar .tab{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer}
@@ -106,7 +108,7 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=709ad467"></script>
+<script src="data.js?v=817d6a06"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -178,9 +180,12 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
   const aTag = (href, text, cls) => '<a' + (cls ? ' class="' + cls + '"' : '') + ' href="' + href + '"' + (href.startsWith('#') ? '' : ' target="_blank" rel="noopener"') + '>' + text + '</a>';
   function inline(s){
     s = esc(s);
+    // 程式碼（巨集）先拿出來，不做粗體、圖示、連結處理，最後原樣放回
+    const codes = [];
+    s = s.replace(/`([^`]+)`/g, (_, c) => { codes.push(c); return '\u0002' + (codes.length - 1) + '\u0003'; });
     s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, h) => { const href = linkFor(t, h.replace(/&amp;/g, '&')); const isZone = /\/dungeons\//.test(href) || (href[0] === '#' && (G.find(x => '#' + x.slug === href) || {}).cat === '地城'); return aTag(href, t, isZone ? 'zone' : ''); });
     s = s.replace(/\*\*([^*]+)\*\*/g, (_, t) => widget(t)).replace(/\*\*+/g, '').replace(/\*([^*]+)\*/g, '<i>$1</i>').replace(/`([^`]+)`/g, '<code>$1</code>');
-    return autoWidget(s);
+    return autoWidget(s).replace(/\u0002(\d+)\u0003/g, (_, i) => '<code>' + codes[+i] + '</code>');
   }
   function render(md, g){
     ICONS = g.icons || {}; ITEMS = g.items || {}; KINDS = g.kinds || {};
@@ -373,6 +378,9 @@ main img.ic{width:18px;height:18px;vertical-align:-4px;margin-right:3px;border-r
       const body = render(g.md, g);
       main.innerHTML = '<div class="meta">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · ' + dates(g) + (g.author ? ' · 作者：' + esc(g.author) : '') + ' · <a href="' + g.url + '" target="_blank" rel="noopener">原文 ↗</a> · <a class="rp-link" onclick="window.__openRp()">📝 回報翻譯問題</a>' + (g.authorUrl ? ' · <a href="' + g.authorUrl + '" target="_blank" rel="noopener">' + esc(g.author) + ' 的 Bilibili 國漫 Reaction ↗</a>' : '') + '</div>' + (g.author && g.author.indexOf('Progress') < 0 ? '<p class="meta">本篇經作者 ' + esc(g.author) + ' 同意翻譯，機器翻譯僅供參考，以原文為準。</p>' : '') + body;
       wireTabs();
+      // 標題就是一個技能（巨集標題）→ 前面放圖
+      const HIC = g.hicons || {};
+      main.querySelectorAll('h2,h3,h4').forEach(h => { const k = HIC[h.textContent.trim()]; if (k && !h.querySelector('img')) h.insertAdjacentHTML('afterbegin', '<img class="ic" src="https://wow.zamimg.com/images/wow/icons/small/' + k + '.jpg" onerror="this.style.display=\'none\'" alt="">'); });
       const hs = main.querySelectorAll('h2'); if (hs.length > 1) { let t = '<div class="toc"><b>目錄</b>'; hs.forEach((x,i) => { x.id = 's' + i; t += '<a href="#' + slug + '" onclick="event.preventDefault();document.getElementById(\'s' + i + '\').scrollIntoView({behavior:\'smooth\'})">' + x.textContent + '</a>'; }); const h1 = main.querySelector('h1'); if (h1) h1.insertAdjacentHTML('afterend', t + '</div>'); else main.insertAdjacentHTML('afterbegin', t + '</div>'); }
     }
     window.scrollTo(0,0); nav.classList.remove('open');
