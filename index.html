@@ -111,7 +111,7 @@ main code{white-space:pre-wrap}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=0ece549d"></script>
+<script src="data.js?v=1d7adba5"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -142,7 +142,9 @@ main code{white-space:pre-wrap}
     if (txt.length > 18 && /[，。；]/.test(txt) && !/（[A-Za-z][^）]*）\s*$/.test(txt)) return txt;
     // 粗體裡的「中文（English）」或純英文 → 查圖示表
     const m = txt.match(/（([^（）]+)）\s*$/) || txt.match(/\(([^()]+)\)\s*$/);
-    const key = (m ? m[1] : txt).trim();
+    let key = (m ? m[1] : txt).trim();
+    // 反過來寫的「Poised（沉著）」：括號裡是中文，就用前面的英文查
+    if (m && /[\u4e00-\u9fff]/.test(m[1]) && /^[A-Za-z]/.test(txt)) key = txt.slice(0, txt.indexOf(m[0])).trim();
     const v = ICONS[key] || ICONS[txt.trim()] || '';
     const item = ITEMS[key] || ITEMS[txt.trim()];
     const dh = dungeonHref(key);
@@ -161,7 +163,8 @@ main code{white-space:pre-wrap}
     for (const p of parts) {
       if (p.startsWith('<')) { if (/^<(b class="w"|a )/.test(p)) inW++; else if ((p === '</b>' || p === '</a>') && inW) inW--; out += p; continue; }
       if (inW) { out += p; continue; }
-      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] || ITEMS[en] || DMAP[en] ? widget(zh + '（' + en + '）') : m));
+      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] || ITEMS[en] || DMAP[en] ? widget(zh + '（' + en + '）') : m))
+        .replace(/(^|[^A-Za-z'])([A-Z][A-Za-z' :\-]{1,40})（([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})）/g, (m, pre, en, zh) => (ICONS[en.trim()] ? pre + widget(en + '（' + zh + '）') : m));
     }
     return out;
   }
