@@ -80,6 +80,7 @@ main code{white-space:pre-wrap}
 .pane{display:none}.pane.on{display:block}
 .rp-btn{position:fixed;right:16px;bottom:18px;z-index:20;display:none;background:var(--accent);color:#111;border:0;border-radius:999px;padding:11px 16px;font:600 14px system-ui,"Noto Sans TC",sans-serif;box-shadow:0 6px 18px #0008;cursor:pointer}
 .rp-btn.show{display:block}
+.rp-btn.float{right:auto;bottom:auto;left:50%;transform:translateX(-50%)}
 .rp-mask{position:fixed;inset:0;background:#000a;z-index:30;display:none;align-items:center;justify-content:center;padding:16px}
 .rp-mask.show{display:flex}
 .rp-box{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:100%;max-width:520px;padding:18px;max-height:90vh;overflow:auto}
@@ -111,7 +112,7 @@ main code{white-space:pre-wrap}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=b9502e30"></script>
+<script src="data.js?v=b22ccd8e"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -428,10 +429,23 @@ main code{white-space:pre-wrap}
   }
   function checkSel(){
     const s = window.getSelection(); const t = s ? s.toString().trim() : '';
-    if (t.length >= 2 && t.length <= 600 && curGuide() && s.anchorNode && main.contains(s.anchorNode)) { rpSel = t; rpSec = secOf(s.anchorNode); rpBtn.classList.add('show'); }
-    else rpBtn.classList.remove('show');
+    if (t.length >= 2 && t.length <= 600 && curGuide() && s.anchorNode && main.contains(s.anchorNode)) { rpSel = t; rpSec = secOf(s.anchorNode); placeBtn(s); rpBtn.classList.add('show'); clearTimeout(checkSel.h); }
+    // 手機點按鈕時選取會先被取消 → 晚一點才收起來，免得按不到
+    else if (rpBtn.classList.contains('show')) { clearTimeout(checkSel.h); checkSel.h = setTimeout(() => rpBtn.classList.remove('show'), TOUCH ? 1500 : 0); }
+  }
+  // 手機：反白時畫面下方會跳出 Google 搜尋、選取文字旁邊會有「複製」選單
+  // → 按鈕放在畫面上方（標題列下面）；反白的地方太靠上時，改放在反白文字的下面
+  const TOUCH = matchMedia('(pointer:coarse)').matches || 'ontouchstart' in window;
+  function placeBtn(sel){
+    if (!TOUCH) { rpBtn.classList.remove('float'); rpBtn.style.top = ''; return; }
+    let r = null; try { r = sel.getRangeAt(0).getBoundingClientRect(); } catch (e) {}
+    const top = document.querySelector('.top'), hb = top ? top.getBoundingClientRect().bottom : 56;
+    let y = hb + 10;
+    if (r && r.top < hb + 150) y = Math.min(r.bottom + 14, innerHeight * 0.6);
+    rpBtn.classList.add('float'); rpBtn.style.top = Math.max(hb + 10, y) + 'px';
   }
   document.addEventListener('selectionchange', () => { clearTimeout(checkSel.t); checkSel.t = setTimeout(checkSel, 250); });
+  addEventListener('scroll', () => { if (rpBtn.classList.contains('show') && TOUCH) { const s = getSelection(); if (s && s.rangeCount) placeBtn(s); } }, {passive: true});
   function openRp(quote, sec){
     const g = curGuide(); if (!g) return;
     rpCurSec = sec || ''; $('rpWhere').textContent = g.title + (sec ? '　／　' + sec : '');
