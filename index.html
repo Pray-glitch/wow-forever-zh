@@ -111,7 +111,7 @@ main code{white-space:pre-wrap}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=5ca5fed7"></script>
+<script src="data.js?v=bc3a4557"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -154,7 +154,9 @@ main code{white-space:pre-wrap}
     let [icon, col] = v.split('|');
     col = kindColor(key, txt) || col;
     // 圖示直接引用 Wowhead 圖庫（不存到本站）
-    const img = icon ? '<img class="ic" src="https://wow.zamimg.com/images/wow/icons/small/' + icon + '.jpg" onerror="this.style.display=\'none\'" alt="">' : '';
+    // Wowhead 圖庫沒有的（天裔精靈、坦克/輸出圖示）→ 改用原文（Mobalytics）的圖
+    const alt = (v.split('|')[2] || '').replace(/"/g, '');
+    const img = icon ? '<img class="ic" src="https://wow.zamimg.com/images/wow/icons/small/' + icon + '.jpg"' + (alt ? ' data-alt="' + alt + '"' : '') + ' onerror="if(this.dataset.alt){this.src=this.dataset.alt;this.removeAttribute(\'data-alt\')}else this.style.display=\'none\'" alt="">' : '';
     if (item) return '<a class="w it" href="https://foreverchanges.pro/zh-tw/item/' + item + '" target="_blank" rel="noopener" title="查看物品資料"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</a>';
     if (whq) return '<a class="w it" href="https://www.wowhead.com/forever/search?q=' + encodeURIComponent(whq) + '" target="_blank" rel="noopener" title="在 Wowhead 查這個物品"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</a>';
     return '<b class="w"' + (col ? ' style="color:' + col + '"' : '') + '>' + img + txt + '</b>';
@@ -165,7 +167,12 @@ main code{white-space:pre-wrap}
     for (const p of parts) {
       if (p.startsWith('<')) { if (/^<(b class="w"|a )/.test(p)) inW++; else if ((p === '</b>' || p === '</a>') && inW) inW--; out += p; continue; }
       if (inW) { out += p; continue; }
-      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => (ICONS[en] || ITEMS[en] || DMAP[en] || WHQ.has(en) ? widget(zh + '（' + en + '）') : m))
+      out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => {
+          if (!(ICONS[en] || ITEMS[en] || DMAP[en] || WHQ.has(en))) return m;
+          // 「和磨刀石」「搭配風怒」：前面的連接詞不算名字
+          const lead = (zh.match(/^(?:搭配|使用|以及|還有|和|與|或|及|跟|用|把|將|對|在|從|的)(?=[\u4e00-\u9fff]{2})/) || [''])[0];
+          return lead + widget(zh.slice(lead.length) + '（' + en + '）');
+        })
         .replace(/(^|[^A-Za-z'])([A-Z][A-Za-z' :\-]{1,40})（([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})）/g, (m, pre, en, zh) => (ICONS[en.trim()] ? pre + widget(en + '（' + zh + '）') : m));
     }
     return out;
