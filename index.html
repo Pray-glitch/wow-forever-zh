@@ -146,7 +146,7 @@ details.sec>.body>h2:first-child{display:none}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=5b189862"></script>
+<script src="data.js?v=0f2593a5"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -474,11 +474,11 @@ details.sec>.body>h2:first-child{display:none}
       let h = '<div class="home"><p class="meta">WoW Forever 攻略中文版（Progress 公會與經作者同意的攻略）· 更新於 ' + esc(window.GENERATED||'') + ' · 看到翻錯，反白那段就能回報</p>';
       h += '<h2>攻略分類</h2><div class="grid sec">';
       SECTIONS.forEach(x => { const n = (cats[x.cat]||[]).length; if (!n && !(x.cat === '地城' && DN)) return; const cnt = n ? n + ' 篇' : DN + ' 副本'; const d = x.cat === '地城' && DN ? '地城攻略 ' + n + ' 篇＋' + DN + ' 個副本首領掉落' : x.d; h += '<div class="card tile" onclick="location.hash=\'k:' + x.cat + '\'"><span class="ti">' + x.i + '</span><b>' + esc(x.t) + '</b><span class="n">' + cnt + '</span>' + (d ? '<div class="c">' + esc(d) + '</div>' : '') + '</div>'; });
-      h += '</div>';
-      h += '<h2>最近更新</h2><div class="recent">';
-      G.slice().sort((a,b)=>(b.updated||'').localeCompare(a.updated||'')).slice(0,5).forEach(g => { h += '<a href="#' + g.slug + '"><span class="k">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + '</span><span class="t">' + esc(g.title.replace(/（Progress[^）]*）/,'')) + '</span><span class="u">' + esc((g.updated||'').slice(5,16).replace('-','/')) + '</span></a>'; });
       h += '</div></div>';
       h += classGrid('<h2>依職業找攻略</h2>');
+      h += '<div class="home"><h2>最近更新</h2><div class="recent">';
+      G.slice().sort((a,b)=>(b.updated||'').localeCompare(a.updated||'')).slice(0,5).forEach(g => { h += '<a href="#' + g.slug + '"><span class="k">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + '</span><span class="t">' + esc(g.title.replace(/（Progress[^）]*）/,'')) + '</span><span class="u">' + esc((g.updated||'').slice(5,16).replace('-','/')) + '</span></a>'; });
+      h += '</div></div>';
       main.innerHTML = h;
     } else {
       const body = render(g.md, g);
