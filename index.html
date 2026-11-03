@@ -39,7 +39,9 @@ main ul{padding-left:22px}
 main li{margin:4px 0}
 main img.shot{max-width:100%;border:1px solid var(--line);border-radius:10px;margin:10px 0;display:block}
 main .cap{color:var(--muted);font-size:13px;margin:-4px 0 14px}
-main table{border-collapse:collapse;margin:10px 0;font-size:14px}
+main .tw{overflow-x:auto;max-width:100%;margin:10px 0;-webkit-overflow-scrolling:touch}
+main table{border-collapse:collapse;margin:0;font-size:14px}
+main th{background:var(--panel);text-align:left}
 main td,main th{border:1px solid var(--line);padding:6px 10px}
 main blockquote{border-left:3px solid var(--accent);margin:10px 0;padding:4px 14px;color:var(--muted)}
 .home .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0;cursor:pointer}
@@ -91,6 +93,7 @@ main code{white-space:pre-wrap}
 .rp-row button{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}
 .rp-row button.go{background:var(--accent);color:#111;border-color:var(--accent);font-weight:700}
 .meta a.rp-link{cursor:pointer}
+@media (max-width:820px){main b.w,main a.w{white-space:normal}main{min-width:0;overflow-wrap:break-word}}
 @media (max-width:820px){nav{position:fixed;left:-280px;transition:left .2s;z-index:6}nav.open{left:0}.top button{display:block}main{padding:18px 16px}}
 </style>
 </head>
@@ -108,7 +111,7 @@ main code{white-space:pre-wrap}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=bbcf42e2"></script>
+<script src="data.js?v=15049c46"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -202,7 +205,7 @@ main code{white-space:pre-wrap}
     const lines = md.split('\n'); let html = '', inList = false, inTable = false, para = [];
     const flushP = () => { if (para.length) { html += '<p>' + para.map(inline).join('<br>') + '</p>'; para = []; } };
     const closeList = () => { if (inList) { html += '</ul>'; inList = false; } };
-    const closeTable = () => { if (inTable) { html += '</table>'; inTable = false; } };
+    const closeTable = () => { if (inTable) { html += '</table></div>'; inTable = false; } };
     // 分頁（### ▸ 名稱）：收集成可點的分頁列
     let tabs = null, tabGroups = 0;
     const closeTabs = () => {
@@ -241,7 +244,18 @@ main code{white-space:pre-wrap}
       if ((m = l.match(/^###\s+▸\s*(.*)/))) { startTab(m[1]); continue; }
       if ((m = l.match(/^(#{1,3})\s+(.*)/))) { const n = m[1].length; if (tabs && n <= 2) { finishTab(); closeTabs(); } flushP(); closeList(); closeTable(); html += '<h' + (n+0) + '>' + inline(m[2]) + '</h' + (n+0) + '>'; continue; }
       if (l.startsWith('- ') || l.startsWith('* ')) { flushP(); closeTable(); if (!inList) { html += '<ul>'; inList = true; } html += '<li>' + inline(l.slice(2)) + '</li>'; continue; }
-      if (l.startsWith('|')) { flushP(); closeList(); if (!inTable) { html += '<table>'; inTable = true; } const cells = l.split('|').filter((x,i,a)=>i>0&&i<a.length-1); html += '<tr>' + cells.map(c=>'<td>'+inline(c.trim())+'</td>').join('') + '</tr>'; continue; }
+      if (l.startsWith('|')) {
+        flushP(); closeList();
+        const cells = l.split('|').filter((x,i,a)=>i>0&&i<a.length-1);
+        // 「|---|---|」是表頭分隔線：不顯示，把上一列變成表頭
+        if (cells.length && cells.every(c => /^\s*:?-{2,}:?\s*$/.test(c))) {
+          if (inTable) { const k = html.lastIndexOf('<tr>'); if (k >= 0) html = html.slice(0, k) + html.slice(k).replace(/<td>/g, '<th>').replace(/<\/td>/g, '</th>'); }
+          continue;
+        }
+        if (!inTable) { html += '<div class="tw"><table>'; inTable = true; }
+        html += '<tr>' + cells.map(c=>'<td>'+inline(c.trim()).replace(/&lt;br\s*\/?&gt;/gi, '<br>')+'</td>').join('') + '</tr>';
+        continue;
+      }
       if (l.startsWith('> ')) { flushP(); closeList(); closeTable(); html += '<blockquote>' + inline(l.slice(2)) + '</blockquote>'; continue; }
       closeList(); closeTable(); para.push(l);
     }
