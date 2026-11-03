@@ -111,13 +111,14 @@ main code{white-space:pre-wrap}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=536f7d49"></script>
+<script src="data.js?v=5f5cb58f"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
-  const order = ["職業攻略","天梯排名","練功升級","地城","團本","專業技能","任務","其他攻略"];
+  const order = ["官方情報","職業攻略","天梯排名","練功升級","地城","團本","專業技能","任務","其他攻略"];
   const cats = {};
   G.forEach(g => { (cats[g.cat] = cats[g.cat] || []).push(g); });
+  if (cats['官方情報']) cats['官方情報'].sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0) || (b.updated || '').localeCompare(a.updated || ''));
   const nav = document.getElementById('nav'), main = document.getElementById('main');
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   let ICONS = {}, ITEMS = {};
@@ -291,6 +292,7 @@ main code{white-space:pre-wrap}
     const M = 'https://mobalytics.gg/wow-forever/';
     const menu = [
       {t:'首頁', i:'🏠', home:true},
+      {t:'官方情報', i:'📢', cat:'官方情報', ext:'https://www.wowhead.com/forever/news', news:true},
       {t:'天賦模擬器', i:'🧩', ext:M+'talent-calculator'},
       {t:'角色規劃', i:'📋', ext:M+'planner'},
       {t:'職業攻略', i:'⚔️', cat:'職業攻略', ext:M+'classes', byClass:true},
@@ -334,6 +336,7 @@ main code{white-space:pre-wrap}
     });
   }
   const SECTIONS = [
+    {cat:'官方情報', t:'官方情報', i:'📢', d:'暴雪藍帖、Wowhead 新聞的中文全文'},
     {cat:'職業攻略', t:'職業攻略', i:'⚔️', d:'各職業專精的天賦、輸出循環、裝備'},
     {cat:'天梯排名', t:'Tier List', i:'🏆', d:'DPS／補師強度排名'},
     {cat:'練功升級', t:'練功升級', i:'📈', d:'練功路線與傳承點數'},
@@ -391,7 +394,7 @@ main code{white-space:pre-wrap}
       main.innerHTML = h + '</div>';
     } else {
       const body = render(g.md, g);
-      main.innerHTML = '<div class="meta">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · ' + dates(g) + (g.author ? ' · 作者：' + esc(g.author) : '') + ' · <a href="' + g.url + '" target="_blank" rel="noopener">原文 ↗</a> · <a class="rp-link" onclick="window.__openRp()">📝 回報翻譯問題</a>' + (g.authorUrl ? ' · <a href="' + g.authorUrl + '" target="_blank" rel="noopener">' + esc(g.author) + ' 的 Bilibili 國漫 Reaction ↗</a>' : '') + '</div>' + (g.author && g.author.indexOf('Progress') < 0 ? '<p class="meta">本篇經作者 ' + esc(g.author) + ' 同意翻譯，機器翻譯僅供參考，以原文為準。</p>' : '') + body;
+      main.innerHTML = '<div class="meta">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · ' + dates(g) + (g.author ? (g.cat === '官方情報' ? ' · 來源：' : ' · 作者：') + esc(g.author) : '') + ' · <a href="' + g.url + '" target="_blank" rel="noopener">原文 ↗</a> · <a class="rp-link" onclick="window.__openRp()">📝 回報翻譯問題</a>' + (g.authorUrl ? ' · <a href="' + g.authorUrl + '" target="_blank" rel="noopener">' + esc(g.author) + ' 的 Bilibili 國漫 Reaction ↗</a>' : '') + '</div>' + (g.author && g.cat !== '官方情報' && g.author.indexOf('Progress') < 0 ? '<p class="meta">本篇經作者 ' + esc(g.author) + ' 同意翻譯，機器翻譯僅供參考，以原文為準。</p>' : '') + body;
       wireTabs();
       // 標題就是一個技能（巨集標題）→ 前面放圖
       const HIC = g.hicons || {};
