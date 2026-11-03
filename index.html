@@ -127,6 +127,9 @@ details.sec>summary::before{content:'▸';color:var(--accent);display:inline-blo
 details.sec[open]>summary::before{content:'▾'}
 details.sec>.body{padding:0 16px 10px}
 details.sec>.body>h2:first-child,details.sec>.body>h3:first-child{display:none}
+details.sec.sub{background:var(--panel2);margin:8px 0}
+details.sec.sub>summary{font-size:15px;padding:8px 12px}
+details.sec.sub>.body{padding:0 12px 6px}
 @media (max-width:820px){.top .sub,.top .tools a{display:none}.top input#q{width:100%;min-width:0}.top .tools{flex:1}}
 @media (max-width:820px){main b.w,main a.w{white-space:normal}main{min-width:0;overflow-wrap:break-word}}
 @media (max-width:820px){nav{position:fixed;left:-280px;transition:left .2s;z-index:6}nav.open{left:0}.top button{display:block}main{padding:18px 16px}}
@@ -146,7 +149,7 @@ details.sec>.body>h2:first-child,details.sec>.body>h3:first-child{display:none}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=c9e35e40"></script>
+<script src="data.js?v=3c4c8787"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -211,8 +214,10 @@ details.sec>.body>h2:first-child,details.sec>.body>h3:first-child{display:none}
           const lead = (zh.match(/^(?:包括|包含|例如|像是|搭配|使用|以及|還有|和|與|或|及|跟|用|把|將|對|在|從|的)(?=[\u4e00-\u9fff]{2})/) || [''])[0];
           let pre = lead, name = zh.slice(lead.length);
           // 「此懲罰仍適用於暴風雪」「暴風雪觸發祕法集中」：句子黏在名字前面 → 只取最後一個虛詞後面的部分當名字
-          if (name.length > 4) { const m2 = name.match(/^(.*(?:觸發|使用|搭配|包括|於|在|和|與|或|及|讓|對|將|把|從|以|為|是|有|了))([\u4e00-\u9fff0-9]{2,})$/); if (m2) { pre += m2[1]; name = m2[2]; } }
-          if (!known) return pre + '<a class="w it" href="https://www.wowhead.com/forever/search?q=' + encodeURIComponent(en) + '" target="_blank" rel="noopener" title="在 Wowhead 查「' + en.replace(/"/g, '') + '」">' + name + '（' + en + '）</a>';
+          if (name.length > 3) { const m2 = name.match(/^(.*(?:觸發|使用|搭配|包括|影響|提高|提升|降低|增加|減少|移除|調整|脫離|適用|顯示|同時|改為|變成|取代|不再|現在|你的|會|但|於|在|和|與|或|及|讓|對|將|把|從|以|為|是|有|了))([\u4e00-\u9fff0-9·・]{2,})$/); if (m2) { pre += m2[1]; name = m2[2]; } }
+          // 「不死族牧師的黑暗犧牲」：「的」前面夠長（4 字以上）才拆；「馬杜克的黑檀劍柄」這種名字本身有「的」就不拆
+          { const k = name.lastIndexOf('的'); if (k >= 4 && name.length - k - 1 >= 2) { pre += name.slice(0, k + 1); name = name.slice(k + 1); } }
+          if (!known) return pre + '<a class="w it fb" href="https://www.wowhead.com/forever/search?q=' + encodeURIComponent(en) + '" target="_blank" rel="noopener" title="在 Wowhead 查「' + en.replace(/"/g, '') + '」">' + name + '（' + en + '）</a>';
           return pre + widget(name + '（' + en + '）');
         })
         .replace(/(^|[^A-Za-z'])([A-Z][A-Za-z' :\-]{1,40})（([\u4e00-\u9fff][\u4e00-\u9fff0-9]{0,15})）/g, (m, pre, en, zh) => (ICONS[en.trim()] ? pre + widget(en + '（' + zh + '）') : m));
@@ -442,6 +447,20 @@ details.sec>.body>h2:first-child,details.sec>.body>h3:first-child{display:none}
       let n = h2; const stop = hs[i + 1];
       while (n && n !== stop && !(n.tagName === 'P' && /英文原文/.test(n.textContent))) { const nx = n.nextSibling; body.appendChild(n); n = nx; }
     });
+    // 章節裡面還有 ### 小標題（例如「職業」底下九大職業）→ 每個小標題也能各自展開收起（預設收起）
+    if (tag === 'H2') main.querySelectorAll('details.sec>.body').forEach(body => {
+      const subs = [...body.children].filter(x => x.tagName === 'H3'); if (subs.length < 2) return;
+      subs.forEach((h3, i) => {
+        const d = document.createElement('details'); d.className = 'sec sub';
+        const sm = document.createElement('summary'); sm.innerHTML = h3.innerHTML; d.appendChild(sm);
+        const cn = Object.keys(CLASS).find(c => h3.textContent.trim().startsWith(c));
+        if (cn) { sm.style.color = CLASS[cn].c; sm.insertAdjacentHTML('afterbegin', '<span style="margin-right:6px">' + CLASS[cn].i + '</span>'); }
+        const b = document.createElement('div'); b.className = 'body'; d.appendChild(b);
+        body.insertBefore(d, h3);
+        let n = h3; const stop = subs[i + 1];
+        while (n && n !== stop) { const nx = n.nextSibling; b.appendChild(n); n = nx; }
+      });
+    });
     const bar = document.createElement('div'); bar.className = 'secbar';
     bar.innerHTML = '<button data-o="1">全部展開</button><button data-o="0">全部收起</button>';
     bar.onclick = e => { const o = e.target.dataset.o; if (o === undefined) return; main.querySelectorAll('details.sec').forEach(x => x.open = o === '1'); };
@@ -492,6 +511,8 @@ details.sec>.body>h2:first-child,details.sec>.body>h3:first-child{display:none}
       // 標題就是一個技能（巨集標題）→ 前面放圖
       const HIC = g.hicons || {};
       main.querySelectorAll('h2,h3,h4').forEach(h => { const k = HIC[h.textContent.trim()]; if (k && !h.querySelector('img')) h.insertAdjacentHTML('afterbegin', '<img class="ic" src="https://wow.zamimg.com/images/wow/icons/small/' + k + '.jpg" onerror="this.style.display=\'none\'" alt="">'); });
+      // 標題本身不放 Wowhead 連結（點標題是要展開，不是跳走）
+      main.querySelectorAll('h1 a.it,h2 a.it,h3 a.it,h4 a.it').forEach(a => a.replaceWith(...a.childNodes));
       if (g.cat === '官方情報') foldSections(g);
       const hs = main.querySelectorAll('h2'); if (g.cat !== '官方情報' && hs.length > 1) { let t = '<div class="toc"><b>目錄</b>'; hs.forEach((x,i) => { x.id = 's' + i; t += '<a href="#' + slug + '" onclick="event.preventDefault();document.getElementById(\'s' + i + '\').scrollIntoView({behavior:\'smooth\'})">' + x.textContent + '</a>'; }); const h1 = main.querySelector('h1'); if (h1) h1.insertAdjacentHTML('afterend', t + '</div>'); else main.insertAdjacentHTML('afterbegin', t + '</div>'); }
     }
