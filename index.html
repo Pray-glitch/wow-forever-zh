@@ -111,7 +111,7 @@ main code{white-space:pre-wrap}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=60bb024f"></script>
+<script src="data.js?v=d315b836"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -207,7 +207,7 @@ main code{white-space:pre-wrap}
     const closeList = () => { if (inList) { html += '</ul>'; inList = false; } };
     const closeTable = () => { if (inTable) { html += '</table></div>'; inTable = false; } };
     // 分頁（### ▸ 名稱）：收集成可點的分頁列
-    let tabs = null, tabGroups = 0;
+    let tabs = null, tabGroups = 0, curTab = '';
     const closeTabs = () => {
       if (!tabs) return;
       flushP(); closeList(); closeTable();
@@ -218,13 +218,14 @@ main code{white-space:pre-wrap}
         panes += '<div class="pane' + (i === 0 ? ' on' : '') + '" data-g="' + gi + '" data-i="' + i + '">' + t.html + '</div>';
       });
       html = tabs.before + '<div class="tabs">' + bar + '</div>' + panes + '</div>';
-      tabs = null;
+      tabs = null; curTab = '';
     };
     const startTab = (name) => {
       flushP(); closeList(); closeTable();
       if (!tabs) tabs = { before: html, list: [] };
       else tabs.list[tabs.list.length - 1].html = html.slice(tabs.cursor);
       tabs.list.push({ name, html: '' }); tabs.cursor = html.length;
+      curTab = name.replace(/\*\*/g, '').replace(/（[A-Za-z][^）]*）/g, '').trim();
     };
     const finishTab = () => { if (tabs) { flushP(); closeList(); closeTable(); tabs.list[tabs.list.length - 1].html = html.slice(tabs.cursor); } };
     let firstH1 = true;
@@ -234,7 +235,7 @@ main code{white-space:pre-wrap}
       let sm;
       if ((sm = l.match(/^\[\[SHOT:talents(?::(\d+))?\]\]$/))) {
         flushP(); closeList(); closeTable();
-        const shot = (f, i) => { html += '<img class="shot" src="img/' + f + '?v=' + encodeURIComponent(g.updated || '') + (g.shotVer || '') + '" loading="lazy"><div class="cap">天賦配點' + ((g.shotNames||[])[i] ? '：' + esc(g.shotNames[i]) : '') + '</div>'; };
+        const shot = (f, i) => { const nm = curTab || (g.shotNames||[])[i] || ''; html += '<img class="shot" src="img/' + f + '?v=' + encodeURIComponent(g.updated || '') + (g.shotVer || '') + '" loading="lazy"><div class="cap">天賦配點' + (nm ? '：' + esc(nm) : '') + '</div>'; };
         if (sm[1] !== undefined) { const i = +sm[1]; if ((g.shots||[])[i]) shot(g.shots[i], i); else html += '<p class="cap">（天賦樹請看原文）</p>'; }
         else { (g.shots || []).forEach(shot); if (!(g.shots||[]).length) html += '<p class="cap">（天賦樹請看原文）</p>'; }
         continue;
