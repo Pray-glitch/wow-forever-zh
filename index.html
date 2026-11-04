@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=05847d6b"></script>
+<script src="data.js?v=b23ffb28"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -159,7 +159,7 @@ details.sec.sub>.body{padding:0 12px 6px}
   if (cats['官方情報']) cats['官方情報'].sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0) || (b.updated || '').localeCompare(a.updated || ''));
   const nav = document.getElementById('nav'), main = document.getElementById('main');
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  let ICONS = {}, ITEMS = {}, WHQ = new Set();
+  let ICONS = {}, ZHEN = {}, ITEMS = {}, WHQ = new Set();
   // 副本英文名 → foreverchanges 繁中頁（「挖掘場：濕地」這種也用冒號前的部分比對）
   const DMAP = {};
   (window.DUNGEONS || []).forEach(d => { DMAP[d.en] = d.slug; DMAP[d.en.split(':')[0].trim()] = d.slug; DMAP[d.en.replace(/^The /, '')] = d.slug; });
@@ -183,6 +183,8 @@ details.sec.sub>.body{padding:0 12px 6px}
     let key = (m ? m[1] : txt).trim();
     // 反過來寫的「Poised（沉著）」：括號裡是中文，就用前面的英文查
     if (m && /[\u4e00-\u9fff]/.test(m[1]) && /^[A-Za-z]/.test(txt)) key = txt.slice(0, txt.indexOf(m[0])).trim();
+    // 只寫中文沒附英文（「求生意志」「強韌（被動）」）→ 用中英對照找英文
+    if (!ICONS[key] && !ICONS[txt.trim()]) { const z = txt.replace(/（(被動|Passive)）/g, '').replace(/\*\*/g, '').trim(); if (ZHEN[z]) key = ZHEN[z]; }
     const v = ICONS[key] || ICONS[txt.trim()] || '';
     const item = ITEMS[key] || ITEMS[txt.trim()];
     const whq = !item && (WHQ.has(key) || WHQ.has(txt.trim())) ? (WHQ.has(key) ? key : txt.trim()) : '';
@@ -326,7 +328,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     return out.join('\n');
   }
   function render(md, g){
-    ICONS = g.icons || {}; ITEMS = g.items || {}; KINDS = g.kinds || {}; WHQ = new Set(g.whq || []);
+    ICONS = g.icons || {}; ZHEN = g.zhen || {}; ITEMS = g.items || {}; KINDS = g.kinds || {}; WHQ = new Set(g.whq || []);
     // 清掉原網站的雜訊：重複日期、頁面自帶的「目錄」「最新攻略」等區塊、作者／更新於那行（上方已顯示）
     md = md.replace(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2}, \d{4})\1/g, '$1');
     md = md.replace(/^.*(作者|By)[：:].*(更新於|Updated).*$/gm, '');
@@ -697,6 +699,12 @@ details.sec.sub>.body{padding:0 12px 6px}
       if (en >= 2) add(en + ' 段英文沒翻，例：' + ex);
       box.querySelectorAll('.pane').forEach(x => { if (!x.textContent.trim() && !x.querySelector('img')) add('有空白分頁'); });
       box.querySelectorAll('h2').forEach(h => { const n = h.nextElementSibling; if (!n || n.tagName === 'H2') add('章節「' + h.textContent.trim().slice(0, 20) + '」沒有內容'); });
+      // 同一章節的清單：大部分名詞有圖示、有幾個沒有（翻譯只寫中文、查不到圖）
+      if (g.cat !== '官方情報') { const secs = []; let cur = { y: 0, n: 0, ex: '' }; secs.push(cur);
+        box.querySelectorAll('h2, li').forEach(el => { if (el.tagName === 'H2') { cur = { y: 0, n: 0, ex: '', h: el.textContent.trim() }; secs.push(cur); return; }
+          const f = el.firstElementChild; if (!f || el.textContent.trim().indexOf(f.textContent.trim()) !== 0) return;
+          if (f.querySelector('img.ic')) cur.y++; else if (f.tagName === 'B' && !/\d|[：:]$|時間|站位|冷卻|消耗|距離|傷害|效果|注意|提示|優點|缺點|範圍|階段|位置|機制|長靴|頭盔|頭部|護肩|肩膀|胸甲|胸部|手套|手部|腰帶|腰部|護腿|腿部|護腕|手腕|披風|背部|戒指|飾品|武器|副手|腳部/.test(f.textContent.trim())) { cur.n++; if (!cur.ex) cur.ex = f.textContent.trim(); } });
+        secs.forEach(c => { if (c.y >= 3 && c.n >= 2 && c.y >= c.n) add('「' + (c.h || '開頭') + '」裡有 ' + c.n + ' 個名詞沒圖示，例：' + c.ex); }); }
       let bad = 0; box.querySelectorAll('a').forEach(a => { const h = a.getAttribute('href') || ''; if (!h || /undefined|null|NaN/.test(h)) bad++; });
       if (bad) add(bad + ' 個連結是壞的');
       if (p.length) out.push({ slug: g.slug, title: g.title, problems: p });
