@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=1d38365a"></script>
+<script src="data.js?v=05847d6b"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -583,6 +583,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     } else {
       const body = render(g.md, g);
       main.innerHTML = '<div class="meta">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · ' + dates(g) + (g.author ? (g.cat === '官方情報' ? ' · 來源：' : ' · 作者：') + esc(g.author) : '') + ' · <a href="' + g.url + '" target="_blank" rel="noopener">原文 ↗</a> · <a class="rp-link" onclick="window.__openRp()">📝 回報翻譯問題</a>' + (g.authorUrl ? ' · <a href="' + g.authorUrl + '" target="_blank" rel="noopener">' + esc(g.author) + ' 的 Bilibili 國漫 Reaction ↗</a>' : '') + '</div>' + (g.author && g.cat !== '官方情報' && g.author.indexOf('Progress') < 0 ? '<p class="meta">本篇經作者 ' + esc(g.author) + ' 同意翻譯，機器翻譯僅供參考，以原文為準。</p>' : '') + body;
+      tidyDom(main);
       wireTabs();
       // 標題就是一個技能（巨集標題）→ 前面放圖
       const HIC = g.hicons || {};
@@ -662,6 +663,46 @@ details.sec.sub>.body{padding:0 12px 6px}
     $('rpSend').disabled = false;
   };
   document.getElementById('menu').onclick = () => nav.classList.toggle('open');
+  // 拿掉底下沒有內容的章節標題（原文是影片、表格之類抓不到的東西）
+  function tidyDom(el){ el.querySelectorAll('h2').forEach(h => { const n = h.nextElementSibling; if (!n || n.tagName === 'H2') h.remove(); }); }
+  // ===== 自我檢查：把每一篇實際畫出來，抓畫面上的問題（機器人每輪用瀏覽器呼叫）=====
+  window.__auditAll = function(){
+    const out = [], box = document.createElement('div');
+    G.forEach(g => {
+      const p = [], add = s => { if (p.indexOf(s) < 0) p.push(s); };
+      try { box.innerHTML = render(g.md, g); tidyDom(box); } catch (e) { out.push({ slug: g.slug, title: g.title, problems: ['畫面產生失敗：' + e.message] }); return; }
+      box.querySelectorAll('ul').forEach(ul => { let run = 0, best = 0; [...ul.children].forEach(x => { run = /^\s*\d{1,3}\s*$/.test(x.textContent) ? run + 1 : 0; if (run > best) best = run; }); if (best >= 3) add('有一排純數字的清單（' + best + ' 個）'); });
+      const glued = [...box.querySelectorAll('li')].filter(x => /^\s*\d{1,2}[A-Za-z]/.test(x.textContent));
+      if (glued.length) add(glued.length + ' 行等級和英文黏在一起，例：' + glued[0].textContent.trim().slice(0, 30));
+      const ns = (g.shots || []).length, ni = box.querySelectorAll('img.shot').length;
+      if (ni < ns) add('天賦圖只顯示 ' + ni + '/' + ns + ' 張');
+      const txt = box.textContent;
+      if (/天賦樹請看原文/.test(txt)) add('有天賦圖沒截到');
+      const junk = [];
+      const plain = box.cloneNode(true); plain.querySelectorAll('code,pre').forEach(x => x.remove());
+      const pt = plain.textContent;
+      if (/\*\*/.test(pt)) junk.push('**');
+      if (/\[\[/.test(pt)) junk.push('[[');
+      if (/\]\s*[（(]https?:/.test(pt)) junk.push('](網址)');
+      if (/(^|\n)\s*#{1,4}\s/.test(pt)) junk.push('#');
+      if (/<\/?(br|p|div|span|a|b|img)\b/i.test(pt)) junk.push('HTML 標籤');
+      if (junk.length) add('畫面上露出符號：' + junk.join(' '));
+      let en = 0, ex = '';
+      plain.querySelectorAll('p,li,td,h2,h3,h4,blockquote').forEach(el => {
+        if (el.querySelector('p,li,td')) return;
+        const t = el.textContent.trim(); if (/[一-鿿]/.test(t) || /^#show|\/(cast|use|target|stopcasting|petattack)\b/.test(t)) return;
+        const w = t.match(/[A-Za-z][A-Za-z']+/g) || [];
+        if (w.length >= 6 || (/^H/.test(el.tagName) && w.length >= 3)) { en++; if (!ex) ex = t.slice(0, 50); }
+      });
+      if (en >= 2) add(en + ' 段英文沒翻，例：' + ex);
+      box.querySelectorAll('.pane').forEach(x => { if (!x.textContent.trim() && !x.querySelector('img')) add('有空白分頁'); });
+      box.querySelectorAll('h2').forEach(h => { const n = h.nextElementSibling; if (!n || n.tagName === 'H2') add('章節「' + h.textContent.trim().slice(0, 20) + '」沒有內容'); });
+      let bad = 0; box.querySelectorAll('a').forEach(a => { const h = a.getAttribute('href') || ''; if (!h || /undefined|null|NaN/.test(h)) bad++; });
+      if (bad) add(bad + ' 個連結是壞的');
+      if (p.length) out.push({ slug: g.slug, title: g.title, problems: p });
+    });
+    return out;
+  };
   window.addEventListener('hashchange', show); show();
 })();
 </script>
