@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=e4ee3cdd"></script>
+<script src="data.js?v=1d38365a"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -250,6 +250,81 @@ details.sec.sub>.body{padding:0 12px 6px}
     s = s.replace(/\*\*([^*]+)\*\*/g, (_, t) => widget(t)).replace(/\*\*+/g, '').replace(/\*([^*]+)\*/g, '<i>$1</i>').replace(/\*/g, '').replace(/`([^`]+)`/g, '<code>$1</code>');
     return autoWidget(s).replace(/\u0002(\d+)\u0003/g, (_, i) => '<code>' + codes[+i] + '</code>');
   }
+  // ===== 天賦：補回天賦圖、把逐級加點整理成區間 =====
+  // 英文天賦名 → 中文（從所有攻略的「中文（English）」寫法收集）
+  let TERMS = null;
+  function terms(){
+    if (TERMS) return TERMS;
+    const cnt = {};
+    const add = (zh, en, w) => { const k = en.trim().toLowerCase(); cnt[k] = cnt[k] || {}; cnt[k][zh] = (cnt[k][zh] || 0) + w; };
+    G.forEach(x => {
+      const md = x.md || ''; let m;
+      const r1 = /\*\*([^*（）\n]{1,14})（([A-Z][A-Za-z' :\-]{1,40})）\*\*/g;
+      while ((m = r1.exec(md))) if (/[一-鿿]/.test(m[1])) add(m[1].trim(), m[2], 3);
+      const r2 = /(?:^|[\s　、，：|-])([一-鿿·]{1,10})（([A-Z][A-Za-z' :\-]{1,40})）/gm;
+      while ((m = r2.exec(md))) add(m[1], m[2], 1);
+    });
+    TERMS = {};
+    for (const k in cnt) { let best = '', n = 0; for (const z in cnt[k]) if (cnt[k][z] > n) { best = z; n = cnt[k][z]; } TERMS[k] = best; }
+    return TERMS;
+  }
+  function talentLabel(name){
+    name = name.replace(/\*\*/g, '').trim();
+    if (!/[一-鿿]/.test(name)) { const zh = terms()[name.toLowerCase()]; if (zh) return zh + '（' + name + '）'; }
+    return name;
+  }
+  // 原站「練功路線」：一排純數字（等級欄）＋「10 偏斜」逐級清單 → 拿掉數字欄，合併成「10–14 級：偏斜 5 點」
+  function levelLists(md){
+    const L = md.split('\n'), out = [];
+    for (let i = 0; i < L.length; ) {
+      let j = i;
+      while (j < L.length && /^\s*[-*]\s+\d{1,2}\s*$/.test(L[j])) j++;
+      if (j - i >= 3) { i = j; continue; }
+      j = i; const rows = []; let m;
+      while (j < L.length && (m = L[j].match(/^\s*[-*]\s+(\d{1,2})\s*[：:.、]?\s*([^\d\s級].*)$/)) && +m[1] >= 1 && +m[1] <= 60 && (!rows.length || +m[1] === rows[rows.length - 1].lv + 1)) { rows.push({ lv: +m[1], name: m[2].trim() }); j++; }
+      if (rows.length >= 4) {
+        const key = s => s.replace(/\*\*/g, '').replace(/（[^）]*）/g, '').trim().toLowerCase();
+        const grp = [];
+        rows.forEach(r => {
+          const last = grp[grp.length - 1];
+          if (last && last.key === key(r.name)) { last.to = r.lv; if (/（/.test(r.name) && !/（/.test(last.name)) last.name = r.name; }
+          else grp.push({ key: key(r.name), from: r.lv, to: r.lv, name: r.name });
+        });
+        // 同一個天賦的英文名可能只出現在第一次：補給後面同名的
+        const full = {}; grp.forEach(x => { if (/（/.test(x.name)) full[x.key] = x.name; });
+        grp.forEach(x => { const nm = talentLabel(full[x.key] || x.name), n = x.to - x.from + 1;
+          out.push('- ' + (n > 1 ? x.from + '–' + x.to : x.from) + ' 級：**' + nm + '**' + (n > 1 ? '　' + n + ' 點' : '')); });
+        i = j; continue;
+      }
+      out.push(L[i]); i++;
+    }
+    return out.join('\n');
+  }
+  // 有天賦截圖、但翻譯時把位置標記弄丟的攻略：照分頁名稱（或順序）放回天賦段落
+  function injectShots(md, g){
+    const shots = g.shots || [];
+    if (!shots.length || /\[\[SHOT:talents/.test(md)) return md;
+    const norm = s => (s || '').replace(/\*\*/g, '').replace(/（[^）]*）|\([^)]*\)/g, '').replace(/[–—~～]/g, '-').replace(/級|\s/g, '').toLowerCase();
+    const L = md.split('\n');
+    let s = L.findIndex(l => /^##\s+.*(天賦|Talent)/i.test(l));
+    if (s < 0) s = L.findIndex(l => /^##\s/.test(l));
+    if (s < 0) return md;
+    let e = L.findIndex((l, k) => k > s && /^##\s/.test(l)); if (e < 0) e = L.length;
+    const tabsIdx = []; for (let k = s + 1; k < e; k++) if (/^###\s+▸/.test(L[k])) tabsIdx.push(k);
+    const used = new Set(), ins = {};
+    const names = g.shotNames || [];
+    tabsIdx.forEach((k, t) => {
+      const nm = norm(L[k].replace(/^###\s+▸\s*/, ''));
+      let hit = names.findIndex((x, i) => !used.has(i) && x && nm && (norm(x) === nm || norm(x).indexOf(nm) >= 0 || nm.indexOf(norm(x)) >= 0));
+      if (hit < 0 && tabsIdx.length === shots.length && !used.has(t)) hit = t;
+      if (hit >= 0) { used.add(hit); (ins[k] = ins[k] || []).push(hit); }
+    });
+    const rest = shots.map((_, i) => i).filter(i => !used.has(i));
+    if (rest.length) ins[s] = (ins[s] || []).concat(rest);
+    const out = [];
+    L.forEach((l, k) => { out.push(l); if (ins[k]) ins[k].forEach(i => out.push('', '[[SHOT:talents:' + i + ']]', '')); });
+    return out.join('\n');
+  }
   function render(md, g){
     ICONS = g.icons || {}; ITEMS = g.items || {}; KINDS = g.kinds || {}; WHQ = new Set(g.whq || []);
     // 清掉原網站的雜訊：重複日期、頁面自帶的「目錄」「最新攻略」等區塊、作者／更新於那行（上方已顯示）
@@ -262,6 +337,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     // 整理翻譯時亂掉的星號：「**中文**（English）」→「**中文（English）**」，多餘的 ** / **** 拿掉
     md = md.replace(/（\*\*([^*（）\n]+)\*\*）/g, '（$1）').replace(/\*\*([^*\n]+?)\*\*（([A-Za-z][^（）\n]{1,40})）/g, '**$1（$2）**')
       .replace(/\*{3,}/g, '**').replace(/(^|[ \t：:|])\*\*(?=[ \t|]|$)/gm, '$1');
+    md = levelLists(injectShots(md, g));
     const lines = md.split('\n'); let html = '', inList = false, inTable = false, para = [];
     const flushP = () => { if (para.length) { html += '<p>' + para.map(inline).join('<br>') + '</p>'; para = []; } };
     const closeList = () => { if (inList) { html += '</ul>'; inList = false; } };
