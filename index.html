@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=00f73db4"></script>
+<script src="data.js?v=a16996bc"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -248,6 +248,8 @@ details.sec.sub>.body{padding:0 12px 6px}
     // 程式碼（巨集）先拿出來，不做粗體、圖示、連結處理，最後原樣放回
     const codes = [];
     s = s.replace(/`([^`]+)`/g, (_, c) => { codes.push(c); return '\u0002' + (codes.length - 1) + '\u0003'; });
+    // 原文連結文字自己帶中括號（[[OXM guild finder]](網址)）→ 拿掉多的一層
+    s = s.replace(/\[\[([^\[\]\n]+)\]\]\((https?:)/g, '[$1]($2');
     s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, h) => { const href = linkFor(t, h.replace(/&amp;/g, '&')); const isZone = /\/dungeons\//.test(href) || (href[0] === '#' && (G.find(x => '#' + x.slug === href) || {}).cat === '地城'); return aTag(href, t, isZone ? 'zone' : ''); });
     s = s.replace(/\*\*([^*]+)\*\*/g, (_, t) => widget(t)).replace(/\*\*+/g, '').replace(/\*([^*]+)\*/g, '<i>$1</i>').replace(/\*/g, '').replace(/`([^`]+)`/g, '<code>$1</code>');
     return autoWidget(s).replace(/\u0002(\d+)\u0003/g, (_, i) => '<code>' + codes[+i] + '</code>');
