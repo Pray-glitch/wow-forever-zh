@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=046bc91b"></script>
+<script src="data.js?v=08de75da"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -319,21 +319,40 @@ details.sec.sub>.body{padding:0 12px 6px}
     if (s < 0) return md;
     let e = L.findIndex((l, k) => k > s && /^##\s/.test(l)); if (e < 0) e = L.length;
     const tabsIdx = []; for (let k = s + 1; k < e; k++) if (/^###\s+▸/.test(L[k])) tabsIdx.push(k);
-    const used = new Set(), ins = {};
+    const used = new Set(), ins = {}, before = {};
     const names = g.shotNames || [];
+    const tabName = k => L[k].replace(/^###\s+▸\s*/, '').trim();
+    // 參考分頁：其他章節的分頁列（原站每個區塊的分頁名稱、順序都一樣），取分頁最多的那組
+    const groups = []; let cur = null;
+    L.forEach((l, k) => {
+      if (/^#{1,2}\s/.test(l)) { cur = (k >= s && k < e) ? null : []; if (cur) groups.push(cur); }
+      else if (cur && /^###\s+▸/.test(l)) cur.push(tabName(k));
+    });
+    let R = []; groups.forEach(x => { if (x.length >= 2 && x.length > R.length) R = x; });
+    const core = x => norm(x).replace(/配點|配裝|配置|流派|build/g, '');
+    const same = (a, b) => { a = core(a); b = core(b); return !!(a && b && (a === b || a.indexOf(b) >= 0 || b.indexOf(a) >= 0)); };
+    // 每張圖是參考分頁的第幾個：張數一樣就照順序；不一樣就比名稱
+    const sr = shots.map((_, i) => R.length === shots.length ? i : R.findIndex(x => same(x, names[i] || '')));
+    const tr = tabsIdx.map(k => R.findIndex(x => same(x, tabName(k))));
     tabsIdx.forEach((k, t) => {
-      const nm = norm(L[k].replace(/^###\s+▸\s*/, ''));
-      let hit = names.findIndex((x, i) => !used.has(i) && x && nm && (norm(x) === nm || norm(x).indexOf(nm) >= 0 || nm.indexOf(norm(x)) >= 0));
-      if (hit < 0 && tabsIdx.length === shots.length && !used.has(t)) hit = t;
+      let hit = tr[t] >= 0 ? sr.findIndex((r, i) => !used.has(i) && r === tr[t]) : -1;
+      const nm = norm(tabName(k));
+      if (hit < 0) hit = names.findIndex((x, i) => !used.has(i) && sr[i] < 0 && x && nm && (norm(x) === nm || norm(x).indexOf(nm) >= 0 || nm.indexOf(norm(x)) >= 0));
+      if (hit < 0 && tr[t] < 0 && tabsIdx.length === shots.length && !used.has(t)) hit = t;
       if (hit >= 0) { used.add(hit); (ins[k] = ins[k] || []).push(hit); }
     });
     const rest = shots.map((_, i) => i).filter(i => !used.has(i));
-    // 有分頁、但翻譯少了某個分頁（例：狂暴懶人版）→ 補一個分頁放那張圖，不要擠在分頁列上面
+    // 有分頁、但翻譯少了某個分頁（例：狂暴懶人版）→ 補一個分頁放那張圖（名稱、位置照參考分頁），不要擠在分頁列上面
     const tail = {};
-    if (rest.length && tabsIdx.length) tail[e - 1] = rest.map(i => ['', '### ▸ ' + (names[i] || ('天賦配點 ' + (i + 1))), '', '[[SHOT:talents:' + i + ']]', '']).reduce((a, b) => a.concat(b), []);
+    const newTab = i => ['', '### ▸ ' + (sr[i] >= 0 ? R[sr[i]] : (names[i] || ('天賦配點 ' + (i + 1)))), '', '[[SHOT:talents:' + i + ']]', ''];
+    if (rest.length && tabsIdx.length) rest.forEach(i => {
+      const t = sr[i] >= 0 ? tr.findIndex(r => r > sr[i]) : -1;
+      if (t >= 0) (before[tabsIdx[t]] = before[tabsIdx[t]] || []).push(...newTab(i));
+      else (tail[e - 1] = tail[e - 1] || []).push(...newTab(i));
+    });
     else if (rest.length) ins[s] = (ins[s] || []).concat(rest);
     const out = [];
-    L.forEach((l, k) => { out.push(l); if (ins[k]) ins[k].forEach(i => out.push('', '[[SHOT:talents:' + i + ']]', '')); if (tail[k]) out.push(...tail[k]); });
+    L.forEach((l, k) => { if (before[k]) out.push(...before[k]); out.push(l); if (ins[k]) ins[k].forEach(i => out.push('', '[[SHOT:talents:' + i + ']]', '')); if (tail[k]) out.push(...tail[k]); });
     return out.join('\n');
   }
   function render(md, g){
@@ -344,7 +363,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     md = md.replace(/^#{1,3}\s*(目錄|目次|Table of Contents|最新攻略|熱門攻略|相關攻略|推薦攻略|Trending Guides|Related Guides|Latest Guides|留言|評論|Comments)\s*$[\s\S]*?(?=^#{1,2}\s|$(?![\s\S]))/gmi, '');
     md = md.replace(/<([a-z_]*reminder|system[a-z_]*)>[\s\S]*?<\/([a-z_]*reminder|system[a-z_]*)>/g, '');
     // 修掉抓取時誤判的小標題：「### ### X」「- ### X」「| ### X |」
-    md = md.replace(/^(#{1,3}) (?:#{1,3} )+/gm, '$1 ').replace(/^(\s*(?:-|\*) )#{1,3} (.+)$/gm, '$1**$2**').replace(/#{1,3} ([^|\n]+?)\s*\|/g, '**$1** |');
+    md = md.replace(/^(#{1,3}) (?:#{1,3} )+/gm, '$1 ').replace(/^(\s*(?:-|\*) )#{1,3} (.+)$/gm, '$1**$2**').replace(/#{1,3} ([^|\n]+?)[ \t]*\|/g, '**$1** |');
     // 整理翻譯時亂掉的星號：「**中文**（English）」→「**中文（English）**」，多餘的 ** / **** 拿掉
     md = md.replace(/（\*\*([^*（）\n]+)\*\*）/g, '（$1）').replace(/\*\*([^*\n]+?)\*\*（([A-Za-z][^（）\n]{1,40})）/g, '**$1（$2）**')
       .replace(/\*{3,}/g, '**').replace(/(^|[ \t：:|])\*\*(?=[ \t|]|$)/gm, '$1');
