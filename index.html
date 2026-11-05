@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=3d9b1fb6"></script>
+<script src="data.js?v=a63e122e"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -328,9 +328,12 @@ details.sec.sub>.body{padding:0 12px 6px}
       if (hit >= 0) { used.add(hit); (ins[k] = ins[k] || []).push(hit); }
     });
     const rest = shots.map((_, i) => i).filter(i => !used.has(i));
-    if (rest.length) ins[s] = (ins[s] || []).concat(rest);
+    // 有分頁、但翻譯少了某個分頁（例：狂暴懶人版）→ 補一個分頁放那張圖，不要擠在分頁列上面
+    const tail = {};
+    if (rest.length && tabsIdx.length) tail[e - 1] = rest.map(i => ['', '### ▸ ' + (names[i] || ('天賦配點 ' + (i + 1))), '', '[[SHOT:talents:' + i + ']]', '']).reduce((a, b) => a.concat(b), []);
+    else if (rest.length) ins[s] = (ins[s] || []).concat(rest);
     const out = [];
-    L.forEach((l, k) => { out.push(l); if (ins[k]) ins[k].forEach(i => out.push('', '[[SHOT:talents:' + i + ']]', '')); });
+    L.forEach((l, k) => { out.push(l); if (ins[k]) ins[k].forEach(i => out.push('', '[[SHOT:talents:' + i + ']]', '')); if (tail[k]) out.push(...tail[k]); });
     return out.join('\n');
   }
   function render(md, g){
@@ -686,6 +689,8 @@ details.sec.sub>.body{padding:0 12px 6px}
       if (ni < ns) add('天賦圖只顯示 ' + ni + '/' + ns + ' 張');
       const txt = box.textContent;
       if (/天賦樹請看原文/.test(txt)) add('有天賦圖沒截到');
+      // 天賦圖擠在分頁列外面（同一章節有分頁，但這張不屬於任何分頁）
+      box.querySelectorAll('img.shot').forEach(im => { if (im.closest('.pane')) return; let n = im.nextElementSibling; while (n && n.tagName !== 'H2') { if (n.classList.contains('tabs')) { add('有天賦圖放在分頁外面（翻譯可能少了一個分頁）'); break; } n = n.nextElementSibling; } });
       const junk = [];
       const plain = box.cloneNode(true); plain.querySelectorAll('code,pre').forEach(x => x.remove());
       const pt = plain.textContent;
