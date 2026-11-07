@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=bdb89285"></script>
+<script src="data.js?v=ecfdaaac"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -255,26 +255,13 @@ details.sec.sub>.body{padding:0 12px 6px}
     return autoWidget(s).replace(/\u0002(\d+)\u0003/g, (_, i) => '<code>' + codes[+i] + '</code>');
   }
   // ===== 天賦：補回天賦圖、把逐級加點整理成區間 =====
-  // 英文天賦名 → 中文（從所有攻略的「中文（English）」寫法收集）
-  let TERMS = null;
-  function terms(){
-    if (TERMS) return TERMS;
-    const cnt = {};
-    const add = (zh, en, w) => { const k = en.trim().toLowerCase(); cnt[k] = cnt[k] || {}; cnt[k][zh] = (cnt[k][zh] || 0) + w; };
-    G.forEach(x => {
-      const md = x.md || ''; let m;
-      const r1 = /\*\*([^*（）\n]{1,14})（([A-Z][A-Za-z' :\-]{1,40})）\*\*/g;
-      while ((m = r1.exec(md))) if (/[一-鿿]/.test(m[1])) add(m[1].trim(), m[2], 3);
-      const r2 = /(?:^|[\s　、，：|-])([一-鿿·]{1,10})（([A-Z][A-Za-z' :\-]{1,40})）/gm;
-      while ((m = r2.exec(md))) add(m[1], m[2], 1);
-    });
-    TERMS = {};
-    for (const k in cnt) { let best = '', n = 0; for (const z in cnt[k]) if (cnt[k][z] > n) { best = z; n = cnt[k][z]; } TERMS[k] = best; }
-    return TERMS;
-  }
+  // 英文天賦名 → 台服譯名（Go 端從語庫產生 window.TERMS；11/7 起不再從別篇攻略收集）
+  // 語庫查不到的就留英文，記在 NOZH，畫面自我檢查會列出來
+  let NOZH = null;
+  function terms(){ return window.TERMS || {}; }
   function talentLabel(name){
     name = name.replace(/\*\*/g, '').trim();
-    if (!/[一-鿿]/.test(name)) { const zh = terms()[name.toLowerCase()]; if (zh) return zh + '（' + name + '）'; }
+    if (!/[一-鿿]/.test(name)) { const zh = terms()[name.toLowerCase()]; if (zh) return zh + '（' + name + '）'; if (NOZH && /^[A-Z][A-Za-z' :\-]{2,40}$/.test(name)) NOZH.add(name); }
     return name;
   }
   // 原站「練功路線」：一排純數字（等級欄）＋「10 偏斜」逐級清單 → 拿掉數字欄，合併成「10–14 級：偏斜 5 點」
@@ -700,7 +687,10 @@ details.sec.sub>.body{padding:0 12px 6px}
     const out = [], box = document.createElement('div');
     G.forEach(g => {
       const p = [], add = s => { if (p.indexOf(s) < 0) p.push(s); };
-      try { box.innerHTML = render(g.md, g); tidyDom(box); } catch (e) { out.push({ slug: g.slug, title: g.title, problems: ['畫面產生失敗：' + e.message] }); return; }
+      NOZH = new Set();
+      try { box.innerHTML = render(g.md, g); tidyDom(box); } catch (e) { NOZH = null; out.push({ slug: g.slug, title: g.title, problems: ['畫面產生失敗：' + e.message] }); return; }
+      if (NOZH.size) add('語庫查不到台服譯名、只顯示英文：' + [...NOZH].slice(0, 8).join('、'));
+      NOZH = null;
       box.querySelectorAll('ul').forEach(ul => { let run = 0, best = 0; [...ul.children].forEach(x => { run = /^\s*\d{1,3}\s*$/.test(x.textContent) ? run + 1 : 0; if (run > best) best = run; }); if (best >= 3) add('有一排純數字的清單（' + best + ' 個）'); });
       const glued = [...box.querySelectorAll('li')].filter(x => /^\s*\d{1,2}[A-Za-z]/.test(x.textContent));
       if (glued.length) add(glued.length + ' 行等級和英文黏在一起，例：' + glued[0].textContent.trim().slice(0, 30));
