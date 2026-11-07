@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=86cf5de2"></script>
+<script src="data.js?v=fda1c05e"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -171,7 +171,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     const k = KINDS[key] || KINDS[(txt||'').trim()] || '';
     if (k[0] === 'i') return QCOL[+k.slice(1)] || QCOL[1];
     if (k === 's') return '#ffd100';
-    if (k === 'c') return CLSCOL[key] || '';
+    if (k === 'c') return CLSCOL[key] || CLSCOL[(key || '').split(' ').pop()] || '';
     if (ITEMS[key] || ITEMS[(txt||'').trim()]) return QCOL[1];
     return '';
   }
@@ -274,21 +274,45 @@ details.sec.sub>.body{padding:0 12px 6px}
       j = i; const rows = []; let m;
       while (j < L.length && (m = L[j].match(/^\s*[-*]\s+(\d{1,2})\s*[：:.、]?\s*([^\d\s級].*)$/)) && +m[1] >= 1 && +m[1] <= 60 && (!rows.length || +m[1] === rows[rows.length - 1].lv + 1)) { rows.push({ lv: +m[1], name: m[2].trim() }); j++; }
       if (rows.length >= 4) {
-        // 同一個分頁後面已經有作者寫好的「10–12 級：…」說明 → 這份逐級清單是重複的，不要
-        let dup = false;
-        for (let k = j; k < L.length && !/^#{1,2}\s|^###\s+▸/.test(L[k]); k++) if (/^\s*[-*]\s+\d{1,2}(\s*[–-]\s*\d{1,2})?\s*級[：:]/.test(L[k])) { dup = true; break; }
-        if (dup) { i = j; continue; }
-        const key = s => s.replace(/\*\*/g, '').replace(/（[^）]*）/g, '').trim().toLowerCase();
+        // 同一個分頁後面已經有作者寫好的「10–12 級：…」說明（3 行以上）→ 這份逐級清單是重複的，不要
+        // （只有一兩行「40 級：…」是補充說明，不算；11/8 熊坦練功路線整份被當重複拿掉）
+        // 順便收集作者清單裡「39級 **預知（Anticipation）**」的等級 → 英文，給下面對譯名用
+        let dup = 0; const lvEN = {};
+        for (let k = j; k < L.length && !/^#{1,2}\s|^###\s+▸/.test(L[k]); k++) {
+          if (/^\s*[-*]\s+\d{1,2}(\s*[–-]\s*\d{1,2})?\s*級[：:]/.test(L[k])) dup++;
+          const a = L[k].match(/^\s*[-*]\s+(?:等級\s*)?(\d{1,2})\s*級?\s*[：:]?\s*\**([^（*\n|]+?)（([A-Z][A-Za-z' :\-]+)）/);
+          if (a) lvEN[+a[1]] = a[3].trim();
+        }
+        if (dup >= 3) { i = j; continue; }
+        // 同一個天賦：模型只在第一次附英文，後面幾級常換別的譯名（魔杖專精／法杖專精）→ 用英文當同一個天賦的依據
+        const T = terms(), OFF = {}; Object.keys(T).forEach(e => { OFF[T[e]] = e; });
+        const zhEn = {}, han = c => /[\u4e00-\u9fff]/.test(c);
+        rows.forEach(r => { const m = r.name.match(/（([A-Za-z][^）]*)）/); r.zh = r.name.replace(/\*\*/g, '').replace(/（[^）]*）/g, '').trim(); r.en = m ? m[1].trim() : ''; r.own = !!r.en; if (r.en && r.zh) zhEn[r.zh] = r.en; });
+        if (rows.some(r => r.en)) rows.forEach((r, k) => {
+          if (r.en) return;
+          const p = rows[k - 1];
+          r.en = zhEn[r.zh] || lvEN[r.lv] || '';
+          // 前一級有英文、這一級中文字數一樣又有相同的字、而且不是別的天賦的正式譯名 → 同一個天賦換了譯名（鋼鐵信條＝鐵之教條）
+          if (!r.en && !OFF[r.zh] && p && p.en && r.zh && r.zh.length === p.zh.length && [...r.zh].some(c => han(c) && p.zh.indexOf(c) >= 0)) r.en = p.en;
+          if (r.en && r.zh) zhEn[r.zh] = r.en;
+        });
+        const key = r => r.en ? 'en:' + r.en.toLowerCase() : (OFF[r.zh] ? 'en:' + OFF[r.zh] : r.zh.toLowerCase());
         const grp = [];
         rows.forEach(r => {
           const last = grp[grp.length - 1];
-          if (last && last.key === key(r.name)) { last.to = r.lv; if (/（/.test(r.name) && !/（/.test(last.name)) last.name = r.name; }
-          else grp.push({ key: key(r.name), from: r.lv, to: r.lv, name: r.name });
+          if (last && last.key === key(r)) { last.to = r.lv; if (!last.rep.own && r.own) last.rep = r; }
+          else grp.push({ key: key(r), from: r.lv, to: r.lv, rep: r });
         });
-        // 同一個天賦的英文名可能只出現在第一次：補給後面同名的
-        const full = {}; grp.forEach(x => { if (/（/.test(x.name)) full[x.key] = x.name; });
-        grp.forEach(x => { const nm = talentLabel(full[x.key] || x.name), n = x.to - x.from + 1;
-          out.push('- ' + (n > 1 ? x.from + '–' + x.to : x.from) + ' 級：**' + nm + '**' + (n > 1 ? '　' + n + ' 點' : '')); });
+        // 同一個天賦的英文、譯名：用語庫的台服譯名，沒有才用第一次附英文的那個中文
+        const firstZh = {}; rows.forEach(r => { if (r.own && r.zh && !firstZh[key(r)]) firstZh[key(r)] = r.zh; });
+        grp.forEach(x => {
+          const r = x.rep, en = r.en, n = x.to - x.from + 1;
+          let nm;
+          if (!r.zh || !/[一-鿿]/.test(r.zh)) nm = talentLabel(r.name);
+          else if (en && /^[^（]*（[A-Za-z][^）]*）$/.test(r.name.replace(/\*\*/g, '').trim() || '') || (en && !r.own)) nm = (T[en.toLowerCase()] || firstZh[x.key] || r.zh) + '（' + en + '）';
+          else nm = r.name.replace(/\*\*/g, '').trim();
+          out.push('- ' + (n > 1 ? x.from + '–' + x.to : x.from) + ' 級：**' + nm + '**' + (n > 1 ? '　' + n + ' 點' : ''));
+        });
         i = j; continue;
       }
       out.push(L[i]); i++;
@@ -299,7 +323,7 @@ details.sec.sub>.body{padding:0 12px 6px}
   function injectShots(md, g){
     const shots = g.shots || [];
     if (!shots.length || /\[\[SHOT:talents/.test(md)) return md;
-    const norm = s => (s || '').replace(/\*\*/g, '').replace(/（[^）]*）|\([^)]*\)/g, '').replace(/[–—~～]/g, '-').replace(/級|\s/g, '').toLowerCase();
+    const norm = s => (s || '').replace(/\*\*/g, '').replace(/（[^）]*）|\([^)]*\)/g, '').replace(/[–—~～]/g, '-').replace(/\s*[&＆]\s*|\s+and\s+/gi, '與').replace(/級|\s/g, '').toLowerCase();
     const L = md.split('\n');
     let s = L.findIndex(l => /^##\s+.*(天賦|Talent)/i.test(l));
     if (s < 0) s = L.findIndex(l => /^##\s/.test(l));
@@ -318,9 +342,12 @@ details.sec.sub>.body{padding:0 12px 6px}
     let R = []; groups.forEach(x => { if (x.length >= 2 && x.length > R.length) R = x; });
     const core = x => norm(x).replace(/配點|配裝|配置|流派|build/g, '');
     const same = (a, b) => { a = core(a); b = core(b); return !!(a && b && (a === b || a.indexOf(b) >= 0 || b.indexOf(a) >= 0)); };
+    // 先找完全一樣的（字順序不同也算：「冰霜練功單人」＝「冰霜單人練功」），找不到才用包含（「PI」不要搶走「PI 與 DI」）
+    const sorted = x => [...core(x)].sort().join('');
+    const pick = (list, x) => { let k = list.findIndex(y => core(y) && core(y) === core(x)); if (k < 0) k = list.findIndex(y => sorted(y) && sorted(y) === sorted(x)); if (k < 0) k = list.findIndex(y => same(y, x)); return k; };
     // 每張圖是參考分頁的第幾個：張數一樣就照順序；不一樣就比名稱
-    const sr = shots.map((_, i) => R.length === shots.length ? i : R.findIndex(x => same(x, names[i] || '')));
-    const tr = tabsIdx.map(k => R.findIndex(x => same(x, tabName(k))));
+    const sr = shots.map((_, i) => R.length === shots.length ? i : pick(R, names[i] || ''));
+    const tr = tabsIdx.map(k => pick(R, tabName(k)));
     tabsIdx.forEach((k, t) => {
       let hit = tr[t] >= 0 ? sr.findIndex((r, i) => !used.has(i) && r === tr[t]) : -1;
       const nm = norm(tabName(k));
@@ -350,7 +377,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     md = md.replace(/^#{1,3}\s*(目錄|目次|Table of Contents|最新攻略|熱門攻略|相關攻略|推薦攻略|Trending Guides|Related Guides|Latest Guides|留言|評論|Comments)\s*$[\s\S]*?(?=^#{1,2}\s|$(?![\s\S]))/gmi, '');
     md = md.replace(/<([a-z_]*reminder|system[a-z_]*)>[\s\S]*?<\/([a-z_]*reminder|system[a-z_]*)>/g, '');
     // 修掉抓取時誤判的小標題：「### ### X」「- ### X」「| ### X |」
-    md = md.replace(/^(#{1,3}) (?:#{1,3} )+/gm, '$1 ').replace(/^(\s*(?:-|\*) )#{1,3} (.+)$/gm, '$1**$2**').replace(/#{1,3} ([^|\n]+?)[ \t]*\|/g, '**$1** |');
+    md = md.replace(/^(#{1,3}) (?:#{1,3} )+/gm, '$1 ').replace(/^(\s*(?:-|\*) )#{1,3} (.+)$/gm, '$1**$2**').replace(/(\|[ \t]*)#{1,3} ([^|\n]+?)[ \t]*\|/g, '$1**$2** |');
     // 整理翻譯時亂掉的星號：「**中文**（English）」→「**中文（English）**」，多餘的 ** / **** 拿掉
     md = md.replace(/（\*\*([^*（）\n]+)\*\*）/g, '（$1）').replace(/\*\*([^*\n]+?)\*\*（([A-Za-z][^（）\n]{1,40})）/g, '**$1（$2）**')
       .replace(/\*{3,}/g, '**').replace(/(^|[ \t：:|])\*\*(?=[ \t|]|$)/gm, '$1');
