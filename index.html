@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=d74a72b2"></script>
+<script src="data.js?v=3a6a7a77"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -739,7 +739,7 @@ details.sec.sub>.body{padding:0 12px 6px}
       let en = 0, ex = '';
       plain.querySelectorAll('p,li,td,h2,h3,h4,blockquote').forEach(el => {
         if (el.querySelector('p,li,td')) return;
-        const t = el.textContent.trim(); if (/[一-鿿]/.test(t) || /^#show|\/(cast|use|target|stopcasting|petattack)\b/.test(t)) return;
+        const t = el.textContent.trim(); if (/[一-鿿]/.test(t) || /^#show|^\/[a-z]+\b|\/(cast|castsequence|use|target|stopcasting|stopmacro|petattack)\b/.test(t)) return;
         const w = t.match(/[A-Za-z][A-Za-z']+/g) || [];
         if (w.length >= 6 || (/^H/.test(el.tagName) && w.length >= 3)) { en++; if (!ex) ex = t.slice(0, 50); }
       });
