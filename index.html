@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=c1a8d78c"></script>
+<script src="data.js?v=7df0908d"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -213,10 +213,10 @@ details.sec.sub>.body{padding:0 12px 6px}
           // 語庫沒有的專有名詞（新物品、首領）：英文是「每個字大寫」的名稱 → 至少給 Wowhead 連結
           if (!known && !/^[A-Z][A-Za-z']*(?:[ :\-]+(?:[A-Z][A-Za-z']*|of|the|and|to|in|on|a|an|for|from|with))*$/.test(en)) return m;
           // 「和磨刀石」「搭配風怒」：前面的連接詞不算名字
-          const lead = (zh.match(/^(?:包括|包含|例如|像是|搭配|使用|以及|還有|和|與|或|及|跟|用|把|將|對|在|從|的)(?=[\u4e00-\u9fff]{2})/) || [''])[0];
+          const lead = (zh.match(/^(?:級的|級|包括|包含|例如|像是|搭配|使用|以及|還有|和|與|或|及|跟|用|把|將|對|在|從|的)(?=[\u4e00-\u9fff]{2})/) || [''])[0];
           let pre = lead, name = zh.slice(lead.length);
           // 「此懲罰仍適用於暴風雪」「暴風雪觸發祕法集中」：句子黏在名字前面 → 只取最後一個虛詞後面的部分當名字
-          if (name.length > 3) { const m2 = name.match(/^(.*(?:觸發|使用|搭配|包括|影響|提高|提升|降低|增加|減少|移除|調整|脫離|適用|顯示|同時|改為|變成|取代|不再|現在|你的|會|但|於|在|和|與|或|及|讓|對|將|把|從|以|為|是|有|了))([\u4e00-\u9fff0-9·・]{2,})$/); if (m2) { pre += m2[1]; name = m2[2]; } }
+          if (name.length > 3) { const m2 = name.match(/^(.*(?:觸發|使用|搭配|包括|達到|達成|製作|開好|獲得|取得|購買|影響|提高|提升|降低|增加|減少|移除|調整|脫離|適用|顯示|同時|改為|變成|取代|不再|現在|你的|會|但|於|在|和|與|或|及|讓|對|將|把|從|以|為|是|有|了))([\u4e00-\u9fff0-9·・]{2,})$/); if (m2) { pre += m2[1]; name = m2[2]; } }
           // 「不死族牧師的黑暗犧牲」：「的」前面夠長（4 字以上）才拆；「馬杜克的黑檀劍柄」這種名字本身有「的」就不拆
           { const k = name.lastIndexOf('的'); if (k >= 4 && name.length - k - 1 >= 2) { pre += name.slice(0, k + 1); name = name.slice(k + 1); } }
           if (!known) return pre + '<a class="w it fb" href="https://www.wowhead.com/forever/search?q=' + encodeURIComponent(en) + '" target="_blank" rel="noopener" title="在 Wowhead 查「' + en.replace(/"/g, '') + '」">' + name + '（' + en + '）</a>';
@@ -380,6 +380,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     md = md.replace(/^(#{1,3}) (?:#{1,3} )+/gm, '$1 ').replace(/^(\s*(?:-|\*) )#{1,3} (.+)$/gm, '$1**$2**').replace(/(\|[ \t]*)#{1,3} ([^|\n]+?)[ \t]*\|/g, '$1**$2** |');
     // 整理翻譯時亂掉的星號：「**中文**（English）」→「**中文（English）**」，多餘的 ** / **** 拿掉
     md = md.replace(/（\*\*([^*（）\n]+)\*\*）/g, '（$1）').replace(/\*\*([^*\n]+?)\*\*（([A-Za-z][^（）\n]{1,40})）/g, '**$1（$2）**')
+      .replace(/）\*\*\*\*(?=[^*\s])/g, '）**\u2060**')
       .replace(/\*{3,}/g, '**').replace(/(^|[ \t：:|])\*\*(?=[ \t|]|$)/gm, '$1');
     md = levelLists(injectShots(md, g));
     const lines = md.split('\n'); let html = '', inList = false, inTable = false, para = [];
