@@ -85,7 +85,7 @@ function openItem(id){var x=findRow(id),A=window.AH,it=null;if(A)A.items.forEach
   '<div class="tip" id="tipx"><span class="dim">載入說明中…</span></div>'+
   (x?'<div class="nums" style="display:flex"><span>成本 <b>'+money(x.cost)+'</b></span><span>AH <b>'+money(x.ah)+'</b></span><span>淨賺 <b class="'+(x.p_ah>=0?'up':'down')+'">'+money(x.p_ah)+'</b></span></div><div class="dim" style="margin-top:6px">材料：'+esc(x.mats)+'</div>':(it?'<div class="nums" style="display:flex"><span>一般價 <b>'+money(it.k)+'</b></span><span>架上 <b>'+it.a+'</b> 筆</span></div>':''));
  $('md').classList.add('on');
- withTips(function(){var t=window.TIPS[id];$('tipx').innerHTML=t&&t.length?t.map(function(l){return '<div style="color:'+(/^(使用|裝備|擊中|Use|Equip|Chance)/.test(l)?'#1eff00':(/^「/.test(l)?'#ffd100':(/^※/.test(l)?'#e8a33d;font-size:12px;margin-top:6px':'var(--text)')))+'">'+esc(l)+'</div>'}).join(''):'<span class="dim">這個物品還沒有說明資料（機器人每小時補一批）</span>'})}
+ withTips(function(){var t=window.TIPS[id];$('tipx').innerHTML=t&&t.length?t.map(function(l){return '<div style="color:'+(/^(使用|裝備|擊中|命中率：|Use|Equip|Chance)/.test(l)?'#1eff00':(/^「/.test(l)?'#ffd100':(/^※/.test(l)?'#e8a33d;font-size:12px;margin-top:6px':'var(--text)')))+'">'+esc(l)+'</div>'}).join(''):'<span class="dim">這個物品還沒有說明資料（機器人每小時補一批）</span>'})}
 document.addEventListener('click',function(e){var c=e.target.closest('[data-item]');if(c){openItem(+c.getAttribute('data-item'));return}if(e.target.id=='md')$('md').classList.remove('on')});
 document.addEventListener('keydown',function(e){if(e.key=='Escape')$('md').classList.remove('on')});
 function overview(){
