@@ -58,6 +58,15 @@ td.l .in{display:flex;align-items:center;gap:8px;white-space:normal}
 .stats div{background:#0b0907;border:1px solid var(--line);border-radius:6px;padding:8px}
 .stats .lb{display:block;color:var(--dim);font-size:12px}
 svg text{fill:var(--dim);font-size:11px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.mat{display:flex;align-items:center;gap:10px;padding:8px 4px;border-top:1px solid #ffffff0d;cursor:pointer}
+.mat:first-child{border-top:0}
+.mat .nm{flex:1;min-width:0}
+.mat .pr{text-align:right;white-space:nowrap}
+.mat .sub{display:block;font-size:12px;color:var(--dim)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.rk{color:var(--dim);width:1.6em;text-align:right;flex:none;font-size:13px}
 .foot{color:var(--dim);font-size:12px;text-align:center;margin-top:30px}
 </style></head><body><div class="wrap">
 <div class="hero">
@@ -78,6 +87,15 @@ svg text{fill:var(--dim);font-size:11px}
  <div class="box"><h3>📈 比 7 日均價漲最多</h3><div id="lUp"></div></div>
  <div class="box"><h3>📉 比 7 日均價跌最多</h3><div id="lDown"></div></div>
  <div class="box"><h3>🔥 上架最多</h3><div id="lHot"></div></div>
+</div>
+<h2>常用材料行情</h2>
+<div class="tabs" id="gtabs"></div>
+<div class="box" id="glist"></div>
+<h2>分類排行</h2>
+<div class="tabs" id="ctabs"></div>
+<div class="two">
+ <div class="box"><h3>🔥 上架最多</h3><div id="cHot"></div></div>
+ <div class="box"><h3>💰 最貴（一般價）</h3><div id="cTop"></div></div>
 </div>
 <h2>全部物品</h2>
 <div class="bar"><input type="search" id="q" placeholder="搜尋物品（中文或英文）…"></div>
@@ -135,6 +153,36 @@ var cats={};A.items.forEach(function(it){if(it.c)cats[it.c]=(cats[it.c]||0)+1});
 var catList=Object.keys(cats).sort(function(a,b){return cats[b]-cats[a]});var cat='';
 $('cats').innerHTML='<span class="chip on" data-c="">全部</span>'+catList.map(function(c){return '<span class="chip" data-c="'+esc(c)+'">'+esc(c)+' '+cats[c]+'</span>'}).join('');
 $('cats').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;cat=t.getAttribute('data-c');[].forEach.call($('cats').children,function(x){x.classList.toggle('on',x===t)});page=0;render()};
+
+// ===== 常用材料行情（分組固定清單，照 lifeonazeroth 的分法再擴充）=====
+var GROUPS=[['礦石與金屬條',[2770,2771,2772,2775,3858,7911,10620,2840,3576,3575,3577,3860,6037,12359]],
+ ['布料',[2589,2592,4306,4338,14047,14256]],
+ ['皮革',[2318,2319,4234,4304,8170,783,4232,4235,8171]],
+ ['草藥',[765,2447,785,2449,2450,2452,3820,2453,3355,3356,3357,3369,3818,3821,3819,4625,8831,8836,8838,8839,8845,8846,13464,13463,13465,13466,13467]],
+ ['附魔材料',[10940,11083,11137,11176,10938,10939,10998,11082,11134,11135,11174,11175,10978,11084,11138,11139,11177,11178,14343,14344]],
+ ['石頭與寶石',[2835,2836,2838,7912,12365,774,818,1210,1705,1206,1529,3864,7909,7910,12799,12361,12364,12800]],
+ ['元素',[7067,7068,7069,7070,7075,7077,7079,7081,7972,12803,7078,7080,7076,7082,12808]],
+ ['藥水',[118,858,929,1710,3928,13446,2455,3385,3827,6149,13444,5634,6048,3387,13442]]];
+A.items.forEach(function(it){var h=it.h||[];it.dy=null;if(h.length>=2){var a=h[h.length-2],b=h[h.length-1],pa=a[3]||a[1],pb=b[3]||b[1];if(pa>0)it.dy=(pb-pa)/pa*100}});
+function dyTag(it){return it.dy==null?'<span class="sub">—</span>':'<span class="sub '+(it.dy>=0?'up':'down')+'">'+(it.dy>=0?'▲':'▼')+Math.abs(it.dy).toFixed(1)+'%</span>'}
+function matRow(it,rank){return '<div class="mat" data-id="'+it.id+'">'+(rank?'<span class="rk">'+rank+'</span>':'')+icon(it)+'<span class="nm"><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span><span class="sub">'+(it.e?esc(it.e)+' · ':'')+it.a+' 筆</span></span><span class="pr">'+money(it.k)+dyTag(it)+'</span></div>'}
+var gi=0;
+function drawG(){$('gtabs').innerHTML=GROUPS.map(function(g,i){return '<span class="chip'+(i==gi?' on':'')+'" data-g="'+i+'">'+g[0]+'</span>'}).join('');
+ var rows=GROUPS[gi][1].map(function(id){return byId0[id]}).filter(Boolean);
+ $('glist').innerHTML=rows.length?rows.map(function(it){return matRow(it)}).join(''):'<div style="color:var(--dim)">這類目前沒有人在賣</div>'}
+var byId0={};A.items.forEach(function(it){byId0[it.id]=it});
+$('gtabs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;gi=+t.getAttribute('data-g');drawG()};
+drawG();
+// ===== 分類排行 =====
+var ci=catList[0]||'';
+function drawC(){$('ctabs').innerHTML=catList.map(function(c){return '<span class="chip'+(c==ci?' on':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</span>'}).join('');
+ var inC=A.items.filter(function(it){return it.c==ci&&it.n.indexOf('未收錄')<0});
+ var hotC=inC.slice().sort(function(a,b){return b.a-a.a}).slice(0,15);
+ var topC=inC.filter(function(it){return it.a>=3}).sort(function(a,b){return b.k-a.k}).slice(0,15);
+ $('cHot').innerHTML=hotC.map(function(it,i){return matRow(it,i+1)}).join('')||'<div style="color:var(--dim)">沒有資料</div>';
+ $('cTop').innerHTML=topC.map(function(it,i){return matRow(it,i+1)}).join('')||'<div style="color:var(--dim)">沒有資料</div>'}
+$('ctabs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;ci=t.getAttribute('data-c');drawC()};
+drawC();
 // 表格
 var sortK='a',sortDir=-1,page=0,PER=100,q='';
 document.querySelector('thead').onclick=function(e){var th=e.target.closest('th');if(!th)return;var k=th.getAttribute('data-k');if(sortK==k)sortDir=-sortDir;else{sortK=k;sortDir=(k=='n')?1:-1}page=0;render()};
