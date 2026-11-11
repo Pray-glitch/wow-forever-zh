@@ -270,7 +270,7 @@ function open(id){var it=byId[id];if(!it)return;var h=it.h||[];
  $('md').classList.add('on');showTip(it.id)}
 var tipsLoading=0;
 function showTip(id){function draw(){var t=(window.TIPS||{})[id],b=$('tipbox');if(!b)return;
-  b.innerHTML=t?'<div style="background:#0b0907;border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin:10px 0;font-size:14px;line-height:1.7">'+t.map(function(l){return '<div style="color:'+(/^(使用|裝備|擊中|Use|Equip|Chance)/.test(l)?'#1eff00':(/^「/.test(l)?'#ffd100':(/^※/.test(l)?'#e8a33d;font-size:12px;margin-top:6px':'var(--text)')))+'">'+esc(l)+'</div>'}).join('')+'</div>':''}
+  b.innerHTML=t?'<div style="background:#0b0907;border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin:10px 0;font-size:14px;line-height:1.7">'+t.map(function(l){return '<div style="color:'+(/^(使用|裝備|擊中|命中率：|Use|Equip|Chance)/.test(l)?'#1eff00':(/^「/.test(l)?'#ffd100':(/^※/.test(l)?'#e8a33d;font-size:12px;margin-top:6px':'var(--text)')))+'">'+esc(l)+'</div>'}).join('')+'</div>':''}
  if(window.TIPS)return draw();if(tipsLoading)return;tipsLoading=1;var s=document.createElement('script');s.src='tips.js?'+Date.now();s.onload=draw;document.body.appendChild(s)}
 document.body.addEventListener('click',function(e){var r=e.target.closest('[data-id]');if(r)open(+r.getAttribute('data-id'));if(e.target.id=='md')$('md').classList.remove('on')});
 document.addEventListener('keydown',function(e){if(e.key=='Escape')$('md').classList.remove('on')});
