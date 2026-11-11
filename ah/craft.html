@@ -8,11 +8,13 @@ body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0
 a{color:var(--gold)}
 .wrap{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
 h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:18px;margin:18px 0 8px}
 .dim{color:var(--dim);font-size:13px}
-.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
 input[type=search]{flex:1;min-width:200px;background:#0b0907;border:1px solid var(--line);color:var(--text);border-radius:6px;padding:9px 12px;font-size:15px}
-.chip{border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;user-select:none}
+.chip{border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;user-select:none;white-space:nowrap}
 .chip.on{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.tabs .chip{font-size:14px;padding:6px 14px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px;display:grid;grid-template-columns:36px 1fr auto;gap:4px 10px;align-items:center}
 .ic{width:36px;height:36px;border-radius:5px;border:1px solid #000;background:#222 center/cover;grid-row:span 2}
 .nm{font-weight:700}
@@ -23,21 +25,17 @@ input[type=search]{flex:1;min-width:200px;background:#0b0907;border:1px solid va
 .up{color:var(--up)}.down{color:var(--down)}
 .g{color:#ffd700}.s{color:#c7c7cf}.c{color:#d18a52}
 .note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13px;margin:10px 0}
+.ov{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.pc{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;cursor:pointer}
+.pc h3{margin:0 0 4px;color:var(--gold);font-size:17px;display:flex;justify-content:space-between}
+.pc .r{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;border-top:1px solid #ffffff0d}
+.pc .r:first-of-type{border-top:0}
+.badge{font-size:12px;color:var(--dim);font-weight:400}
 </style></head><body><div class="wrap">
-<a href="./">← 回拍賣場</a>
-<h1 id="ttl">專業獲利表</h1>
+<h1>專業獲利表</h1>
 <div class="dim" id="upd"></div>
-<div class="note">每小時跟著拍賣場自動更新。成本＝材料照 AH 一般價買（助熔劑、線這類用商人價）；淨賺已扣 AH 5% 手續費；CP 值＝淨賺 ÷ 成本。「每小時賣出」是成品的估計成交量（看不出被買走還是賣家取消，所以是估計）。商店收購價全部低於成本，所以只算 AH。</div>
-<div class="bar"><input type="search" id="q" placeholder="搜尋成品或材料…"></div>
-<div class="bar" id="flt">
- <span class="chip on" data-f="sell">只看賣得掉（每小時有成交或架上 30 筆以上）</span>
- <span class="chip on" data-f="profit">只看會賺</span>
- <span class="chip" data-f="cheap">成本 1 金以下</span>
-</div>
-<div class="bar" id="srt">排序：
- <span class="chip on" data-s="roi">CP 值</span><span class="chip" data-s="p">每個淨賺</span><span class="chip" data-s="hr">每小時可賺</span><span class="chip" data-s="sold">賣最快</span>
-</div>
-<div id="list"></div>
+<div class="bar tabs" id="tabs"></div>
+<div id="view"></div>
 </div>
 <script>
 (function(){
@@ -46,24 +44,72 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 function money(cp){var neg=cp<0;cp=Math.abs(Math.round(cp||0));var g=Math.floor(cp/10000),s=Math.floor(cp%10000/100),c=cp%100,o='';
  if(g)o+='<span class="g">'+g.toLocaleString()+'金</span> ';if(s)o+='<span class="s">'+s+'銀</span> ';if(!g&&(c||!s))o+='<span class="c">'+c+'銅</span>';return (neg?'-':'')+o.trim()}
 var QC={POOR:'#9d9d9d',COMMON:'#fff',UNCOMMON:'#1eff00',RARE:'#0070dd',EPIC:'#a335ee',LEGENDARY:'#ff8000'};
-var prof=(location.hash||'#blacksmithing').slice(1);
-var NAMES={blacksmithing:'鍛造',leatherworking:'製皮',tailoring:'裁縫',engineering:'工程學',alchemy:'鍊金術',enchanting:'附魔',cooking:'烹飪',jewelcrafting:'珠寶'};
-var sc=document.createElement('script');sc.src='craft_'+prof+'.js?'+Date.now();sc.onload=init;sc.onerror=function(){$('list').innerHTML='<div class="dim">還沒有這個專業的資料</div>'};document.body.appendChild(sc);
-function init(){var C=window.CRAFT||{rows:[]};$('ttl').textContent=(NAMES[prof]||C.prof)+' 獲利表';
- $('upd').textContent='更新：'+new Date(C.updated*1000).toLocaleString('zh-TW',{hour12:false})+'・US PvP 聯盟拍賣場';
- var rows=C.rows.filter(function(r){return r.cost_ok&&r.ah>0&&r.cost>0});
- rows.forEach(function(r){r.roi=r.p_ah/r.cost;r.hr=r.sold>0?r.p_ah*r.sold/Math.max(1,r.qty):0});
- var F={sell:1,profit:1,cheap:0},S='roi',q='';
- $('flt').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;var k=t.getAttribute('data-f');F[k]=F[k]?0:1;t.classList.toggle('on');draw()};
- $('srt').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;S=t.getAttribute('data-s');[].forEach.call($('srt').querySelectorAll('.chip'),function(x){x.classList.toggle('on',x===t)});draw()};
+var CRAFT=[['blacksmithing','鍛造'],['alchemy','鍊金術'],['tailoring','裁縫'],['leatherworking','製皮'],['engineering','工程學'],['enchanting','附魔'],['cooking','烹飪'],['first_aid','急救'],['mining','採礦（熔煉）']];
+var GATHER=[['g_mining','採礦（賣礦）',[2770,2771,2772,2775,3858,7911,10620,2776,11370,2835,2836,2838,7912,12365,774,818,1210,1705,1206,1529,3864,7909,7910,12799,12361,12364,12800,7067,7069,7068,7075,11382]],
+ ['g_herb','草藥',[765,2447,785,2449,2450,2452,3820,2453,3355,3356,3357,3369,3818,3821,3819,4625,8831,8836,8838,8839,8845,8846,13464,13463,13465,13466,13467,13468,8153]],
+ ['g_skin','剝皮',[2934,2318,783,2319,4232,4234,4235,4304,8169,8170,8171,15417,15419,15412,15408,15414,15415,15416,17012,7392,4461,8154,15407,8165,7286,7287,5784,5785]],
+ ['g_fish','釣魚',[6291,6303,6289,6317,6308,6358,6359,6361,6362,4603,8365,6522,13754,13755,13756,13757,13758,13759,13760,13888,13889,13893,13422,21071,21153,7070,13926,7973,5498,5500]]];
+var loaded=0,need=CRAFT.length+1;
+function done(){if(++loaded>=need)init()}
+CRAFT.forEach(function(p){var s=document.createElement('script');s.src='craft_'+p[0]+'.js?'+Date.now();s.onload=done;s.onerror=done;document.body.appendChild(s)});
+(function(){var s=document.createElement('script');s.src='data.js?'+Date.now();s.onload=done;s.onerror=done;document.body.appendChild(s)})();
+var cur=(location.hash||'#overview').slice(1);
+function prep(key){var C=(window.CRAFTS||{})[key];if(!C)return null;if(C._p)return C;
+ C.list=C.rows.filter(function(r){return r.cost_ok&&r.ah>0&&r.cost>0});
+ C.list.forEach(function(r){r.roi=r.p_ah/r.cost;r.hr=r.sold>0?r.p_ah*r.sold/Math.max(1,r.qty):0;r.liq=r.sold>0||r.ah_n>=30});C._p=1;return C}
+function init(){
+ var t='<span class="chip" data-t="overview">🏆 總覽</span>'+CRAFT.map(function(p){return '<span class="chip" data-t="'+p[0]+'">'+p[1]+'</span>'}).join('')+GATHER.map(function(p){return '<span class="chip" data-t="'+p[0]+'">'+p[1]+'</span>'}).join('');
+ $('tabs').innerHTML=t;$('tabs').onclick=function(e){var c=e.target.closest('.chip');if(!c)return;go(c.getAttribute('data-t'))};
+ var A=window.AH;$('upd').textContent=A?'拍賣場資料：'+new Date(A.updated*1000).toLocaleString('zh-TW',{hour12:false})+'・US PvP 聯盟':'';
+ go(cur)}
+function go(k){cur=k;history.replaceState(null,'','#'+k);[].forEach.call($('tabs').children,function(c){c.classList.toggle('on',c.getAttribute('data-t')==k)});
+ if(k=='overview')overview();else if(k.indexOf('g_')==0)gather(k);else craft(k)}
+function card(x){return '<div class="card"><span class="ic" style="'+(x.icon?'background-image:url('+esc(x.icon)+')':'')+'"></span>'+
+ '<span class="nm" style="color:'+(QC[x.q]||'#fff')+'">'+esc(x.item)+(x.qty>1?' ×'+x.qty:'')+'</span><span class="roi '+(x.roi>=0?'up':'down')+'">'+(x.roi*100).toFixed(0)+'%</span>'+
+ '<div class="nums"><span>成本 <b>'+money(x.cost)+'</b></span><span>AH <b>'+money(x.ah)+'</b></span><span>淨賺 <b class="'+(x.p_ah>=0?'up':'down')+'">'+money(x.p_ah)+'</b></span><span>每小時賣 <b>'+(x.sold>0?x.sold:'—')+'</b></span><span>架上 <b>'+x.ah_n+'</b> 筆</span></div>'+
+ '<div class="mats">'+esc(x.mats)+'</div></div>'}
+function overview(){
+ var h='<div class="note">只算「賣得掉」的配方（估計每小時有成交，或架上 30 筆以上），成本照 AH 買材料、淨賺已扣 5% 手續費。採集專業（賣原料）看上面的採礦／草藥／剝皮／釣魚分頁。</div><div class="ov">';
+ var rows=[];
+ CRAFT.forEach(function(p){var C=prep(p[0]);if(!C){rows.push([p,null]);return}
+  var good=C.list.filter(function(r){return r.liq&&r.p_ah>0});
+  var byRoi=good.slice().sort(function(a,b){return b.roi-a.roi}).slice(0,3);
+  var byP=good.slice().sort(function(a,b){return b.p_ah-a.p_ah})[0];
+  var score=byRoi.length?byRoi[0].roi:0;rows.push([p,C,good,byRoi,byP,score])});
+ rows.sort(function(a,b){return (b[5]||0)-(a[5]||0)});
+ rows.forEach(function(r){var p=r[0];if(!r[1]){h+='<div class="pc"><h3>'+p[1]+'<span class="badge">資料準備中</span></h3></div>';return}
+  h+='<div class="pc" data-t="'+p[0]+'"><h3>'+p[1]+'<span class="badge">會賺又賣得掉：'+r[2].length+' 個</span></h3>';
+  if(!r[3].length)h+='<div class="dim">目前沒有又賺又賣得掉的配方</div>';
+  r[3].forEach(function(x){h+='<div class="r"><span style="color:'+(QC[x.q]||'#fff')+'">'+esc(x.item)+'</span><span><span class="up">'+(x.roi*100).toFixed(0)+'%</span>・'+money(x.p_ah)+'</span></div>'});
+  if(r[4]&&r[3].indexOf(r[4])<0)h+='<div class="r"><span>單件最賺：'+esc(r[4].item)+'</span><span class="up">'+money(r[4].p_ah)+'</span></div>';
+  h+='</div>'});
+ h+='</div>';$('view').innerHTML=h;
+ [].forEach.call(document.querySelectorAll('.pc[data-t]'),function(e){e.onclick=function(){go(e.getAttribute('data-t'))}})}
+var F={sell:1,profit:1,cheap:0},S='roi',q='';
+function craft(k){var C=prep(k);if(!C){$('view').innerHTML='<div class="dim">這個專業的資料還在準備中（機器人每小時更新一次）</div>';return}
+ $('view').innerHTML='<div class="note">成本＝材料照 AH 一般價買（助熔劑、線、瓶子、香料這類用商人價）；淨賺已扣 AH 5% 手續費；CP 值＝淨賺 ÷ 成本。「每小時賣出」是估計成交量。材料有缺行情的配方不列。</div>'+
+ '<div class="bar"><input type="search" id="q" placeholder="搜尋成品或材料…" value="'+esc(q)+'"></div>'+
+ '<div class="bar" id="flt"><span class="chip'+(F.sell?' on':'')+'" data-f="sell">只看賣得掉</span><span class="chip'+(F.profit?' on':'')+'" data-f="profit">只看會賺</span><span class="chip'+(F.cheap?' on':'')+'" data-f="cheap">成本 1 金以下</span></div>'+
+ '<div class="bar" id="srt">排序：<span class="chip" data-s="roi">CP 值</span><span class="chip" data-s="p_ah">每個淨賺</span><span class="chip" data-s="hr">每小時可賺</span><span class="chip" data-s="sold">賣最快</span></div><div id="list"></div>';
+ $('flt').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;var f=t.getAttribute('data-f');F[f]=F[f]?0:1;t.classList.toggle('on');draw()};
+ $('srt').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;S=t.getAttribute('data-s');draw()};
  $('q').oninput=function(){q=this.value.trim().toLowerCase();draw()};
- function draw(){var r=rows.filter(function(x){if(F.sell&&!(x.sold>0||x.ah_n>=30))return false;if(F.profit&&x.p_ah<=0)return false;if(F.cheap&&x.cost>10000)return false;
-  if(q&&(x.item+' '+x.recipe+' '+x.mats).toLowerCase().indexOf(q)<0)return false;return true});
+ function draw(){[].forEach.call($('srt').querySelectorAll('.chip'),function(x){x.classList.toggle('on',x.getAttribute('data-s')==S)});
+  var r=C.list.filter(function(x){if(F.sell&&!x.liq)return false;if(F.profit&&x.p_ah<=0)return false;if(F.cheap&&x.cost>10000)return false;
+   if(q&&(x.item+' '+x.recipe+' '+x.mats).toLowerCase().indexOf(q)<0)return false;return true});
   r.sort(function(a,b){return (b[S]||0)-(a[S]||0)});
-  $('list').innerHTML=r.slice(0,200).map(function(x){return '<div class="card"><span class="ic" style="'+(x.icon?'background-image:url('+esc(x.icon)+')':'')+'"></span>'+
-   '<span class="nm" style="color:'+(QC[x.q]||'#fff')+'">'+esc(x.item)+(x.qty>1?' ×'+x.qty:'')+'</span><span class="roi '+(x.roi>=0?'up':'down')+'">'+(x.roi*100).toFixed(0)+'%</span>'+
-   '<div class="nums"><span>成本 <b>'+money(x.cost)+'</b></span><span>AH <b>'+money(x.ah)+'</b></span><span>淨賺 <b class="'+(x.p_ah>=0?'up':'down')+'">'+money(x.p_ah)+'</b></span><span>每小時賣 <b>'+(x.sold>0?x.sold:'—')+'</b></span><span>架上 <b>'+x.ah_n+'</b> 筆</span></div>'+
-   '<div class="mats">'+esc(x.mats)+'</div></div>'}).join('')||'<div class="dim">沒有符合條件的配方</div>'}
+  $('list').innerHTML=r.slice(0,200).map(card).join('')||'<div class="dim">沒有符合條件的配方</div>'}
  draw()}
+function gather(k){var g=GATHER.filter(function(x){return x[0]==k})[0],A=window.AH;if(!A){$('view').innerHTML='<div class="dim">拍賣場資料還沒載入</div>';return}
+ var by={};A.items.forEach(function(it){by[it.id]=it});
+ var seen={},list=g[2].filter(function(id){if(seen[id])return false;seen[id]=1;return by[id]}).map(function(id){return by[id]});
+ var GS='k';
+ $('view').innerHTML='<div class="note">採集專業沒有材料成本，賺多少＝自己採到的東西賣多少。「每小時賣出」越高越好賣；一般價高又賣得快的就是最值得去採的。</div><div class="bar" id="gs">排序：<span class="chip" data-s="k">一般價</span><span class="chip" data-s="s">賣最快</span><span class="chip" data-s="v">每小時成交金額</span></div><div id="glist"></div>';
+ function draw(){[].forEach.call($('gs').querySelectorAll('.chip'),function(x){x.classList.toggle('on',x.getAttribute('data-s')==GS)});
+  list.forEach(function(it){it.v=(it.s||0)*it.k});
+  var r=list.slice().sort(function(a,b){return (b[GS]||0)-(a[GS]||0)});
+  $('glist').innerHTML=r.map(function(it){return '<div class="card"><span class="ic" style="'+(it.i?'background-image:url('+esc(it.i)+')':'')+'"></span><span class="nm" style="color:'+(QC[it.q]||'#fff')+'">'+esc(it.n)+'</span><span class="roi" style="font-size:16px">'+money(it.k)+'</span>'+
+   '<div class="nums"><span>每小時賣 <b>'+(it.s!=null?it.s:'—')+'</b> 個</span><span>架上 <b>'+it.a+'</b> 筆 / <b>'+it.t+'</b> 個</span>'+(it.s?'<span>每小時成交 <b>'+money(it.v)+'</b></span>':'')+'</div>'+(it.e?'<div class="mats">'+esc(it.e)+'</div>':'')+'</div>'}).join('')}
+ $('gs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;GS=t.getAttribute('data-s');draw()};draw()}
 })();
 </script></body></html>
