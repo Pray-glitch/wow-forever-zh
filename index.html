@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=5ec9f714"></script>
+<script src="data.js?v=98b3d019"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -387,7 +387,10 @@ details.sec.sub>.body{padding:0 12px 6px}
     // 整理翻譯時亂掉的星號：「**中文**（English）」→「**中文（English）**」，多餘的 ** / **** 拿掉
     md = md.replace(/（\*\*([^*（）\n]+)\*\*）/g, '（$1）').replace(/\*\*([^*\n]+?)\*\*（([A-Za-z][^（）\n]{1,40})）/g, '**$1（$2）**')
       .replace(/）\*\*\*\*(?=[^*\s])/g, '）**\u2060**')
-      .replace(/\*{3,}/g, '**').replace(/(^|[ \t：:|])\*\*(?=[ \t|]|$)/gm, '$1');
+      .replace(/\*{3,}/g, '**')
+      // 11/12：「- **武器更換：** 說明」的收尾 ** 前面是冒號、後面是空白，會被下一條當成多餘星號拿掉，整行粗體錯位 → 先用 \u2060 隔開
+      .replace(/(^|[\s\-|])(\*\*[^*\n]{1,40}?[：:])\*\*(?=[ \t])/gm, '$1$2**\u2060')
+      .replace(/(^|[ \t：:|])\*\*(?=[ \t|]|$)/gm, '$1');
     md = levelLists(injectShots(md, g));
     const lines = md.split('\n'); let html = '', inList = false, inTable = false, para = [];
     const flushP = () => { if (para.length) { html += '<p>' + para.map(inline).join('<br>') + '</p>'; para = []; } };
