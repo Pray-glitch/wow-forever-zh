@@ -132,4 +132,10 @@ function gather(k){var g=GATHER.filter(function(x){return x[0]==k})[0],A=window.
    '<div class="nums"><span>'+per(it.s)+'</span><span>架上 <b>'+it.a+'</b> 筆 / <b>'+it.t+'</b> 個</span>'+(it.s?'<span>每小時成交 <b>'+money(it.v)+'</b></span>':'')+'</div>'+(it.e?'<div class="mats">'+esc(it.e)+'</div>':'')+'</div>'}).join('')}
  $('gs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;GS=t.getAttribute('data-s');draw()};draw()}
 })();
+</script>
+<script>
+// 手機按「返回」＝關掉物品視窗，不會跳回上一頁
+(function(){var md=document.getElementById('md');if(!md)return;var pushed=false;
+new MutationObserver(function(){var on=md.classList.contains('on');if(on&&!pushed){history.pushState({md:1},'');pushed=true}else if(!on&&pushed){pushed=false;if(history.state&&history.state.md)history.back()}}).observe(md,{attributes:true,attributeFilter:['class']});
+window.addEventListener('popstate',function(){if(pushed){pushed=false;md.classList.remove('on')}})})();
 </script></body></html>
