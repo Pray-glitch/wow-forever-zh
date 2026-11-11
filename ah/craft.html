@@ -46,6 +46,7 @@ input[type=search]{flex:1;min-width:200px;background:#0b0907;border:1px solid va
 <script>
 (function(){
 function $(i){return document.getElementById(i)}
+function per(v){if(v==null||!(v>0))return '<b>—</b>';if(v>=1)return '每小時賣 <b>'+(v>=10?Math.round(v):v)+'</b> 個';return '每天約賣 <b>'+Math.max(1,Math.round(v*24))+'</b> 個'}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function money(cp){var neg=cp<0;cp=Math.abs(Math.round(cp||0));var g=Math.floor(cp/10000),s=Math.floor(cp%10000/100),c=cp%100,o='';
  if(g)o+='<span class="g">'+g.toLocaleString()+'金</span> ';if(s)o+='<span class="s">'+s+'銀</span> ';if(!g&&(c||!s))o+='<span class="c">'+c+'銅</span>';return (neg?'-':'')+o.trim()}
@@ -72,7 +73,7 @@ function go(k){cur=k;history.replaceState(null,'','#'+k);[].forEach.call($('tabs
  if(k=='overview')overview();else if(k.indexOf('g_')==0)gather(k);else craft(k)}
 function card(x){return '<div class="card" data-item="'+x.item_id+'"><span class="ic" style="'+(x.icon?'background-image:url('+esc(x.icon)+')':'')+'"></span>'+
  '<span class="nm" style="color:'+(QC[x.q]||'#fff')+'">'+esc(x.item)+(x.qty>1?' ×'+x.qty:'')+'</span><span class="roi '+(x.roi>=0?'up':'down')+'">'+(x.roi*100).toFixed(0)+'%</span>'+
- '<div class="nums"><span>成本 <b>'+money(x.cost)+'</b></span><span>AH <b>'+money(x.ah)+'</b></span><span>淨賺 <b class="'+(x.p_ah>=0?'up':'down')+'">'+money(x.p_ah)+'</b></span><span>每小時賣 <b>'+(x.sold>0?x.sold:'—')+'</b></span><span>架上 <b>'+x.ah_n+'</b> 筆</span></div>'+
+ '<div class="nums"><span>成本 <b>'+money(x.cost)+'</b></span><span>AH <b>'+money(x.ah)+'</b></span><span>淨賺 <b class="'+(x.p_ah>=0?'up':'down')+'">'+money(x.p_ah)+'</b></span><span>'+per(x.sold)+'</span><span>架上 <b>'+x.ah_n+'</b> 筆</span></div>'+
  '<div class="mats">'+esc(x.mats)+'</div></div>'}
 
 var TIPQ=[],tipsLoading=0;
@@ -84,7 +85,7 @@ function openItem(id){var x=findRow(id),A=window.AH,it=null;if(A)A.items.forEach
   '<div class="tip" id="tipx"><span class="dim">載入說明中…</span></div>'+
   (x?'<div class="nums" style="display:flex"><span>成本 <b>'+money(x.cost)+'</b></span><span>AH <b>'+money(x.ah)+'</b></span><span>淨賺 <b class="'+(x.p_ah>=0?'up':'down')+'">'+money(x.p_ah)+'</b></span></div><div class="dim" style="margin-top:6px">材料：'+esc(x.mats)+'</div>':(it?'<div class="nums" style="display:flex"><span>一般價 <b>'+money(it.k)+'</b></span><span>架上 <b>'+it.a+'</b> 筆</span></div>':''));
  $('md').classList.add('on');
- withTips(function(){var t=window.TIPS[id];$('tipx').innerHTML=t&&t.length?t.map(function(l){return '<div style="color:'+(/^(使用|裝備|擊中|Use|Equip|Chance)/.test(l)?'#1eff00':(/^「/.test(l)?'#ffd100':'var(--text)'))+'">'+esc(l)+'</div>'}).join(''):'<span class="dim">這個物品還沒有說明資料（機器人每小時補一批）</span>'})}
+ withTips(function(){var t=window.TIPS[id];$('tipx').innerHTML=t&&t.length?t.map(function(l){return '<div style="color:'+(/^(使用|裝備|擊中|Use|Equip|Chance)/.test(l)?'#1eff00':(/^「/.test(l)?'#ffd100':(/^※/.test(l)?'#e8a33d;font-size:12px;margin-top:6px':'var(--text)')))+'">'+esc(l)+'</div>'}).join(''):'<span class="dim">這個物品還沒有說明資料（機器人每小時補一批）</span>'})}
 document.addEventListener('click',function(e){var c=e.target.closest('[data-item]');if(c){openItem(+c.getAttribute('data-item'));return}if(e.target.id=='md')$('md').classList.remove('on')});
 document.addEventListener('keydown',function(e){if(e.key=='Escape')$('md').classList.remove('on')});
 function overview(){
@@ -128,7 +129,7 @@ function gather(k){var g=GATHER.filter(function(x){return x[0]==k})[0],A=window.
   list.forEach(function(it){it.v=(it.s||0)*it.k});
   var r=list.slice().sort(function(a,b){return (b[GS]||0)-(a[GS]||0)});
   $('glist').innerHTML=r.map(function(it){return '<div class="card" data-item="'+it.id+'"><span class="ic" style="'+(it.i?'background-image:url('+esc(it.i)+')':'')+'"></span><span class="nm" style="color:'+(QC[it.q]||'#fff')+'">'+esc(it.n)+'</span><span class="roi" style="font-size:16px">'+money(it.k)+'</span>'+
-   '<div class="nums"><span>每小時賣 <b>'+(it.s!=null?it.s:'—')+'</b> 個</span><span>架上 <b>'+it.a+'</b> 筆 / <b>'+it.t+'</b> 個</span>'+(it.s?'<span>每小時成交 <b>'+money(it.v)+'</b></span>':'')+'</div>'+(it.e?'<div class="mats">'+esc(it.e)+'</div>':'')+'</div>'}).join('')}
+   '<div class="nums"><span>'+per(it.s)+'</span><span>架上 <b>'+it.a+'</b> 筆 / <b>'+it.t+'</b> 個</span>'+(it.s?'<span>每小時成交 <b>'+money(it.v)+'</b></span>':'')+'</div>'+(it.e?'<div class="mats">'+esc(it.e)+'</div>':'')+'</div>'}).join('')}
  $('gs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;GS=t.getAttribute('data-s');draw()};draw()}
 })();
 </script></body></html>
