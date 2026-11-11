@@ -44,7 +44,7 @@ tr.row{cursor:pointer}tr.row:hover{background:#2a2015}
 td.l .in{display:flex;align-items:center;gap:8px;white-space:normal}
 .en{display:block;color:var(--dim);font-size:11px}
 .tblw{overflow-x:auto}
-@media(max-width:620px){.hide-s{display:none}}
+@media(max-width:620px){.hide-s{display:none}th,td{padding:7px 6px;font-size:14px}td.l{min-width:11em}.en{font-size:10.5px}}
 .g{color:#ffd700}.s{color:#c7c7cf}.c{color:#d18a52}
 .pager{display:flex;gap:8px;justify-content:center;margin:12px 0}
 .pager button{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px 14px;cursor:pointer}
@@ -83,10 +83,10 @@ svg text{fill:var(--dim);font-size:11px}
 <div class="bar"><input type="search" id="q" placeholder="搜尋物品（中文或英文）…"></div>
 <div class="bar" id="cats"></div>
 <div class="tblw"><table><thead><tr>
- <th class="l" data-k="n">物品</th><th data-k="m">最低單價</th><th data-k="k" class="hide-s">市場價</th><th data-k="ch">與 7 日均價</th><th data-k="t" class="hide-s">數量</th><th data-k="a">筆數</th>
+ <th class="l" data-k="n">物品</th><th data-k="k">一般價</th><th data-k="m" class="hide-s">最低價</th><th data-k="ch" class="hide-s">與 7 日均價</th><th data-k="t" class="hide-s">數量</th><th data-k="a">筆數</th>
 </tr></thead><tbody id="tb"></tbody></table></div>
 <div class="pager"><button id="prev">上一頁</button><span id="pg" style="align-self:center;color:var(--dim)"></span><button id="next">下一頁</button></div>
-<div class="foot">資料來源：暴雪官方 Battle.net API（WoW Forever）。市場價＝依數量排序後第 20% 的單價，比最低價不容易被單筆低價誤導。<br>菲比鳩比公會整理 · 非暴雪官方網站</div>
+<div class="foot">資料來源：暴雪官方 Battle.net API（WoW Forever）。一般價＝把所有上架依單價由低到高排，第 20% 數量那一筆的價格；比「最低價」不容易被一兩筆亂開的低價誤導。<br>菲比鳩比公會整理 · 非暴雪官方網站</div>
 </div>
 <div class="modal" id="md"><div class="dlg" id="dlg"></div></div>
 <script src="data.js"></script>
@@ -96,7 +96,7 @@ var A=window.AH||{items:[],summary:[]};
 function $(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function money(cp){cp=Math.round(cp||0);var g=Math.floor(cp/10000),s=Math.floor(cp%10000/100),c=cp%100,o='';
- if(g)o+='<span class="g">'+g.toLocaleString()+'金</span> ';if(s||g)o+='<span class="s">'+s+'銀</span> ';if(!g)o+='<span class="c">'+c+'銅</span>';return o.trim()}
+ if(g)o+='<span class="g">'+g.toLocaleString()+'金</span> ';if(s)o+='<span class="s">'+s+'銀</span> ';if(!g&&(c||!s))o+='<span class="c">'+c+'銅</span>';return o.trim()}
 function goldShort(cp){var g=cp/10000;return g>=1e6?(g/1e6).toFixed(2)+'M':g>=1e3?(g/1e3).toFixed(1)+'k':Math.round(g)+''}
 var QC={POOR:'q-poor',COMMON:'q-common',UNCOMMON:'q-uncommon',RARE:'q-rare',EPIC:'q-epic',LEGENDARY:'q-legendary'};
 function qcol(q){return 'var(--'+(QC[q]||'q-common')+')'}
@@ -113,7 +113,7 @@ if(S.length){var days={};S.forEach(function(x){days[new Date(x.t*1000).toDateStr
  var dayAgo=null;for(var i=S.length-1;i>=0;i--){if(S[S.length-1].t-S[i].t>=20*3600){dayAgo=S[i];break}}
  if(dayAgo){var da=S[S.length-1].a-dayAgo.a,dg=(S[S.length-1].g-dayAgo.g);$('cA2').innerHTML='比一天前 <span class="'+(da>=0?'up':'down')+'">'+(da>=0?'+':'')+da.toLocaleString()+'</span>';$('cG2').innerHTML='比一天前 <span class="'+(dg>=0?'up':'down')+'">'+(dg>=0?'+':'-')+goldShort(Math.abs(dg))+' 金</span>'}}
 // 總覽走勢
-function lineChart(pts,opt){opt=opt||{};var W=opt.w||700,H=opt.h||160,P=34;if(pts.length<2)return '<div style="color:var(--dim);padding:10px">資料累積中，至少要兩個時間點才畫得出走勢。</div>';
+function lineChart(pts,opt){opt=opt||{};var W=opt.w||700,H=opt.h||160,P=34;if(pts.length<2||(opt.minSpan&&pts[pts.length-1][0]-pts[0][0]<opt.minSpan))return '<div style="color:var(--dim);padding:14px 4px">資料累積中：暴雪每小時更新一次，'+(opt.wait||'幾個小時後')+'就會畫出走勢。</div>';
  var xs=pts.map(function(p){return p[0]}),ys=pts.map(function(p){return p[1]});var x0=Math.min.apply(0,xs),x1=Math.max.apply(0,xs),y0=Math.min.apply(0,ys),y1=Math.max.apply(0,ys);if(y1==y0){y1=y0+1}if(x1==x0)x1=x0+1;
  function X(x){return P+(x-x0)/(x1-x0)*(W-P-10)}function Y(y){return H-22-(y-y0)/(y1-y0)*(H-40)}
  var d=pts.map(function(p,i){return (i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)}).join(' ');
@@ -121,11 +121,11 @@ function lineChart(pts,opt){opt=opt||{};var W=opt.w||700,H=opt.h||160,P=34;if(pt
  var lab='<text x="2" y="'+(Y(y1)+4)+'">'+esc(opt.fmt?opt.fmt(y1):y1)+'</text><text x="2" y="'+(Y(y0)+4)+'">'+esc(opt.fmt?opt.fmt(y0):y0)+'</text>';
  lab+='<text x="'+P+'" y="'+(H-4)+'">'+esc(opt.xfmt(x0))+'</text><text x="'+(W-10)+'" y="'+(H-4)+'" text-anchor="end">'+esc(opt.xfmt(x1))+'</text>';
  return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" preserveAspectRatio="none" style="display:block"><path d="'+area+'" fill="#e8c26b22"/><path d="'+d+'" fill="none" stroke="#e8c26b" stroke-width="2"/>'+lab+'</svg>'}
-$('trend').innerHTML='<h3 style="margin:0 0 6px;color:var(--gold);font-size:15px">市場總值走勢（金）</h3>'+lineChart(S.map(function(x){return [x.t,x.g/10000]}),{fmt:function(v){return Math.round(v).toLocaleString()},xfmt:function(t){var d=new Date(t*1000);return (d.getMonth()+1)+'/'+d.getDate()+' '+d.getHours()+':00'}});
+$('trend').innerHTML='<h3 style="margin:0 0 6px;color:var(--gold);font-size:15px">市場總值走勢（金）</h3>'+lineChart(S.map(function(x){return [x.t,x.g/10000]}),{minSpan:3*3600,wait:'累積 3 小時',fmt:function(v){return Math.round(v).toLocaleString()},xfmt:function(t){var d=new Date(t*1000);return (d.getMonth()+1)+'/'+d.getDate()+' '+d.getHours()+':00'}});
 // 焦點清單
 function mini(it,right){return '<div class="mini" data-id="'+it.id+'">'+icon(it)+'<span class="nm" style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span>'+right+'</div>'}
 var withCh=A.items.filter(function(it){return it.ch!=null&&it.a>=3});
-var ups=withCh.slice().sort(function(a,b){return b.ch-a.ch}).slice(0,8),downs=withCh.slice().sort(function(a,b){return a.ch-b.ch}).slice(0,8),hot=A.items.slice().sort(function(a,b){return b.a-a.a}).slice(0,8);
+var ups=withCh.slice().sort(function(a,b){return b.ch-a.ch}).slice(0,8),downs=withCh.slice().sort(function(a,b){return a.ch-b.ch}).slice(0,8),hot=A.items.filter(function(it){return it.n.indexOf('未收錄')<0}).sort(function(a,b){return b.a-a.a}).slice(0,8);
 function pct(v){return '<span class="'+(v>=0?'up':'down')+'">'+(v>=0?'+':'')+v.toFixed(0)+'%</span>'}
 $('lUp').innerHTML=ups.length?ups.map(function(it){return mini(it,pct(it.ch))}).join(''):'<div style="color:var(--dim)">要累積兩天以上資料才會出現</div>';
 $('lDown').innerHTML=downs.length?downs.map(function(it){return mini(it,pct(it.ch))}).join(''):'<div style="color:var(--dim)">要累積兩天以上資料才會出現</div>';
@@ -143,16 +143,16 @@ $('prev').onclick=function(){if(page>0){page--;render()}};$('next').onclick=func
 function rows(){var r=A.items.filter(function(it){if(cat&&it.c!=cat)return false;if(q&&(it.n+' '+(it.e||'')).toLowerCase().indexOf(q)<0)return false;return true});
  r.sort(function(a,b){var x=a[sortK],y=b[sortK];if(x==null)return 1;if(y==null)return -1;if(sortK=='n')return x.localeCompare(y,'zh-Hant')*sortDir;return (x-y)*sortDir});return r}
 function render(){var r=rows(),pages=Math.max(1,Math.ceil(r.length/PER));if(page>=pages)page=pages-1;var sl=r.slice(page*PER,page*PER+PER);
- $('tb').innerHTML=sl.map(function(it){return '<tr class="row" data-id="'+it.id+'"><td class="l"><div class="in">'+icon(it)+'<span><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span>'+(it.e?'<span class="en">'+esc(it.e)+'</span>':'')+'</span></div></td><td>'+money(it.m)+'</td><td class="hide-s">'+money(it.k)+'</td><td>'+(it.ch==null?'<span style="color:var(--dim)">—</span>':pct(it.ch))+'</td><td class="hide-s">'+it.t.toLocaleString()+'</td><td>'+it.a+'</td></tr>'}).join('')||'<tr><td colspan="6" class="l" style="color:var(--dim)">找不到符合的物品</td></tr>';
+ $('tb').innerHTML=sl.map(function(it){return '<tr class="row" data-id="'+it.id+'"><td class="l"><div class="in">'+icon(it)+'<span><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span>'+(it.e?'<span class="en">'+esc(it.e)+'</span>':'')+'</span></div></td><td>'+money(it.k)+'</td><td class="hide-s">'+money(it.m)+'</td><td class="hide-s">'+(it.ch==null?'<span style="color:var(--dim)">—</span>':pct(it.ch))+'</td><td class="hide-s">'+it.t.toLocaleString()+'</td><td>'+it.a+'</td></tr>'}).join('')||'<tr><td colspan="6" class="l" style="color:var(--dim)">找不到符合的物品</td></tr>';
  $('pg').textContent=(page+1)+' / '+pages+'（共 '+r.length+' 項）'}
 render();
 // 物品詳細
 var byId={};A.items.forEach(function(it){byId[it.id]=it});
 function open(id){var it=byId[id];if(!it)return;var h=it.h||[];
- var chart=lineChart(h.map(function(p,i){return [i,p[1]/10000]}),{h:180,fmt:function(v){return v>=1?v.toFixed(1)+'金':Math.round(v*100)+'銀'},xfmt:function(i){return h[i]?dstr(h[i][0]):''}});
+ var chart=lineChart(h.map(function(p,i){return [i,p[1]/10000]}),{h:180,wait:'明天開始',fmt:function(v){return v>=1?v.toFixed(1)+'金':Math.round(v*100)+'銀'},xfmt:function(i){return h[i]?dstr(h[i][0]):''}});
  var lo=null,hi=null;h.forEach(function(p){if(lo==null||p[1]<lo)lo=p[1];if(hi==null||p[1]>hi)hi=p[1]});
  $('dlg').innerHTML='<div class="hd">'+icon(it,1)+'<div><div style="font-size:20px;font-weight:700;color:'+qcol(it.q)+'">'+esc(it.n)+'</div>'+(it.e?'<div class="en" style="font-size:13px">'+esc(it.e)+'</div>':'')+'<div style="color:var(--dim);font-size:12px">'+esc(it.c||'')+' · ID '+it.id+'</div></div><button class="x" onclick="document.getElementById(\'md\').classList.remove(\'on\')">×</button></div>'+
- '<div class="stats"><div><span class="lb">最低單價</span>'+money(it.m)+'</div><div><span class="lb">市場價</span>'+money(it.k)+'</div><div><span class="lb">7 日均價</span>'+(it.avg?money(it.avg):'—')+'</div><div><span class="lb">上架</span>'+it.a+' 筆 / '+it.t.toLocaleString()+' 個</div></div>'+
+ '<div class="stats"><div><span class="lb">最低價</span>'+money(it.m)+'</div><div><span class="lb">一般價</span>'+money(it.k)+'</div><div><span class="lb">7 日均價</span>'+(it.avg?money(it.avg):'—')+'</div><div><span class="lb">上架</span>'+it.a+' 筆 / '+it.t.toLocaleString()+' 個</div></div>'+
  '<h3 style="margin:6px 0;color:var(--gold);font-size:15px">每日最低單價</h3>'+chart+
  (h.length?'<div style="color:var(--dim);font-size:12px;margin-top:6px">紀錄 '+h.length+' 天，最低 '+money(lo)+'，最高 '+money(hi)+'</div>':'');
  $('md').classList.add('on')}
