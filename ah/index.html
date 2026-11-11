@@ -275,4 +275,10 @@ function showTip(id){function draw(){var t=(window.TIPS||{})[id],b=$('tipbox');i
 document.body.addEventListener('click',function(e){var r=e.target.closest('[data-id]');if(r)open(+r.getAttribute('data-id'));if(e.target.id=='md')$('md').classList.remove('on')});
 document.addEventListener('keydown',function(e){if(e.key=='Escape')$('md').classList.remove('on')});
 })();
+</script>
+<script>
+// 手機按「返回」＝關掉物品視窗，不會跳回上一頁
+(function(){var md=document.getElementById('md');if(!md)return;var pushed=false;
+new MutationObserver(function(){var on=md.classList.contains('on');if(on&&!pushed){history.pushState({md:1},'');pushed=true}else if(!on&&pushed){pushed=false;if(history.state&&history.state.md)history.back()}}).observe(md,{attributes:true,attributeFilter:['class']});
+window.addEventListener('popstate',function(){if(pushed){pushed=false;md.classList.remove('on')}})})();
 </script></body></html>
