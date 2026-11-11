@@ -69,6 +69,22 @@ svg text{fill:var(--dim);font-size:11px}
 .rk{color:var(--dim);width:1.6em;text-align:right;flex:none;font-size:13px}
 .sbar{position:sticky;top:0;z-index:5;background:var(--bg,#0b0907);padding:8px 0;margin:0 0 6px}
 .sbar input{font-size:16px;padding:12px 14px;border-color:#c8a24a}
+.nav{display:flex;gap:6px;margin-top:8px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav span{flex:none;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+.sbar{flex-direction:column;align-items:stretch}
+h2.fold{cursor:pointer;display:flex;align-items:center;scroll-margin-top:120px;user-select:none}
+h2.fold .tg{margin-left:auto;font-family:"Noto Sans TC",sans-serif;font-size:13px;font-weight:400;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+.sec.off{display:none}
+.flt{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:10px}
+.frow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:4px 0}
+.frow>b{flex:none;width:4.5em;color:var(--dim);font-weight:400;font-size:13px}
+.frow input{width:4.2em;background:#0b0907;border:1px solid var(--line);color:var(--text);border-radius:6px;padding:5px 6px;font-size:15px;text-align:center}
+.frow .chip{padding:3px 10px}
+.lv{color:var(--dim);font-size:11px}
+.lim .mat:nth-child(n+6){display:none}
+.lim.open .mat{display:flex}
+.morebtn{display:block;width:100%;margin-top:6px;background:var(--panel2);color:var(--gold);border:1px solid var(--line);border-radius:6px;padding:7px;font-size:13px;cursor:pointer}
 .foot{color:var(--dim);font-size:12px;text-align:center;margin-top:30px}
 </style></head><body><div class="wrap">
 <div class="hero">
@@ -77,7 +93,7 @@ svg text{fill:var(--dim);font-size:11px}
  <span class="pill">資料更新：<b id="upd">—</b></span>
  <div class="tags" id="tags"></div>
 </div>
-<div class="bar sbar"><input type="search" id="q" placeholder="🔍 搜尋物品（中文或英文），例如：初級治療、銅礦、Linen"></div>
+<div class="bar sbar"><input type="search" id="q" placeholder="🔍 搜尋物品（中文或英文），例如：初級治療、銅礦、Linen"><div class="nav" id="nav"><span data-s="foc">今日焦點</span><span data-s="mat">常用材料</span><span data-s="rank">分類排行</span><span data-s="all">全部物品</span></div></div>
 <div id="dash">
 <div class="cards">
  <div class="card"><div class="k">上架筆數</div><div class="v" id="cA">—</div><div class="s" id="cA2"></div></div>
@@ -86,28 +102,28 @@ svg text{fill:var(--dim);font-size:11px}
  <div class="card"><div class="k">資料天數</div><div class="v" id="cD">—</div><div class="s">每小時抓一次官方資料</div></div>
 </div>
 <div class="box" id="trend"></div>
-<h2>今日焦點</h2>
-<div class="three">
+<h2 class="fold" data-s="foc">今日焦點<span class="tg"></span></h2>
+<div class="sec" id="s_foc"><div class="three">
  <div class="box"><h3>📈 比 7 日均價漲最多</h3><div id="lUp"></div></div>
  <div class="box"><h3>📉 比 7 日均價跌最多</h3><div id="lDown"></div></div>
  <div class="box"><h3 id="lHotT">🔥 上架最多</h3><div id="lHot"></div></div>
-</div>
-<h2>常用材料行情</h2>
-<div class="tabs" id="gtabs"></div>
-<div class="box" id="glist"></div>
-<h2>分類排行</h2>
-<div class="tabs" id="ctabs"></div>
+</div></div>
+<h2 class="fold" data-s="mat">常用材料行情<span class="tg"></span></h2>
+<div class="sec" id="s_mat"><div class="tabs" id="gtabs"></div>
+<div class="box" id="glist"></div></div>
+<h2 class="fold" data-s="rank">分類排行<span class="tg"></span></h2>
+<div class="sec" id="s_rank"><div class="tabs" id="ctabs"></div>
 <div class="two">
  <div class="box"><h3>🔥 上架最多</h3><div id="cHot"></div></div>
  <div class="box"><h3>💰 最貴（一般價）</h3><div id="cTop"></div></div>
+</div></div>
 </div>
-</div>
-<h2 id="allh">全部物品</h2>
-<div class="bar" id="cats"></div>
+<h2 class="fold" data-s="all"><span id="allh">全部物品</span><span class="tg"></span></h2>
+<div class="sec" id="s_all"><div class="bar" id="cats"></div><div class="flt" id="flt"></div>
 <div class="tblw"><table><thead><tr>
  <th class="l" data-k="n">物品</th><th data-k="k">一般價</th><th data-k="m" class="hide-s">最低價</th><th data-k="ch" class="hide-s">與 7 日均價</th><th data-k="s">每小時賣出</th><th data-k="t" class="hide-s">數量</th><th data-k="a" class="hide-s">架上筆數</th>
 </tr></thead><tbody id="tb"></tbody></table></div>
-<div class="pager"><button id="prev">上一頁</button><span id="pg" style="align-self:center;color:var(--dim)"></span><button id="next">下一頁</button></div>
+<div class="pager"><button id="prev">上一頁</button><span id="pg" style="align-self:center;color:var(--dim)"></span><button id="next">下一頁</button></div></div>
 <div class="foot">資料來源：暴雪官方 Battle.net API（WoW Forever）。每小時賣出＝這一小時跟上一小時比，消失的上架裡「原本還剩 2 小時以上」的（不可能自己到期，所以多半是被買走；也可能是賣家自己取消重掛），取最近 3 天平均，是估計值。<br>一般價＝把所有上架依單價由低到高排，第 20% 數量那一筆的價格；比「最低價」不容易被一兩筆亂開的低價誤導。<br>菲比鳩比公會整理 · 非暴雪官方網站</div>
 </div>
 <div class="modal" id="md"><div class="dlg" id="dlg"></div></div>
@@ -159,7 +175,35 @@ else $('lHot').innerHTML=hot.map(function(it){return mini(it,'<span style="color
 var cats={};A.items.forEach(function(it){if(it.c)cats[it.c]=(cats[it.c]||0)+1});
 var catList=Object.keys(cats).sort(function(a,b){return cats[b]-cats[a]});var cat='';
 $('cats').innerHTML='<span class="chip on" data-c="">全部</span>'+catList.map(function(c){return '<span class="chip" data-c="'+esc(c)+'">'+esc(c)+' '+cats[c]+'</span>'}).join('');
-$('cats').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;cat=t.getAttribute('data-c');[].forEach.call($('cats').children,function(x){x.classList.toggle('on',x===t)});page=0;render()};
+$('cats').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;cat=t.getAttribute('data-c');[].forEach.call($('cats').children,function(x){x.classList.toggle('on',x===t)});fw='';fs='';drawF();page=0;render()};
+// 篩選（學遊戲拍賣場：品質、需求等級、護甲類型／部位、武器類型）
+var WN={200:'單手斧',201:'雙手斧',202:'弓',203:'槍械',204:'單手錘',205:'雙手錘',206:'長柄武器',207:'單手劍',208:'雙手劍',210:'法杖',213:'拳套',214:'其他',215:'匕首',216:'投擲武器',217:'矛',218:'弩',219:'魔杖',220:'魚竿',
+ 400:'飾品類',401:'布甲',402:'皮甲',403:'鎖甲',404:'鎧甲',406:'盾牌',407:'聖契',408:'塑像',409:'圖騰'};
+var SN={HEAD:'頭部',NECK:'頸部',SHOULDER:'肩部',CLOAK:'背部',BACK:'背部',CHEST:'胸部',ROBE:'胸部',WRIST:'手腕',HAND:'手',WAIST:'腰部',LEGS:'腿部',FEET:'腳',FINGER:'手指',TRINKET:'飾品',HOLDABLE:'副手',SHIELD:'盾牌',BODY:'襯衣',TABARD:'外袍',RELIC:'聖物',WEAPON:'單手',TWOHWEAPON:'雙手',WEAPONMAINHAND:'主手',WEAPONOFFHAND:'副手',RANGED:'遠程',RANGEDRIGHT:'遠程',THROWN:'投擲'};
+var SORD=['頭部','頸部','肩部','背部','胸部','手腕','手','腰部','腿部','腳','手指','飾品','副手','盾牌','襯衣','外袍','聖物','單手','主手','雙手','遠程','投擲'];
+var QL=[['','全部'],['POOR','粗糙'],['COMMON','普通'],['UNCOMMON','優秀'],['RARE','精良'],['EPIC','史詩']];
+var fq='',fw='',fs='',lmin='',lmax='';
+function wt(it){return it.w?it.w-1:-1}
+function drawF(){var h='<div class="frow"><b>品質</b>'+QL.map(function(x){return '<span class="chip'+(fq==x[0]?' on':'')+'" data-fq="'+x[0]+'"'+(x[0]?' style="color:'+qcol(x[0])+'"':'')+'>'+x[1]+'</span>'}).join('')+'</div>';
+ h+='<div class="frow"><b>需求等級</b><input id="lmin" type="number" inputmode="numeric" placeholder="最低" value="'+lmin+'"> ～ <input id="lmax" type="number" inputmode="numeric" placeholder="最高" value="'+lmax+'">'+[[1,10],[11,20],[21,30],[31,40],[41,50],[51,60]].map(function(r){return '<span class="chip'+(lmin==r[0]&&lmax==r[1]?' on':'')+'" data-lv="'+r[0]+'-'+r[1]+'">'+r[0]+'-'+r[1]+'</span>'}).join('')+'</div>';
+ var base=A.items.filter(function(it){return !cat||it.c==cat});
+ if(cat=='護甲'||cat=='武器'){var cw={},cs={};base.forEach(function(it){var w=wt(it);if(w>=0&&WN[w])cw[w]=(cw[w]||0)+1;if(cat=='護甲'&&SN[it.sl])cs[SN[it.sl]]=(cs[SN[it.sl]]||0)+1});
+  var ws=Object.keys(cw).sort(function(a,b){return a-b});
+  if(ws.length)h+='<div class="frow"><b>類型</b><span class="chip'+(fw===''?' on':'')+'" data-fw="">全部</span>'+ws.map(function(w){return '<span class="chip'+(fw==w?' on':'')+'" data-fw="'+w+'">'+WN[w]+'</span>'}).join('')+'</div>';
+  var ss=SORD.filter(function(x){return cs[x]});
+  if(ss.length)h+='<div class="frow"><b>部位</b><span class="chip'+(fs===''?' on':'')+'" data-fs="">全部</span>'+ss.map(function(x){return '<span class="chip'+(fs==x?' on':'')+'" data-fs="'+x+'">'+x+'</span>'}).join('')+'</div>'}
+ if(fq||fw||fs||lmin||lmax)h+='<div class="frow"><span class="chip" data-reset="1">✕ 清除篩選</span></div>';
+ $('flt').innerHTML=h;
+ $('lmin').oninput=$('lmax').oninput=function(){lmin=$('lmin').value;lmax=$('lmax').value;page=0;render()};
+ $('lmin').onchange=$('lmax').onchange=function(){drawF()}}
+$('flt').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;
+ if(t.hasAttribute('data-fq'))fq=t.getAttribute('data-fq');
+ else if(t.hasAttribute('data-fw'))fw=t.getAttribute('data-fw');
+ else if(t.hasAttribute('data-fs'))fs=t.getAttribute('data-fs');
+ else if(t.hasAttribute('data-lv')){var r=t.getAttribute('data-lv').split('-');if(lmin==r[0]&&lmax==r[1]){lmin='';lmax=''}else{lmin=r[0];lmax=r[1]}}
+ else if(t.hasAttribute('data-reset')){fq=fw=fs=lmin=lmax=''}
+ drawF();page=0;render()};
+drawF();
 
 // ===== 常用材料行情（分組固定清單，照 lifeonazeroth 的分法再擴充）=====
 var GROUPS=[['礦石與金屬條',[2770,2771,2772,2775,3858,7911,10620,2840,3576,3575,3577,3860,6037,12359]],
@@ -186,19 +230,31 @@ function drawC(){$('ctabs').innerHTML=catList.map(function(c){return '<span clas
  var inC=A.items.filter(function(it){return it.c==ci&&it.n.indexOf('未收錄')<0});
  var hotC=inC.slice().sort(function(a,b){return b.a-a.a}).slice(0,15);
  var topC=inC.filter(function(it){return it.a>=3}).sort(function(a,b){return b.k-a.k}).slice(0,15);
- $('cHot').innerHTML=hotC.map(function(it,i){return matRow(it,i+1)}).join('')||'<div style="color:var(--dim)">沒有資料</div>';
- $('cTop').innerHTML=topC.map(function(it,i){return matRow(it,i+1)}).join('')||'<div style="color:var(--dim)">沒有資料</div>'}
+ function lim(id,arr){var el=$(id);el.className='lim';el.innerHTML=arr.map(function(it,i){return matRow(it,i+1)}).join('')+(arr.length>5?'<button class="morebtn">看全部 '+arr.length+' 名 ▼</button>':'')||'<div style="color:var(--dim)">沒有資料</div>'}
+ lim('cHot',hotC);lim('cTop',topC)}
+document.addEventListener('click',function(e){var b=e.target.closest('.morebtn');if(!b)return;var l=b.parentNode;l.classList.toggle('open');var n=l.querySelectorAll('.mat').length;b.textContent=l.classList.contains('open')?'只看前 5 名 ▲':'看全部 '+n+' 名 ▼'});
 $('ctabs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;ci=t.getAttribute('data-c');drawC()};
 drawC();
 // 表格
 var sortK='a',sortDir=-1,page=0,PER=100,q='';
 document.querySelector('thead').onclick=function(e){var th=e.target.closest('th');if(!th)return;var k=th.getAttribute('data-k');if(sortK==k)sortDir=-sortDir;else{sortK=k;sortDir=(k=='n')?1:-1}page=0;render()};
-$('q').oninput=function(){q=this.value.trim().toLowerCase();page=0;$('dash').style.display=q?'none':'';$('allh').textContent=q?'搜尋結果':'全部物品';render()};
+$('q').oninput=function(){q=this.value.trim().toLowerCase();page=0;$('dash').style.display=q?'none':'';$('allh').textContent=q?'搜尋結果':'全部物品';if(q)setSec('all',true);render()};
+// 區塊收合
+var FOLD={};try{FOLD=JSON.parse(localStorage.getItem('ahFold')||'null')||null}catch(e){FOLD=null}
+if(!FOLD){FOLD=window.innerWidth<760?{mat:1,rank:1}:{}}
+function setSec(k,open){var el=$('s_'+k);if(!el)return;if(open)delete FOLD[k];else FOLD[k]=1;el.classList.toggle('off',!open);
+ var h=document.querySelector('h2.fold[data-s="'+k+'"] .tg');if(h)h.textContent=open?'收起 ▲':'展開 ▼';try{localStorage.setItem('ahFold',JSON.stringify(FOLD))}catch(e){}}
+['foc','mat','rank','all'].forEach(function(k){setSec(k,!FOLD[k])});
+Array.prototype.forEach.call(document.querySelectorAll('h2.fold'),function(h){h.onclick=function(){var k=h.getAttribute('data-s');setSec(k,!!FOLD[k])}});
+$('nav').onclick=function(e){var t=e.target.closest('span[data-s]');if(!t)return;var k=t.getAttribute('data-s');
+ if(q){q='';$('q').value='';$('dash').style.display='';$('allh').textContent='全部物品';page=0;render()}
+ setSec(k,true);document.querySelector('h2.fold[data-s="'+k+'"]').scrollIntoView({behavior:'smooth'})};
 $('prev').onclick=function(){if(page>0){page--;render()}};$('next').onclick=function(){page++;render()};
-function rows(){var r=A.items.filter(function(it){if(cat&&it.c!=cat)return false;if(q&&(it.n+' '+(it.e||'')).toLowerCase().indexOf(q)<0)return false;return true});
+function rows(){var a=parseInt(lmin,10),b=parseInt(lmax,10);var r=A.items.filter(function(it){if(cat&&it.c!=cat)return false;if(fq&&it.q!=fq)return false;if(fw!==''&&wt(it)!=fw)return false;if(fs&&SN[it.sl]!=fs)return false;if(a>0&&!((it.rl||0)>=a))return false;if(b>0&&!((it.rl||0)<=b))return false;if(q&&(it.n+' '+(it.e||'')).toLowerCase().indexOf(q)<0)return false;return true});
  r.sort(function(a,b){var x=a[sortK],y=b[sortK];if(x==null)return 1;if(y==null)return -1;if(sortK=='n')return x.localeCompare(y,'zh-Hant')*sortDir;return (x-y)*sortDir});return r}
+function lvTxt(it){var p=[];if(it.rl>1)p.push(it.rl+' 級');var w=wt(it);if(w>=0&&WN[w]&&w!=400)p.push(WN[w]);if(SN[it.sl]&&SN[it.sl]!=WN[w])p.push(SN[it.sl]);return p.length?'<span class="lv">'+(it.e?' · ':'')+p.join(' ')+'</span>':''}
 function render(){var r=rows(),pages=Math.max(1,Math.ceil(r.length/PER));if(page>=pages)page=pages-1;var sl=r.slice(page*PER,page*PER+PER);
- $('tb').innerHTML=sl.map(function(it){return '<tr class="row" data-id="'+it.id+'"><td class="l"><div class="in">'+icon(it)+'<span><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span>'+(it.e?'<span class="en">'+esc(it.e)+'</span>':'')+'</span></div></td><td>'+money(it.k)+'</td><td class="hide-s">'+money(it.m)+'</td><td class="hide-s">'+(it.ch==null?'<span style="color:var(--dim)">—</span>':pct(it.ch))+'</td><td>'+soldTxt(it)+'</td><td class="hide-s">'+it.t.toLocaleString()+'</td><td class="hide-s">'+it.a+'</td></tr>'}).join('')||'<tr><td colspan="7" class="l" style="color:var(--dim)">找不到符合的物品</td></tr>';
+ $('tb').innerHTML=sl.map(function(it){return '<tr class="row" data-id="'+it.id+'"><td class="l"><div class="in">'+icon(it)+'<span><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span>'+((it.e||it.rl||it.w)?'<span class="en">'+esc(it.e||'')+lvTxt(it)+'</span>':'')+'</span></div></td><td>'+money(it.k)+'</td><td class="hide-s">'+money(it.m)+'</td><td class="hide-s">'+(it.ch==null?'<span style="color:var(--dim)">—</span>':pct(it.ch))+'</td><td>'+soldTxt(it)+'</td><td class="hide-s">'+it.t.toLocaleString()+'</td><td class="hide-s">'+it.a+'</td></tr>'}).join('')||'<tr><td colspan="7" class="l" style="color:var(--dim)">找不到符合的物品</td></tr>';
  $('pg').textContent=(page+1)+' / '+pages+'（共 '+r.length+' 項）'}
 render();
 // 物品詳細
