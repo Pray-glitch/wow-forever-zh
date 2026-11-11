@@ -30,6 +30,11 @@ input[type=search]{flex:1;min-width:200px;background:#0b0907;border:1px solid va
 .pc h3{margin:0 0 4px;color:var(--gold);font-size:17px;display:flex;justify-content:space-between}
 .pc .r{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;border-top:1px solid #ffffff0d}
 .pc .r:first-of-type{border-top:0}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+.modal.on{display:flex}
+.dlg{background:var(--panel);border:1px solid var(--gold2);border-radius:10px;max-width:560px;width:100%;max-height:90vh;overflow:auto;padding:16px}
+.tip{background:#0b0907;border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin:10px 0;font-size:14px;line-height:1.7}
+.card{cursor:pointer}
 .badge{font-size:12px;color:var(--dim);font-weight:400}
 </style></head><body><div class="wrap">
 <h1>專業獲利表</h1>
@@ -37,6 +42,7 @@ input[type=search]{flex:1;min-width:200px;background:#0b0907;border:1px solid va
 <div class="bar tabs" id="tabs"></div>
 <div id="view"></div>
 </div>
+<div class="modal" id="md"><div class="dlg" id="dlg"></div></div>
 <script>
 (function(){
 function $(i){return document.getElementById(i)}
@@ -64,10 +70,23 @@ function init(){
  go(cur)}
 function go(k){cur=k;history.replaceState(null,'','#'+k);[].forEach.call($('tabs').children,function(c){c.classList.toggle('on',c.getAttribute('data-t')==k)});
  if(k=='overview')overview();else if(k.indexOf('g_')==0)gather(k);else craft(k)}
-function card(x){return '<div class="card"><span class="ic" style="'+(x.icon?'background-image:url('+esc(x.icon)+')':'')+'"></span>'+
+function card(x){return '<div class="card" data-item="'+x.item_id+'"><span class="ic" style="'+(x.icon?'background-image:url('+esc(x.icon)+')':'')+'"></span>'+
  '<span class="nm" style="color:'+(QC[x.q]||'#fff')+'">'+esc(x.item)+(x.qty>1?' ×'+x.qty:'')+'</span><span class="roi '+(x.roi>=0?'up':'down')+'">'+(x.roi*100).toFixed(0)+'%</span>'+
  '<div class="nums"><span>成本 <b>'+money(x.cost)+'</b></span><span>AH <b>'+money(x.ah)+'</b></span><span>淨賺 <b class="'+(x.p_ah>=0?'up':'down')+'">'+money(x.p_ah)+'</b></span><span>每小時賣 <b>'+(x.sold>0?x.sold:'—')+'</b></span><span>架上 <b>'+x.ah_n+'</b> 筆</span></div>'+
  '<div class="mats">'+esc(x.mats)+'</div></div>'}
+
+var TIPQ=[],tipsLoading=0;
+function withTips(cb){if(window.TIPS)return cb();TIPQ.push(cb);if(tipsLoading)return;tipsLoading=1;var s=document.createElement('script');s.src='tips.js?'+Date.now();s.onload=s.onerror=function(){window.TIPS=window.TIPS||{};TIPQ.forEach(function(f){f()})};document.body.appendChild(s)}
+function findRow(id){var r=null;Object.keys(window.CRAFTS||{}).forEach(function(k){(window.CRAFTS[k].rows||[]).forEach(function(x){if(!r&&x.item_id==id)r=x})});return r}
+function openItem(id){var x=findRow(id),A=window.AH,it=null;if(A)A.items.forEach(function(i){if(i.id==id)it=i});
+ var name=x?x.item:(it?it.n:'物品 #'+id),q=x?x.q:(it&&it.q),icon=x?x.icon:(it&&it.i);
+ $('dlg').innerHTML='<div style="display:flex;gap:10px;align-items:center"><span class="ic" style="grid-row:auto;width:44px;height:44px;'+(icon?'background-image:url('+esc(icon)+')':'')+'"></span><div><div style="font-size:18px;font-weight:700;color:'+(QC[q]||'#fff')+'">'+esc(name)+'</div>'+(it&&it.e?'<div class="dim">'+esc(it.e)+'</div>':'')+'</div><button onclick="document.getElementById(\'md\').classList.remove(\'on\')" style="margin-left:auto;background:none;border:0;color:var(--dim);font-size:26px;cursor:pointer">×</button></div>'+
+  '<div class="tip" id="tipx"><span class="dim">載入說明中…</span></div>'+
+  (x?'<div class="nums" style="display:flex"><span>成本 <b>'+money(x.cost)+'</b></span><span>AH <b>'+money(x.ah)+'</b></span><span>淨賺 <b class="'+(x.p_ah>=0?'up':'down')+'">'+money(x.p_ah)+'</b></span></div><div class="dim" style="margin-top:6px">材料：'+esc(x.mats)+'</div>':(it?'<div class="nums" style="display:flex"><span>一般價 <b>'+money(it.k)+'</b></span><span>架上 <b>'+it.a+'</b> 筆</span></div>':''));
+ $('md').classList.add('on');
+ withTips(function(){var t=window.TIPS[id];$('tipx').innerHTML=t&&t.length?t.map(function(l){return '<div style="color:'+(/^(使用|裝備|擊中|Use|Equip|Chance)/.test(l)?'#1eff00':(/^「/.test(l)?'#ffd100':'var(--text)'))+'">'+esc(l)+'</div>'}).join(''):'<span class="dim">這個物品還沒有說明資料（機器人每小時補一批）</span>'})}
+document.addEventListener('click',function(e){var c=e.target.closest('[data-item]');if(c){openItem(+c.getAttribute('data-item'));return}if(e.target.id=='md')$('md').classList.remove('on')});
+document.addEventListener('keydown',function(e){if(e.key=='Escape')$('md').classList.remove('on')});
 function overview(){
  var h='<div class="note">只算「賣得掉」的配方（估計每小時有成交，或架上 30 筆以上），成本照 AH 買材料、淨賺已扣 5% 手續費。採集專業（賣原料）看上面的採礦／草藥／剝皮／釣魚分頁。</div><div class="ov">';
  var rows=[];
@@ -108,7 +127,7 @@ function gather(k){var g=GATHER.filter(function(x){return x[0]==k})[0],A=window.
  function draw(){[].forEach.call($('gs').querySelectorAll('.chip'),function(x){x.classList.toggle('on',x.getAttribute('data-s')==GS)});
   list.forEach(function(it){it.v=(it.s||0)*it.k});
   var r=list.slice().sort(function(a,b){return (b[GS]||0)-(a[GS]||0)});
-  $('glist').innerHTML=r.map(function(it){return '<div class="card"><span class="ic" style="'+(it.i?'background-image:url('+esc(it.i)+')':'')+'"></span><span class="nm" style="color:'+(QC[it.q]||'#fff')+'">'+esc(it.n)+'</span><span class="roi" style="font-size:16px">'+money(it.k)+'</span>'+
+  $('glist').innerHTML=r.map(function(it){return '<div class="card" data-item="'+it.id+'"><span class="ic" style="'+(it.i?'background-image:url('+esc(it.i)+')':'')+'"></span><span class="nm" style="color:'+(QC[it.q]||'#fff')+'">'+esc(it.n)+'</span><span class="roi" style="font-size:16px">'+money(it.k)+'</span>'+
    '<div class="nums"><span>每小時賣 <b>'+(it.s!=null?it.s:'—')+'</b> 個</span><span>架上 <b>'+it.a+'</b> 筆 / <b>'+it.t+'</b> 個</span>'+(it.s?'<span>每小時成交 <b>'+money(it.v)+'</b></span>':'')+'</div>'+(it.e?'<div class="mats">'+esc(it.e)+'</div>':'')+'</div>'}).join('')}
  $('gs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;GS=t.getAttribute('data-s');draw()};draw()}
 })();
