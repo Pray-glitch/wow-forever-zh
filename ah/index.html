@@ -204,9 +204,13 @@ function open(id){var it=byId[id];if(!it)return;var h=it.h||[];
  var lo=null,hi=null;h.forEach(function(p){if(lo==null||p[1]<lo)lo=p[1];if(hi==null||p[1]>hi)hi=p[1]});
  $('dlg').innerHTML='<div class="hd">'+icon(it,1)+'<div><div style="font-size:20px;font-weight:700;color:'+qcol(it.q)+'">'+esc(it.n)+'</div>'+(it.e?'<div class="en" style="font-size:13px">'+esc(it.e)+'</div>':'')+'<div style="color:var(--dim);font-size:12px">'+esc(it.c||'')+' · ID '+it.id+'</div></div><button class="x" onclick="document.getElementById(\'md\').classList.remove(\'on\')">×</button></div>'+
  '<div class="stats"><div><span class="lb">最低價</span>'+money(it.m)+'</div><div><span class="lb">一般價</span>'+money(it.k)+'</div><div><span class="lb">7 日均價</span>'+(it.avg?money(it.avg):'—')+'</div><div><span class="lb">上架</span>'+it.a+' 筆 / '+it.t.toLocaleString()+' 個</div><div><span class="lb">估計每小時賣出</span>'+soldTxt(it)+(it.sn!=null?'（'+it.sn+' 筆）':'')+'</div></div>'+
- '<h3 style="margin:6px 0;color:var(--gold);font-size:15px">每日最低單價</h3>'+chart+
+ '<div id="tipbox"></div>'+'<h3 style="margin:6px 0;color:var(--gold);font-size:15px">每日最低單價</h3>'+chart+
  (h.length?'<div style="color:var(--dim);font-size:12px;margin-top:6px">紀錄 '+h.length+' 天，最低 '+money(lo)+'，最高 '+money(hi)+'</div>':'');
- $('md').classList.add('on')}
+ $('md').classList.add('on');showTip(it.id)}
+var tipsLoading=0;
+function showTip(id){function draw(){var t=(window.TIPS||{})[id],b=$('tipbox');if(!b)return;
+  b.innerHTML=t?'<div style="background:#0b0907;border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin:10px 0;font-size:14px;line-height:1.7">'+t.map(function(l){return '<div style="color:'+(/^(使用|裝備|擊中|Use|Equip|Chance)/.test(l)?'#1eff00':(/^「/.test(l)?'#ffd100':'var(--text)'))+'">'+esc(l)+'</div>'}).join('')+'</div>':''}
+ if(window.TIPS)return draw();if(tipsLoading)return;tipsLoading=1;var s=document.createElement('script');s.src='tips.js?'+Date.now();s.onload=draw;document.body.appendChild(s)}
 document.body.addEventListener('click',function(e){var r=e.target.closest('[data-id]');if(r)open(+r.getAttribute('data-id'));if(e.target.id=='md')$('md').classList.remove('on')});
 document.addEventListener('keydown',function(e){if(e.key=='Escape')$('md').classList.remove('on')});
 })();
