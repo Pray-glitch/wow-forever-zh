@@ -127,7 +127,8 @@ function craft(k){var C=prep(k);if(!C){$('view').innerHTML='<div class="dim">這
  function draw(){[].forEach.call($('srt').querySelectorAll('.chip'),function(x){x.classList.toggle('on',x.getAttribute('data-s')==S)});
   var ml=myLv();var r=C.list.filter(function(x){if(F.can&&ml&&(x.spec||(x.lv&&x.lv>ml)))return false;if(F.sell&&!x.liq)return false;if(F.profit&&x.p_ah<=0)return false;if(F.cheap&&x.cost>10000)return false;
    if(q&&(x.item+' '+x.recipe+' '+x.mats).toLowerCase().indexOf(q)<0)return false;return true});
-  r.sort(function(a,b){return (b[S]||0)-(a[S]||0)});
+  var nm=function(x){return q&&(x.item+' '+x.recipe).toLowerCase().indexOf(q)<0?1:0};
+  r.sort(function(a,b){return nm(a)-nm(b)||(b[S]||0)-(a[S]||0)});
   $('list').innerHTML=r.slice(0,200).map(card).join('')||'<div class="dim">沒有符合條件的配方</div>'}
  draw()}
 function gather(k){var g=GATHER.filter(function(x){return x[0]==k})[0],A=window.AH;if(!A){$('view').innerHTML='<div class="dim">拍賣場資料還沒載入</div>';return}
