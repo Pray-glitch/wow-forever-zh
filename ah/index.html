@@ -124,7 +124,7 @@ h2.fold .tg{margin-left:auto;font-family:"Noto Sans TC",sans-serif;font-size:13p
  <th class="l" data-k="n">物品</th><th data-k="k">一般價</th><th data-k="m" class="hide-s">最低價</th><th data-k="ch" class="hide-s">與 7 日均價</th><th data-k="s">每小時賣出</th><th data-k="t" class="hide-s">數量</th><th data-k="a" class="hide-s">架上筆數</th>
 </tr></thead><tbody id="tb"></tbody></table></div>
 <div class="pager"><button id="prev">上一頁</button><span id="pg" style="align-self:center;color:var(--dim)"></span><button id="next">下一頁</button></div></div>
-<div class="foot">資料來源：暴雪官方 Battle.net API（WoW Forever）。每小時賣出＝這一小時跟上一小時比，消失的上架裡「原本還剩 2 小時以上」的（不可能自己到期，所以多半是被買走；也可能是賣家自己取消重掛），取最近 3 天平均，是估計值。<br>一般價＝把所有上架依單價由低到高排，第 20% 數量那一筆的價格；比「最低價」不容易被一兩筆亂開的低價誤導。<br>菲比鳩比公會整理 · 非暴雪官方網站</div>
+<div class="foot">資料來源：暴雪官方 Battle.net API（WoW Forever）。每小時賣出＝這一小時跟上一小時比，消失的上架裡「原本還剩 2 小時以上」的（不可能自己到期，所以多半是被買走；也可能是賣家自己取消重掛），取最近 3 天平均，是估計值。<br>一般價＝把所有上架依單價由低到高排，第 20% 數量那一筆的價格；比「最低價」不容易被一兩筆亂開的低價誤導（架上少於 5 筆時直接用最低價）。<br>菲比鳩比公會整理 · 非暴雪官方網站</div>
 </div>
 <div class="modal" id="md"><div class="dlg" id="dlg"></div></div>
 <script src="data.js"></script>
