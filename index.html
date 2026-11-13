@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=2e02243e"></script>
+<script src="data.js?v=27575fba"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -215,11 +215,13 @@ details.sec.sub>.body{padding:0 12px 6px}
           if (!known && (/^[A-Z]{2,5}$/.test(en) || /(?:^| )(?:Mode|Overview|Displayed|Buffs|Debuffs|Cap|Macros?|Loot|Settings|Options|Frames?|Tips|Guide|Rotation|Priority|Weights?|List|Section|Menu|Window|Panel|Tracker|Addons?|AddOns?|UI)$/.test(en))) return m;
           if (!known && !/^[A-Z][A-Za-z']*(?:[ :\-]+(?:[A-Z][A-Za-z']*|of|the|and|to|in|on|a|an|for|from|with))*$/.test(en)) return m;
           // 「和磨刀石」「搭配風怒」：前面的連接詞不算名字
-          const lead = (zh.match(/^(?:級的|級|包括|包含|例如|像是|搭配|使用|以及|還有|和|與|或|及|跟|用|把|將|對|在|從|的)(?=[\u4e00-\u9fff]{2})/) || [''])[0];
+          const lead = (zh.match(/^(?:級的|級|包括|包含|例如|像是|搭配|使用|以及|還有|和|與|或|及|跟|用|把|將|對|在|從|的|施放|解除|受到|請先完成|完成|搭船到|搭船前往|靠|以)(?=[\u4e00-\u9fff]{2})/) || [''])[0];
           let pre = lead, name = zh.slice(lead.length);
           // 「此懲罰仍適用於暴風雪」「暴風雪觸發祕法集中」：句子黏在名字前面 → 只取最後一個虛詞後面的部分當名字
-          if (name.length > 3) { const m2 = name.match(/^(.*(?:觸發|使用|搭配|打開|開啟|新增|更新|保持|拾取|抵達|生成的|產生的|召喚的|包括|達到|達成|製作|開好|獲得|取得|購買|影響|提高|提升|降低|增加|減少|移除|調整|脫離|適用|顯示|同時|改為|變成|取代|不再|現在|你的|會|但|於|在|和|與|或|及|讓|對|將|把|從|以|為|是|有|了)的?)([\u4e00-\u9fff0-9·・]{2,})$/); if (m2) { pre += m2[1]; name = m2[2]; } }
+          if (name.length > 3) { const m2 = name.match(/^(.*(?:觸發|施放|解除|受到|完成|搭船到|搭船前往|使用|搭配|打開|開啟|新增|更新|保持|拾取|抵達|生成的|產生的|召喚的|包括|達到|達成|製作|開好|獲得|取得|購買|影響|提高|提升|降低|增加|減少|移除|調整|脫離|適用|顯示|同時|改為|變成|取代|不再|現在|你的|會|但|於|在|和|與|或|及|讓|對|將|把|從|以|為|是|有|了)的?)([\u4e00-\u9fff0-9·・]{2,})$/); if (m2) { pre += m2[1]; name = m2[2]; } }
           // 「不死族牧師的黑暗犧牲」：「的」前面夠長（4 字以上）才拆；「馬杜克的黑檀劍柄」這種名字本身有「的」就不拆
+          // 11/14：「15 隻暴怒幻影」「10 隻受折磨的靈魂」：單獨的量詞先拿掉（在拆「的」之前，免得名字只包到一半）
+          { const q0 = name.match(/^[個隻](?=[\u4e00-\u9fff]{2})/); if (q0) { pre += q0[0]; name = name.slice(1); } }
           { const k = name.lastIndexOf('的'); if (k >= 4 && !(/'s\b|s'(?:\s|$)/.test(en) && k <= 5 && !/[你我他]|(?:谷|山脈|城|鎮|島|森林|裂口|裂谷|平原|高地|沼澤|之地|蘇斯|地區|附近|裡|中)$/.test(name.slice(0, k))) && name.length - k - 1 >= 2) { pre += name.slice(0, k + 1); name = name.slice(k + 1); } }
           // 11/10：「掉落自死亡礦坑」「打開盧修斯的鎖箱」「八個海盜保險箱」「一些水下呼吸藥劑」「旁邊的收割者」：動詞、數量詞、方位詞不算名字（放在「的」拆完之後，免得「前往幽暗城的赫伯特」少拆）
           { const q = name.match(/^(?:由|隨著|隨|掉落自|來自|前往|進入|打開|開啟|[一二三四五六七八九十兩幾數]+(?:個|隻|把|件|瓶|張|顆|份|種|根|塊)|一些|一點|旁邊的|附近的|身上的|裡面的)(?=[\u4e00-\u9fff]{2})/); if (q) { pre += q[0]; name = name.slice(q[0].length); } }
@@ -241,6 +243,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     const own = G.find(g => g.cat === '地城' && norm(g.url).indexOf(slug) >= 0);
     return own ? '#' + own.slug : 'https://foreverchanges.pro/zh-tw/dungeons/' + slug;
   }
+  let CURSLUG = ''; // 11/14：目前顯示的攻略（同篇章節連結 → 站內捲動）
   function linkFor(text, href){
     const inSite = BYURL[norm(href)];
     if (inSite) return '#' + inSite;
@@ -256,7 +259,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     s = s.replace(/`([^`]+)`/g, (_, c) => { codes.push(c); return '\u0002' + (codes.length - 1) + '\u0003'; });
     // 原文連結文字自己帶中括號（[[OXM guild finder]](網址)）→ 拿掉多的一層
     s = s.replace(/\[\[([^\[\]\n]+)\]\]\((https?:)/g, '[$1]($2');
-    s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, h) => { const href = linkFor(t, h.replace(/&amp;/g, '&')); const isZone = /\/dungeons\//.test(href) || (href[0] === '#' && (G.find(x => '#' + x.slug === href) || {}).cat === '地城'); return aTag(href, t, isZone ? 'zone' : ''); });
+    s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, h) => { const href = linkFor(t, h.replace(/&amp;/g, '&')); if (CURSLUG && href === '#' + CURSLUG && /#[^#\s]/.test(h)) return aTag(href, t, 'sec'); const isZone = /\/dungeons\//.test(href) || (href[0] === '#' && (G.find(x => '#' + x.slug === href) || {}).cat === '地城'); return aTag(href, t, isZone ? 'zone' : ''); });
     s = s.replace(/\*\*([^*]+)\*\*/g, (_, t) => widget(t)).replace(/\*\*+/g, '').replace(/\*([^*]+)\*/g, '<i>$1</i>').replace(/\*/g, '').replace(/`([^`]+)`/g, '<code>$1</code>');
     return autoWidget(s).replace(/\u0002(\d+)\u0003/g, (_, i) => '<code>' + codes[+i] + '</code>');
   }
@@ -283,13 +286,15 @@ details.sec.sub>.body{padding:0 12px 6px}
         // 同一個分頁後面已經有作者寫好的「10–12 級：…」說明（3 行以上）→ 這份逐級清單是重複的，不要
         // （只有一兩行「40 級：…」是補充說明，不算；11/8 熊坦練功路線整份被當重複拿掉）
         // 順便收集作者清單裡「39級 **預知（Anticipation）**」的等級 → 英文，給下面對譯名用
-        let dup = 0; const lvEN = {};
+        let dup = 0; const lvEN = {}, cov = {};
         for (let k = j; k < L.length && !/^#{1,2}\s|^###\s+▸/.test(L[k]); k++) {
-          if (/^\s*[-*]\s+\d{1,2}(\s*[–-]\s*\d{1,2})?\s*級[：:]/.test(L[k])) dup++;
+          const dm = L[k].match(/^\s*[-*]\s+(\d{1,2})(?:\s*[–-]\s*(\d{1,2}))?\s*級[：:]/);
+          if (dm) { dup++; for (let v = +dm[1]; v <= +(dm[2] || dm[1]) && v <= 60; v++) cov[v] = 1; }
           const a = L[k].match(/^\s*[-*]\s+(?:等級\s*)?(\d{1,2})\s*級?\s*[：:]?\s*\**([^（*\n|]+?)（([A-Z][A-Za-z' :\-]+)）/);
           if (a) lvEN[+a[1]] = a[3].trim();
         }
-        if (dup >= 3) { i = j; continue; }
+        // 11/14：作者說明要涵蓋逐級清單大部分的等級才算重複（暗影牧師作者只寫 31–40 級，10–30 級不能跟著拿掉）
+        if (dup >= 3 && rows.filter(r => cov[r.lv]).length >= rows.length * 0.7) { i = j; continue; }
         // 同一個天賦：模型只在第一次附英文，後面幾級常換別的譯名（魔杖專精／法杖專精）→ 用英文當同一個天賦的依據
         const T = terms(), OFF = {}; Object.keys(T).forEach(e => { OFF[T[e]] = e; });
         const zhEn = {}, han = c => /[\u4e00-\u9fff]/.test(c);
@@ -635,7 +640,9 @@ details.sec.sub>.body{padding:0 12px 6px}
       h += '</div></div>';
       main.innerHTML = h;
     } else {
+      CURSLUG = g.slug;
       const body = render(g.md, g);
+      CURSLUG = '';
       main.innerHTML = '<div class="meta">' + esc(g.cat==='天梯排名'?'Tier List':g.cat) + ' · ' + dates(g) + (g.author ? (g.cat === '官方情報' ? ' · 來源：' : ' · 作者：') + esc(g.author) : '') + ' · <a href="' + g.url + '" target="_blank" rel="noopener">原文 ↗</a> · <a class="rp-link" onclick="window.__openRp()">📝 回報翻譯問題</a>' + (g.authorUrl ? ' · <a href="' + g.authorUrl + '" target="_blank" rel="noopener">' + esc(g.author) + ' 的 Bilibili 國漫 Reaction ↗</a>' : '') + '</div>' + (g.author && g.cat !== '官方情報' && g.author.indexOf('Progress') < 0 ? '<p class="meta">本篇經作者 ' + esc(g.author) + ' 同意翻譯，機器翻譯僅供參考，以原文為準。</p>' : '') + body;
       tidyDom(main);
       wireTabs();
@@ -646,6 +653,17 @@ details.sec.sub>.body{padding:0 12px 6px}
       main.querySelectorAll('h1 a.it,h2 a.it,h3 a.it,h4 a.it').forEach(a => a.replaceWith(...a.childNodes));
       if (g.cat === '官方情報') foldSections(g);
       const hs = main.querySelectorAll('h2'); if (g.cat !== '官方情報' && hs.length > 1) { let t = '<div class="toc"><b>目錄</b>'; hs.forEach((x,i) => { x.id = 's' + i; t += '<a href="#' + slug + '" onclick="event.preventDefault();document.getElementById(\'s' + i + '\').scrollIntoView({behavior:\'smooth\'})">' + x.textContent + '</a>'; }); const h1 = main.querySelector('h1'); if (h1) h1.insertAdjacentHTML('afterend', t + '</div>'); else main.insertAdjacentHTML('afterbegin', t + '</div>'); }
+      // 11/14：概述下的快速導覽（連到同篇原文章節）→ 站內捲到同名章節，連結之間加間隔
+      const HS = [...main.querySelectorAll('h2,h3')];
+      main.querySelectorAll('a.sec').forEach(a => {
+        const k = a.textContent.replace(/^\d+\.\s*/, '').trim();
+        const syn = {'技巧':['技巧','訣竅','提示'],'提示':['提示','訣竅','技巧'],'循環':['循環','玩法'],'優先序':['優先','屬性']};
+        const k2 = k.slice(-2), alt = syn[k2] || syn[k.slice(-3)] || [k2];
+        const h = HS.find(x => x.textContent.trim() === k) || (k ? HS.find(x => x.textContent.indexOf(k) >= 0) : null) || (k.length > 1 ? HS.find(x => /^H2$/.test(x.tagName) && alt.some(w => x.textContent.indexOf(w) >= 0)) : null);
+        if (h) a.onclick = e => { e.preventDefault(); const p = h.closest('.pane'); if (p && !p.classList.contains('on')) { const t = p.parentElement.querySelector('.tab[data-i="' + p.dataset.i + '"]'); if (t) t.click(); } h.scrollIntoView({behavior:'smooth'}); };
+        const n = a.nextSibling;
+        if (n && n.nodeType === 1 && n.tagName === 'A' && n.classList.contains('sec')) a.insertAdjacentText('afterend', '　');
+      });
     }
     window.scrollTo(0,0); nav.classList.remove('open');
   }
