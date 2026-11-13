@@ -69,10 +69,11 @@ function prep(key){var C=(window.CRAFTS||{})[key];if(!C)return null;if(C._p)retu
  C.list.forEach(function(r){r.roi=r.p_ah/r.cost;r.hr=r.sold>0?r.p_ah*r.sold/Math.max(1,r.qty):0;r.liq=r.sold>0||r.ah_n>=30});C._p=1;return C}
 function init(){
  var t='<span class="chip" data-t="overview">🏆 總覽</span>'+CRAFT.map(function(p){return '<span class="chip" data-t="'+p[0]+'">'+p[1]+'</span>'}).join('')+GATHER.map(function(p){return '<span class="chip" data-t="'+p[0]+'">'+p[1]+'</span>'}).join('');
- $('tabs').innerHTML=t;$('tabs').onclick=function(e){var c=e.target.closest('.chip');if(!c)return;go(c.getAttribute('data-t'))};
+ $('tabs').innerHTML=t;$('tabs').onclick=function(e){var c=e.target.closest('.chip');if(!c)return;go(c.getAttribute('data-t'),1)};
  var A=window.AH;$('upd').textContent=A?'拍賣場資料：'+new Date(A.updated*1000).toLocaleString('zh-TW',{hour12:false})+'・US PvP 聯盟':'';
  go(cur)}
-function go(k){cur=k;history.replaceState(null,'','#'+k);[].forEach.call($('tabs').children,function(c){c.classList.toggle('on',c.getAttribute('data-t')==k)});
+window.addEventListener('popstate',function(e){if(e.state&&e.state.md)return;var k=(e.state&&e.state.tab)||(location.hash||'#overview').slice(1);if(k!=cur&&window.CRAFTS)go(k)}); // 手機返回鍵回到上一個分頁
+function go(k,push){if(push&&k!=cur){history.pushState({tab:k},'','#'+k);window.scrollTo(0,0)}else history.replaceState({tab:k},'','#'+k);cur=k;[].forEach.call($('tabs').children,function(c){c.classList.toggle('on',c.getAttribute('data-t')==k)});
  if(k=='overview')overview();else if(k.indexOf('g_')==0)gather(k);else craft(k)}
 function card(x){return '<div class="card" data-item="'+x.item_id+'"><span class="ic" style="'+(x.icon?'background-image:url('+esc(x.icon)+')':'')+'"></span>'+
  '<span class="nm" style="color:'+(QC[x.q]||'#fff')+'">'+esc(x.item)+(x.qty>1?' ×'+x.qty:'')+'</span><span class="roi '+(x.roi>=0?'up':'down')+'">'+(x.roi*100).toFixed(0)+'%</span>'+
@@ -112,7 +113,7 @@ function overview(){
   if(r[4]&&r[3].indexOf(r[4])<0)h+='<div class="r"><span>單件最賺：'+esc(r[4].item)+'</span><span class="up">'+money(r[4].p_ah)+'</span></div>';
   h+='</div>'});
  h+='</div>';$('view').innerHTML=h;
- [].forEach.call(document.querySelectorAll('.pc[data-t]'),function(e){e.onclick=function(){go(e.getAttribute('data-t'))}})}
+ [].forEach.call(document.querySelectorAll('.pc[data-t]'),function(e){e.onclick=function(){go(e.getAttribute('data-t'),1)}})}
 var F={sell:1,profit:1,cheap:0,can:0},S='roi',q='';
 function craft(k){var C=prep(k);if(!C){$('view').innerHTML='<div class="dim">這個專業的資料還在準備中（機器人每小時更新一次）</div>';return}
  $('view').innerHTML='<div class="note">成本＝材料照 AH 一般價買（助熔劑、線、瓶子、香料這類用商人價）；淨賺已扣 AH 5% 手續費；CP 值＝淨賺 ÷ 成本。「每小時賣出」是估計成交量。材料有缺行情的配方不列。</div>'+
