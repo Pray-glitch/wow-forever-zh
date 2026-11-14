@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=39db4bb3"></script>
+<script src="data.js?v=410bca11"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -163,6 +163,9 @@ details.sec.sub>.body{padding:0 12px 6px}
   // 副本英文名 → foreverchanges 繁中頁（「挖掘場：濕地」這種也用冒號前的部分比對）
   const DMAP = {};
   (window.DUNGEONS || []).forEach(d => { DMAP[d.en] = d.slug; DMAP[d.en.split(':')[0].trim()] = d.slug; DMAP[d.en.replace(/^The /, '')] = d.slug; });
+  // 11/15：大小寫不同、常見別名（Halls of Thanes、Stormwind Stockades）也當副本（地點青色）
+  Object.keys(DMAP).forEach(k => { DMAP[k.toLowerCase()] = DMAP[k]; });
+  [['halls of thanes', 'hall-of-thanes'], ['stormwind stockades', 'the-stockade'], ['stormwind stockade', 'the-stockade'], ['stockades', 'the-stockade']].forEach(([k, v]) => { if ((window.DUNGEONS || []).some(d => d.slug === v)) DMAP[k] = v; });
   // 統一配色（照遊戲）：物品依品質、技能天賦金黃、職業依職業色、地點副本青色
   const QCOL = ['#9d9d9d', '#ffffff', '#1eff00', '#3d8bff', '#b154ff', '#ff8000'];
   const CLSCOL = {Warrior:'#c69b6d', Paladin:'#f48cba', Hunter:'#aad372', Rogue:'#fff468', Priest:'#ffffff', Shaman:'#0070dd', Mage:'#3fc7eb', Warlock:'#8788ee', Druid:'#ff7c0a'};
@@ -192,7 +195,10 @@ details.sec.sub>.body{padding:0 12px 6px}
     if (dh) return aTag(dh, txt, 'w zone');
     if (!v && !item && !whq) return '<b>' + txt + '</b>';
     let [icon, col] = v.split('|');
-    col = kindColor(key, txt) || col;
+    const kc = kindColor(key, txt);
+    // 11/15 夜間驗收：Mobalytics 預設的金色（#f2bf43）不是品質色 → 永恆新物品（inv_ 圖示、語庫沒有品質）用白色；沒圖示的（首領名）不上色
+    if (!kc && /^#f2bf43$/i.test(col || '')) { if (/^inv_/.test(icon || '')) col = QCOL[1]; else if (!icon) col = ''; }
+    col = kc || col;
     // 圖示直接引用 Wowhead 圖庫（不存到本站）
     // Wowhead 圖庫沒有的（天裔精靈、坦克/輸出圖示）→ 改用原文（Mobalytics）的圖
     const alt = (v.split('|')[2] || '').replace(/"/g, '');
@@ -209,16 +215,18 @@ details.sec.sub>.body{padding:0 12px 6px}
       if (p.startsWith('<')) { if (/^<(b class="w"|a )/.test(p)) inW++; else if ((p === '</b>' || p === '</a>') && inW) inW--; out += p; continue; }
       if (inW) { out += p; continue; }
       out += p.replace(/([\u4e00-\u9fff][\u4e00-\u9fff0-9·・]{0,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/g, (m, zh, en) => {
-          const known = ICONS[en] || ITEMS[en] || DMAP[en] || WHQ.has(en);
+          const known = ICONS[en] || ITEMS[en] || DMAP[en] || DMAP[en.toLowerCase()] || WHQ.has(en);
           // 語庫沒有的專有名詞（新物品、首領）：英文是「每個字大寫」的名稱 → 至少給 Wowhead 連結
           // 11/11：縮寫（PUG、PPM）、介面名稱、章節名（Spell Overview、Edit Mode、Lockpicking Cap、Notable Trash Mob Loot…）不做 Wowhead 連結
           if (!known && (/^[A-Z]{2,5}$/.test(en) || /(?:^| )(?:Mode|Overview|Displayed|Buffs|Debuffs|Cap|Macros?|Loot|Settings|Options|Frames?|Tips|Guide|Rotation|Priority|Weights?|List|Section|Menu|Window|Panel|Tracker|Addons?|AddOns?|UI)$/.test(en))) return m;
+          // 11/15：一般詞（畢業裝、屬性、口號、藥劑分類、見到即擊殺）不做 Wowhead 連結
+          if (!known && /^(?:BiS|Hit|Hit Rating|Crit|Critical Strike|Haste|Spell Haste|Spell Power|Spellpower|Spell Damage|Hit Chance|Spell Hit|Spell Crit|Spell Critical Strike(?: Chance)?|Critical Strike Chance|Crit Chance|Attack Power|Intellect|Int|Spirit|Stamina|Agility|Strength|Armor|Expertise|Mp5|Always Be Casting|ABC|Kill on Sight|KOS|Battle Elixirs?|Guardian Elixirs?|Flasks?)$/i.test(en)) return m;
           if (!known && !/^[A-Z][A-Za-z']*(?:[ :\-]+(?:[A-Z][A-Za-z']*|of|the|and|to|in|on|a|an|for|from|with))*$/.test(en)) return m;
           // 「和磨刀石」「搭配風怒」：前面的連接詞不算名字
-          const lead = (zh.match(/^(?:級的|級|包括|包含|例如|像是|搭配|使用|以及|還有|和|與|或|及|跟|用|把|將|對|在|從|的|施放|解除|受到|請先完成|完成|搭船到|搭船前往|靠|以)(?=[\u4e00-\u9fff]{2})/) || [''])[0];
+          const lead = (zh.match(/^(?:而|請去|再補上|補上|依循|級的|級|包括|包含|例如|像是|搭配|使用|以及|還有|和|與|或|及|跟|用|把|將|對|在|從|的|施放|解除|受到|請先完成|完成|搭船到|搭船前往|靠|以)(?=[\u4e00-\u9fff]{2})/) || [''])[0];
           let pre = lead, name = zh.slice(lead.length);
           // 「此懲罰仍適用於暴風雪」「暴風雪觸發祕法集中」：句子黏在名字前面 → 只取最後一個虛詞後面的部分當名字
-          if (name.length > 3) { const m2 = name.match(/^(.*(?:觸發|施放|解除|受到|完成|搭船到|搭船前往|使用|搭配|打開|開啟|新增|更新|保持|拾取|抵達|生成的|產生的|召喚的|包括|達到|達成|製作|開好|獲得|取得|購買|影響|提高|提升|降低|增加|減少|移除|調整|脫離|適用|顯示|同時|改為|變成|取代|不再|現在|你的|會|但|於|在|和|與|或|及|讓|對|將|把|從|以|為|是|有|了)的?)([\u4e00-\u9fff0-9·・]{2,})$/); if (m2) { pre += m2[1]; name = m2[2]; } }
+          if (name.length > 3) { const m2 = name.match(/^(.*(?:觸發|施放|解除|受到|完成|依循|請去|補上|維護一份|一份|搭船到|搭船前往|使用|搭配|打開|開啟|新增|更新|保持|拾取|抵達|生成的|產生的|召喚的|包括|達到|達成|製作|開好|獲得|取得|購買|影響|提高|提升|降低|增加|減少|移除|調整|脫離|適用|顯示|同時|改為|變成|取代|不再|現在|你的|會|但|於|在|和|與|或|及|讓|對|將|把|從|以|為|是|有|了)的?)([\u4e00-\u9fff0-9·・]{2,})$/); if (m2) { pre += m2[1]; name = m2[2]; } }
           // 「不死族牧師的黑暗犧牲」：「的」前面夠長（4 字以上）才拆；「馬杜克的黑檀劍柄」這種名字本身有「的」就不拆
           // 11/14：「15 隻暴怒幻影」「10 隻受折磨的靈魂」：單獨的量詞先拿掉（在拆「的」之前，免得名字只包到一半）
           { const q0 = name.match(/^[個隻](?=[\u4e00-\u9fff]{2})/); if (q0) { pre += q0[0]; name = name.slice(1); } }
@@ -238,7 +246,7 @@ details.sec.sub>.body{padding:0 12px 6px}
   const norm = u => (u || '').replace(/[?#].*$/, '').replace(/\/+$/, '').toLowerCase();
   const BYURL = {}; G.forEach(g => { BYURL[norm(g.url)] = g.slug; });
   function dungeonHref(en){
-    const slug = DMAP[en] || DMAP[(en||'').replace(/^The /, '')];
+    const slug = DMAP[en] || DMAP[(en||'').replace(/^The /, '')] || DMAP[(en||'').toLowerCase()] || DMAP[(en||'').replace(/^The /i, '').toLowerCase()];
     if (!slug) return '';
     const own = G.find(g => g.cat === '地城' && norm(g.url).indexOf(slug) >= 0);
     return own ? '#' + own.slug : 'https://foreverchanges.pro/zh-tw/dungeons/' + slug;
@@ -385,6 +393,8 @@ details.sec.sub>.body{padding:0 12px 6px}
     // 清掉原網站的雜訊：重複日期、頁面自帶的「目錄」「最新攻略」等區塊、作者／更新於那行（上方已顯示）
     md = md.replace(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2}, \d{4})\1/g, '$1');
     md = md.replace(/^.*(作者|By)[：: ].*(更新於|Updated).*$/gm, '');
+    // 11/15：作者、更新於分成兩行（插件攻略、阿爾卡茲監獄、盜賊練功）也拿掉
+    md = md.replace(/^(?:作者|By)[：:][^\n]*\n[ \t]*(?:更新於|Updated)[^\n]*$/gm, '');
     md = md.replace(/^#{1,3}\s*(目錄|目次|Table of Contents|最新攻略|熱門攻略|相關攻略|推薦攻略|Trending Guides|Related Guides|Latest Guides|留言|評論|Comments)\s*$[\s\S]*?(?=^#{1,2}\s|$(?![\s\S]))/gmi, '');
     md = md.replace(/<([a-z_]*reminder|system[a-z_]*)>[\s\S]*?<\/([a-z_]*reminder|system[a-z_]*)>/g, '');
     // 修掉抓取時誤判的小標題：「### ### X」「- ### X」「| ### X |」
