@@ -184,9 +184,9 @@ var WN={200:'單手斧',201:'雙手斧',202:'弓',203:'槍械',204:'單手錘',2
 var SN={HEAD:'頭部',NECK:'頸部',SHOULDER:'肩部',CLOAK:'背部',BACK:'背部',CHEST:'胸部',ROBE:'胸部',WRIST:'手腕',HAND:'手',WAIST:'腰部',LEGS:'腿部',FEET:'腳',FINGER:'手指',TRINKET:'飾品',HOLDABLE:'副手',SHIELD:'盾牌',BODY:'襯衣',TABARD:'外袍',RELIC:'聖物',WEAPON:'單手',TWOHWEAPON:'雙手',WEAPONMAINHAND:'主手',WEAPONOFFHAND:'副手',RANGED:'遠程',RANGEDRIGHT:'遠程',THROWN:'投擲'};
 var SORD=['頭部','頸部','肩部','背部','胸部','手腕','手','腰部','腿部','腳','手指','飾品','副手','盾牌','襯衣','外袍','聖物','單手','主手','雙手','遠程','投擲'];
 var QL=[['','全部'],['POOR','粗糙'],['COMMON','普通'],['UNCOMMON','優秀'],['RARE','精良'],['EPIC','史詩']];
-var fq='',fw='',fs='',lmin='',lmax='';
+var fq=[],fw='',fs='',lmin='',lmax='';
 function wt(it){return it.w?it.w-1:-1}
-function drawF(){var h='<div class="frow"><b>品質</b>'+QL.map(function(x){return '<span class="chip'+(fq==x[0]?' on':'')+'" data-fq="'+x[0]+'"'+(x[0]?' style="color:'+qcol(x[0])+'"':'')+'>'+x[1]+'</span>'}).join('')+'</div>';
+function drawF(){var h='<div class="frow"><b>品質</b>'+QL.map(function(x){return '<span class="chip'+((x[0]?fq.indexOf(x[0])>=0:!fq.length)?' on':'')+'" data-fq="'+x[0]+'"'+(x[0]?' style="color:'+qcol(x[0])+'"':'')+'>'+x[1]+'</span>'}).join('')+'</div>';
  h+='<div class="frow"><b>需求等級</b><input id="lmin" type="number" inputmode="numeric" placeholder="最低" value="'+lmin+'"> ～ <input id="lmax" type="number" inputmode="numeric" placeholder="最高" value="'+lmax+'">'+[[1,10],[11,20],[21,30],[31,40],[41,50],[51,60]].map(function(r){return '<span class="chip'+(lmin==r[0]&&lmax==r[1]?' on':'')+'" data-lv="'+r[0]+'-'+r[1]+'">'+r[0]+'-'+r[1]+'</span>'}).join('')+'</div>';
  var base=A.items.filter(function(it){return !cat||it.c==cat});
  if(cat=='護甲'||cat=='武器'){var cw={},cs={};base.forEach(function(it){var w=wt(it);if(w>=0&&WN[w])cw[w]=(cw[w]||0)+1;if(cat=='護甲'&&SN[it.sl])cs[SN[it.sl]]=(cs[SN[it.sl]]||0)+1});
@@ -194,16 +194,16 @@ function drawF(){var h='<div class="frow"><b>品質</b>'+QL.map(function(x){retu
   if(ws.length)h+='<div class="frow"><b>類型</b><span class="chip'+(fw===''?' on':'')+'" data-fw="">全部</span>'+ws.map(function(w){return '<span class="chip'+(fw==w?' on':'')+'" data-fw="'+w+'">'+WN[w]+'</span>'}).join('')+'</div>';
   var ss=SORD.filter(function(x){return cs[x]});
   if(ss.length)h+='<div class="frow"><b>部位</b><span class="chip'+(fs===''?' on':'')+'" data-fs="">全部</span>'+ss.map(function(x){return '<span class="chip'+(fs==x?' on':'')+'" data-fs="'+x+'">'+x+'</span>'}).join('')+'</div>'}
- if(fq||fw||fs||lmin||lmax)h+='<div class="frow"><span class="chip" data-reset="1">✕ 清除篩選</span></div>';
+ if(fq.length||fw||fs||lmin||lmax)h+='<div class="frow"><span class="chip" data-reset="1">✕ 清除篩選</span></div>';
  $('flt').innerHTML=h;
  $('lmin').oninput=$('lmax').oninput=function(){lmin=$('lmin').value;lmax=$('lmax').value;page=0;render()};
  $('lmin').onchange=$('lmax').onchange=function(){drawF()}}
 $('flt').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;
- if(t.hasAttribute('data-fq'))fq=t.getAttribute('data-fq');
+ if(t.hasAttribute('data-fq')){var v=t.getAttribute('data-fq'),i=fq.indexOf(v);if(!v)fq=[];else if(i>=0)fq.splice(i,1);else fq.push(v)}
  else if(t.hasAttribute('data-fw'))fw=t.getAttribute('data-fw');
  else if(t.hasAttribute('data-fs'))fs=t.getAttribute('data-fs');
  else if(t.hasAttribute('data-lv')){var r=t.getAttribute('data-lv').split('-');if(lmin==r[0]&&lmax==r[1]){lmin='';lmax=''}else{lmin=r[0];lmax=r[1]}}
- else if(t.hasAttribute('data-reset')){fq=fw=fs=lmin=lmax=''}
+ else if(t.hasAttribute('data-reset')){fq=[];fw=fs=lmin=lmax=''}
  drawF();page=0;render()};
 drawF();
 
@@ -252,7 +252,7 @@ $('nav').onclick=function(e){var t=e.target.closest('span[data-s]');if(!t)return
  if(q){q='';$('q').value='';$('dash').style.display='';$('allh').textContent='全部物品';page=0;render()}
  setSec(k,true);document.querySelector('h2.fold[data-s="'+k+'"]').scrollIntoView({behavior:'smooth'})};
 $('prev').onclick=function(){if(page>0){page--;render()}};$('next').onclick=function(){page++;render()};
-function rows(){var a=parseInt(lmin,10),b=parseInt(lmax,10);var r=A.items.filter(function(it){if(cat&&it.c!=cat)return false;if(fq&&it.q!=fq)return false;if(fw!==''&&wt(it)!=fw)return false;if(fs&&SN[it.sl]!=fs)return false;if(a>0&&!((it.rl||0)>=a))return false;if(b>0&&!((it.rl||0)<=b))return false;if(q&&(it.n+' '+(it.e||'')).toLowerCase().indexOf(q)<0)return false;return true});
+function rows(){var a=parseInt(lmin,10),b=parseInt(lmax,10);var r=A.items.filter(function(it){if(cat&&it.c!=cat)return false;if(fq.length&&fq.indexOf(it.q)<0)return false;if(fw!==''&&wt(it)!=fw)return false;if(fs&&SN[it.sl]!=fs)return false;if(a>0&&!((it.rl||0)>=a))return false;if(b>0&&!((it.rl||0)<=b))return false;if(q&&(it.n+' '+(it.e||'')).toLowerCase().indexOf(q)<0)return false;return true});
  r.sort(function(a,b){var x=a[sortK],y=b[sortK];if(x==null)return 1;if(y==null)return -1;if(sortK=='n')return x.localeCompare(y,'zh-Hant')*sortDir;return (x-y)*sortDir});return r}
 function lvTxt(it){var p=[];if(it.rl>1)p.push(it.rl+' 級');var w=wt(it);if(w>=0&&WN[w]&&w!=400)p.push(WN[w]);if(SN[it.sl]&&SN[it.sl]!=WN[w])p.push(SN[it.sl]);return p.length?'<span class="lv">'+(it.e?' · ':'')+p.join(' ')+'</span>':''}
 function render(){var r=rows(),pages=Math.max(1,Math.ceil(r.length/PER));if(page>=pages)page=pages-1;var sl=r.slice(page*PER,page*PER+PER);
