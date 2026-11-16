@@ -119,16 +119,16 @@ h2.fold .tg{margin-left:auto;font-family:"Noto Sans TC",sans-serif;font-size:13p
 <div class="sec" id="s_rank"><div class="tabs" id="ctabs"></div>
 <div class="two">
  <div class="box"><h3>🔥 上架最多</h3><div id="cHot"></div></div>
- <div class="box"><h3>💰 最貴（一般價）</h3><div id="cTop"></div></div>
+ <div class="box"><h3>💰 最貴</h3><div id="cTop"></div></div>
 </div></div>
 </div>
 <h2 class="fold" data-s="all"><span id="allh">全部物品</span><span class="tg"></span></h2>
 <div class="sec" id="s_all"><div class="bar" id="cats"></div><div class="flt" id="flt"></div>
 <div class="tblw"><table><thead><tr>
- <th class="l" data-k="n">物品</th><th data-k="k">一般價</th><th data-k="m" class="hide-s">最低價</th><th data-k="ch" class="hide-s">比前 7 天</th><th data-k="s">每小時賣出</th><th data-k="t" class="hide-s">數量</th><th data-k="a" class="hide-s">架上筆數</th>
+ <th class="l" data-k="n">物品</th><th data-k="p">價格</th><th data-k="m" class="hide-s">最低價</th><th data-k="ch" class="hide-s">比前 7 天</th><th data-k="s">每小時賣出</th><th data-k="t" class="hide-s">數量</th><th data-k="a" class="hide-s">架上筆數</th>
 </tr></thead><tbody id="tb"></tbody></table></div>
 <div class="pager"><button id="prev">上一頁</button><span id="pg" style="align-self:center;color:var(--dim)"></span><button id="next">下一頁</button></div></div>
-<div class="foot">資料來源：暴雪官方 Battle.net API（WoW Forever）。每小時賣出＝這一小時跟上一小時比，消失的上架裡「原本還剩 2 小時以上」的（不可能自己到期，所以多半是被買走；也可能是賣家自己取消重掛），取最近 3 天平均，是估計值。<br>一般價＝把所有上架依單價由低到高排，第 20% 數量那一筆的價格；比「最低價」不容易被一兩筆亂開的低價誤導（架上少於 5 筆時直接用最低價）。<br>菲比鳩比公會整理 · 非暴雪官方網站</div>
+<div class="foot">資料來源：暴雪官方 Battle.net API（WoW Forever）。每小時賣出＝這一小時跟上一小時比，消失的上架裡「原本還剩 2 小時以上」的（不可能自己到期，所以多半是被買走；也可能是賣家自己取消重掛），取最近 3 天平均，是估計值。<br>清單上的「價格」：武器和護甲顯示最低價，其他物品顯示一般價。一般價＝把所有上架依單價由低到高排，第 20% 數量那一筆的價格；比「最低價」不容易被一兩筆亂開的低價誤導（架上少於 5 筆時直接用最低價）。<br>菲比鳩比公會整理 · 非暴雪官方網站</div>
 </div>
 <div class="modal" id="md"><div class="dlg" id="dlg"></div></div>
 <script src="data.js"></script>
@@ -145,6 +145,8 @@ function qcol(q){return 'var(--'+(QC[q]||'q-common')+')'}
 function icon(it,big){return '<span class="ic'+(big?' big':'')+'" style="'+(it.i?'background-image:url('+esc(it.i)+')':'')+'"></span>'}
 function dstr(d){d=String(d);return d.slice(4,6)+'/'+d.slice(6,8)}
 // 跟前 7 天（不含今天）每天一般價的中位數比；用一般價不用最低價，免得有人掛 1 銅或天價把百分比灌爆
+// 清單上顯示的價格：武器、護甲（一件一件買）用最低價；材料、消耗品用一般價
+A.items.forEach(function(it){it.p=it.w?it.m:it.k});
 A.items.forEach(function(it){var h=it.h||[];it.ch=null;var prev=h.slice(Math.max(0,h.length-8),h.length-1).map(function(p){return p[3]}).filter(function(v){return v>0}).sort(function(x,y){return x-y});if(prev.length>=2){var med=prev[prev.length>>1];it.avg=med;it.ch=(it.k-med)/med*100}});
 // 頂部
 var up=new Date((A.updated||0)*1000);$('upd').textContent=A.updated?up.toLocaleString('zh-TW',{hour12:false}):'尚未有資料';
@@ -218,7 +220,7 @@ function drawF(){var h='<div class="frow"><b>我能用</b><select id="ucls"><opt
  $('flt').innerHTML=h;
  $('lmin').oninput=$('lmax').oninput=function(){lmin=$('lmin').value;lmax=$('lmax').value;page=0;render()};
  $('lmin').onchange=$('lmax').onchange=function(){drawF()};
- function sm(){try{localStorage.setItem('ahMe',JSON.stringify(ME))}catch(e){}page=0;if(sortK=='a'){sortK='k';sortDir=1}render()}
+ function sm(){try{localStorage.setItem('ahMe',JSON.stringify(ME))}catch(e){}page=0;if(sortK=='a'){sortK='p';sortDir=1}render()}
  $('ucls').onchange=function(){ME.c=this.value;sm();drawF()};$('ulv').oninput=function(){ME.l=this.value;sm()};$('ulv').onchange=function(){drawF()}}
 $('flt').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;
  if(t.hasAttribute('data-fq')){var v=t.getAttribute('data-fq'),i=fq.indexOf(v);if(!v)fq=[];else if(i>=0)fq.splice(i,1);else fq.push(v)}
@@ -241,7 +243,7 @@ var GROUPS=[['礦石與金屬條',[2770,2771,2772,2775,3858,7911,10620,2840,3576
  ['藥水',[118,858,929,1710,3928,13446,2455,3385,3827,6149,13444,5634,6048,3387,13442]]];
 A.items.forEach(function(it){var h=it.h||[];it.dy=null;if(h.length>=2){var a=h[h.length-2],b=h[h.length-1],pa=a[3]||a[1],pb=b[3]||b[1];if(pa>0)it.dy=(pb-pa)/pa*100}});
 function dyTag(it){return it.dy==null?'<span class="sub">—</span>':'<span class="sub '+(it.dy>=0?'up':'down')+'">'+(it.dy>=0?'▲':'▼')+Math.abs(it.dy).toFixed(1)+'%</span>'}
-function matRow(it,rank){return '<div class="mat" data-id="'+it.id+'">'+(rank?'<span class="rk">'+rank+'</span>':'')+icon(it)+'<span class="nm"><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span><span class="sub">'+(it.e?esc(it.e)+' · ':'')+'架上 '+it.a+' 筆'+(it.s!=null?' · 每小時賣 '+soldTxt(it):'')+'</span></span><span class="pr">'+money(it.k)+dyTag(it)+'</span></div>'}
+function matRow(it,rank){return '<div class="mat" data-id="'+it.id+'">'+(rank?'<span class="rk">'+rank+'</span>':'')+icon(it)+'<span class="nm"><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span><span class="sub">'+(it.e?esc(it.e)+' · ':'')+'架上 '+it.a+' 筆'+(it.s!=null?' · 每小時賣 '+soldTxt(it):'')+'</span></span><span class="pr">'+money(it.p)+dyTag(it)+'</span></div>'}
 var gi=0;
 function drawG(){$('gtabs').innerHTML=GROUPS.map(function(g,i){return '<span class="chip'+(i==gi?' on':'')+'" data-g="'+i+'">'+g[0]+'</span>'}).join('');
  var rows=GROUPS[gi][1].map(function(id){return byId0[id]}).filter(Boolean);
@@ -254,7 +256,7 @@ var ci=catList[0]||'';
 function drawC(){$('ctabs').innerHTML=catList.map(function(c){return '<span class="chip'+(c==ci?' on':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</span>'}).join('');
  var inC=A.items.filter(function(it){return it.c==ci&&it.n.indexOf('未收錄')<0});
  var hotC=inC.slice().sort(function(a,b){return b.a-a.a}).slice(0,15);
- var topC=inC.filter(function(it){return it.a>=3}).sort(function(a,b){return b.k-a.k}).slice(0,15);
+ var topC=inC.filter(function(it){return it.a>=3}).sort(function(a,b){return b.p-a.p}).slice(0,15);
  function lim(id,arr){var el=$(id);el.className='lim';el.innerHTML=arr.map(function(it,i){return matRow(it,i+1)}).join('')+(arr.length>5?'<button class="morebtn">看全部 '+arr.length+' 名 ▼</button>':'')||'<div style="color:var(--dim)">沒有資料</div>'}
  lim('cHot',hotC);lim('cTop',topC)}
 document.addEventListener('click',function(e){var b=e.target.closest('.morebtn');if(!b)return;var l=b.parentNode;l.classList.toggle('open');var n=l.querySelectorAll('.mat').length;b.textContent=l.classList.contains('open')?'只看前 5 名 ▲':'看全部 '+n+' 名 ▼'});
@@ -279,7 +281,7 @@ function rows(){var a=parseInt(lmin,10),b=parseInt(lmax,10);var r=A.items.filter
  r.sort(function(a,b){var x=a[sortK],y=b[sortK];if(x==null)return 1;if(y==null)return -1;if(sortK=='n')return x.localeCompare(y,'zh-Hant')*sortDir;return (x-y)*sortDir});return r}
 function lvTxt(it){var p=[];if(it.rl>1)p.push(it.rl+' 級');var w=wt(it);if(w>=0&&WN[w]&&w!=400)p.push(WN[w]);if(SN[it.sl]&&SN[it.sl]!=WN[w])p.push(SN[it.sl]);return p.length?'<span class="lv">'+(it.e?' · ':'')+p.join(' ')+'</span>':''}
 function render(){var r=rows(),pages=Math.max(1,Math.ceil(r.length/PER));if(page>=pages)page=pages-1;var sl=r.slice(page*PER,page*PER+PER);
- $('tb').innerHTML=sl.map(function(it){return '<tr class="row" data-id="'+it.id+'"><td class="l"><div class="in">'+icon(it)+'<span><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span>'+((it.e||it.rl||it.w)?'<span class="en">'+esc(it.e||'')+lvTxt(it)+'</span>':'')+'</span></div></td><td>'+money(it.k)+(it.sp?'<div style="color:#ff9f43;font-size:11px">⚠ 剛暴漲</div>':'')+'</td><td class="hide-s">'+money(it.m)+'</td><td class="hide-s">'+(it.ch==null?'<span style="color:var(--dim)">—</span>':pct(it.ch))+'</td><td>'+soldTxt(it)+'</td><td class="hide-s">'+it.t.toLocaleString()+'</td><td class="hide-s">'+it.a+'</td></tr>'}).join('')||'<tr><td colspan="7" class="l" style="color:var(--dim)">找不到符合的物品</td></tr>';
+ $('tb').innerHTML=sl.map(function(it){return '<tr class="row" data-id="'+it.id+'"><td class="l"><div class="in">'+icon(it)+'<span><span style="color:'+qcol(it.q)+'">'+esc(it.n)+'</span>'+((it.e||it.rl||it.w)?'<span class="en">'+esc(it.e||'')+lvTxt(it)+'</span>':'')+'</span></div></td><td>'+money(it.p)+(it.sp?'<div style="color:#ff9f43;font-size:11px">⚠ 剛暴漲</div>':'')+'</td><td class="hide-s">'+money(it.m)+'</td><td class="hide-s">'+(it.ch==null?'<span style="color:var(--dim)">—</span>':pct(it.ch))+'</td><td>'+soldTxt(it)+'</td><td class="hide-s">'+it.t.toLocaleString()+'</td><td class="hide-s">'+it.a+'</td></tr>'}).join('')||'<tr><td colspan="7" class="l" style="color:var(--dim)">找不到符合的物品</td></tr>';
  $('pg').textContent=(page+1)+' / '+pages+'（共 '+r.length+' 項）'}
 render();
 // 物品詳細
