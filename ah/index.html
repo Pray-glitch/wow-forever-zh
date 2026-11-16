@@ -265,13 +265,14 @@ function open(id){var it=byId[id];if(!it)return;var h=it.h||[];
  var chart=lineChart(h.map(function(p,i){return [i,p[1]/10000]}),{h:180,wait:'明天開始',fmt:function(v){return v>=1?v.toFixed(1)+'金':Math.round(v*100)+'銀'},xfmt:function(i){return h[i]?dstr(h[i][0]):''}});
  var lo=null,hi=null;h.forEach(function(p){if(lo==null||p[1]<lo)lo=p[1];if(hi==null||p[1]>hi)hi=p[1]});
  $('dlg').innerHTML='<div class="hd">'+icon(it,1)+'<div><div style="font-size:20px;font-weight:700;color:'+qcol(it.q)+'">'+esc(it.n)+'</div>'+(it.e?'<div class="en" style="font-size:13px">'+esc(it.e)+'</div>':'')+'<div style="color:var(--dim);font-size:12px">'+esc(it.c||'')+' · ID '+it.id+'</div></div><button class="x" onclick="document.getElementById(\'md\').classList.remove(\'on\')">×</button></div>'+
- '<div class="stats"><div><span class="lb">最低價</span>'+money(it.m)+'</div><div><span class="lb">一般價</span>'+money(it.k)+(it.sp?'<div style="color:#ff9f43;font-size:12px">⚠ 剛暴漲，前幾天約 '+money(it.sp)+'，可能有人掃貨後高價重掛</div>':'')+'</div><div><span class="lb">前 7 天一般價</span>'+(it.avg?money(it.avg):'—')+'</div><div><span class="lb">上架</span>'+it.a+' 筆 / '+it.t.toLocaleString()+' 個</div><div><span class="lb">估計賣出</span>'+soldFull(it)+'</div>'+(it.mk?'<div><span class="lb">誰做得出來</span>'+esc(it.mk)+'</div>':'')+'</div>'+
+ '<div class="stats"><div><span class="lb">最低價</span>'+money(it.m)+'</div><div><span class="lb">一般價</span>'+money(it.k)+(it.sp?'<div style="color:#ff9f43;font-size:12px">⚠ 剛暴漲，前幾天約 '+money(it.sp)+'，可能有人掃貨後高價重掛</div>':'')+'</div><div><span class="lb">前 7 天一般價</span>'+(it.avg?money(it.avg):'—')+'</div><div><span class="lb">上架</span>'+it.a+' 筆 / '+it.t.toLocaleString()+' 個</div>'+(it.mk?'<div><span class="lb">誰做得出來</span>'+esc(it.mk)+'</div>':'')+'</div>'+
  '<div id="lstbox"></div><div id="tipbox"></div>'+'<h3 style="margin:6px 0;color:var(--gold);font-size:15px">每日最低單價</h3>'+chart+
  (h.length?'<div style="color:var(--dim);font-size:12px;margin-top:6px">紀錄 '+h.length+' 天，最低 '+money(lo)+'，最高 '+money(hi)+'</div>':'');
  $('md').classList.add('on');showList(it.id);showTip(it.id)}
 var listLoading=0,listCur=0;
 function salesHtml(id){var S=(window.SALES||{})[id],h='<h3 style="margin:14px 0 4px;color:var(--gold);font-size:15px">最近成交（推估）</h3>';
- if(!S||!S.length)return h+'<div style="color:var(--dim);font-size:13px">最近 14 天沒有看到成交</div>';
+ var it=byId[id]||{},sm=soldFull(it);h+='<div style="font-size:13px;margin-bottom:4px">'+sm+'</div>';
+ if(!S||!S.length)return h+(it.sq>0||it.s>0?'<div style="color:var(--dim);font-size:12px">每一筆的成交價從 11/15 下午才開始記錄，更早賣出的沒有留下價格。</div>':'');
  S=S.slice().reverse();var sum=0,n=0,one=S.every(function(r){return r[2]==1});S.forEach(function(r){sum+=r[1]*r[2];n+=r[2]});
  h+='<div style="font-size:13px;margin-bottom:4px">最近 '+S.length+' 筆平均每'+(one?'件':'個')+' '+money(Math.round(sum/n))+'</div><div style="overflow-x:auto"><table class="lst"><tr><th>時間</th><th>'+(one?'價格':'單價')+'</th>'+(one?'':'<th>數量</th>')+'</tr>';
  S.slice(0,20).forEach(function(r){var d=new Date(r[0]*1000);h+='<tr><td>'+(d.getMonth()+1)+'/'+d.getDate()+' '+('0'+d.getHours()).slice(-2)+':00 前後</td><td>'+money(r[1])+'</td>'+(one?'':'<td>'+r[2]+' 個</td>')+'</tr>'});
