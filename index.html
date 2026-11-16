@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=f7ee41bd"></script>
+<script src="data.js?v=72ba0c31"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -159,7 +159,7 @@ details.sec.sub>.body{padding:0 12px 6px}
   if (cats['官方情報']) cats['官方情報'].sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0) || (b.updated || '').localeCompare(a.updated || ''));
   const nav = document.getElementById('nav'), main = document.getElementById('main');
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  let ICONS = {}, ZHEN = {}, ITEMS = {}, WHQ = new Set();
+  let ICONS = {}, ZHEN = {}, ITEMS = {}, WHQ = new Set(), SHORTZH = {};
   // 副本英文名 → foreverchanges 繁中頁（「挖掘場：濕地」這種也用冒號前的部分比對）
   const DMAP = {};
   (window.DUNGEONS || []).forEach(d => { DMAP[d.en] = d.slug; DMAP[d.en.split(':')[0].trim()] = d.slug; DMAP[d.en.replace(/^The /, '')] = d.slug; });
@@ -212,7 +212,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     let [icon, col] = v.split('|');
     const kc = kindColor(key, txt);
     // 11/15 夜間驗收：Mobalytics 預設的金色（#f2bf43）不是品質色 → 永恆新物品（inv_ 圖示、語庫沒有品質）用白色；沒圖示的（首領名）不上色
-    if (!kc && /^#f2bf43$/i.test(col || '')) { if (/^inv_/.test(icon || '')) col = QCOL[1]; else if (!icon) col = ''; }
+    if (!kc && /^#f2bf43$/i.test(col || '')) { if (/^inv_/.test(icon || '') || /\/icons\/items\//.test(v.split('|')[2] || '')) col = QCOL[1]; /* 11/17：原站物品路徑的圖示（Riptear's Spare Arm 用 spell_ 圖）也算物品 */ else if (!icon) col = ''; }
     col = kc || col;
     // 圖示直接引用 Wowhead 圖庫（不存到本站）
     // Wowhead 圖庫沒有的（天裔精靈、坦克/輸出圖示）→ 改用原文（Mobalytics）的圖
@@ -250,7 +250,10 @@ details.sec.sub>.body{padding:0 12px 6px}
           // 11/10：「掉落自死亡礦坑」「打開盧修斯的鎖箱」「八個海盜保險箱」「一些水下呼吸藥劑」「旁邊的收割者」：動詞、數量詞、方位詞不算名字（放在「的」拆完之後，免得「前往幽暗城的赫伯特」少拆）
           { const q = name.match(/^(?:由|隨著|隨|掉落自|來自|前往|進入|打開|開啟|[一二三四五六七八九十兩幾數]+(?:個|隻|把|件|瓶|張|顆|份|種|根|塊)|一些|一點|旁邊的|附近的|身上的|裡面的)(?=[\u4e00-\u9fff]{2})/); if (q) { pre += q[0]; name = name.slice(q[0].length); } }
           // 11/11：用語.json／語庫確定的中文名在最後面 → 只包那個名字（「任務族長之廳」「小鎮月溪鎮」「前往沼澤的旅程」）
-          { const kz = (window.KZH || {})[en]; if (kz && zh.endsWith(kz)) { pre = zh.slice(0, zh.length - kz.length); name = kz; } }
+          { const kz = (window.KZH || {})[en]; if (kz && zh.endsWith(kz)) { pre = zh.slice(0, zh.length - kz.length); name = kz; }
+            // 11/17 夜間驗收：同篇別處「單獨出現」（前面是標點、空白、** 或行首）的「中文（English）」當這個名詞的寫法 →
+            // 這裡的中文比它長、結尾又是它 → 前面多的字不算名字（「因此寵物攻擊」「天賦的暗影出神」「暴風城的馬提亞斯·蕭」）
+            else { const c = SHORTZH[en.toLowerCase()]; let best = ''; if (c) c.forEach(z => { if (zh.length > z.length && zh.endsWith(z) && (!best || z.length < best.length)) best = z; }); if (best && best.length < name.length) { pre = zh.slice(0, zh.length - best.length); name = best; } } }
           if (!known && NOFB.has(CURSLUG)) return m;
           if (!known) return pre + '<a class="w it fb" href="https://www.wowhead.com/forever/search?q=' + encodeURIComponent(en) + '" target="_blank" rel="noopener" title="在 Wowhead 查「' + en.replace(/"/g, '') + '」">' + name + '（' + en + '）</a>';
           return pre + widget(name + '（' + en + '）');
@@ -407,6 +410,8 @@ details.sec.sub>.body{padding:0 12px 6px}
   }
   function render(md, g){
     ICONS = g.icons || {}; ZHEN = g.zhen || {}; ITEMS = g.items || {}; KINDS = g.kinds || {}; WHQ = new Set(g.whq || []);
+    // 11/17：「中文（English）」前面不是中文字的（行首、標點、**、空白）→ 這篇裡這個名詞的單獨寫法（autoWidget 用來切掉黏在前面的字）
+    SHORTZH = {}; md.replace(/(^|[^\u4e00-\u9fff0-9·・])([\u4e00-\u9fff][\u4e00-\u9fff0-9·・]{1,15})（([A-Za-z][A-Za-z' :\-]{1,40})）/gm, (m, a, z, e, off, str) => { if (a === '*' && str[off - 1] === '*' && /[\u4e00-\u9fff]/.test(str[off - 2] || '')) return m; (SHORTZH[e.toLowerCase()] = SHORTZH[e.toLowerCase()] || new Set()).add(z); return m; });
     // 清掉原網站的雜訊：重複日期、頁面自帶的「目錄」「最新攻略」等區塊、作者／更新於那行（上方已顯示）
     md = md.replace(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2}, \d{4})\1/g, '$1');
     md = md.replace(/^.*(作者|By)[：: ].*(更新於|Updated).*$/gm, '');
