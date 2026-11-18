@@ -48,7 +48,7 @@ label{font-size:14px;color:var(--dim);margin-right:14px;white-space:nowrap}
 <div class="dim"><a href="index.html">← 拍賣場</a>・<a href="craft.html">專業獲利表</a></div>
 <div class="note">艾澤拉斯商業管理局（赤脊山・三角路口）：<b>聲望</b>決定能不能買圖紙（不會扣），<b>商人青睞</b>是錢（買東西會扣）。
 聲望靠「工匠令狀」或「空箱子＋偽造收據」；青睞只能靠交填好的運送箱。價格都是拍賣場最新的最低價，每小時更新。</div>
-<div class="bar"><label>目前聲望 <input type="number" id="cur" value="0" min="0" step="100"></label><label>還要的青睞 <input type="number" id="fav" value="630" min="0" step="10"></label><label><input type="checkbox" id="lab"> 已經拿過出貨標籤（第一箱 +2000）</label></div>
+<div class="bar"><label>目前聲望 <input type="number" id="cur" value="0" min="0" step="100"></label><label>還要的青睞 <input type="number" id="fav" value="630" min="0" step="10"></label><label><input type="checkbox" id="lab"> 已經拿過出貨標籤（第一箱 +2000）</label><label><input type="checkbox" id="near" checked> 只挑飛行點附近的顧客（下飛機騎 1 分鐘內）</label></div>
 <div class="tabs" id="tabs"><span class="chip on" data-t="sum">怎麼衝最划算</span><span class="chip" data-t="writ">令狀（依區域）</span><span class="chip" data-t="crate">青睞：填箱子</span></div>
 <div id="view"></div>
 </div>
@@ -67,6 +67,9 @@ var W="J|Elixir of Lesser Agility|鍊金|Ziz Fizziks|Stonetalon Mountains\nJ|Rou
 // 填箱子：等級 青睞 箱子英文 最便宜的一組材料（英文 數量）——outof.games 美服 PvE 11/18 的資料，換伺服器材料表一樣
 var CR=[["高級零件",30,"Waylaid Crate: Expert Parts","Iron Strut",8],["高級布料",30,"Waylaid Crate: Expert Fabrics","Cured Heavy Hide",2],["高級金屬錠",30,"Waylaid Crate: Expert Ingots","Gold Bar",10],["高級紡織品",15,"Waylaid Crate: Expert Textiles","Heavy Leather",20],["大地高級草藥",15,"Waylaid Crate: Earthly Expert Herbs","Goldthorn",10],["高級珍品",15,"Waylaid Crate: Expert Curiosities","Greater Mystic Essence",4],["開花高級草藥",15,"Waylaid Crate: Flowering Expert Herbs","Wintersbite",10],["高級礦石",15,"Waylaid Crate: Expert Ore","Gold Ore",10],["中級布料",20,"Waylaid Crate: Journeyman Fabrics","Cured Medium Hide",2]];
 var NEAR={'Badlands':1,'Searing Gorge':1,'Swamp of Sorrows':1,'Blasted Lands':1,'Deadwind Pass':1,'Burning Steppes':1,'Duskwood':1,'Stranglethorn Vale':1};
+// 顧客離最近聯盟飛行點的距離（碼），Questie 永恆資料庫座標算的（11/19）；null＝資料庫沒有這個顧客
+var DIST={"Ziz Fizziks": 2114, "Kixxle": 1789, "Kzixx": 457, "Battered Trunk": null, "Rizzle Brassbolts": null, "\"Plucky\" Johnson": null, "Razzeric": null, "Goblin Pit Boss": null, "Magus Tirth": null, "Muggol Breezebeard": null, "Alyce": null, "Ash'alari": null, "Cowardly Peon": null, "Grembly": null, "Murache": null, "Short John Mithril": 1300, "\"Sea Wolf\" MacKinley": 35, "Scooty": 14, "Narkk": 148, "Hekshi": null, "Alan Sneeks": null, "Sos'mol": null, "Bath'rah the Windwatcher": null, "Webbed Mudsnout Gnoll": null, "Gorgrash": null, "Kris Legace": 1026, "Centaur Pariah": 2368, "Bibbly F'utzbuckle": 859, "Azore Aldamort": 1261, "Willow": 879, "Mudcrush Durtfeet": 1758, "Ugbert": null, "The Ravenous": null, "Tabetha": 1143, "Greta Mosshoof": 2311, "Taronn Redfeather": 2298, "Jessir Moonbow": 2305, "Ivy Leafrunner": 2296, "Eridan Bluewind": 2287, "Dendrite Starblaze": 595, "Meliri": 392, "Narianna": 398, "Mylentha Riverbend": 542, "Spek": null, "Durganon": null, "Master Smith Burninate": 40, "Evonice Sootsmoker": 47, "Lookout Captain Lolo Longstriker": 64, "Alchemist Pestlezugg": 110, "Spigot Operator Luglunket": 110, "Jhordy Lapforge": 144, "Yeh'kinya": 1148, "Vizzklick": 91, "Lotwil Veriatus": null, "Furious Shadowforge Digger": null, "Garek": null, "Rigglefuzz": null, "Mukomonji": null, "Bullets Bigblast": null, "Juo": null, "Rhapsody Shindigger": 614, "Atal'ai Exile": 1148, "Spark Nilminer": 75, "Torwa Pathfinder": 1986, "Nergal": 86, "Petra Grossen": 66, "Scout Raroul": null, "Kum'isha the Collector": 520, "Hastings": null, "Adon": 1326, "Quartermaster Miranda Breechlock": 17, "Khur Hornstriker": 89, "Hermit Ortell": 1003, "Archmage Xylem": 1540, "Gorzeeki Wildeyes": 2224, "Fallen Adventurer": null},NEARYD=800;
+function dtxt(r){return r.d==null?'位置不明':r.d<=250?'飛行點旁（'+r.d+' 碼）':'離飛行點 '+r.d+' 碼'+(r.d>NEARYD?'（遠）':'')}
 var A,BY={},WR=[],ZONES=[],CRATES=[],TAB='sum';
 function load(){var s=document.createElement('script');s.src='data.js?'+Date.now();s.onload=s.onerror=init;document.body.appendChild(s)}
 function price(en){var x=BY[en];return x&&x.m>0?x.m:null}
@@ -75,23 +78,25 @@ function init(){A=window.AH;if(!A){$('view').innerHTML='<div class="dim">拍賣�
  $('upd').textContent='拍賣場資料：'+new Date(A.updated*1000).toLocaleString('zh-TW',{hour12:false})+'・'+(A.title||'');
  W.split('\n').forEach(function(l){var p=l.split('|');if(p.length<5)return;var w=BY["Craftsman's Writ: "+p[1]],it=BY[p[1]];
   var wp=w&&w.m>0?w.m:null,ip=it&&it.m>0?it.m:null,net=(wp!=null&&ip!=null)?wp+ip-POUCH[p[0]]:null;
-  WR.push({t:p[0],en:p[1],zh:(it&&it.n)||(w&&w.n?w.n.replace('工匠令狀：',''):p[1]),prof:p[2],npc:p[3],z:p[4],wp:wp,ip:ip,wn:w?w.t:0,inn:it?it.t:0,net:net,pay:(wp!=null&&ip!=null)?wp+ip:null,back:POUCH[p[0]],rep:REP[p[0]],per:net!=null?net/REP[p[0]]*1000:null})});
+  WR.push({t:p[0],en:p[1],zh:(it&&it.n)||(w&&w.n?w.n.replace('工匠令狀：',''):p[1]),prof:p[2],npc:p[3],z:p[4],wp:wp,ip:ip,wn:w?w.t:0,inn:it?it.t:0,net:net,pay:(wp!=null&&ip!=null)?wp+ip:null,back:POUCH[p[0]],rep:REP[p[0]],d:DIST[p[3]]!=null?DIST[p[3]]:null,per:net!=null?net/REP[p[0]]*1000:null})});
  var zm={};WR.forEach(function(r){(zm[r.z]=zm[r.z]||{z:r.z,rows:[],rep:0,cost:0,ok:0}).rows.push(r);if(r.net!=null){zm[r.z].rep+=r.rep;zm[r.z].cost+=Math.max(0,r.net);zm[r.z].ok++}});
  ZONES=Object.keys(zm).map(function(k){var z=zm[k];z.per=z.rep?z.cost/z.rep*1000:1e12;z.rows.sort(function(a,b){return (a.per==null?1e12:a.per)-(b.per==null?1e12:b.per)});return z}).sort(function(a,b){return (NEAR[b.z]||0)-(NEAR[a.z]||0)||a.per-b.per});
  CRATES=CR.map(function(c){var cp=price(c[2]),mp=price(c[3]);var tot=(cp!=null&&mp!=null)?cp+mp*c[4]:null;return {zh:c[0],fav:c[1],en:c[2],mat:c[3],matzh:(BY[c[3]]||{}).n||c[3],q:c[4],cp:cp,mp:mp,tot:tot,pf:tot!=null?tot/c[1]:null,avail:BY[c[3]]?BY[c[3]].t:0,cn:BY[c[2]]?BY[c[2]].t:0}}).sort(function(a,b){return (a.pf==null?1e12:a.pf)-(b.pf==null?1e12:b.pf)});
  draw()}
 function emptyCrate(){var best=null;A.items.forEach(function(it){if(it.e&&it.e.indexOf('Waylaid Crate:')==0&&it.m>0&&(!best||it.m<best.m))best=it});return best}
-function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=$('lab').checked;
+function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=$('lab').checked,near=$('near').checked;
  var need=Math.max(0,9000-cur-(lab?0:2000)),toF=Math.max(0,3000-cur-(lab?0:2000));
  var bc=CRATES[0],ec=emptyCrate();
  var favCost=bc&&bc.pf!=null?bc.pf:null,ecp=ec?ec.m:null;
  var first=lab?0:(bc&&bc.tot!=null?bc.tot:null); // 第一箱（觸發出貨標籤 +2,000）
- var good=WR.filter(function(r){return r.per!=null}).sort(function(a,b){return a.per-b.per});
+ var good=WR.filter(function(r){return r.per!=null&&(!near||(r.d!=null&&r.d<=NEARYD))}).sort(function(a,b){return a.per-b.per});
  var top=good.slice(0,20),wAvg=0,wRep=0;top.forEach(function(r){wAvg+=Math.max(0,r.net);wRep+=r.rep});
  // 路線一：每天交最便宜 20 張令狀
  var days=wRep?Math.ceil(need/wRep):null,wTot=null;
  if(wRep){var left=need,full=Math.floor(need/wRep);wTot=full*wAvg;left-=full*wRep;for(var k=0;k<top.length&&left>0;k++){wTot+=Math.max(0,top[k].net);left-=top[k].rep}}
  var aTot=(wTot!=null&&first!=null)?wTot+first:null;
+ // 對照：不挑地點、全部裡最便宜 20 張
+ var alt=null;if(near){var gA=WR.filter(function(r){return r.per!=null}).sort(function(a,b){return a.per-b.per}).slice(0,20),aA=0,rA=0;gA.forEach(function(r){aA+=Math.max(0,r.net);rA+=r.rep});if(rA&&first!=null){var lf=need,fu=Math.floor(need/rA),tA=fu*aA;lf-=fu*rA;for(var q=0;q<gA.length&&lf>0;q++){tA+=Math.max(0,gA[q].net);lf-=gA[q].rep}alt={days:Math.ceil(need/rA),tot:tA+first}}}
  // 路線二：空箱＋偽造收據，一天衝完
  var rcpt=(favCost!=null&&ecp!=null)?favCost*15+ecp:null; // 一張收據＋空箱 = 50 聲望
  var nR=Math.ceil(Math.max(0,need-toF)/50),nF=Math.ceil(toF/125);
@@ -104,13 +109,13 @@ function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=$('lab').ch
   '<div class="card">路線一：交令狀（推薦）<b>'+money(aTot)+'</b><span class="dim">'+(days==null?'—':days+' 天')+'・每 1,000 聲望 '+money(wRep?wAvg/wRep*1000:null)+'</span></div>'+
   '<div class="card">路線二：一天衝完<b>'+money(bTot)+'</b><span class="dim">每 1,000 聲望 '+money(rcpt!=null?rcpt*20:null)+'（貴約 '+(wRep&&rcpt?Math.round(rcpt*20/(wAvg/wRep*1000)):'—')+' 倍）</span></div>'+
   '<div class="card">圖紙要的 '+fav+' 青睞<b>'+money(pTot)+'</b><span class="dim">兩條路都要另外買（'+nP+' 個'+(bc?esc(bc.zh)+'箱':'')+'）</span></div></div>';
- h+='<h2>路線一（推薦）：每天交最便宜的 20 張令狀</h2><ol class="steps">';
+ h+='<h2>路線一（推薦）：每天交最便宜的 '+top.length+' 張令狀'+(near?'（只挑飛行點附近）':'')+'</h2>'+(near?'<div class="note">只列下飛機騎 1 分鐘內（離飛行點 '+NEARYD+' 碼內）的顧客，像塵泥沼澤、淒涼之地、費伍德森林南邊這種離飛行點很遠的不列。取消上面的勾選就回到全部裡最便宜的 20 張。顧客位置是用 Questie 永恆資料庫算的，資料庫還沒有的顧客（例如 Riverglades 的 Spek）算位置不明、不列。'+(alt&&aTot!=null?'<br>代價：不挑地點的話 '+alt.days+' 天、約 '+money(alt.tot)+'；只挑飛行點附近要 '+(days==null?'—':days+' 天')+'、約 '+money(aTot)+'，多花約 '+money(aTot-alt.tot)+'，換不用騎遠路。':'')+'</div>':'')+'<ol class="steps">';
  if(!lab)h+='<li>先填 1 個運送箱交出去（最便宜的是'+(bc?esc(bc.zh)+'箱 '+money(bc.tot):'—')+'），觸發<b>出貨標籤</b>任務：+2,000 聲望、+50 青睞。</li>';
- h+='<li>每天把下面 20 張交一輪：<b>'+wRep.toLocaleString()+' 聲望</b>，約 '+money(wAvg)+'。同一張訂單一天只能交一次，隔天再交同一批。</li>';
+ h+='<li>每天把下面 '+top.length+' 張交一輪：<b>'+wRep.toLocaleString()+' 聲望</b>，約 '+money(wAvg)+'。同一張訂單一天只能交一次，隔天再交同一批。</li>';
  h+='<li><b>'+(days==null?'—':days+' 天')+'</b>到尊敬（'+need.toLocaleString()+' ÷ '+wRep.toLocaleString()+'），總花費約 <b>'+money(aTot)+'</b>。要跑各地 NPC，順路的先交。</li>';
  h+='<li>圖紙要的青睞：買 '+nP+' 個'+(bc?esc(bc.zh)+'箱＋'+(nP*bc.q)+' 個'+esc(bc.matzh):'')+'填好交出去，約 '+money(pTot)+'。</li></ol>';
  h+='<table><tr><th>#</th><th>訂單</th><th>區域・顧客</th><th class="n">淨成本</th><th class="n">聲望</th><th class="n">每千聲望</th></tr>'+
-  top.map(function(r,i){var short=r.wn<1||r.inn<1;return '<tr><td>'+(i+1)+'</td><td><span class="t t'+r.t+'">'+TN[r.t]+'</span>'+esc(r.zh)+(r.prof=='鍛造'?' <span class="bs">鍛造</span>':'')+'<div class="dim">'+esc(r.en)+'・'+r.prof+(short?'・<span style="color:#e06c6c">架上缺貨</span>':'')+'</div></td><td>'+esc(ZN[r.z]||r.z)+(NEAR[r.z]?' <span class="t" style="color:#4fc46a">近</span>':'')+'<div class="dim">'+esc(r.npc)+'</div></td><td class="n">'+money(r.net)+'<div class="dim">先付 '+money(r.pay)+'</div></td><td class="n">'+r.rep+'</td><td class="n">'+money(r.per)+'</td></tr>'}).join('')+
+  top.map(function(r,i){var short=r.wn<1||r.inn<1;return '<tr><td>'+(i+1)+'</td><td><span class="t t'+r.t+'">'+TN[r.t]+'</span>'+esc(r.zh)+(r.prof=='鍛造'?' <span class="bs">鍛造</span>':'')+'<div class="dim">'+esc(r.en)+'・'+r.prof+(short?'・<span style="color:#e06c6c">架上缺貨</span>':'')+'</div></td><td>'+esc(ZN[r.z]||r.z)+(NEAR[r.z]?' <span class="t" style="color:#4fc46a">近</span>':'')+'<div class="dim">'+esc(r.npc)+'・'+dtxt(r)+'</div></td><td class="n">'+money(r.net)+'<div class="dim">先付 '+money(r.pay)+'</div></td><td class="n">'+r.rep+'</td><td class="n">'+money(r.per)+'</td></tr>'}).join('')+
   '<tr><td></td><td><b>一天合計</b></td><td></td><td class="n">'+money(wAvg)+'</td><td class="n">'+wRep.toLocaleString()+'</td><td class="n">'+money(wRep?wAvg/wRep*1000:null)+'</td></tr></table>';
  h+='<div class="note">令狀本身也要在拍賣場買。淨成本＝令狀價＋物品價－交完拿回的錢袋（中級 33 銀、高級 70 銀、專家級 75 銀），所以出門要先帶「先付」那麼多錢。'+'</div>';
  h+='<div class="note">排序是每千聲望由便宜到貴；架上缺貨的那張當天跳過、改交第 21、22 名（看「令狀」分頁）。</div>';
@@ -128,7 +133,7 @@ function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=$('lab').ch
 function writs(){var h='<div class="note">一張令狀的成本＝令狀＋要交的東西－交完拿到的錢袋（中級約 33 銀、高級約 70 銀、專家級約 75 銀）。同一張訂單一天只能交一次，不同的一天交幾張都可以。離赤脊山營地近的區域排前面，其次依每千聲望的成本排；點標題展開。<span class="bs">鍛造</span>＝你可以自己做。</div>';
  ZONES.forEach(function(z,i){h+='<div class="card"><div class="hd" data-z="'+i+'"><h3>'+esc(ZN[z.z]||z.z)+' <span class="dim">'+esc(z.z)+'</span>'+(NEAR[z.z]?' <span class="t" style="color:#4fc46a">離赤脊山營地近</span>':'')+'</h3><span>'+z.ok+' 張・<span class="big">'+z.rep.toLocaleString()+'</span> 聲望・'+money(z.cost)+'・每千 '+money(z.rep?z.per:null)+'</span></div>'+
   '<table id="z'+i+'" style="display:'+(i<3?'table':'none')+'"><tr><th>訂單</th><th>顧客</th><th class="n">令狀</th><th class="n">東西</th><th class="n">淨成本</th><th class="n">每千聲望</th></tr>'+
-  z.rows.map(function(r){return '<tr><td><span class="t t'+r.t+'">'+TN[r.t]+'</span>'+esc(r.zh)+(r.prof=='鍛造'?' <span class="bs">鍛造</span>':'')+'<div class="dim">'+esc(r.en)+'・'+r.prof+'</div></td><td>'+esc(r.npc)+'</td><td class="n">'+money(r.wp)+'<div class="dim">'+r.wn+' 個</div></td><td class="n">'+money(r.ip)+'<div class="dim">'+r.inn+' 個</div></td><td class="n">'+money(r.net)+'</td><td class="n">'+money(r.per)+'</td></tr>'}).join('')+'</table></div>'});
+  z.rows.map(function(r){return '<tr><td><span class="t t'+r.t+'">'+TN[r.t]+'</span>'+esc(r.zh)+(r.prof=='鍛造'?' <span class="bs">鍛造</span>':'')+'<div class="dim">'+esc(r.en)+'・'+r.prof+'</div></td><td>'+esc(r.npc)+'<div class="dim">'+dtxt(r)+'</div></td><td class="n">'+money(r.wp)+'<div class="dim">'+r.wn+' 個</div></td><td class="n">'+money(r.ip)+'<div class="dim">'+r.inn+' 個</div></td><td class="n">'+money(r.net)+'</td><td class="n">'+money(r.per)+'</td></tr>'}).join('')+'</table></div>'});
  h+='<div class="dim">還有 6 張高級、32 張專家級令狀還不知道顧客在哪，沒列進來。顧客與區域整理自 ConquestCapped（11/18），遊戲裡以任務說明為準。</div>';return h}
 function crates(){var ec=emptyCrate();var h='<div class="note">運送箱只要填其中一組材料；這裡列的是目前已知最便宜的一組（outof.games 整理），其他組合看箱子說明。空箱子自己打怪也會掉。最便宜的空箱子現在是 '+(ec?esc(ec.n)+' '+money(ec.m):'—')+'（拿來配偽造收據用）。</div><table><tr><th>箱子</th><th>材料</th><th class="n">箱子</th><th class="n">材料</th><th class="n">一箱合計</th><th class="n">青睞</th><th class="n">每點青睞</th></tr>'+
  CRATES.map(function(c){return '<tr><td>'+esc(c.zh)+'</td><td>'+esc(c.matzh)+' ×'+c.q+'<div class="dim">架上 '+c.avail+' 個</div></td><td class="n">'+money(c.cp)+'</td><td class="n">'+money(c.mp!=null?c.mp*c.q:null)+'</td><td class="n">'+money(c.tot)+'</td><td class="n">'+c.fav+'</td><td class="n">'+money(c.pf)+'</td></tr>'}).join('')+'</table>';return h}
@@ -154,13 +159,13 @@ function routeMap(list){var by={};list.forEach(function(r){(by[r.z]=by[r.z]||[])
  seq.forEach(function(z,i){var p=ZPOS[z],n=by[z].length;s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="13" class="stop"/><text x="'+p[0]+'" y="'+(p[1]+5)+'" class="sn">'+(i+1)+'</text><text x="'+(LEFT[z]?p[0]-17:p[0]+17)+'" y="'+(p[1]+5)+'" class="sl"'+(LEFT[z]?' text-anchor="end"':'')+'>'+esc(ZN[z]||z)+'（'+n+'）</text>'});
  s+='</svg>';
  var h='<h2>跑單路線圖</h2><div class="note">從赤脊山的貿易局營地出發，照號碼跑。括號是那一站要交幾張；'+(hasEK&&hasK?'東部王國跑完到米奈希爾港坐船去塞拉摩，再跑卡林多。':'')+'地圖是示意圖，位置大概就好；顧客在區域裡的位置用 <b>/tar 顧客英文名</b> 找。飛行點是經典版的，永恆可能有新增。</div>'+s;
- h+='<ol class="route">'+seq.map(function(z,i){return '<li><b>'+(i+1)+'. '+esc(ZN[z]||z)+'</b> <span class="dim">'+esc(z)+'・飛行點：'+esc(FP[z]||'—')+'</span><ul>'+by[z].map(function(r){return '<li><span class="t t'+r.t+'">'+TN[r.t]+'</span>'+esc(r.zh)+' → <b>'+esc(r.npc)+'</b> <span class="dim">'+esc(r.en)+'・先付 '+money(r.pay)+'（令狀＋物品），交完拿回 '+money(r.back)+'，淨 '+money(r.net)+'</span></li>'}).join('')+'</ul></li>'}).join('')+'</ol>';
+ h+='<ol class="route">'+seq.map(function(z,i){return '<li><b>'+(i+1)+'. '+esc(ZN[z]||z)+'</b> <span class="dim">'+esc(z)+'・飛行點：'+esc(FP[z]||'—')+'</span><ul>'+by[z].map(function(r){return '<li><span class="t t'+r.t+'">'+TN[r.t]+'</span>'+esc(r.zh)+' → <b>'+esc(r.npc)+'</b> <span class="dim">'+dtxt(r)+'・'+esc(r.en)+'・先付 '+money(r.pay)+'（令狀＋物品），交完拿回 '+money(r.back)+'，淨 '+money(r.net)+'</span></li>'}).join('')+'</ul></li>'}).join('')+'</ol>';
  return h}
 function draw(){[].forEach.call($('tabs').querySelectorAll('.chip'),function(x){x.classList.toggle('on',x.getAttribute('data-t')==TAB)});
  $('view').innerHTML=TAB=='sum'?sum():TAB=='writ'?writs():crates()}
 $('tabs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;TAB=t.getAttribute('data-t');draw()};
 $('view').onclick=function(e){var t=e.target.closest('.hd');if(!t)return;var tb=$('z'+t.getAttribute('data-z'));tb.style.display=tb.style.display=='none'?'table':'none'};
-['cur','fav','lab'].forEach(function(i){$(i).oninput=$(i).onchange=function(){try{localStorage.setItem('rep_'+i,$(i).type=='checkbox'?($(i).checked?'1':''):$(i).value)}catch(e){}if(TAB=='sum')draw()}});
-try{['cur','fav'].forEach(function(i){var v=localStorage.getItem('rep_'+i);if(v!=null&&v!=='')$(i).value=v});if(localStorage.getItem('rep_lab'))$('lab').checked=true}catch(e){}
+['cur','fav','lab','near'].forEach(function(i){$(i).oninput=$(i).onchange=function(){try{localStorage.setItem('rep_'+i,$(i).type=='checkbox'?($(i).checked?'1':''):$(i).value)}catch(e){}if(TAB=='sum')draw()}});
+try{['cur','fav'].forEach(function(i){var v=localStorage.getItem('rep_'+i);if(v!=null&&v!=='')$(i).value=v});if(localStorage.getItem('rep_lab'))$('lab').checked=true;if(localStorage.getItem('rep_near')==='')$('near').checked=false}catch(e){}
 load()})();
 </script></body></html>
