@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>貿易局聲望 CP 值</title>
+<style>
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;--up:#4fc46a;--down:#e06054}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55}
+a{color:var(--gold)}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:19px;margin:22px 0 8px}
+h3{color:var(--gold);font-size:16px;margin:0}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.chip{border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer;user-select:none;white-space:nowrap}
+.chip.on{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:10px}
+.hd{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline;cursor:pointer}
+.big{font-size:18px;font-weight:700}
+.up{color:var(--up)}.down{color:var(--down)}
+.g{color:#ffd700}.s{color:#c7c7cf}.c{color:#d18a52}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{padding:5px 6px;border-top:1px solid #ffffff12;text-align:left;vertical-align:top}
+th{color:var(--dim);font-weight:500;font-size:12.5px}
+td.n,th.n{text-align:right;white-space:nowrap}
+.t{display:inline-block;font-size:12px;border:1px solid currentColor;border-radius:4px;padding:0 6px;margin-right:4px;white-space:nowrap}
+.tJ{color:#9fd3ff}.tE{color:#c79bff}.tA{color:#ffb35c}
+.bs{color:var(--up);font-size:12px;white-space:nowrap}
+.miss{color:var(--down)}
+.kpi{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:10px 0}
+.kpi .card{margin:0}
+.kpi b{display:block;font-size:20px;color:var(--gold)}
+input[type=number]{width:110px;background:#0b0907;border:1px solid var(--line);color:var(--text);border-radius:6px;padding:6px 8px;font-size:15px}
+label{font-size:14px;color:var(--dim);margin-right:14px;white-space:nowrap}
+.steps li{margin:4px 0}
+</style></head><body><div class="wrap">
+<h1>貿易局聲望 CP 值</h1>
+<div class="dim" id="upd"></div>
+<div class="dim"><a href="index.html">← 拍賣場</a>・<a href="craft.html">專業獲利表</a></div>
+<div class="note">艾澤拉斯商業管理局（赤脊山・三角路口）：<b>聲望</b>決定能不能買圖紙（不會扣），<b>商人青睞</b>是錢（買東西會扣）。
+聲望靠「工匠令狀」或「空箱子＋偽造收據」；青睞只能靠交填好的運送箱。價格都是拍賣場最新的最低價，每小時更新。</div>
+<div class="bar"><label>目前聲望 <input type="number" id="cur" value="0" min="0" step="100"></label><label>還要的青睞 <input type="number" id="fav" value="630" min="0" step="10"></label><label><input type="checkbox" id="lab"> 已經拿過出貨標籤（第一箱 +2000）</label></div>
+<div class="tabs" id="tabs"><span class="chip on" data-t="sum">怎麼衝最划算</span><span class="chip" data-t="writ">令狀（依區域）</span><span class="chip" data-t="crate">青睞：填箱子</span></div>
+<div id="view"></div>
+</div>
+<script>
+(function(){
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function money(cp){if(cp==null||isNaN(cp))return '<span class="miss">沒行情</span>';var neg=cp<0;cp=Math.abs(Math.round(cp));var g=Math.floor(cp/10000),s=Math.floor(cp%10000/100),c=cp%100,o='';
+ if(g)o+='<span class="g">'+g.toLocaleString()+'金</span> ';if(s)o+='<span class="s">'+s+'銀</span> ';if(!g&&(c||!s))o+='<span class="c">'+c+'銅</span>';return (neg?'-':'')+o.trim()}
+var REP={J:75,E:125,A:200},TN={J:'中級 75',E:'高級 125',A:'專家級 200'},POUCH={J:3300,E:7000,A:7500};
+var ZN={"Badlands":"荒蕪之地","Searing Gorge":"灼熱峽谷","Swamp of Sorrows":"悲傷沼澤","Blasted Lands":"詛咒之地","Deadwind Pass":"逆風小徑","Burning Steppes":"燃燒平原","Tanaris":"塔納利斯","Un'Goro Crater":"安戈洛環形山","Felwood":"費伍德森林","Moonglade":"月光林地","Desolace":"淒涼之地","Dustwallow Marsh":"塵泥沼澤","Feralas":"菲拉斯","The Hinterlands":"辛特蘭","Riverglades":"Riverglades","Stonetalon Mountains":"石爪山脈","Wetlands":"濕地","Duskwood":"暮色森林","Thousand Needles":"千針石林","Arathi Highlands":"阿拉希高地","Ashenvale":"梣谷","Stranglethorn Vale":"荊棘谷","Alterac Mountains":"奧特蘭克山脈","Hillsbrad Foothills":"希爾斯布萊德丘陵","Eastern Plaguelands":"東瘟疫之地","Western Plaguelands":"西瘟疫之地","Silithus":"希利蘇斯","Azshara":"艾薩拉"};
+// 等級|物品（英文）|專業|顧客|區域
+var W="J|Elixir of Lesser Agility|鍊金|Ziz Fizziks|Stonetalon Mountains\nJ|Rough Bronze Leggings|鍛造|Ziz Fizziks|Stonetalon Mountains\nJ|Shadow Goggles|工程|Ziz Fizziks|Stonetalon Mountains\nJ|Heavy Quiver|製皮|Ziz Fizziks|Stonetalon Mountains\nJ|Red Woolen Boots|裁縫|Ziz Fizziks|Stonetalon Mountains\nJ|Draught of Water Breathing|鍊金|Kixxle|Wetlands\nJ|Green Iron Boots|鍛造|Kixxle|Wetlands\nJ|Crafted Solid Shot|工程|Kixxle|Wetlands\nJ|Red Whelp Gloves|製皮|Kixxle|Wetlands\nJ|Spider Silk Slippers|裁縫|Kixxle|Wetlands\nJ|Shadow Protection Potion|鍊金|Kzixx|Duskwood\nJ|Minor Recombobulator|工程|Kzixx|Duskwood\nJ|Dark Leather Tunic|製皮|Kzixx|Duskwood\nJ|Small Silk Pack|裁縫|Kzixx|Duskwood\nJ|Silver Skeleton Key|鍛造|Battered Trunk|Duskwood\nJ|Elixir of Defense|鍊金|Rizzle Brassbolts|Thousand Needles\nJ|Big Bronze Knife|鍛造|\"Plucky\" Johnson|Thousand Needles\nJ|Big Bronze Bomb|工程|Razzeric|Thousand Needles\nJ|Barbaric Gloves|製皮|Goblin Pit Boss|Thousand Needles\nJ|Greater Adept's Robe|裁縫|Magus Tirth|Thousand Needles\nJ|Elixir of Wisdom|鍊金|Muggol Breezebeard|Arathi Highlands\nJ|Golden Rod|鍛造|Muggol Breezebeard|Arathi Highlands\nJ|Explosive Sheep|工程|Alyce|Arathi Highlands\nJ|Fine Leather Pants|製皮|Alyce|Arathi Highlands\nJ|Blue Overalls|裁縫|Alyce|Arathi Highlands\nJ|Lesser Mana Potion|鍊金|Ash'alari|Ashenvale\nJ|Iridescent Hammer|鍛造|Cowardly Peon|Ashenvale\nJ|Azure Silk Hood|裁縫|Cowardly Peon|Ashenvale\nJ|Moonsight Rifle|工程|Grembly|Ashenvale\nJ|Herbalist's Gloves|製皮|Murache|Ashenvale\nJ|Lesser Troll's Blood Elixir|鍊金|Short John Mithril|Stranglethorn Vale\nJ|Green Iron Gauntlets|鍛造|\"Sea Wolf\" MacKinley|Stranglethorn Vale\nJ|Gnomish Universal Remote|工程|Scooty|Stranglethorn Vale\nJ|Dark Leather Shoulders|製皮|Narkk|Stranglethorn Vale\nJ|Colorful Kilt|裁縫|Hekshi|Stranglethorn Vale\nJ|Pearl-Handled Dagger|鍛造|Alan Sneeks|Alterac Mountains\nJ|Ornate Spyglass|工程|Alan Sneeks|Alterac Mountains\nJ|Lesser Wizard's Robe|裁縫|Alan Sneeks|Alterac Mountains\nJ|Heavy Leather Ball|製皮|Sos'mol|Alterac Mountains\nJ|Phoenix Pants|裁縫|Bath'rah the Windwatcher|Alterac Mountains\nJ|Free Action Potion|鍊金|Webbed Mudsnout Gnoll|Hillsbrad Foothills\nJ|Heavy Bronze Mace|鍛造|Gorgrash|Hillsbrad Foothills\nJ|Practice Lock|工程|Gorgrash|Hillsbrad Foothills\nJ|Pilferer's Gloves|製皮|Kris Legace|Hillsbrad Foothills\n"+
+"E|Lesser Invisibility Potion|鍊金|Centaur Pariah|Desolace\nE|Inlaid Mithril Cylinder|鍛造|Bibbly F'utzbuckle|Desolace\nE|Advanced Target Dummy|工程|Bibbly F'utzbuckle|Desolace\nE|Guardian Cloak|製皮|Azore Aldamort|Desolace\nE|Shadoweave Gloves|裁縫|Willow|Desolace\nE|Lesser Stoneshield Potion|鍊金|Mudcrush Durtfeet|Dustwallow Marsh\nE|Steel Weapon Chain|鍛造|Ugbert|Dustwallow Marsh\nE|Craftsman's Monocle|工程|The Ravenous|Dustwallow Marsh\nE|Dusky Bracers|製皮|The Ravenous|Dustwallow Marsh\nE|Crimson Silk Robe|裁縫|Tabetha|Dustwallow Marsh\nE|Nature Protection Potion|鍊金|Greta Mosshoof|Felwood\nE|Ornate Mithril Shoulders|鍛造|Taronn Redfeather|Felwood\nE|Goblin Land Mine|工程|Jessir Moonbow|Felwood\nE|Wild Leather Helmet|製皮|Ivy Leafrunner|Felwood\nE|Shadoweave Robe|裁縫|Eridan Bluewind|Felwood\nE|Great Rage Potion|鍊金|Dendrite Starblaze|Moonglade\nE|Moonsteel Broadsword|鍛造|Meliri|Moonglade\nE|Unstable Trigger|工程|Narianna|Moonglade\nE|Quickdraw Quiver|製皮|Narianna|Moonglade\nE|Star Belt|裁縫|Mylentha Riverbend|Moonglade\nE|Mana Potion|鍊金|Spek|Riverglades\nE|Golden Scale Coif|鍛造|Spek|Riverglades\nE|Flash Bomb|工程|Spek|Riverglades\nE|Swift Boots|製皮|Spek|Riverglades\nE|Black Mageweave Vest|裁縫|Spek|Riverglades\nE|Fire Protection Potion|鍊金|Durganon|Searing Gorge\nE|Solid Sharpening Stone|鍛造|Master Smith Burninate|Searing Gorge\nE|Fire Goggles|工程|Durganon|Searing Gorge\nE|Nightscape Shoulders|製皮|Evonice Sootsmoker|Searing Gorge\nE|Red Mageweave Pants|裁縫|Lookout Captain Lolo Longstriker|Searing Gorge\nE|Goblin Rocket Fuel|鍊金|Alchemist Pestlezugg|Tanaris\nE|Truesilver Rod|鍛造|Spigot Operator Luglunket|Tanaris\nE|Gyromatic Micro-Adjuster|工程|Jhordy Lapforge|Tanaris\nE|Big Voodoo Robe|製皮|Yeh'kinya|Tanaris\nE|White Bandit Mask|裁縫|Vizzklick|Tanaris\nE|Frost Protection Potion|鍊金|Lotwil Veriatus|Badlands\nE|Steel Plate Helm|鍛造|Furious Shadowforge Digger|Badlands\nE|Comfortable Leather Hat|製皮|Garek|Badlands\nE|Mageweave Bag|裁縫|Rigglefuzz|Badlands\nE|Shadow Oil|鍊金|Mukomonji|Swamp of Sorrows\nE|Mithril Frag Bomb|工程|Bullets Bigblast|Swamp of Sorrows\nE|Big Voodoo Mask|製皮|Mukomonji|Swamp of Sorrows\nE|Orange Martial Shirt|裁縫|Bullets Bigblast|Swamp of Sorrows\nE|Elixir of Agility|鍊金|Juo|The Hinterlands\nE|Mechanical Repair Kit|工程|Rhapsody Shindigger|The Hinterlands\nE|Turtle Scale Breastplate|製皮|Juo|The Hinterlands\nE|Cindercloth Robe|裁縫|Atal'ai Exile|The Hinterlands\nE|Wildvine Potion|鍊金|Spark Nilminer|Un'Goro Crater\nE|Heavy Mithril Axe|鍛造|Torwa Pathfinder|Un'Goro Crater\nE|Thick Leather Ammo Pouch|製皮|Nergal|Un'Goro Crater\nE|Earthen Silk Belt|裁縫|Petra Grossen|Un'Goro Crater\nE|Catseye Draught|鍊金|Scout Raroul|Feralas\nE|Blue Glittering Axe|鍛造|Scout Raroul|Feralas\nE|Catseye Ultra Goggles|工程|Scout Raroul|Feralas\n"+
+"A|Dreamless Sleep Potion|鍊金|Kum'isha the Collector|Blasted Lands\nA|Radiant Belt|鍛造|Kum'isha the Collector|Blasted Lands\nA|Runecloth Bag|裁縫|Kum'isha the Collector|Blasted Lands\nA|Draught of Detect Demon|鍊金|Hastings|Deadwind Pass\nA|Runic Leather Headband|製皮|Hastings|Deadwind Pass\nA|Tuxedo Jacket|裁縫|Hastings|Deadwind Pass\nA|Gift of Arthas|鍊金|Adon|Eastern Plaguelands\nA|Wicked Leather Bracers|製皮|Quartermaster Miranda Breechlock|Eastern Plaguelands\nA|Truesilver Transformer|工程|Khur Hornstriker|Silithus\nA|Shadoweave Mask|裁縫|Hermit Ortell|Silithus\nA|Potion of Demonslaying|鍊金|Archmage Xylem|Azshara\nA|Runecloth Boots|裁縫|Gorzeeki Wildeyes|Burning Steppes\nA|Runic Leather Bracers|製皮|Fallen Adventurer|Western Plaguelands";
+// 填箱子：等級 青睞 箱子英文 最便宜的一組材料（英文 數量）——outof.games 美服 PvE 11/18 的資料，換伺服器材料表一樣
+var CR=[["高級零件",30,"Waylaid Crate: Expert Parts","Iron Strut",8],["高級布料",30,"Waylaid Crate: Expert Fabrics","Cured Heavy Hide",2],["高級金屬錠",30,"Waylaid Crate: Expert Ingots","Gold Bar",10],["高級紡織品",15,"Waylaid Crate: Expert Textiles","Heavy Leather",20],["大地高級草藥",15,"Waylaid Crate: Earthly Expert Herbs","Goldthorn",10],["高級珍品",15,"Waylaid Crate: Expert Curiosities","Greater Mystic Essence",4],["開花高級草藥",15,"Waylaid Crate: Flowering Expert Herbs","Wintersbite",10],["高級礦石",15,"Waylaid Crate: Expert Ore","Gold Ore",10],["中級布料",20,"Waylaid Crate: Journeyman Fabrics","Cured Medium Hide",2]];
+var NEAR={'Badlands':1,'Searing Gorge':1,'Swamp of Sorrows':1,'Blasted Lands':1,'Deadwind Pass':1,'Burning Steppes':1,'Duskwood':1,'Stranglethorn Vale':1};
+var A,BY={},WR=[],ZONES=[],CRATES=[],TAB='sum';
+function load(){var s=document.createElement('script');s.src='data.js?'+Date.now();s.onload=s.onerror=init;document.body.appendChild(s)}
+function price(en){var x=BY[en];return x&&x.m>0?x.m:null}
+function init(){A=window.AH;if(!A){$('view').innerHTML='<div class="dim">拍賣場資料還沒載入</div>';return}
+ A.items.forEach(function(it){if(it.e)BY[it.e]=it});
+ $('upd').textContent='拍賣場資料：'+new Date(A.updated*1000).toLocaleString('zh-TW',{hour12:false})+'・'+(A.title||'');
+ W.split('\n').forEach(function(l){var p=l.split('|');if(p.length<5)return;var w=BY["Craftsman's Writ: "+p[1]],it=BY[p[1]];
+  var wp=w&&w.m>0?w.m:null,ip=it&&it.m>0?it.m:null,net=(wp!=null&&ip!=null)?wp+ip-POUCH[p[0]]:null;
+  WR.push({t:p[0],en:p[1],zh:(it&&it.n)||(w&&w.n?w.n.replace('工匠令狀：',''):p[1]),prof:p[2],npc:p[3],z:p[4],wp:wp,ip:ip,wn:w?w.t:0,inn:it?it.t:0,net:net,rep:REP[p[0]],per:net!=null?net/REP[p[0]]*1000:null})});
+ var zm={};WR.forEach(function(r){(zm[r.z]=zm[r.z]||{z:r.z,rows:[],rep:0,cost:0,ok:0}).rows.push(r);if(r.net!=null){zm[r.z].rep+=r.rep;zm[r.z].cost+=Math.max(0,r.net);zm[r.z].ok++}});
+ ZONES=Object.keys(zm).map(function(k){var z=zm[k];z.per=z.rep?z.cost/z.rep*1000:1e12;z.rows.sort(function(a,b){return (a.per==null?1e12:a.per)-(b.per==null?1e12:b.per)});return z}).sort(function(a,b){return (NEAR[b.z]||0)-(NEAR[a.z]||0)||a.per-b.per});
+ CRATES=CR.map(function(c){var cp=price(c[2]),mp=price(c[3]);var tot=(cp!=null&&mp!=null)?cp+mp*c[4]:null;return {zh:c[0],fav:c[1],en:c[2],mat:c[3],matzh:(BY[c[3]]||{}).n||c[3],q:c[4],cp:cp,mp:mp,tot:tot,pf:tot!=null?tot/c[1]:null,avail:BY[c[3]]?BY[c[3]].t:0,cn:BY[c[2]]?BY[c[2]].t:0}}).sort(function(a,b){return (a.pf==null?1e12:a.pf)-(b.pf==null?1e12:b.pf)});
+ draw()}
+function emptyCrate(){var best=null;A.items.forEach(function(it){if(it.e&&it.e.indexOf('Waylaid Crate:')==0&&it.m>0&&(!best||it.m<best.m))best=it});return best}
+function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=$('lab').checked;
+ var need=Math.max(0,9000-cur-(lab?0:2000)),toF=Math.max(0,3000-cur-(lab?0:2000));
+ var bc=CRATES[0],ec=emptyCrate();
+ var favCost=bc&&bc.pf!=null?bc.pf:null,ecp=ec?ec.m:null;
+ var rcpt=(favCost!=null&&ecp!=null)?favCost*15+ecp:null; // 一張收據＋空箱 = 50 聲望
+ var nR=Math.ceil(Math.max(0,need-toF)/50);
+ var good=WR.filter(function(r){return r.per!=null}).sort(function(a,b){return a.per-b.per});
+ var wAvg=0,wRep=0;good.slice(0,20).forEach(function(r){wAvg+=Math.max(0,r.net);wRep+=r.rep});
+ var h='<div class="kpi">'+
+  '<div class="card">到尊敬還差<b>'+need.toLocaleString()+' 聲望</b><span class="dim">（尊敬＝累計 9,000'+(lab?'':'；含第一箱出貨標籤 +2,000')+'）</span></div>'+
+  '<div class="card">最便宜的青睞<b>'+(bc?esc(bc.zh)+'箱':'—')+'</b><span class="dim">每點 '+money(favCost)+'</span></div>'+
+  '<div class="card">空箱＋偽造收據（50 聲望）<b>'+money(rcpt)+'</b><span class="dim">每 1,000 聲望 '+money(rcpt!=null?rcpt*20:null)+'</span></div>'+
+  '<div class="card">最便宜的 20 張令狀<b>'+money(wRep?wAvg/wRep*1000:null)+'</b><span class="dim">每 1,000 聲望（要跑各地 NPC）</span></div></div>';
+ h+='<h2>建議：一天衝到尊敬</h2><ol class="steps">';
+ if(!lab)h+='<li>先填 1 個運送箱交出去，觸發<b>出貨標籤</b>任務：+2,000 聲望、+50 青睞。</li>';
+ if(toF>0)h+='<li>偽造收據要<b>友好</b>（3,000）才買得到：先交 '+Math.ceil(toF/125)+' 張高級令狀補到友好（看「令狀」分頁挑順路、便宜的）。</li>';
+ h+='<li>拍賣場買 <b>'+nR+'</b> 個最便宜的空箱子（現在 '+(ec?esc(ec.n)+' '+money(ec.m):'—')+'），在營地向無照文書買 '+nR+' 張偽造收據（15 青睞一張，共 '+(nR*15).toLocaleString()+' 青睞），交出去 +'+(nR*50).toLocaleString()+' 聲望。</li>';
+ var favTotal=nR*15+fav,nC=bc?Math.ceil(favTotal/bc.fav):0;
+ h+='<li>青睞合計要 <b>'+favTotal.toLocaleString()+'</b>（收據 '+(nR*15).toLocaleString()+'＋圖紙 '+fav+'）：買 <b>'+nC+'</b> 個'+(bc?esc(bc.zh)+'箱＋'+(nC*bc.q)+' 個'+esc(bc.matzh):'')+'，填好交出去。</li>';
+ var tot=(bc&&bc.tot!=null&&ecp!=null)?nC*bc.tot+nR*ecp:null;
+ h+='<li>總花費約 <b>'+money(tot)+'</b>，全部在赤脊山營地完成，不用跑各地。</li></ol>';
+ if(bc&&(nC*bc.q>bc.avail||nC>bc.cn))h+='<div class="note">⚠ 架上只有 '+bc.cn+' 個'+esc(bc.zh)+'箱、'+bc.avail+' 個'+esc(bc.matzh)+'，不夠 '+nC+' 箱：不夠的用「填箱子」分頁第二、三便宜的補（價格差不多）。一次大量買價格會往上漲一點。</div>';
+ if(ec&&nR>ec.t)h+='<div class="note">⚠ 最便宜的空箱子架上只有 '+ec.t+' 個，其他種類的空箱子也可以用（偽造收據不挑種類）。</div>';
+ h+='<div class="note">只想省錢、不怕跑：每天交「令狀」分頁最便宜的 20 張，約 '+money(wAvg)+' 換 '+wRep.toLocaleString()+' 聲望，但每張訂單一天只能交一次、要送到各地的 NPC。</div>';
+ return h}
+function writs(){var h='<div class="note">一張令狀的成本＝令狀＋要交的東西－交完拿到的錢袋（中級約 33 銀、高級約 70 銀、專家級約 75 銀）。同一張訂單一天只能交一次，不同的一天交幾張都可以。離赤脊山營地近的區域排前面，其次依每千聲望的成本排；點標題展開。<span class="bs">鍛造</span>＝你可以自己做。</div>';
+ ZONES.forEach(function(z,i){h+='<div class="card"><div class="hd" data-z="'+i+'"><h3>'+esc(ZN[z.z]||z.z)+' <span class="dim">'+esc(z.z)+'</span>'+(NEAR[z.z]?' <span class="t" style="color:#4fc46a">離赤脊山營地近</span>':'')+'</h3><span>'+z.ok+' 張・<span class="big">'+z.rep.toLocaleString()+'</span> 聲望・'+money(z.cost)+'・每千 '+money(z.rep?z.per:null)+'</span></div>'+
+  '<table id="z'+i+'" style="display:'+(i<3?'table':'none')+'"><tr><th>訂單</th><th>顧客</th><th class="n">令狀</th><th class="n">東西</th><th class="n">淨成本</th><th class="n">每千聲望</th></tr>'+
+  z.rows.map(function(r){return '<tr><td><span class="t t'+r.t+'">'+TN[r.t]+'</span>'+esc(r.zh)+(r.prof=='鍛造'?' <span class="bs">鍛造</span>':'')+'<div class="dim">'+esc(r.en)+'・'+r.prof+'</div></td><td>'+esc(r.npc)+'</td><td class="n">'+money(r.wp)+'<div class="dim">'+r.wn+' 個</div></td><td class="n">'+money(r.ip)+'<div class="dim">'+r.inn+' 個</div></td><td class="n">'+money(r.net)+'</td><td class="n">'+money(r.per)+'</td></tr>'}).join('')+'</table></div>'});
+ h+='<div class="dim">還有 6 張高級、32 張專家級令狀還不知道顧客在哪，沒列進來。顧客與區域整理自 ConquestCapped（11/18），遊戲裡以任務說明為準。</div>';return h}
+function crates(){var ec=emptyCrate();var h='<div class="note">運送箱只要填其中一組材料；這裡列的是目前已知最便宜的一組（outof.games 整理），其他組合看箱子說明。空箱子自己打怪也會掉。最便宜的空箱子現在是 '+(ec?esc(ec.n)+' '+money(ec.m):'—')+'（拿來配偽造收據用）。</div><table><tr><th>箱子</th><th>材料</th><th class="n">箱子</th><th class="n">材料</th><th class="n">一箱合計</th><th class="n">青睞</th><th class="n">每點青睞</th></tr>'+
+ CRATES.map(function(c){return '<tr><td>'+esc(c.zh)+'</td><td>'+esc(c.matzh)+' ×'+c.q+'<div class="dim">架上 '+c.avail+' 個</div></td><td class="n">'+money(c.cp)+'</td><td class="n">'+money(c.mp!=null?c.mp*c.q:null)+'</td><td class="n">'+money(c.tot)+'</td><td class="n">'+c.fav+'</td><td class="n">'+money(c.pf)+'</td></tr>'}).join('')+'</table>';return h}
+function draw(){[].forEach.call($('tabs').querySelectorAll('.chip'),function(x){x.classList.toggle('on',x.getAttribute('data-t')==TAB)});
+ $('view').innerHTML=TAB=='sum'?sum():TAB=='writ'?writs():crates()}
+$('tabs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;TAB=t.getAttribute('data-t');draw()};
+$('view').onclick=function(e){var t=e.target.closest('.hd');if(!t)return;var tb=$('z'+t.getAttribute('data-z'));tb.style.display=tb.style.display=='none'?'table':'none'};
+['cur','fav','lab'].forEach(function(i){$(i).oninput=$(i).onchange=function(){try{localStorage.setItem('rep_'+i,$(i).type=='checkbox'?($(i).checked?'1':''):$(i).value)}catch(e){}if(TAB=='sum')draw()}});
+try{['cur','fav'].forEach(function(i){var v=localStorage.getItem('rep_'+i);if(v!=null&&v!=='')$(i).value=v});if(localStorage.getItem('rep_lab'))$('lab').checked=true}catch(e){}
+load()})();
+</script></body></html>
