@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>術士 團隊前 BiS</title>
+<style>
+/* 跟拍賣場／聲望頁同一套深色金色樣式；單欄，上方篩選，下面依類別分段，每個主題一張卡 */
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;--up:#4fc46a;--down:#e06054;--blue:#9fd3ff;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:15px}
+a{color:var(--gold);word-break:break-word}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:19px;margin:24px 0 8px}
+h2 small{color:var(--dim);font-size:13px;font-weight:400;margin-left:8px}
+h3{color:var(--gold);font-size:16px;margin:0;line-height:1.45}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
+.note b{color:var(--text)}
+.filters{padding:6px 0;margin:6px 0 0}
+.tabs{position:sticky;top:0;z-index:5;background:#0d0b0af2;padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:8px}
+.tabc{font-weight:700;font-size:15px}
+.desc{margin:6px 0 10px}
+.pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px 0 0}
+.chip:disabled{opacity:.35;cursor:default}
+.cards h4{grid-column:1/-1;margin:8px 0 0}
+.row{display:flex;gap:8px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;user-select:none;white-space:nowrap}
+.chip[aria-pressed="true"]{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.chip:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.card p{margin:6px 0 0}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:12px;margin-bottom:6px}
+.tag,.st{display:inline-block;border:1px solid currentColor;border-radius:4px;padding:0 6px;white-space:nowrap}
+.tag{color:var(--blue)}
+.st.ok{color:var(--up)}.st.warn{color:#ffb35c}.st.wait{color:#c79bff}
+.when{color:var(--dim)}
+details{margin-top:8px;border-top:1px solid #ffffff12;padding-top:6px}
+summary{cursor:pointer;color:var(--gold);font-size:13.5px}
+.det{font-size:14px;padding-top:4px}
+.det p{margin:8px 0 4px}
+.det ul,.det ol{margin:4px 0;padding-left:20px}
+.det li{margin:4px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{padding:5px 6px;border-top:1px solid #ffffff12;text-align:left;vertical-align:top;white-space:nowrap}
+th{color:var(--dim);font-weight:500;font-size:12.5px}
+td.w{white-space:normal;min-width:160px}
+td.n,th.n{text-align:right}
+code{background:#0b0907;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-size:12.5px;word-break:break-all}
+.links{display:flex;flex-direction:column;gap:4px}
+.empty{color:var(--dim);text-align:center;padding:24px 0}
+footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:12px;margin-top:24px}
+@media (max-width:700px){.cards{grid-template-columns:1fr}}
+h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.st.new{color:#0d0b0a;background:var(--gold);border-color:var(--gold);font-weight:700}
+.st.hot{color:var(--down)}
+.hotlist{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.hotlist li{margin:6px 0}
+.card{scroll-margin-top:70px}
+.card.flash{border-color:var(--gold)}
+</style>
+</head>
+<body><div class="wrap">
+<h1>術士 團隊前 BiS（第一階段）</h1>
+<div class="dim"><a href="warlock.html">← 回術士 DC 重點</a></div>
+<div class="note">Warlock Classic 的 forever-pve 頻道 11/15 釘選：管理員 Xn（Forever 術士模擬器作者）做的團隊前 BiS。每個天賦配置一套「實際拿得到」的藍裝，DPS 是模擬器跑 1,000 場 3 分鐘單體首領戰（理想第一階段團隊：全團增益、精煉藥劑、食物、巫師之油）的平均。綠字附魔是第一階段有的附魔。<br><b>原始清單（英文）：</b><a href="https://xnwlk.github.io/BIS/" target="_blank" rel="noopener">xnwlk.github.io/BIS</a>（點部位可以看「更好的升級」和「替代品」各差多少 DPS）</div>
+<div class="row" id="bt">
+<button class="chip" data-k="wrack-ds" aria-pressed="true">毀壞・惡魔犧牲（痛苦） 933.5</button>
+<button class="chip" data-k="shadow-demo" aria-pressed="false">暗影惡魔 906.2</button>
+<button class="chip" data-k="fire-demo" aria-pressed="false">火焰惡魔 887.2</button>
+<button class="chip" data-k="incinerate-pandemic" aria-pressed="false">燒盡・災疫（毀滅） 873.6</button>
+<button class="chip" data-k="incinerate-ds" aria-pressed="false">燒盡・惡魔犧牲（毀滅） 849.0</button>
+</div>
+<div class="bl" data-k="wrack-ds"><h2>毀壞・惡魔犧牲（痛苦） <small>Wrack DS・獸人・天賦 35/11/5・模擬 933.5 DPS</small></h2><div class="dim">整套合計：法術強度 205、暗影法術強度 +291、命中 3%、致命 7.4%</div><div class="tw"><table><tr><th>部位</th><th>裝備</th><th>附魔</th><th>怎麼拿</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22267" target="_blank" rel="noopener">魔法編織者的頭巾</a><div class="dim">Spellweaver&#x27;s Turban</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：達基薩斯將軍（黑石塔上層）</td></tr>
+<tr><td>項鍊</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22403" target="_blank" rel="noopener">珍珠光彩貝殼項鍊</a><div class="dim">Nacreous Shell Necklace</div></td><td>法術強度 +6</td><td class="w">掉落：砲手威利（斯坦索姆）</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=19050" target="_blank" rel="noopener">木喉襯肩</a><div class="dim">Mantle of the Timbermaw</div></td><td>—</td><td class="w">製作</td></tr>
+<tr><td>披風</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272411" target="_blank" rel="noopener">奧紋披風</a><div class="dim">Arcanoweave Cloak</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>胸</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=14136" target="_blank" rel="noopener">冬夜法袍</a><div class="dim">Robe of Winter Night</div></td><td>法術強度 +6、護甲 +40</td><td class="w">製作</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13409" target="_blank" rel="noopener">淚泉護腕（暗影之怒）</a><div class="dim">Tearfall Bracers of Shadow Wrath</div></td><td>法術強度 +16</td><td class="w">掉落：不可寬恕者（斯坦索姆）</td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18407" target="_blank" rel="noopener">惡魔布手套</a><div class="dim">Felcloth Gloves</div></td><td>法術強度 +6、護甲 +40</td><td class="w">製作</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=10255" target="_blank" rel="noopener">大師腰帶（暗影之怒）</a><div class="dim">Master&#x27;s Belt of Shadow Wrath</div></td><td>—</td><td class="w">世界掉落（隨機屬性，要找「暗影之怒」後綴）</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22342" target="_blank" rel="noopener">折磨護腿</a><div class="dim">Leggings of Torment</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：瓦薩拉克（黑石塔上層，要召喚）</td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=10247" target="_blank" rel="noopener">大師長靴（暗影之怒）</a><div class="dim">Master&#x27;s Boots of Shadow Wrath</div></td><td>初級速度</td><td class="w">世界掉落（隨機屬性，要找「暗影之怒」後綴）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=12543" target="_blank" rel="noopener">鐵爐堡歌唱石</a><div class="dim">Songstone of Ironforge</div></td><td>—</td><td class="w">任務：「公主的驚喜」</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22433" target="_blank" rel="noopener">唐·馬里喬的統禦之戒</a><div class="dim">Don Mauricio&#x27;s Band of Domination</div></td><td>—</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18465" target="_blank" rel="noopener">埃德薩拉斯皇家徽記</a><div class="dim">Royal Seal of Eldre&#x27;Thalas</div></td><td>—</td><td class="w">任務：Harnessing Shadows</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272438" target="_blank" rel="noopener">弱點分析器</a><div class="dim">Weakness Analyzer</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>主手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18372" target="_blank" rel="noopener">新月之刃</a><div class="dim">Blade of the New Moon</div></td><td>啟示（Revelation）</td><td class="w">掉落：伊莫塔爾（厄運之槌）</td></tr>
+<tr><td>副手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18316" target="_blank" rel="noopener">黑曜石權杖</a><div class="dim">Obsidian Bauble</div></td><td>智力 +9</td><td class="w">掉落：普希林（厄運之槌）</td></tr>
+<tr><td>魔杖</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13396" target="_blank" rel="noopener">斯庫爾的蒼白之觸</a><div class="dim">Skul&#x27;s Ghastly Touch</div></td><td>—</td><td class="w">掉落：斯庫爾（斯坦索姆稀有）</td></tr>
+</table></div></div>
+<div class="bl" data-k="shadow-demo" hidden><h2>暗影惡魔 <small>Shadow Demo・獸人・天賦 2/31/18・模擬 906.2 DPS</small></h2><div class="dim">整套合計：法術強度 386、暗影法術強度 +22、命中 6.8%、致命 7.1%、加速 1%</div><div class="tw"><table><tr><th>部位</th><th>裝備</th><th>附魔</th><th>怎麼拿</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22267" target="_blank" rel="noopener">魔法編織者的頭巾</a><div class="dim">Spellweaver&#x27;s Turban</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：達基薩斯將軍（黑石塔上層）</td></tr>
+<tr><td>項鍊</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22403" target="_blank" rel="noopener">珍珠光彩貝殼項鍊</a><div class="dim">Nacreous Shell Necklace</div></td><td>法術強度 +6</td><td class="w">掉落：砲手威利（斯坦索姆）</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=19050" target="_blank" rel="noopener">木喉襯肩</a><div class="dim">Mantle of the Timbermaw</div></td><td>—</td><td class="w">製作</td></tr>
+<tr><td>披風</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272411" target="_blank" rel="noopener">奧紋披風</a><div class="dim">Arcanoweave Cloak</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>胸</td><td class="w">Robes of Dark Summons</td><td>法術強度 +6、護甲 +40</td><td class="w">掉落：Impaan the Imprisoner（永恆新首領）</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13409" target="_blank" rel="noopener">淚泉護腕（暗影之怒）</a><div class="dim">Tearfall Bracers of Shadow Wrath</div></td><td>法術強度 +16</td><td class="w">掉落：不可寬恕者（斯坦索姆）</td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13253" target="_blank" rel="noopener">力量之手</a><div class="dim">Hands of Power</div></td><td>加速 +1%</td><td class="w">掉落：軍需官茲格瑞斯（黑石塔下層）</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11662" target="_blank" rel="noopener">奧科索爾腰帶</a><div class="dim">Ban&#x27;thok Sash</div></td><td>—</td><td class="w">掉落：破壞者奧科索爾（黑石塔下層）</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13170" target="_blank" rel="noopener">天空護腿</a><div class="dim">Skyshroud Leggings</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：歐莫克大王（黑石塔下層）</td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11822" target="_blank" rel="noopener">全法長靴</a><div class="dim">Omnicast Boots</div></td><td>初級速度</td><td class="w">掉落：傀儡統帥阿格曼奇（黑石深淵）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=12543" target="_blank" rel="noopener">鐵爐堡歌唱石</a><div class="dim">Songstone of Ironforge</div></td><td>—</td><td class="w">任務：「公主的驚喜」</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272406" target="_blank" rel="noopener">導魔師戒指</a><div class="dim">Channeler&#x27;s Ring</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18465" target="_blank" rel="noopener">埃德薩拉斯皇家徽記</a><div class="dim">Royal Seal of Eldre&#x27;Thalas</div></td><td>—</td><td class="w">任務：Harnessing Shadows</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272438" target="_blank" rel="noopener">弱點分析器</a><div class="dim">Weakness Analyzer</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>主手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13964" target="_blank" rel="noopener">女巫之刃</a><div class="dim">Witchblade</div></td><td>啟示（Revelation）</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+<tr><td>副手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18316" target="_blank" rel="noopener">黑曜石權杖</a><div class="dim">Obsidian Bauble</div></td><td>智力 +9</td><td class="w">掉落：普希林（厄運之槌）</td></tr>
+<tr><td>魔杖</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13938" target="_blank" rel="noopener">噬骨鐵針</a><div class="dim">Bonecreeper Stylus</div></td><td>—</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+</table></div></div>
+<div class="bl" data-k="fire-demo" hidden><h2>火焰惡魔 <small>Fire Demo・獸人・天賦 2/31/18・模擬 887.2 DPS</small></h2><div class="dim">整套合計：法術強度 410、命中 6.8%、致命 6.6%</div><div class="tw"><table><tr><th>部位</th><th>裝備</th><th>附魔</th><th>怎麼拿</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22267" target="_blank" rel="noopener">魔法編織者的頭巾</a><div class="dim">Spellweaver&#x27;s Turban</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：達基薩斯將軍（黑石塔上層）</td></tr>
+<tr><td>項鍊</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22403" target="_blank" rel="noopener">珍珠光彩貝殼項鍊</a><div class="dim">Nacreous Shell Necklace</div></td><td>法術強度 +6</td><td class="w">掉落：砲手威利（斯坦索姆）</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=19050" target="_blank" rel="noopener">木喉襯肩</a><div class="dim">Mantle of the Timbermaw</div></td><td>—</td><td class="w">製作</td></tr>
+<tr><td>披風</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272411" target="_blank" rel="noopener">奧紋披風</a><div class="dim">Arcanoweave Cloak</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>胸</td><td class="w">Robes of Dark Summons</td><td>法術強度 +6、護甲 +40</td><td class="w">掉落：Impaan the Imprisoner（永恆新首領）</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18497" target="_blank" rel="noopener">莊嚴護腕</a><div class="dim">Sublime Wristguards</div></td><td>法術強度 +16</td><td class="w">副本掉落</td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13253" target="_blank" rel="noopener">力量之手</a><div class="dim">Hands of Power</div></td><td>法術強度 +6、護甲 +40</td><td class="w">掉落：軍需官茲格瑞斯（黑石塔下層）</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11662" target="_blank" rel="noopener">奧科索爾腰帶</a><div class="dim">Ban&#x27;thok Sash</div></td><td>—</td><td class="w">掉落：破壞者奧科索爾（黑石塔下層）</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13170" target="_blank" rel="noopener">天空護腿</a><div class="dim">Skyshroud Leggings</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：歐莫克大王（黑石塔下層）</td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11822" target="_blank" rel="noopener">全法長靴</a><div class="dim">Omnicast Boots</div></td><td>初級速度</td><td class="w">掉落：傀儡統帥阿格曼奇（黑石深淵）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=12543" target="_blank" rel="noopener">鐵爐堡歌唱石</a><div class="dim">Songstone of Ironforge</div></td><td>—</td><td class="w">任務：「公主的驚喜」</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272406" target="_blank" rel="noopener">導魔師戒指</a><div class="dim">Channeler&#x27;s Ring</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18465" target="_blank" rel="noopener">埃德薩拉斯皇家徽記</a><div class="dim">Royal Seal of Eldre&#x27;Thalas</div></td><td>—</td><td class="w">任務：Harnessing Shadows</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272438" target="_blank" rel="noopener">弱點分析器</a><div class="dim">Weakness Analyzer</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>主手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13964" target="_blank" rel="noopener">女巫之刃</a><div class="dim">Witchblade</div></td><td>啟示（Revelation）</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+<tr><td>副手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11904" target="_blank" rel="noopener">亞奎門塔斯之魂</a><div class="dim">Spirit of Aquementas</div></td><td>智力 +9</td><td class="w">任務：It&#x27;s Dangerous to Go Alone</td></tr>
+<tr><td>魔杖</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13938" target="_blank" rel="noopener">噬骨鐵針</a><div class="dim">Bonecreeper Stylus</div></td><td>—</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+</table></div></div>
+<div class="bl" data-k="incinerate-pandemic" hidden><h2>燒盡・災疫（毀滅） <small>Incinerate Pandemic・獸人・天賦 14/4/33・模擬 873.6 DPS</small></h2><div class="dim">整套合計：法術強度 404、命中 6.8%、致命 6.6%、加速 1%</div><div class="tw"><table><tr><th>部位</th><th>裝備</th><th>附魔</th><th>怎麼拿</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22267" target="_blank" rel="noopener">魔法編織者的頭巾</a><div class="dim">Spellweaver&#x27;s Turban</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：達基薩斯將軍（黑石塔上層）</td></tr>
+<tr><td>項鍊</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22403" target="_blank" rel="noopener">珍珠光彩貝殼項鍊</a><div class="dim">Nacreous Shell Necklace</div></td><td>法術強度 +6</td><td class="w">掉落：砲手威利（斯坦索姆）</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=19050" target="_blank" rel="noopener">木喉襯肩</a><div class="dim">Mantle of the Timbermaw</div></td><td>—</td><td class="w">製作</td></tr>
+<tr><td>披風</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272411" target="_blank" rel="noopener">奧紋披風</a><div class="dim">Arcanoweave Cloak</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>胸</td><td class="w">Robes of Dark Summons</td><td>法術強度 +6、護甲 +40</td><td class="w">掉落：Impaan the Imprisoner（永恆新首領）</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18497" target="_blank" rel="noopener">莊嚴護腕</a><div class="dim">Sublime Wristguards</div></td><td>法術強度 +16</td><td class="w">副本掉落</td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13253" target="_blank" rel="noopener">力量之手</a><div class="dim">Hands of Power</div></td><td>加速 +1%</td><td class="w">掉落：軍需官茲格瑞斯（黑石塔下層）</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11662" target="_blank" rel="noopener">奧科索爾腰帶</a><div class="dim">Ban&#x27;thok Sash</div></td><td>—</td><td class="w">掉落：破壞者奧科索爾（黑石塔下層）</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13170" target="_blank" rel="noopener">天空護腿</a><div class="dim">Skyshroud Leggings</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：歐莫克大王（黑石塔下層）</td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11822" target="_blank" rel="noopener">全法長靴</a><div class="dim">Omnicast Boots</div></td><td>初級速度</td><td class="w">掉落：傀儡統帥阿格曼奇（黑石深淵）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=12543" target="_blank" rel="noopener">鐵爐堡歌唱石</a><div class="dim">Songstone of Ironforge</div></td><td>—</td><td class="w">任務：「公主的驚喜」</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272406" target="_blank" rel="noopener">導魔師戒指</a><div class="dim">Channeler&#x27;s Ring</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18465" target="_blank" rel="noopener">埃德薩拉斯皇家徽記</a><div class="dim">Royal Seal of Eldre&#x27;Thalas</div></td><td>—</td><td class="w">任務：Harnessing Shadows</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272438" target="_blank" rel="noopener">弱點分析器</a><div class="dim">Weakness Analyzer</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>主手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13964" target="_blank" rel="noopener">女巫之刃</a><div class="dim">Witchblade</div></td><td>啟示（Revelation）</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+<tr><td>副手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11904" target="_blank" rel="noopener">亞奎門塔斯之魂</a><div class="dim">Spirit of Aquementas</div></td><td>智力 +9</td><td class="w">任務：It&#x27;s Dangerous to Go Alone</td></tr>
+<tr><td>魔杖</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13938" target="_blank" rel="noopener">噬骨鐵針</a><div class="dim">Bonecreeper Stylus</div></td><td>—</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+</table></div></div>
+<div class="bl" data-k="incinerate-ds" hidden><h2>燒盡・惡魔犧牲（毀滅） <small>Incinerate DS・不死族・天賦 7/11/33・模擬 849.0 DPS</small></h2><div class="dim">整套合計：法術強度 404、命中 6.8%、致命 6.6%、加速 1%</div><div class="tw"><table><tr><th>部位</th><th>裝備</th><th>附魔</th><th>怎麼拿</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22267" target="_blank" rel="noopener">魔法編織者的頭巾</a><div class="dim">Spellweaver&#x27;s Turban</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：達基薩斯將軍（黑石塔上層）</td></tr>
+<tr><td>項鍊</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22403" target="_blank" rel="noopener">珍珠光彩貝殼項鍊</a><div class="dim">Nacreous Shell Necklace</div></td><td>法術強度 +6</td><td class="w">掉落：砲手威利（斯坦索姆）</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=19050" target="_blank" rel="noopener">木喉襯肩</a><div class="dim">Mantle of the Timbermaw</div></td><td>—</td><td class="w">製作</td></tr>
+<tr><td>披風</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272411" target="_blank" rel="noopener">奧紋披風</a><div class="dim">Arcanoweave Cloak</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>胸</td><td class="w">Robes of Dark Summons</td><td>法術強度 +6、護甲 +40</td><td class="w">掉落：Impaan the Imprisoner（永恆新首領）</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18497" target="_blank" rel="noopener">莊嚴護腕</a><div class="dim">Sublime Wristguards</div></td><td>法術強度 +16</td><td class="w">副本掉落</td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13253" target="_blank" rel="noopener">力量之手</a><div class="dim">Hands of Power</div></td><td>加速 +1%</td><td class="w">掉落：軍需官茲格瑞斯（黑石塔下層）</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11662" target="_blank" rel="noopener">奧科索爾腰帶</a><div class="dim">Ban&#x27;thok Sash</div></td><td>—</td><td class="w">掉落：破壞者奧科索爾（黑石塔下層）</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13170" target="_blank" rel="noopener">天空護腿</a><div class="dim">Skyshroud Leggings</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：歐莫克大王（黑石塔下層）</td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11822" target="_blank" rel="noopener">全法長靴</a><div class="dim">Omnicast Boots</div></td><td>初級速度</td><td class="w">掉落：傀儡統帥阿格曼奇（黑石深淵）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=12543" target="_blank" rel="noopener">鐵爐堡歌唱石</a><div class="dim">Songstone of Ironforge</div></td><td>—</td><td class="w">任務：「公主的驚喜」</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272406" target="_blank" rel="noopener">導魔師戒指</a><div class="dim">Channeler&#x27;s Ring</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18465" target="_blank" rel="noopener">埃德薩拉斯皇家徽記</a><div class="dim">Royal Seal of Eldre&#x27;Thalas</div></td><td>—</td><td class="w">任務：Harnessing Shadows</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272438" target="_blank" rel="noopener">弱點分析器</a><div class="dim">Weakness Analyzer</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>主手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13964" target="_blank" rel="noopener">女巫之刃</a><div class="dim">Witchblade</div></td><td>啟示（Revelation）</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+<tr><td>副手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11904" target="_blank" rel="noopener">亞奎門塔斯之魂</a><div class="dim">Spirit of Aquementas</div></td><td>智力 +9</td><td class="w">任務：It&#x27;s Dangerous to Go Alone</td></tr>
+<tr><td>魔杖</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13938" target="_blank" rel="noopener">噬骨鐵針</a><div class="dim">Bonecreeper Stylus</div></td><td>—</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+</table></div></div>
+<h2>重點</h2><ul><li>五套都共用的：魔法編織者的頭巾、珍珠光彩貝殼項鍊、木喉襯肩、奧紋披風、鐵爐堡歌唱石、埃德薩拉斯皇家徽記＋弱點分析器兩個飾品。</li><li>痛苦（毀壞・惡魔犧牲）走「暗影之怒」後綴的大師腰帶、大師長靴、淚泉護腕，全部堆暗影傷害，模擬最高。惡魔和毀滅改穿黑石塔下層的藍裝（力量之手、奧科索爾腰帶、天空護腿）和全法長靴。</li><li>命中：痛苦這套只有 3%，其他四套 6.8%。頻道討論也說團隊前很難湊到命中上限，經典版要到安其拉以後才做得到。</li><li>Pix Xizzix、Impaan the Imprisoner 是永恆新增的首領，還沒有中文名稱，先保留英文。</li></ul>
+<footer>整理時間：2026/11/19。裝備中文名稱用台服正式名稱，查不到的保留英文；來源以 Wowhead 永恆資料庫為準。</footer>
+<script>document.getElementById("bt").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;document.querySelectorAll("#bt .chip").forEach(x=>x.setAttribute("aria-pressed",x==b));document.querySelectorAll(".bl").forEach(d=>d.hidden=d.dataset.k!=b.dataset.k)});</script></div></body></html>
