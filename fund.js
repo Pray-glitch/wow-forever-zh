@@ -1,1 +1,1 @@
-window.FUND={"days":[{"d":"2026-11-19","used":16.831811376}],"left":3.168188623999999,"model":"anthropic/claude-haiku-5.5","note":"","total":20,"updated":"2026-11-19 10:47","used":16.831811376};
+window.FUND={"days":[{"d":"2026-11-19","used":16.831811376}],"left":3.168188623999999,"model":"anthropic/claude-haiku-5.5","note":"用 LINE Pay Money 轉帳給站長 Pray 就可以，金額隨意。\n在公會 LINE 群組的人：直接在群組或聊天室用「轉帳」轉給 Pray。\n不在群組的人：到公會 Discord 私訊 Pray，加 LINE 之後再轉。\n贊助的錢只會拿去儲值翻譯額度，上面的數字每小時從帳號直接讀出來。","total":20,"updated":"2026-11-19 11:00","used":16.831811376};
