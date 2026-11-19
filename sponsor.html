@@ -42,6 +42,8 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 <div class="dim">直接取自 OpenRouter 帳號的活動紀錄，跟後台「Activity」頁是同一份資料。日期以 OpenRouter 的 UTC 日期為準。</div>
 <div class="kpi" id="akpi"></div>
 <div class="card chart" id="achart"></div></div>
+<h2>最近收到的銀行轉帳</h2>
+<div class="card"><div id="inc"></div><div class="dim" style="margin-top:6px">第一銀行帳戶收到轉帳時，銀行的通知會自動記在這裡（手機轉到 Discord，機器人每 5 分鐘讀一次）。通知裡沒有金額和轉帳人，所以只顯示時間；收到的錢站長會拿去儲值，儲值後上面的「累計儲值」就會增加。LINE Pay Money 的轉帳不會出現在這裡。</div></div>
 <h2>怎麼贊助</h2>
 <div class="card how" id="how"></div>
 <h2>圖文教學：用 LINE Pay Money 轉帳</h2>
@@ -89,6 +91,7 @@ $('kpi').innerHTML='<div class="card'+(left<2?' low':'')+'">剩餘額度<b>'+usd
  '<div class="card">累計儲值<b>'+usd(F.total)+'</b><span class="dim">含站長自己付的和大家贊助的</span></div>'+
  '<div class="card">最近每天平均<b>'+(last7.length?usd(avg):'—')+'</b><span class="dim">'+(last7.length?'最近 '+last7.length+' 天':'明天起才有')+'</span></div>';
 if(A.length)drawAct(A);
+var I=F.inc||[];$('inc').innerHTML=I.length?'<table><tr><th>收到時間（台灣）</th></tr>'+I.map(function(t){return '<tr><td>'+esc(t)+'</td></tr>'}).join('')+'</table><div class="dim" style="margin-top:4px">共 '+I.length+' 筆'+(I.length>=30?'（只列最近 30 筆）':'')+'</div>':'<span class="dim">目前還沒有。</span>';
 $('how').innerHTML=F.note?F.note.split(/\n+/).map(function(l){return '<p>'+esc(l)+'</p>'}).join(''):'<p>贊助方式請看公會 Discord 的公告，或直接私訊站長。</p>';
 if(!rows.length){$('days').innerHTML='<tr><td class="dim">今天才開始記錄，明天起會列出每天的花費。</td></tr>'}
 else{var mx=Math.max.apply(null,rows.map(function(r){return r.v}))||1;
