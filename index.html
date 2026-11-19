@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=34b1fa7e"></script>
+<script src="data.js?v=63d70f86"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -535,7 +535,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     let h = '';
     const item = g => '<a href="#' + g.slug + '" class="' + (cur===g.slug?'on':'') + '">' + esc(g.title.replace(/（Progress[^）]*）/,'')) + '<span class="d">' + esc(g.date||'') + '</span></a>';
     menu.forEach(m => {
-      if (m.home) { h += '<a href="#" class="top ' + (cur ? '' : 'on') + '">' + m.i + ' ' + m.t + '</a>'; return; }
+      if (m.home) { h += '<a href="#" class="top ' + (cur ? '' : 'on') + '">' + m.i + ' ' + m.t + '</a><a href="dc/paladin.html" class="top">💬 DC 重點：聖騎</a><a href="ah/index.html" class="top">💰 拍賣場</a>'; return; }
       const list = m.cat ? (cats[m.cat] || []) : [];
       if (!list.length) { if (!m.cat) h += '<a href="' + m.ext + '" class="top ext" target="_blank" rel="noopener">' + m.i + ' ' + m.t + ' <span class="d">英文 ↗</span></a>'; return; }
       const open = m.cat === curCat;
