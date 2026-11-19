@@ -19,7 +19,13 @@ h3{color:var(--gold);font-size:16px;margin:0;line-height:1.45}
 .dim{color:var(--dim);font-size:13px}
 .note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
 .note b{color:var(--text)}
-.filters{position:sticky;top:0;z-index:5;background:#0d0b0af2;padding:6px 0;margin:6px 0;border-bottom:1px solid var(--line)}
+.filters{padding:6px 0;margin:6px 0 0}
+.tabs{position:sticky;top:0;z-index:5;background:#0d0b0af2;padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:8px}
+.tabc{font-weight:700;font-size:15px}
+.desc{margin:6px 0 10px}
+.pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px 0 0}
+.chip:disabled{opacity:.35;cursor:default}
+.cards h4{grid-column:1/-1;margin:8px 0 0}
 .row{display:flex;gap:8px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
 .row::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;user-select:none;white-space:nowrap}
@@ -55,7 +61,7 @@ h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bott
 .st.hot{color:var(--down)}
 .hotlist{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
 .hotlist li{margin:6px 0}
-.card{scroll-margin-top:160px}
+.card{scroll-margin-top:70px}
 .card.flash{border-color:var(--gold)}
 </style>
 </head>
@@ -71,6 +77,7 @@ h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bott
   <div class="row" id="catRow" role="group" aria-label="類別"></div>
   <div class="row" id="heatRow" role="group" aria-label="熱門度"></div>
 </div>
+<div class="row tabs" id="tabRow" role="group" aria-label="分頁選單"></div>
 <main id="view"></main>
 <footer>內容是討論的中文摘要，不是原文。技能名稱沒有確定官方中文的（Seal of Fury、Holy Strike、Unsealed Wrath 等）保留英文。裝備屬性與來源取自 Wowhead WoW Forever 資料庫；製作成本是 11/19 早上美服 PvP 聯盟拍賣場價格。</footer>
 </div>
@@ -92,27 +99,36 @@ function chips(){
   $("heatRow").innerHTML=HEATS.map(([k,n])=>`<button class="chip" data-h="${k}" aria-pressed="${fh==k}">${n}</button>`).join("");
   $("catRow").innerHTML=[["all","所有類別"]].concat(CATS).map(([k,n])=>`<button class="chip" data-c="${k}" aria-pressed="${fc==k}">${n}</button>`).join("");
 }
+const PER=6;let tab="new",pg=1;
+try{tab=localStorage.getItem("dcd_t")||"new"}catch(e){}
 function draw(){
   chips();
   $("upd").textContent="最後更新："+(DC.updated||"")+"（台灣時間）・每天早上自動更新一次";
   const list=T.filter(t=>okSpec(t)&&(fc=="all"||fc==t.c)&&(t.heat||0)>=+fh);
-  const fresh=list.filter(t=>t.upd==DC.run).sort((a,b)=>(b.heat||0)-(a.heat||0));
-  const hot=list.filter(t=>(t.heat||0)>=2).sort((a,b)=>b.heat-a.heat).slice(0,6);
-  const old=list.filter(t=>t.upd!=DC.run);
-  let h="";
-  if(fresh.length)h+=`<h2>最新討論<small>${md(DC.run)} 這一天有新進展，${fresh.length} 則</small></h2><div class="cards">`+fresh.map(t=>card(t,t.first==t.upd&&t.first!=T.reduce((m,x)=>x.first<m?x.first:m,"9"))).join("")+`</div>`;
-  if(hot.length)h+=`<h2>熱門討論<small>最近討論量最大的主題，點了跳到那一則</small></h2><ol class="hotlist">`+hot.map(t=>`<li><a href="#t-${t.id}" data-go="${t.id}">${t.h}</a><span class="dim">　${SPN[t.s]}・${STN[t.st]}${t.vol?"・"+t.vol:""}</span></li>`).join("")+`</ol>`;
-  if(old.length){h+=`<h2>之前的討論<small>沒有新進展，內容仍然有效</small></h2>`;
-    CATS.forEach(([k,n])=>{const l=old.filter(t=>t.c==k).sort((a,b)=>b.upd<a.upd?-1:1);if(!l.length)return;
-      h+=`<h4>${n}</h4><div class="cards">`+l.map(t=>card(t,false)).join("")+`</div>`})}
-  $("view").innerHTML=h||`<p class="empty">這個組合沒有內容，換一個篩選看看。</p>`;
+  const first0=T.reduce((m,x)=>x.first<m?x.first:m,"9");
+  const sets={new:list.filter(t=>t.upd==DC.run).sort((a,b)=>(b.heat||0)-(a.heat||0)),
+    hot:list.filter(t=>(t.heat||0)>=2).sort((a,b)=>b.heat-a.heat||(b.upd>a.upd?1:-1)),
+    old:list.filter(t=>t.upd!=DC.run).sort((a,b)=>CATS.findIndex(c=>c[0]==a.c)-CATS.findIndex(c=>c[0]==b.c)||(b.upd>a.upd?1:-1))};
+  const TABS=[["new","最新討論"],["hot","熱門討論"],["old","之前的討論"]];
+  const DESC={new:md(DC.run)+" 這一天有新進展的主題",hot:"最近討論量最大的主題，越上面越熱",old:"沒有新進展、內容仍然有效，依類別排"};
+  $("tabRow").innerHTML=TABS.map(([k,n])=>`<button class="chip tabc" data-t="${k}" aria-pressed="${tab==k}">${n} ${sets[k].length}</button>`).join("");
+  const cur=sets[tab]||[],pages=Math.max(1,Math.ceil(cur.length/PER));if(pg>pages)pg=pages;
+  const part=cur.slice((pg-1)*PER,pg*PER);
+  let h=`<div class="dim desc">${DESC[tab]}${cur.length?`・第 ${pg}／${pages} 頁`:""}</div>`;
+  if(!cur.length)h+=`<p class="empty">這個組合沒有內容，換一個分頁或篩選看看。</p>`;
+  else{let last="";h+=`<div class="cards">`+part.map(t=>{let hd="";if(tab=="old"&&t.c!=last){last=t.c;hd=`<h4>${(CATS.find(c=>c[0]==t.c)||[0,""])[1]}</h4>`}
+      return hd+card(t,t.first==t.upd&&t.first!=first0)}).join("")+`</div>`;
+    if(pages>1){h+=`<nav class="pager" aria-label="分頁"><button class="chip" data-p="${pg-1}" ${pg<=1?"disabled":""}>← 上一頁</button>`;
+      for(let i=1;i<=pages;i++)h+=`<button class="chip" data-p="${i}" aria-pressed="${i==pg}">${i}</button>`;
+      h+=`<button class="chip" data-p="${pg+1}" ${pg>=pages?"disabled":""}>下一頁 →</button></nav>`}}
+  $("view").innerHTML=h;
 }
+function goTop(){const el=$("tabRow");if(el)el.scrollIntoView({block:"start"})}
+$("tabRow").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;tab=b.dataset.t;pg=1;try{localStorage.setItem("dcd_t",tab)}catch(e){}draw()});
+$("view").addEventListener("click",e=>{const b=e.target.closest("button[data-p]");if(!b||b.disabled)return;pg=+b.dataset.p;draw();goTop()});
 $("filters").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
   if(b.dataset.s)fs=b.dataset.s;if(b.dataset.c)fc=b.dataset.c;if(b.dataset.h)fh=b.dataset.h;
-  try{localStorage.setItem("dcd_s",fs);localStorage.setItem("dcd_c",fc);localStorage.setItem("dcd_h",fh)}catch(e){}draw()});
-$("view").addEventListener("click",e=>{const a=e.target.closest("a[data-go]");if(!a)return;e.preventDefault();
-  const el=document.getElementById("t-"+a.dataset.go);if(!el)return;const d=el.querySelector("details");if(d)d.open=true;
-  el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)});
+  try{localStorage.setItem("dcd_s",fs);localStorage.setItem("dcd_c",fc);localStorage.setItem("dcd_h",fh)}catch(e){}pg=1;draw()});
 draw();
 </script>
 </body>
