@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=61c1b64e"></script>
+<script src="data.js?v=4b7837e4"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -535,7 +535,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     let h = '';
     const item = g => '<a href="#' + g.slug + '" class="' + (cur===g.slug?'on':'') + '">' + esc(g.title.replace(/（Progress[^）]*）/,'')) + '<span class="d">' + esc(g.date||'') + '</span></a>';
     menu.forEach(m => {
-      if (m.home) { h += '<a href="#" class="top ' + (cur ? '' : 'on') + '">' + m.i + ' ' + m.t + '</a><a href="dc/paladin.html" class="top">💬 DC 重點：聖騎</a><a href="ah/index.html" class="top">💰 拍賣場</a><a href="sponsor.html" class="top">☕ 贊助翻譯費</a>'; return; }
+      if (m.home) { h += '<a href="#" class="top ' + (cur ? '' : 'on') + '">' + m.i + ' ' + m.t + '</a><a href="dc/paladin.html" class="top">💬 DC 重點：聖騎</a><a href="dc/shaman.html" class="top">💬 DC 重點：薩滿</a><a href="ah/index.html" class="top">💰 拍賣場</a><a href="sponsor.html" class="top">☕ 贊助翻譯費</a>'; return; }
       const list = m.cat ? (cats[m.cat] || []) : [];
       if (!list.length) { if (!m.cat) h += '<a href="' + m.ext + '" class="top ext" target="_blank" rel="noopener">' + m.i + ' ' + m.t + ' <span class="d">英文 ↗</span></a>'; return; }
       const open = m.cat === curCat;
@@ -666,6 +666,7 @@ details.sec.sub>.body{padding:0 12px 6px}
       h += '<h2>工具與社群</h2><div class="grid sec">'
         + '<a class="card tile dcard" href="ah/index.html"><span class="ti">💰</span><b>拍賣場</b><span class="c">美服價格、專業獲利表、貿易局聲望</span></a>'
         + '<a class="card tile dcard" href="dc/paladin.html"><span class="ti">💬</span><b>DC 重點：聖騎</b><span class="c">國外職業 Discord 的討論中文摘要，每天更新</span></a>'
+        + '<a class="card tile dcard" href="dc/shaman.html"><span class="ti">💬</span><b>DC 重點：薩滿</b><span class="c">Shaman Classic（約 9 萬人）的討論中文摘要，每天更新</span></a>'
         + '<a class="card tile dcard" href="sponsor.html"><span class="ti">☕</span><b>贊助翻譯費</b><span class="c">翻譯額度還剩多少、每天花多少</span></a>'
         + '</div>';
       h += '<h2>攻略分類</h2><div class="grid sec">';
