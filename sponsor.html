@@ -29,6 +29,8 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .bal{color:var(--dim);margin-bottom:8px}.bal b{display:block;color:var(--text);font-size:18px}
 .fr{padding:8px 10px;border:1px solid var(--line);border-radius:8px;margin-top:6px;color:var(--dim)}
 .fld{display:flex;justify-content:space-between;padding:8px 2px;border-bottom:1px solid var(--line);color:var(--dim)}.fld b{color:var(--text)}
+.sp{display:flex;justify-content:space-between;align-items:flex-end;gap:8px}.sp svg{flex:0 0 96px}
+.chart svg{width:100%;height:auto;display:block}
 .go{margin-top:10px;text-align:center;padding:9px;border-radius:8px;background:var(--gold2);color:#0d0b0a;font-weight:700}
 </style></head><body><div class="wrap">
 <h1>贊助與翻譯費用</h1>
@@ -36,6 +38,10 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 <div class="dim"><a href="index.html">← 永恆攻略中文版</a>・<a href="ah/index.html">拍賣場</a>・<a href="dc/paladin.html">聖騎 DC 重點</a></div>
 <div class="note">這個網站的攻略和新聞是機器人自動翻譯的，翻譯要付費（OpenRouter，按用量計價）。贊助的錢<b>只用來儲值翻譯額度</b>，下面的數字每 5 分鐘從 OpenRouter 帳號直接讀一次，有變動就更新，不是手動填的。單位是美金。</div>
 <div class="kpi" id="kpi"></div>
+<div id="actbox" style="display:none"><h2>用量圖表（最近 30 天）</h2>
+<div class="dim">直接取自 OpenRouter 帳號的活動紀錄，跟後台「Activity」頁是同一份資料。日期以 OpenRouter 的 UTC 日期為準。</div>
+<div class="kpi" id="akpi"></div>
+<div class="card chart" id="achart"></div></div>
 <h2>怎麼贊助</h2>
 <div class="card how" id="how"></div>
 <h2>圖文教學：用 LINE Pay Money 轉帳</h2>
@@ -60,19 +66,33 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 (function(){var F=window.FUND;function $(i){return document.getElementById(i)}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function usd(v){return '$'+(+v).toFixed(2)}
+function big(v){return v>=1e8?(v/1e8).toFixed(2)+' 億':v>=1e4?Math.round(v/1e4).toLocaleString()+' 萬':Math.round(v).toLocaleString()}
+function spark(vs){var w=96,h=34,mx=Math.max.apply(null,vs)||1,n=vs.length,p=vs.map(function(v,i){return (n>1?i/(n-1)*w:w/2).toFixed(1)+','+(h-2-v/mx*(h-4)).toFixed(1)}).join(' ');
+ return '<svg width="96" height="34" viewBox="0 0 96 34"><polyline points="'+p+'" fill="none" stroke="#b8913f" stroke-width="1.6" stroke-linejoin="round"/></svg>'}
+function drawAct(A){var su=0,sr=0,st=0;A.forEach(function(a){su+=a.usd;sr+=a.req;st+=a.tok});
+ function c(t,v,k){return '<div class="card"><div class="sp"><div>'+t+'<b>'+v+'</b></div>'+spark(A.map(function(a){return a[k]}))+'</div><span class="dim">最近 '+A.length+' 天合計</span></div>'}
+ $('akpi').innerHTML=c('總支出',usd(su),'usd')+c('翻譯請求數',Math.round(sr).toLocaleString()+' 次','req')+c('代幣數量',big(st),'tok');
+ var W=640,H=200,L=38,B=24,T=8,n=A.length,mx=Math.max.apply(null,A.map(function(a){return a.usd}))||1,bw=(W-L-6)/n,g='';
+ for(var k=0;k<=2;k++){var y=T+(H-T-B)*(1-k/2);g+='<line x1="'+L+'" x2="'+W+'" y1="'+y+'" y2="'+y+'" stroke="#ffffff14"/><text x="'+(L-5)+'" y="'+(y+4)+'" text-anchor="end" font-size="11" fill="#a8998a">$'+(mx*k/2).toFixed(mx<2?2:1)+'</text>'}
+ A.forEach(function(a,i){var bh=a.usd/mx*(H-T-B),x=L+i*bw;g+='<rect x="'+(x+bw*0.15).toFixed(1)+'" y="'+(H-B-bh).toFixed(1)+'" width="'+(bw*0.7).toFixed(1)+'" height="'+Math.max(bh,0.5).toFixed(1)+'" rx="2" fill="#e8c26b"><title>'+a.d+'：'+usd(a.usd)+'，'+Math.round(a.req)+' 次請求</title></rect>';
+  var sp=Math.ceil(n/6);if(n<=10||i==n-1||(i%sp==0&&n-1-i>=sp*0.7))g+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(H-7)+'" text-anchor="middle" font-size="11" fill="#a8998a">'+a.d.slice(5).replace('-','/')+'</text>'});
+ $('achart').innerHTML='<div class="dim" style="margin-bottom:4px">每天花費（美金）</div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="每天花費長條圖">'+g+'</svg>';
+ $('actbox').style.display=''}
 if(!F){$('kpi').innerHTML='<div class="card">資料還沒產生，請晚點再來。</div>';return}
 $('upd').textContent='資料更新：'+F.updated+'（台灣時間）・翻譯模型：'+(F.model||'');
-var D=F.days||[],rows=[];for(var i=1;i<D.length;i++)rows.push({d:D[i].d,v:Math.max(0,D[i].used-D[i-1].used)});
+var D=F.days||[],rows=[],A=F.act||[];
+if(A.length){rows=A.map(function(a){return {d:a.d,v:a.usd}})}else{for(var i=1;i<D.length;i++)rows.push({d:D[i].d,v:Math.max(0,D[i].used-D[i-1].used)})}
 var last7=rows.slice(-7),avg=last7.length?last7.reduce(function(a,r){return a+r.v},0)/last7.length:0;
 var left=F.left,daysLeft=avg>0?Math.floor(left/avg):null;
 $('kpi').innerHTML='<div class="card'+(left<2?' low':'')+'">剩餘額度<b>'+usd(left)+'</b><span class="dim">'+(daysLeft!=null?'照最近的用量約可用 '+daysLeft+' 天':'用量資料累積中')+'</span></div>'+
  '<div class="card">累計已使用<b>'+usd(F.used)+'</b><span class="dim">從開站到現在</span></div>'+
  '<div class="card">累計儲值<b>'+usd(F.total)+'</b><span class="dim">含站長自己付的和大家贊助的</span></div>'+
  '<div class="card">最近每天平均<b>'+(last7.length?usd(avg):'—')+'</b><span class="dim">'+(last7.length?'最近 '+last7.length+' 天':'明天起才有')+'</span></div>';
+if(A.length)drawAct(A);
 $('how').innerHTML=F.note?F.note.split(/\n+/).map(function(l){return '<p>'+esc(l)+'</p>'}).join(''):'<p>贊助方式請看公會 Discord 的公告，或直接私訊站長。</p>';
 if(!rows.length){$('days').innerHTML='<tr><td class="dim">今天才開始記錄，明天起會列出每天的花費。</td></tr>'}
 else{var mx=Math.max.apply(null,rows.map(function(r){return r.v}))||1;
  $('days').innerHTML='<tr><th>日期</th><th class="n">當天花費</th><th style="width:50%"></th></tr>'+rows.slice(-30).reverse().map(function(r){return '<tr><td>'+r.d+'</td><td class="n">'+usd(r.v)+'</td><td><div class="bar" style="width:'+Math.round(r.v/mx*100)+'%"></div></td></tr>'}).join('')}
-$('dnote').textContent='當天花費＝當天最後一次讀到的累計使用，減掉前一天的。機器人有一天沒開的話，那天的花費會併到隔天。';
+$('dnote').textContent=A.length?'資料來源：OpenRouter 活動紀錄（UTC 日期），今天這一列會隨用量增加。':'當天花費＝當天最後一次讀到的累計使用，減掉前一天的。機器人有一天沒開的話，那天的花費會併到隔天。';
 })();
 </script></body></html>
