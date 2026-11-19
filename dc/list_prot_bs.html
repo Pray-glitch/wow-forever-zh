@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>防騎 Pre-BiS：440 防禦・含鍛造版</title>
+<style>
+/* 跟拍賣場／聲望頁同一套深色金色樣式；單欄，上方篩選，下面依類別分段，每個主題一張卡 */
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;--up:#4fc46a;--down:#e06054;--blue:#9fd3ff;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:15px}
+a{color:var(--gold);word-break:break-word}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:19px;margin:24px 0 8px}
+h2 small{color:var(--dim);font-size:13px;font-weight:400;margin-left:8px}
+h3{color:var(--gold);font-size:16px;margin:0;line-height:1.45}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
+.note b{color:var(--text)}
+.filters{padding:6px 0;margin:6px 0 0}
+.tabs{position:sticky;top:0;z-index:5;background:#0d0b0af2;padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:8px}
+.tabc{font-weight:700;font-size:15px}
+.desc{margin:6px 0 10px}
+.pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px 0 0}
+.chip:disabled{opacity:.35;cursor:default}
+.cards h4{grid-column:1/-1;margin:8px 0 0}
+.row{display:flex;gap:8px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;user-select:none;white-space:nowrap}
+.chip[aria-pressed="true"]{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.chip:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.card p{margin:6px 0 0}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:12px;margin-bottom:6px}
+.tag,.st{display:inline-block;border:1px solid currentColor;border-radius:4px;padding:0 6px;white-space:nowrap}
+.tag{color:var(--blue)}
+.st.ok{color:var(--up)}.st.warn{color:#ffb35c}.st.wait{color:#c79bff}
+.when{color:var(--dim)}
+details{margin-top:8px;border-top:1px solid #ffffff12;padding-top:6px}
+summary{cursor:pointer;color:var(--gold);font-size:13.5px}
+.det{font-size:14px;padding-top:4px}
+.det p{margin:8px 0 4px}
+.det ul,.det ol{margin:4px 0;padding-left:20px}
+.det li{margin:4px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{padding:5px 6px;border-top:1px solid #ffffff12;text-align:left;vertical-align:top;white-space:nowrap}
+th{color:var(--dim);font-weight:500;font-size:12.5px}
+td.w{white-space:normal;min-width:160px}
+td.n,th.n{text-align:right}
+code{background:#0b0907;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-size:12.5px;word-break:break-all}
+.links{display:flex;flex-direction:column;gap:4px}
+.empty{color:var(--dim);text-align:center;padding:24px 0}
+footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:12px;margin-top:24px}
+@media (max-width:700px){.cards{grid-template-columns:1fr}}
+h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.st.new{color:#0d0b0a;background:var(--gold);border-color:var(--gold);font-weight:700}
+.st.hot{color:var(--down)}
+.hotlist{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.hotlist li{margin:6px 0}
+.card{scroll-margin-top:70px}
+.card.flash{border-color:var(--gold)}
+</style>
+</head><body><div class="wrap">
+<h1>防騎 Pre-BiS：440 防禦・含鍛造版</h1>
+<div class="dim"><a href="paladin.html">← 回聖騎 DC 重點</a></div>
+<div class="note">釘選討論串裡的第二份清單，用了 4 件鍛造裝。<br><b>原始清單（英文）：</b><a href="https://www.wowhead.com/forever/tw/gear-planner/paladin/dwarf/FQBgcAM4ixoyHlAGvkndmhARBB407F1UcBC47D48AosBADzS4BFzUA8AqFSAG406tBHzT_1UcBI406j8AqFSBJ4063zJLBKzT-8AqFSALz51AM1OBAN0wAAO46QYBP46P713eBQ0Jg8AooFBRy0azFZAS1aD" target="_blank" rel="noopener">Wowhead 配裝器（中文介面）</a>。這頁是中文對照，裝備名稱用台服正式譯名；原清單有更新，這頁會在每日更新時跟著改。</div>
+<div class="tw"><table><tr><th class="">部位</th><th class="">裝備</th><th class="n">防禦</th><th class="n">耐力</th><th class="n">智力</th><th class="n">法傷</th><th class="w">其他</th><th class="w">怎麼拿</th></tr><tr><td class="">頭</td><td class="">充盈瑟銀頭盔</td><td class="n">8</td><td class="n">21</td><td class="n">—</td><td class="n">23</td><td class="w">護甲 534</td><td class="w">鍛造；材料約 287 金（11/19 美服價）</td></tr><tr><td class="">項鍊</td><td class="">維漢的角</td><td class="n">5</td><td class="n">10</td><td class="n">—</td><td class="n">—</td><td class="w">命中 1.3%</td><td class="w">海加爾山任務 Work Well Done</td></tr><tr><td class="">肩</td><td class="">牢獄肩甲</td><td class="n">10</td><td class="n">20</td><td class="n">—</td><td class="n">12</td><td class="w">護甲 472</td><td class="w">野外隨機紫裝，拍賣場買</td></tr><tr><td class="">披風</td><td class="">奧紋披風</td><td class="n">—</td><td class="n">—</td><td class="n">8</td><td class="n">16</td><td class="w">命中 1%</td><td class="w">幽坑城商人，75 真幣</td></tr><tr><td class="">胸</td><td class="">亡骨胸甲</td><td class="n">17</td><td class="n">16</td><td class="n">11</td><td class="n">—</td><td class="w">護甲 637</td><td class="w">通靈學院，各王約 1～2%</td></tr><tr><td class="">護腕</td><td class="">護衛腕甲</td><td class="n">8</td><td class="n">11</td><td class="n">—</td><td class="n">7</td><td class="w">護甲 231</td><td class="w">鍛造；材料約 5.7 金</td></tr><tr><td class="">手</td><td class="">亡骨護手</td><td class="n">10</td><td class="n">14</td><td class="n">11</td><td class="n">—</td><td class="w">護甲 398</td><td class="w">通靈學院，約 1%</td></tr><tr><td class="">腰</td><td class="">護衛護腰</td><td class="n">10</td><td class="n">14</td><td class="n">—</td><td class="n">15</td><td class="w">護甲 324</td><td class="w">鍛造；材料約 7.9 金</td></tr><tr><td class="">腿</td><td class="">亡骨腿甲</td><td class="n">13</td><td class="n">20</td><td class="n">14</td><td class="n">—</td><td class="w">護甲 557</td><td class="w">通靈學院，阿萊克斯·巴羅夫約 4.5%</td></tr><tr><td class="">腳</td><td class="">護衛脛甲</td><td class="n">9</td><td class="n">13</td><td class="n">—</td><td class="n">14</td><td class="w">護甲 376</td><td class="w">鍛造；材料約 6.2 金</td></tr><tr><td class="">戒指 1</td><td class="">殉難者之血</td><td class="n">—</td><td class="n">10</td><td class="n">10</td><td class="n">12</td><td class="w"></td><td class="w">斯坦索姆任務「奧里爾斯的清算」</td></tr><tr><td class="">戒指 2</td><td class="">唐·馬里喬的統禦之戒</td><td class="n">—</td><td class="n">10</td><td class="n">—</td><td class="n">11</td><td class="w">暴擊 1%</td><td class="w">通靈學院黑暗院長加丁，約 13%</td></tr><tr><td class="">飾品 1</td><td class="">聖化寶珠</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">15</td><td class="w">使用：回 319～361 法力，5 分鐘冷卻</td><td class="w">聖騎任務「鑄造力量之石」</td></tr><tr><td class="">飾品 2</td><td class="">防衛者抓握穩定器</td><td class="n">13</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="w">使用：格擋 +8%，15 秒，6 分鐘冷卻</td><td class="w">幽坑城商人，125 真幣</td></tr><tr><td class="">主手</td><td class="">大鑄甲師之錘</td><td class="n">—</td><td class="n">10</td><td class="n">—</td><td class="n">68</td><td class="w">命中 1%；44～82 傷害，速度 2.4</td><td class="w">黑石塔上層古拉魯克，約 19%</td></tr><tr><td class="">副手</td><td class="">龍人之盾</td><td class="n">10</td><td class="n">7</td><td class="n">—</td><td class="n">—</td><td class="w">護甲 2153、格擋值 40、火抗 8</td><td class="w">黑石塔上層達基薩斯將軍，約 22%</td></tr><tr><td class="">聖契</td><td class="">熱情聖契</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="w">十字軍聖印攻強 +48、十字軍審判神聖傷害 +33</td><td class="w">稀有隨機掉落，拍賣場買</td></tr></table></div>
+<h2>備註</h2><ul><li>亡骨 3 件：2 件防禦 +3；3 件被打有 15% 機率法傷 +70，持續 10 秒，冷卻 1 分鐘。</li><li>配裝器顯示整套防禦技能 +143，加 60 級基礎 300 約 443。血量約 4,000、護甲約 6,200。</li><li>作者說還在調整，最好的武器是聖劍 Sageblade（武器鍛造），之後可能補上。</li><li>頭盔材料很貴（約 287 金），只換到防禦 +8、法傷 23。護衛三件加起來不到 20 金。</li></ul>
+<footer>整理時間：2026/11/19。屬性與來源以原清單和 Wowhead 永恆資料庫為準。</footer>
+</div></body></html>
