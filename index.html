@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=06dd8074"></script>
+<script src="data.js?v=b9e60ad1"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -663,6 +663,11 @@ details.sec.sub>.body{padding:0 12px 6px}
     else if (!g) {
       const DN = (window.DUNGEONS||[]).length;
       let h = '<div class="home"><p class="meta">WoW Forever 攻略中文版（Progress 公會與經作者同意的攻略）· 更新於 ' + esc(window.GENERATED||'') + ' · 看到翻錯，反白那段就能回報</p>';
+      h += '<h2>工具與社群</h2><div class="grid sec">'
+        + '<a class="card tile dcard" href="ah/index.html"><span class="ti">💰</span><b>拍賣場</b><span class="c">美服價格、專業獲利表、貿易局聲望</span></a>'
+        + '<a class="card tile dcard" href="dc/paladin.html"><span class="ti">💬</span><b>DC 重點：聖騎</b><span class="c">國外職業 Discord 的討論中文摘要，每天更新</span></a>'
+        + '<a class="card tile dcard" href="sponsor.html"><span class="ti">☕</span><b>贊助翻譯費</b><span class="c">翻譯額度還剩多少、每天花多少</span></a>'
+        + '</div>';
       h += '<h2>攻略分類</h2><div class="grid sec">';
       SECTIONS.forEach(x => { const n = (cats[x.cat]||[]).length; if (!n && !(x.cat === '地城' && DN)) return; const cnt = n ? n + ' 篇' : DN + ' 副本'; const d = x.cat === '地城' && DN ? '地城攻略 ' + n + ' 篇＋' + DN + ' 個副本首領掉落' : x.d; h += '<div class="card tile" onclick="location.hash=\'k:' + x.cat + '\'"><span class="ti">' + x.i + '</span><b>' + esc(x.t) + '</b><span class="n">' + cnt + '</span>' + (d ? '<div class="c">' + esc(d) + '</div>' : '') + '</div>'; });
       h += '</div></div>';
