@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>防騎 Pre-BiS：440 防禦・不用鍛造版</title>
+<style>
+/* 跟拍賣場／聲望頁同一套深色金色樣式；單欄，上方篩選，下面依類別分段，每個主題一張卡 */
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;--up:#4fc46a;--down:#e06054;--blue:#9fd3ff;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:15px}
+a{color:var(--gold);word-break:break-word}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:19px;margin:24px 0 8px}
+h2 small{color:var(--dim);font-size:13px;font-weight:400;margin-left:8px}
+h3{color:var(--gold);font-size:16px;margin:0;line-height:1.45}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
+.note b{color:var(--text)}
+.filters{padding:6px 0;margin:6px 0 0}
+.tabs{position:sticky;top:0;z-index:5;background:#0d0b0af2;padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:8px}
+.tabc{font-weight:700;font-size:15px}
+.desc{margin:6px 0 10px}
+.pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px 0 0}
+.chip:disabled{opacity:.35;cursor:default}
+.cards h4{grid-column:1/-1;margin:8px 0 0}
+.row{display:flex;gap:8px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;user-select:none;white-space:nowrap}
+.chip[aria-pressed="true"]{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.chip:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.card p{margin:6px 0 0}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:12px;margin-bottom:6px}
+.tag,.st{display:inline-block;border:1px solid currentColor;border-radius:4px;padding:0 6px;white-space:nowrap}
+.tag{color:var(--blue)}
+.st.ok{color:var(--up)}.st.warn{color:#ffb35c}.st.wait{color:#c79bff}
+.when{color:var(--dim)}
+details{margin-top:8px;border-top:1px solid #ffffff12;padding-top:6px}
+summary{cursor:pointer;color:var(--gold);font-size:13.5px}
+.det{font-size:14px;padding-top:4px}
+.det p{margin:8px 0 4px}
+.det ul,.det ol{margin:4px 0;padding-left:20px}
+.det li{margin:4px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{padding:5px 6px;border-top:1px solid #ffffff12;text-align:left;vertical-align:top;white-space:nowrap}
+th{color:var(--dim);font-weight:500;font-size:12.5px}
+td.w{white-space:normal;min-width:160px}
+td.n,th.n{text-align:right}
+code{background:#0b0907;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-size:12.5px;word-break:break-all}
+.links{display:flex;flex-direction:column;gap:4px}
+.empty{color:var(--dim);text-align:center;padding:24px 0}
+footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:12px;margin-top:24px}
+@media (max-width:700px){.cards{grid-template-columns:1fr}}
+h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.st.new{color:#0d0b0a;background:var(--gold);border-color:var(--gold);font-weight:700}
+.st.hot{color:var(--down)}
+.hotlist{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.hotlist li{margin:6px 0}
+.card{scroll-margin-top:70px}
+.card.flash{border-color:var(--gold)}
+</style>
+</head><body><div class="wrap">
+<h1>防騎 Pre-BiS：440 防禦・不用鍛造版</h1>
+<div class="dim"><a href="paladin.html">← 回聖騎 DC 重點</a></div>
+<div class="note">釘選討論串裡的第一份清單，副本裝加 5 件魂鑄（T0.5），防禦合計 442。<br><b>原始清單（英文）：</b><a href="https://docs.google.com/spreadsheets/d/1tChBTMq0ztV8DQ40cqeRHMR-qM4NRgCRFiye7a0a1lw/edit?usp=sharing" target="_blank" rel="noopener">Google 試算表</a>。這頁是中文對照，裝備名稱用台服正式譯名；原清單有更新，這頁會在每日更新時跟著改。</div>
+<div class="tw"><table><tr><th class="">部位</th><th class="">裝備</th><th class="n">耐力</th><th class="n">力量</th><th class="n">智力</th><th class="n">防禦</th><th class="n">法傷</th><th class="w">其他</th><th class="w">怎麼拿</th><th class="w">附魔</th><th class="w">替代裝</th></tr><tr><td class="">頭</td><td class="">魂鑄頭盔</td><td class="n">33</td><td class="n">18</td><td class="n">18</td><td class="n">4</td><td class="n">13</td><td class="w"></td><td class="w">T0.5 任務</td><td class="w"></td><td class="w">蓋斯的頭骨：黑石塔上層（防禦 +9）</td></tr><tr><td class="">項鍊</td><td class="">維漢的角</td><td class="n">10</td><td class="n">—</td><td class="n">—</td><td class="n">5</td><td class="n">—</td><td class="w">命中 1.3%</td><td class="w">海加爾山任務</td><td class="w">防禦 +5</td><td class="w"></td></tr><tr><td class="">肩</td><td class="">魂鑄肩鎧</td><td class="n">18</td><td class="n">12</td><td class="n">12</td><td class="n">5</td><td class="n">9</td><td class="w">格擋 1%</td><td class="w">厄運之槌北區（莫爾達）</td><td class="w"></td><td class="w"></td></tr><tr><td class="">披風</td><td class="">壁壘披風</td><td class="n">15</td><td class="n">—</td><td class="n">—</td><td class="n">7</td><td class="n">—</td><td class="w"></td><td class="w">厄運之槌貢品箱</td><td class="w"></td><td class="w">血月披風：黑石塔上層（耐力 17、防禦 3）</td></tr><tr><td class="">胸</td><td class="">亡骨胸甲</td><td class="n">15</td><td class="n">—</td><td class="n">11</td><td class="n">17</td><td class="n">—</td><td class="w"></td><td class="w">通靈學院</td><td class="w">屬性 +3 或 +4</td><td class="w">精製合金胸甲：西瘟疫任務（耐力 22、防禦 10、護甲多 150 以上）</td></tr><tr><td class="">護腕</td><td class="">魂鑄腕甲</td><td class="n">16</td><td class="n">8</td><td class="n">8</td><td class="n">3</td><td class="n">6</td><td class="w"></td><td class="w">T0.5 任務</td><td class="w">防禦 +9 或 +7</td><td class="w"></td></tr><tr><td class="">手</td><td class="">魂鑄手甲</td><td class="n">15</td><td class="n">11</td><td class="n">11</td><td class="n">5</td><td class="n">12</td><td class="w">招架 0.8%</td><td class="w">T0.5 任務</td><td class="w"></td><td class="w">亡骨護手：通靈學院（耐力 14、智力 11、防禦 10）</td></tr><tr><td class="">腰</td><td class="">亡骨腰帶</td><td class="n">15</td><td class="n">—</td><td class="n">11</td><td class="n">9</td><td class="n">—</td><td class="w"></td><td class="w">通靈學院</td><td class="w"></td><td class="w"></td></tr><tr><td class="">腿</td><td class="">魂鑄腿甲</td><td class="n">24</td><td class="n">16</td><td class="n">16</td><td class="n">9</td><td class="n">16</td><td class="w"></td><td class="w">T0.5 任務</td><td class="w"></td><td class="w">亡骨腿甲：通靈學院（耐力 20、智力 14、防禦 13）</td></tr><tr><td class="">腳</td><td class="">亡骨馬靴</td><td class="n">11</td><td class="n">—</td><td class="n">14</td><td class="n">10</td><td class="n">—</td><td class="w"></td><td class="w">通靈學院</td><td class="w">跑速 8%</td><td class="w"></td></tr><tr><td class="">戒指 1</td><td class="">警覺戒指</td><td class="n">10</td><td class="n">8</td><td class="n">—</td><td class="n">9</td><td class="n">—</td><td class="w"></td><td class="w">幽坑城商人，75 真幣</td><td class="w"></td><td class="w"></td></tr><tr><td class="">戒指 2</td><td class="">惡魔力量之戒</td><td class="n">10</td><td class="n">—</td><td class="n">—</td><td class="n">7</td><td class="n">—</td><td class="w"></td><td class="w">厄運之槌東區（奧茲恩）</td><td class="w"></td><td class="w"></td></tr><tr><td class="">飾品 1</td><td class="">防衛者抓握穩定器</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">13</td><td class="n">—</td><td class="w">使用：格擋 +8%，15 秒</td><td class="w">幽坑城商人，125 真幣</td><td class="w"></td><td class="w"></td></tr><tr><td class="">飾品 2</td><td class="">弱點分析器</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">18</td><td class="w"></td><td class="w">幽坑城商人，125 真幣</td><td class="w"></td><td class="w">石楠之環：黑石塔上層（法傷 15）</td></tr><tr><td class="">主手</td><td class="">心靈雕刻者</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">72</td><td class="w"></td><td class="w">厄運之槌西區（王子）</td><td class="w"></td><td class="w">Hammer of the Fallen Thane：東瘟疫任務</td></tr><tr><td class="">副手</td><td class="">龍人之盾</td><td class="n">7</td><td class="n">—</td><td class="n">—</td><td class="n">10</td><td class="n">—</td><td class="w"></td><td class="w">黑石塔上層（達基薩斯）</td><td class="w">次級格擋：格擋 2%</td><td class="w">古董壁壘：東瘟疫任務（耐力 15、智力 10、格擋值 39）</td></tr><tr><td class="">聖契</td><td class="">律法聖契</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="w">審判傷害 +4%</td><td class="w">幽坑城商人，50 真幣</td><td class="w"></td><td class="w"></td></tr><tr><td class=""></td><td class=""><b>基礎防禦</b></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">300</td><td class="n"></td><td class="w"></td><td class="w"></td><td class="w"></td><td class="w"></td></tr><tr><td class=""></td><td class=""><b>天賦</b></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">12</td><td class="n"></td><td class="w"></td><td class="w"></td><td class="w"></td><td class="w"></td></tr><tr><td class=""></td><td class=""><b>防禦附魔</b></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">14</td><td class="n"></td><td class="w"></td><td class="w"></td><td class="w"></td><td class="w"></td></tr><tr><td class=""></td><td class=""><b>亡骨 2 件</b></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">3</td><td class="n"></td><td class="w">15% 機率法傷 +70，10 秒</td><td class="w"></td><td class="w"></td><td class="w"></td></tr><tr><td class=""></td><td class=""><b>合計</b></td><td class="n"><b>199</b></td><td class="n"><b>73</b></td><td class="n"><b>101</b></td><td class="n"><b>442</b></td><td class="n"><b>146</b></td><td class="w"></td><td class="w"></td><td class="w"></td><td class="w"></td></tr></table></div>
+<h2>備註</h2><ul><li>作者說這份是「純減傷、帶一點仇恨」的取向，請依自己需求調整。</li><li>作者說清單是半夜兩點排的，還可以再挪。</li><li>野生皮甲片（Wild Leather Armor Kits）先拿掉了，等確認遊戲裡真的有再放回來。</li><li>幽坑城飾品只能裝一個，表裡的防衛者抓握穩定器和弱點分析器實際上要擇一（這是頻道裡其他人的提醒）。</li><li>作者用的天賦：<a href="https://www.wowhead.com/forever/tw/talent-calc/paladin/vkndmh050050002-05320102213301531-502_t0/1BDCHfjjMknqRSnt0BEJ2AC1n" target="_blank" rel="noopener">主要配法</a>、<a href="https://www.wowhead.com/forever/tw/talent-calc/paladin/vkndmh05005-05320102213201531-50203_t0_r5/0BE2ACE1BCDHfjjMknRqSnt" target="_blank" rel="noopener">替代配法</a>（Wowhead 中文介面）。</li></ul>
+<footer>整理時間：2026/11/19。屬性與來源以原清單和 Wowhead 永恆資料庫為準。</footer>
+</div></body></html>
