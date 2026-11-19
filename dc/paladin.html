@@ -50,12 +50,19 @@ code{background:#0b0907;border:1px solid var(--line);padding:1px 5px;border-radi
 .empty{color:var(--dim);text-align:center;padding:24px 0}
 footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:12px;margin-top:24px}
 @media (max-width:700px){.cards{grid-template-columns:1fr}}
+h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.st.new{color:#0d0b0a;background:var(--gold);border-color:var(--gold);font-weight:700}
+.st.hot{color:var(--down)}
+.hot{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.hot li{margin:6px 0}
+.card{scroll-margin-top:110px}
+.card.flash{border-color:var(--gold)}
 </style>
 </head>
 <body>
 <div class="wrap">
 <h1>永恆 DC 重點整理：聖騎士</h1>
-<div class="dim">整理時間：2026/11/19 上午（台灣時間）</div>
+<div class="dim" id="upd"></div>
 <div class="dim"><a href="../index.html">← 永恆攻略中文版</a>・<a href="../ah/index.html">拍賣場</a></div>
 <div class="note">把大型職業 Discord 的討論分類、摘要成中文。每張卡先看摘要，想看細節點「詳細說明」。<br><b>來源：</b>Paladin Forever and Classic（43,143 人）的 WoW: Forever 頻道：wf-tank、wf-dps、wf-healing、wf-general、wf-forum-and-pvp 的釘選訊息、F.A.Q 討論串和關鍵字搜尋結果。遊戲剛開，很多結論還會變；標「爭論中」「待確認」的請當參考。</div>
 
@@ -67,193 +74,43 @@ footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-
 <footer>內容是討論的中文摘要，不是原文。技能名稱沒有確定官方中文的（Seal of Fury、Holy Strike、Unsealed Wrath 等）保留英文。裝備屬性與來源取自 Wowhead WoW Forever 資料庫；製作成本是 11/19 早上美服 PvP 聯盟拍賣場價格。</footer>
 </div>
 
+<script src="paladin_data.js"></script>
 <script>
-const CATS=[
- ["gear","配裝與 BiS"],["stats","屬性與數值"],["talent","天賦"],["play","武器、聖印與手法"],
- ["quest","任務與入手"],["state","現況與改動"],["tools","工具與資源"]];
+const CATS=[["gear","配裝與 BiS"],["stats","屬性與數值"],["talent","天賦"],["play","武器、聖印與手法"],["quest","任務與入手"],["state","現況與改動"],["tools","工具與資源"]];
 const SPECS=[["all","全部"],["prot","防護"],["ret","懲戒"],["holy","神聖"],["any","通用"]];
-const SPN={prot:"防護",ret:"懲戒",holy:"神聖",any:"通用"};
-const STN={ok:"有共識",warn:"爭論中",wait:"待確認"};
-const L=(u,t)=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
-const T=[
-{c:"gear",s:"prot",st:"wait",d:"11/19",ch:"wf-tank 釘選討論串",
- h:"防騎第一階段 Pre-BiS 清單（管理員今天剛開串）",
- p:"管理員開了「Forever Prot Phase 1 Pre BiS Lists」討論串收集清單，目前有兩份，都以湊滿 440 防禦為目標：一份不用鍛造、一份含鍛造裝。作者都說還在調整。",
- det:`<ul><li>${L("https://docs.google.com/spreadsheets/d/1tChBTMq0ztV8DQ40cqeRHMR-qM4NRgCRFiye7a0a1lw/edit?usp=sharing","440 防禦・不用鍛造版（Google 試算表）")}：幾乎全靠副本裝。</li><li>${L("https://www.wowhead.com/forever/gear-planner/paladin/dwarf/FQBgcAM4ixoyHlAGvkndmhARBB407F1UcBC47D48AosBADzS4BFzUA8AqFSAG406tBHzT_1UcBI406j8AqFSBJ4063zJLBKzT-8AqFSALz51AM1OBAN0wAAO46QYBP46P713eBQ0Jg8AooFBRy0azFZAS1aD","440 防禦・含鍛造版（Wowhead 配裝器）")}：作者說最好的武器是 Sageblade（武器鍛造），還沒放進去。</li><li>管理員的做法：湊一套 440 防禦裝、一套輸出裝，再兩邊調配。</li><li>有人提醒：超貴的製作裝不一定值得做。</li></ul>
- <p><b>含鍛造版逐件整理</b></p>
- <div class="tw"><table><tr><th>部位</th><th>裝備</th><th class="n">防禦</th><th class="n">耐力</th><th class="n">法傷</th><th>怎麼拿</th></tr>
- <tr><td>頭</td><td>充盈瑟銀頭盔</td><td class="n">8</td><td class="n">21</td><td class="n">23</td><td class="w">鍛造；材料約 287 金，很貴</td></tr>
- <tr><td>項鍊</td><td>維漢的角</td><td class="n">5</td><td class="n">10</td><td class="n">—</td><td class="w">海加爾山任務 Work Well Done；命中 1.3%</td></tr>
- <tr><td>肩</td><td>牢獄肩甲</td><td class="n">10</td><td class="n">20</td><td class="n">12</td><td class="w">野外隨機紫裝，拍賣場買</td></tr>
- <tr><td>胸</td><td>亡骨胸甲</td><td class="n">17</td><td class="n">16</td><td class="n">—</td><td class="w">通靈學院，各王約 1～2%</td></tr>
- <tr><td>腰</td><td>護衛護腰</td><td class="n">10</td><td class="n">14</td><td class="n">15</td><td class="w">鍛造；材料約 7.9 金</td></tr>
- <tr><td>腿</td><td>亡骨腿甲</td><td class="n">13</td><td class="n">20</td><td class="n">—</td><td class="w">通靈學院，阿萊克斯·巴羅夫約 4.5%</td></tr>
- <tr><td>腳</td><td>護衛脛甲</td><td class="n">9</td><td class="n">13</td><td class="n">14</td><td class="w">鍛造；材料約 6.2 金</td></tr>
- <tr><td>護腕</td><td>護衛腕甲</td><td class="n">8</td><td class="n">11</td><td class="n">7</td><td class="w">鍛造；材料約 5.7 金</td></tr>
- <tr><td>手</td><td>亡骨護手</td><td class="n">10</td><td class="n">14</td><td class="n">—</td><td class="w">通靈學院，約 1%</td></tr>
- <tr><td>戒指</td><td>殉難者之血</td><td class="n">—</td><td class="n">10</td><td class="n">12</td><td class="w">斯坦索姆任務「奧里爾斯的清算」</td></tr>
- <tr><td>戒指</td><td>唐·馬里喬的統禦之戒</td><td class="n">—</td><td class="n">10</td><td class="n">11</td><td class="w">通靈學院黑暗院長加丁，約 13%；暴擊 1%</td></tr>
- <tr><td>飾品</td><td>聖化寶珠</td><td class="n">—</td><td class="n">—</td><td class="n">15</td><td class="w">聖騎任務「鑄造力量之石」；使用回魔</td></tr>
- <tr><td>飾品</td><td>防衛者抓握穩定器</td><td class="n">13</td><td class="n">—</td><td class="n">—</td><td class="w">荊棘谷幽坑城商人，125 個幽坑城真幣；使用格擋 +8%</td></tr>
- <tr><td>披風</td><td>奧紋披風</td><td class="n">—</td><td class="n">—</td><td class="n">16</td><td class="w">同商人，75 個真幣；命中 1%</td></tr>
- <tr><td>主手</td><td>大鑄甲師之錘</td><td class="n">—</td><td class="n">10</td><td class="n">68</td><td class="w">黑石塔上層古拉魯克，約 19%；命中 1%</td></tr>
- <tr><td>副手</td><td>龍人之盾</td><td class="n">10</td><td class="n">7</td><td class="n">—</td><td class="w">黑石塔上層達基薩斯將軍，約 22%</td></tr>
- <tr><td>聖契</td><td>熱情聖契</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="w">稀有隨機掉落，拍賣場買</td></tr></table></div>
- <p>亡骨 3 件：2 件防禦 +3；3 件被打有 15% 機率法傷 +70，持續 10 秒。整套防禦約 443。</p>`},
-{c:"gear",s:"prot",st:"ok",d:"11/14～11/18",ch:"wf-tank 釘選",
- h:"防禦要多少：打 63 級王 440，副本不用硬湊",
- p:"免暴擊（同時也免被打暈）的防禦門檻跟怪物等級走：63 級王 440、62 級 435、61 級 430、60 級 425，每低一級少 5。管理員提醒副本怪傷害不高，通常不用湊到上限。",
- det:`<ul><li>開服前大家懷疑裝備湊不湊得到 440；現在 60 級的人回報「做得到」，還有人已經超過很多。</li><li>幽坑城（Undermine）飾品只能裝一個。很多人為了湊 440 選加防禦的「防衛者」那個。</li><li>防禦天賦要點幾點看裝備：裝備夠了，就把點數移去強韌或清算。</li><li>額外好處：防禦夠高，騎馬不容易被打下來。</li></ul>`},
-{c:"gear",s:"prot",st:"warn",d:"11/17～11/19",ch:"wf-tank",
- h:"T0.5 魂鑄套值不值得做？",
- p:"還沒共識。反方說太貴、防禦離 440 差很遠、進團本很快被換掉；正方說改版後的 4 件套效果很強，也有人認定坦克版 T0.5 就是 BiS。",
- det:`<ul><li>反方：有人在別的伺服器做完很後悔，說打熔火之心穿副本藍裝就夠，省下大筆金幣和時間。</li><li>正方：11/18 改成法傷後，「新的 4 件套真的很好」。</li><li>折衷：挑有加防禦的部位混搭，例如護腕；有人問牢獄肩甲和魂鑄肩哪個好，還沒結論。</li><li>也有人問「護衛（鍛造）是不是直接比魂鑄好」。</li><li>任務流程可參考經典版攻略：${L("https://www.wowhead.com/classic/guide/dungeon-sets-1-2-quests-wow-classic#dungeon-2-tier-0-5","Dungeon Sets 1 and 2 Quests")}。</li></ul>`},
-{c:"gear",s:"ret",st:"wait",d:"11/16～11/19",ch:"wf-dps",
- h:"懲戒還沒有公認的 Pre-BiS",
- p:"頻道沒有釘選的懲戒清單，有人問了也沒有定論。常被貼的是一個第三方清單網站，但模擬器還在很早期，屬性權重隨時會變。",
- det:`<ul><li>常被貼的清單：${L("https://wowforeverbislist.com/preraid/paladin/retribution/?o=10000h","wowforeverbislist.com 懲戒 Pre-BiS")}。有人指出某份清單裡出現了探索賽季的附魔，要自己核對。</li><li>老手建議：現在先別花大錢，等官方把懲戒的屬性定下來，可能要換掉一半裝備。</li><li>武器：有人說快速武器的 Unsealed Wrath 或 Shockadin 目前看起來比慢速雙手強，但沒有定論。</li></ul>`},
-{c:"gear",s:"holy",st:"ok",d:"11/7～11/17",ch:"F.A.Q、wf-healing",
- h:"治療裝：智力＋法傷／治療，護甲類型不重要",
- p:"F.A.Q 的建議是找智力搭配法傷或治療效果的裝備，不必堅持板甲。目前沒有專門的板甲治療套，很多人穿布甲，空位用「先知」字尾的綠裝補。",
- det:`<ul><li>有人擔心官方不出板甲治療裝；也有人認為永恆之後會補。</li><li>副本常見抱怨：治療裝跟法系搶，懲戒也會拿。</li><li>聖契清單：${L("https://www.wowhead.com/forever/items/armor/librams","Wowhead 永恆聖契列表")}。</li></ul>`},
-{c:"gear",s:"any",st:"ok",d:"11/19",ch:"wf-tank、wf-dps",
- h:"附魔：現在先別花大錢",
- p:"坦克和輸出頻道的老手意見一致：現階段裝備和屬性都還會變，便宜的附魔可以上，貴的先不要。",
- det:`<ul><li>武器附魔用法傷還是十字軍，還在吵，沒有結論。</li><li>有人在測新的武器附魔 Revelation，還沒結果。</li><li>沒有附魔專業的人：請附魔師用交易視窗幫你附。鍛造的裝備強化也是同樣方式。</li></ul>`},
-
-{c:"stats",s:"prot",st:"ok",d:"11/18",ch:"wf-tank 釘選",
- h:"防騎屬性優先順序（練等、60 級副本、團本）",
- p:"練等以法傷為主；60 級打團本先湊防禦；刷副本和農怪把法傷放前面、防禦往後排。",
- det:`<ul><li><b>30 級前：</b>隨便穿。</li><li><b>30 級後練等：</b>法傷 > 智力 = 耐力 > 力量 = 攻強 >> 防禦。</li><li><b>50 幾級：</b>開始留有防禦的裝，60 級副本會用到。</li><li><b>團本：</b>防禦 > 減傷（需要免碾壓才看）> 法傷 > 耐力 > 智力 > 力量 > 攻強。</li><li><b>副本、農怪：</b>法傷優先，防禦往後。</li><li>Wowhead 的指南：${L("https://www.wowhead.com/forever/guide/classes/paladin/protection/stat-priority-pve-tank","防騎屬性優先順序")}。</li></ul>`},
-{c:"stats",s:"ret",st:"wait",d:"11/12",ch:"wf-dps 釘選",
- h:"懲戒屬性權重（模擬器很早期，僅供參考）",
- p:"目前模擬結果：力量略高於法傷，再來敏捷、智力；命中和熟練遠高於暴擊，暴擊高於加速。釘選的人自己強調要打很大的折扣。",
- det:`<ul><li>模擬器：${L("https://www.wowsims.com/forever/paladin/retribution/","WoWSims 永恆懲戒")}。</li><li>有人預期團本開放前還會改：Unsealed Wrath 偏近戰屬性、Shockadin 偏智力和法傷。</li><li>有人批評「法傷優先」的說法來自鎖定裝備的模擬，不一定適用實際情況。</li></ul>`},
-{c:"stats",s:"any",st:"wait",d:"11/18",ch:"wf-dps 釘選",
- h:"永恆的法傷係數表",
- p:"玩家整理的技能吃法傷比例，部分還沒確認。",
- det:`<div class="tw"><table><tr><th>技能</th><th class="n">係數</th></tr>
- <tr><td>正義聖印</td><td class="n">單手 10%／雙手 12%（每次命中）</td></tr>
- <tr><td>正義審判</td><td class="n">43%</td></tr>
- <tr><td>命令聖印</td><td class="n">20%</td></tr>
- <tr><td>命令審判</td><td class="n">43%</td></tr>
- <tr><td>Judgement of Fury</td><td class="n">43%</td></tr>
- <tr><td>奉獻</td><td class="n">共 33.6%（每跳 4.2%）</td></tr>
- <tr><td>神聖震擊</td><td class="n">43%</td></tr>
- <tr><td>驅邪術</td><td class="n">43%</td></tr>
- <tr><td>憤怒之錘、神聖憤怒、聖盾術、聖光術、聖光閃現、庇護祝福</td><td class="n">未確認</td></tr></table></div>`},
-{c:"stats",s:"prot",st:"ok",d:"11/12",ch:"wf-tank 釘選討論串",
- h:"防騎 Pawn 字串（比裝備用）",
- p:"管理員提供了一組 Pawn 權重，主要給練等用。適合一對一比裝備；有閃躲、命中這類屬性的裝備要另外看。11/19 他說要依官方新方向再調。",
- det:`<ul><li>主要權重：法傷 1、耐力 1、防禦 1.05、智力 0.3、力量 0.1、命中 0.2、護甲 0.02。</li><li>完整字串在 wf-tank 的「Pawn string (Prot, Forever)」討論串。</li><li>插件：${L("https://www.curseforge.com/wow/addons/pawn","Pawn（CurseForge）")}。裝好後匯入字串即可。</li><li>拍賣場不能用 Pawn 分數搜尋。</li></ul>`},
-
-{c:"talent",s:"prot",st:"ok",d:"10/31（持續更新）",ch:"wf-tank 釘選",
- h:"防騎天賦：練等三套、60 級三套",
- p:"30 級前怎麼點都行。40 級想拿 Shieldsworn 用第一套；之後選 Holy Conduit 或正義追擊路線。60 級打團和副本以正義追擊版為主。管理員註明 60 級的配法還會變。",
- det:`<p><b>練等</b></p><ul><li>${L("https://foreverchanges.pro/talents/paladin?b=-4532013201001531-&o=lllllmmmnnwrrkktqqqkzxxxxxyyykp","40 級拿 Shieldsworn")}（想 30 級先拿聖盾術也用這套）</li><li>${L("https://foreverchanges.pro/talents/paladin?b=0500050000000000002-5532013201001431-05&o=lllllmmm1111155555iDDDDDinnwrrkktqqqkzxxxxyyykkp","Holy Conduit 版，3 點自由")}</li><li>${L("https://foreverchanges.pro/talents/paladin?b=-5532013201001531-052000302&o=lllllmmmDDDDDEEnnwrrkktqqqkzxxxxxyyykpkIIIKK","正義追擊版，7 點自由")}</li></ul>
- <p><b>60 級</b></p><ul><li>${L("https://foreverchanges.pro/talents/paladin?b=-5530513221001531-502000302&o=lllllmmmCCCCCEEsswrrkktqqqkzxxxxxyyykpkoooooIIIKK","團本／副本，正義追擊，2 點自由")}</li><li>${L("https://foreverchanges.pro/talents/paladin?b=0500050000000000002-5530413221001131-502&o=lllllmmm1111155555iisswrrkktqqqkzxkkoyyyoopoCCCCCEE","團本／副本，Holy Conduit，防禦 4、清算 1")}</li><li>${L("https://foreverchanges.pro/talents/paladin?b=0500050000000000002-5530013221001431-0500003&o=lllllmmmsswrrkktqqqkzxxxxyyyk1111155555iiDDDDDIIIkp","最大法力版")}</li></ul>
- <ul><li>有人點招架路線後反映：沒點盾牌專精很缺魔。</li><li>Shockadin 坦不算標準配法，而且拿不到神聖震擊加 Shieldsworn；那是輸出混合型，請到 wf-dps 討論。</li></ul>`},
-{c:"talent",s:"prot",st:"ok",d:"11/17",ch:"wf-tank 釘選",
- h:"Sacred Arbiter 對防騎不值得點",
- p:"管理員實測它只佔傷害約 3%，因為防騎沒有大雙手武器讓它放大。只有團裡沒有懲戒、又想幫神聖聖騎刷新聖印時才考慮。",
- det:`<ul><li>省下的點數建議：清算、防禦或強韌。</li><li>有人想不點它、改點滿清算來補單體仇恨。</li></ul>`},
-{c:"talent",s:"ret",st:"warn",d:"9/14～11/19",ch:"wf-dps",
- h:"懲戒天賦：Unsealed Wrath 還是 Shockadin？",
- p:"哪個輸出高還沒算清楚。測試期聽說 Shockadin 較強，但那是改成 Unsealed Wrath 之前。理論派說連 Unsealed Wrath 的最佳手法都還沒確定。",
- det:`<ul><li>釘選的參考配法（9 月，可能已過時）：${L("https://talentsforever.com/paladin/60/50003-503-05225231201330321-AERTijlm1norstvwxpkm-4","懲戒 8/8/35")}。</li><li>論壇區有人整理了對懲戒的改動期望：不要把聖印交替自動化，改成提供揮擊計時和提示。</li></ul>`},
-{c:"talent",s:"any",st:"ok",d:"11/7",ch:"F.A.Q 討論串",
- h:"新手 F.A.Q：練等天賦、專業、雙天賦價格",
- p:"練等用正義追擊很強（跑速）；Holy Conduit 適合拉一群怪。三系都能練，挑自己喜歡的。雙天賦 50 金；坐騎是技能、免費，騎術也包含在內。",
- det:`<ul><li><b>專業：</b>結論未定。鍛造練等時有好東西但花錢花時間；工程一向強；鍊金有新的傷害和增益藥水；附魔方便分解；採集組合也行。</li><li><b>副本還是任務：</b>副本怪經驗差，副本任務經驗好。接齊任務、打一次、回野外。</li><li><b>職業任務：</b>強烈建議做，會復活可以省很多跑屍時間。</li></ul>`},
-
-{c:"play",s:"prot",st:"ok",d:"11/11",ch:"wf-tank 釘選",
- h:"法傷武器還是物理武器？快還是慢？",
- p:"法傷武器的範圍傷害和仇恨（單體、範圍都是）較高；物理武器單體輸出較高。Seal of Fury 和智慧審判都偏好快速武器。30～40 級之後法傷武器大多勝出。",
- det:`<ul><li>30 級前法傷很少，傷害多靠普攻，可以先拿升級幅度大的物理武器。</li><li>可以兩把都帶，拉群怪和打單體時切換。</li><li>管理員的原話大意：60 級不用法傷武器他就吃帽子。11/18 藍帖也確認官方要防騎靠法傷。</li></ul>`},
-{c:"play",s:"any",st:"ok",d:"11/7",ch:"wf-tank 釘選、F.A.Q",
- h:"聖印和祝福怎麼選",
- p:"防騎從練等到 60 級都用 Seal of Fury，管理員連正義聖印都不學了省錢。命令聖印是懲戒用的，適合慢速武器和高暴擊。",
- det:`<ul><li><b>Seal of Fury：</b>法傷系坦克聖印，快速武器較好。</li><li><b>正義聖印：</b>吃法傷，任何武器都行；武器速度 2.4 以上時可能超過 Seal of Fury。</li><li><b>命令聖印：</b>吃攻強和法傷，慢速武器、高暴擊較好。</li><li><b>十字軍聖印：</b>只拿來審判，不要掛著打。</li><li><b>祝福：</b>法系和自己用智慧；近戰和獵人用力量；王者練等時偏弱。</li><li><b>注意：</b>審判 Seal of Fury 會嘲諷。懲戒在團本審判錯聖印可能把王拉走。</li></ul>`},
-{c:"play",s:"prot",st:"ok",d:"11/9～11/18",ch:"wf-tank",
- h:"防騎手法與巨集",
- p:"沒有固定循環，冷卻好了就按：聖印不斷、Holy Strike、聖盾術、審判。奉獻開怪時放，平常省著用不然很快沒魔。需要多一個嘲諷時用 Swift Judgement。",
- det:`<ul><li>審判／Swift Judgement 合一巨集（按住 Alt 放 Swift Judgement）：<br><code>#showtooltip Judgement</code><br><code>/cast [mod:alt] Swift Judgement;Judgement</code></li><li>目標框顯示仇恨數字：<code>/console threatshownumeric 1</code></li><li>審判 Seal of Fury 時，嘲諷效果會先於傷害生效（管理員用戰鬥紀錄確認）。</li><li>頻道縮寫：HS＝聖盾術、HStr＝Holy Strike、SS＝Shieldsworn、SSP＝盾牌專精、SoF＝Seal of Fury、PoJ＝正義追擊、HC＝Holy Conduit。</li></ul>`},
-{c:"play",s:"ret",st:"warn",d:"11/18～11/19",ch:"wf-dps",
- h:"Unsealed Wrath 怎麼打，大家還在摸索",
- p:"最常見的問題是「疊 3 層後要不要馬上切回命令聖印」，沒有標準答案。一個常被忽略的重點：每層只是讓存起來的聖印照原本機率觸發一次，命令聖印不是 100%，所以 3 層全空是正常的。",
- det:`<ul><li>很多人抱怨第 3 層不好看清楚，會忘了切聖印；施法還會重置揮擊計時。</li><li>有人 56 級打黑石深淵，輸出輸給法師暴風雪和獵人亂射，而且每場都要喝水；問是不是手法問題，沒有明確解答。</li><li>頻道成員自製的插件 ${L("https://www.curseforge.com/wow/addons/foreverret","ForeverRet")}：顯示下一個技能，3 層時發光加音效，也有坦克模式和正義之怒提醒。還在測試期。</li><li>聖印傷害比較（釘選）：命令聖印每分鐘約 1.4 倍法傷；正義聖印每次普攻 0.12 倍，武器越快打越多下。</li></ul>`},
-{c:"play",s:"any",st:"ok",d:"10/8",ch:"wf-dps 釘選",
- h:"通用巨集集合",
- p:"釘選裡有一組經典版沿用的巨集：單手加盾／雙手切換、取消無敵類增益、滑鼠指向治療、滑鼠指向制裁和審判。",
- det:`<ul><li>滑鼠指向聖光閃現：<br><code>/cast [@mouseover,help,nodead] Flash of Light; [help] Flash of Light; [@player] Flash of Light</code></li><li>滑鼠指向審判：<br><code>/cast [@mouseover,harm,nodead][] Judgement</code></li><li>取消保護類增益（想馬上輸出時）：<code>/cancelaura Blessing of Protection</code>、<code>/cancelaura Divine Shield</code></li><li>飾品：<code>/use 13</code>、<code>/use 14</code></li></ul>`},
-
-{c:"quest",s:"prot",st:"ok",d:"11/17",ch:"wf-tank 釘選",
- h:"68 法傷單手錘：東瘟疫任務線",
- p:"東瘟疫之地有一條任務給 Hammer of the Fallen Thane（藍色單手錘，68 法傷），不分陣營。",
- det:`<ol><li>殺 Slack-jawed Ghoul，跟出現的鬼魂接任務。</li><li>到考林路口房子二樓拿錘子。</li><li>在東瘟疫殺憎惡，直到掉出他要的東西。</li><li>到斯坦索姆亡靈區殺瑪勒基。</li><li>到任務標記處交任務。</li></ol><p>每一步都要使用他給的物品才能繼續。${L("https://www.wowhead.com/forever/item=227935/hammer-of-the-fallen-thane","Wowhead 物品頁")}</p>`},
-{c:"quest",s:"any",st:"ok",d:"11/17",ch:"三個頻道都釘選",
- h:"50 級對付亡靈的職業任務還沒實裝",
- p:"原本 50 級的那條還沒做進遊戲，可能永遠不會有。替代的是 Bandarion Keep 的 55 級版本，50 級就能接，獎勵是懲戒用的雙手劍。",
- det:""},
-{c:"quest",s:"any",st:"ok",d:"11/2",ch:"wf-tank 釘選",
- h:"賺錢跟背包大小直接相關",
- p:"有人整理了前期背包攻略：先在新手區農亞麻布做包，再靠幾個任務拿 10～12 格包。到銀行就存東西，食物只帶一組。",
- det:`<ul><li>新手區農 36 塊亞麻布，湊滿 4 個包加 1 個材料包；找公會裁縫做，之後盡快換紅色亞麻包（8 格）。</li><li>30 級前做：睡袋任務、老煤灰、濕地的軟泥包任務、暮色森林守夜人。可以拿到三個 10 格和一個 12 格。</li></ul>`},
-
-{c:"state",s:"prot",st:"ok",d:"11/18",ch:"wf-tank 釘選、wf-dps",
- h:"藍帖：魂鑄套（坦克版）力量改成法傷",
- p:"官方把坦克用的魂鑄護甲從力量改成法術能量，並說明方向：防騎造成傷害的主屬性會偏向法傷。這也是現在清單和武器選擇都往法傷靠的原因。",
- det:`<ul><li>管理員表示 Pawn 字串和建議會跟著調整。</li><li>有人擔心首階段團本調得太硬，不想被逼去做魂鑄。</li></ul>`},
-{c:"state",s:"holy",st:"warn",d:"11/15～11/19",ch:"wf-healing",
- h:"神聖聖騎現況：很多人不滿意",
- p:"抱怨集中在三點：很缺魔、Oath of Light 只照顧一個目標且只有 5 分鐘、Light's Vigil 一發要 700 多魔。有人說這就是聖騎滿街跑卻缺治療的原因。也有人覺得夠用。",
- det:`<ul><li><b>實用打法：</b>Oath of Light 掛坦克，主力用低等級聖光閃現（有人說 2 級就夠，一發約 50 魔）；神聖震擊打在沒有 Oath 的目標上有額外 30% 暴擊。</li><li><b>有固定隊友：</b>優先點 Oath of Light 和神聖震擊。</li><li><b>屬性：</b>有人問是不是治療 > 智力 > 精神，沒有明確答案。</li><li><b>玩家提的改法：</b>給類似聖光道標的機制、延長 Oath 時間、讓部分治療分給附近隊友。</li><li>有人認為神聖是為了壓 Shockadin 而被連帶削弱，天賦之間缺乏配合。這是玩家看法，不是官方說明。</li><li>版規：wf-healing 只談治療，聊 Shockadin 會被禁言一週。</li></ul>`},
-{c:"state",s:"ret",st:"warn",d:"11/18～11/19",ch:"wf-dps",
- h:"懲戒現況：模擬器和手法都還沒定",
- p:"理論派坦白說資料不齊、最佳手法沒有共識，模擬器是 alpha 版，要等滿增益的團隊實測才知道。練等體感兩極：有人說 40 級拿到 Unsealed Wrath 後好玩，也有人覺得單調。",
- det:`<ul><li>常見疑問：練等裝該拿力量還是法傷？沒有定論，F.A.Q 說力量／攻強為主，法傷也不差。</li><li>有人 34 級殺一隻怪要 30 秒，天賦點得太分散。</li></ul>`},
-
-{c:"tools",s:"any",st:"ok",d:"持續",ch:"各頻道釘選",
- h:"常用網站和插件",
- p:"頻道裡反覆出現的工具整理在這裡。",
- det:`<div class="links">
- ${L("https://foreverchanges.pro/talents/paladin","ForeverChanges 天賦模擬器")}
- ${L("https://talentsforever.com/paladin/60/50003-503-05225231201330321-AERTijlm1norstvwxpkm-4","Talents Forever 天賦模擬器")}
- ${L("https://sixtyupgrades.com/forever/","Sixty Upgrades 配裝工具")}
- ${L("https://www.wowhead.com/forever/gear-planner/paladin","Wowhead 配裝器")}
- ${L("https://www.wowsims.com/forever/paladin/retribution/","WoWSims 懲戒模擬器（alpha）")}
- ${L("https://wowforeverbislist.com/preraid/paladin/retribution/?o=10000h","WoW Forever BiS List（第三方清單）")}
- ${L("https://www.wowhead.com/forever/items/armor/librams","Wowhead 聖契列表")}
- ${L("https://www.curseforge.com/wow/addons/pawn","Pawn 插件")}
- ${L("https://www.curseforge.com/wow/addons/foreverret","ForeverRet 插件（測試期）")}
- ${L("https://discord.gg/Bqherze","這個 DC 的邀請連結")}</div>`}
-];
-
+const SPN={prot:"防護",ret:"懲戒",holy:"神聖",any:"通用"},STN={ok:"有共識",warn:"爭論中",wait:"待確認"},HN=["","","熱門","很熱門"];
+const DC=window.DC||{topics:[]},T=DC.topics;
 let fs="all",fc="all";
 try{fs=localStorage.getItem("dcd_s")||"all";fc=localStorage.getItem("dcd_c")||"all"}catch(e){}
 const $=id=>document.getElementById(id);
+const md=d=>{const p=(d||"").split("-");return p.length==3?(+p[1])+"/"+(+p[2]):d};
+const okSpec=t=>fs=="all"||t.s==fs||(t.s=="any"&&fs!="any");
+function card(t,isNew){return `<article class="card" id="t-${t.id}"><div class="tags">${isNew?'<span class="st new">新</span>':''}<span class="tag">${SPN[t.s]}</span><span class="st ${t.st}">${STN[t.st]}</span>${t.heat>=2?`<span class="st hot">${HN[t.heat]}</span>`:''}<span class="when">${t.d}・${t.ch}</span></div><h3>${t.h}</h3><p>${t.p}</p>${t.det?`<details><summary>詳細說明</summary><div class="det">${t.det}</div></details>`:""}</article>`}
 function chips(){
   $("specRow").innerHTML=SPECS.map(([k,n])=>`<button class="chip" data-s="${k}" aria-pressed="${fs==k}">${n}</button>`).join("");
   $("catRow").innerHTML=[["all","所有類別"]].concat(CATS).map(([k,n])=>`<button class="chip" data-c="${k}" aria-pressed="${fc==k}">${n}</button>`).join("");
 }
 function draw(){
   chips();
+  $("upd").textContent="最後更新："+(DC.updated||"")+"（台灣時間）・每天早上自動更新一次";
+  const list=T.filter(t=>okSpec(t)&&(fc=="all"||fc==t.c));
+  const fresh=list.filter(t=>t.upd==DC.run).sort((a,b)=>(b.heat||0)-(a.heat||0));
+  const hot=list.filter(t=>(t.heat||0)>=2).sort((a,b)=>b.heat-a.heat).slice(0,6);
+  const old=list.filter(t=>t.upd!=DC.run);
   let h="";
-  CATS.forEach(([k,n])=>{
-    if(fc!="all"&&fc!=k)return;
-    const list=T.filter(t=>t.c==k&&(fs=="all"||t.s==fs||(t.s=="any"&&fs!="any")||t.s==fs));
-    if(!list.length)return;
-    h+=`<h2>${n}<small>${list.length} 則</small></h2><div class="cards">`+list.map(t=>
-      `<article class="card"><div class="tags"><span class="tag">${SPN[t.s]}</span><span class="st ${t.st}">${STN[t.st]}</span><span class="when">${t.d}・${t.ch}</span></div><h3>${t.h}</h3><p>${t.p}</p>${t.det?`<details><summary>詳細說明</summary><div class="det">${t.det}</div></details>`:""}</article>`).join("")+`</div>`;
-  });
+  if(fresh.length)h+=`<h2>最新討論<small>${md(DC.run)} 這一天有新進展，${fresh.length} 則</small></h2><div class="cards">`+fresh.map(t=>card(t,t.first==t.upd&&t.first!=T.reduce((m,x)=>x.first<m?x.first:m,"9"))).join("")+`</div>`;
+  if(hot.length)h+=`<h2>熱門討論<small>最近討論量最大的主題，點了跳到那一則</small></h2><ol class="hot">`+hot.map(t=>`<li><a href="#t-${t.id}" data-go="${t.id}">${t.h}</a><span class="dim">　${SPN[t.s]}・${STN[t.st]}${t.vol?"・"+t.vol:""}</span></li>`).join("")+`</ol>`;
+  if(old.length){h+=`<h2>之前的討論<small>沒有新進展，內容仍然有效</small></h2>`;
+    CATS.forEach(([k,n])=>{const l=old.filter(t=>t.c==k).sort((a,b)=>b.upd<a.upd?-1:1);if(!l.length)return;
+      h+=`<h4>${n}</h4><div class="cards">`+l.map(t=>card(t,false)).join("")+`</div>`})}
   $("view").innerHTML=h||`<p class="empty">這個組合沒有內容，換一個篩選看看。</p>`;
 }
-$("filters").addEventListener("click",e=>{
-  const b=e.target.closest(".chip");if(!b)return;
+$("filters").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
   if(b.dataset.s)fs=b.dataset.s;if(b.dataset.c)fc=b.dataset.c;
-  try{localStorage.setItem("dcd_s",fs);localStorage.setItem("dcd_c",fc)}catch(e){}
-  draw();
-});
+  try{localStorage.setItem("dcd_s",fs);localStorage.setItem("dcd_c",fc)}catch(e){}draw()});
+$("view").addEventListener("click",e=>{const a=e.target.closest("a[data-go]");if(!a)return;e.preventDefault();
+  const el=document.getElementById("t-"+a.dataset.go);if(!el)return;const d=el.querySelector("details");if(d)d.open=true;
+  el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)});
 draw();
 </script>
 </body>
