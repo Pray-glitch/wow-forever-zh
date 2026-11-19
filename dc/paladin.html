@@ -53,9 +53,9 @@ footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-
 h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
 .st.new{color:#0d0b0a;background:var(--gold);border-color:var(--gold);font-weight:700}
 .st.hot{color:var(--down)}
-.hot{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
-.hot li{margin:6px 0}
-.card{scroll-margin-top:110px}
+.hotlist{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.hotlist li{margin:6px 0}
+.card{scroll-margin-top:160px}
 .card.flash{border-color:var(--gold)}
 </style>
 </head>
@@ -69,6 +69,7 @@ h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bott
 <div class="filters" id="filters">
   <div class="row" id="specRow" role="group" aria-label="專精"></div>
   <div class="row" id="catRow" role="group" aria-label="類別"></div>
+  <div class="row" id="heatRow" role="group" aria-label="熱門度"></div>
 </div>
 <main id="view"></main>
 <footer>內容是討論的中文摘要，不是原文。技能名稱沒有確定官方中文的（Seal of Fury、Holy Strike、Unsealed Wrath 等）保留英文。裝備屬性與來源取自 Wowhead WoW Forever 資料庫；製作成本是 11/19 早上美服 PvP 聯盟拍賣場價格。</footer>
@@ -80,34 +81,35 @@ const CATS=[["gear","配裝與 BiS"],["stats","屬性與數值"],["talent","天�
 const SPECS=[["all","全部"],["prot","防護"],["ret","懲戒"],["holy","神聖"],["any","通用"]];
 const SPN={prot:"防護",ret:"懲戒",holy:"神聖",any:"通用"},STN={ok:"有共識",warn:"爭論中",wait:"待確認"},HN=["","","熱門","很熱門"];
 const DC=window.DC||{topics:[]},T=DC.topics;
-let fs="all",fc="all";
-try{fs=localStorage.getItem("dcd_s")||"all";fc=localStorage.getItem("dcd_c")||"all"}catch(e){}
+let fs="all",fc="all",fh="0";const HEATS=[["0","不限熱度"],["2","熱門以上"],["3","只看很熱門"]];
+try{fs=localStorage.getItem("dcd_s")||"all";fc=localStorage.getItem("dcd_c")||"all";fh=localStorage.getItem("dcd_h")||"0"}catch(e){}
 const $=id=>document.getElementById(id);
 const md=d=>{const p=(d||"").split("-");return p.length==3?(+p[1])+"/"+(+p[2]):d};
 const okSpec=t=>fs=="all"||t.s==fs||(t.s=="any"&&fs!="any");
 function card(t,isNew){return `<article class="card" id="t-${t.id}"><div class="tags">${isNew?'<span class="st new">新</span>':''}<span class="tag">${SPN[t.s]}</span><span class="st ${t.st}">${STN[t.st]}</span>${t.heat>=2?`<span class="st hot">${HN[t.heat]}</span>`:''}<span class="when">${t.d}・${t.ch}</span></div><h3>${t.h}</h3><p>${t.p}</p>${t.det?`<details><summary>詳細說明</summary><div class="det">${t.det}</div></details>`:""}</article>`}
 function chips(){
   $("specRow").innerHTML=SPECS.map(([k,n])=>`<button class="chip" data-s="${k}" aria-pressed="${fs==k}">${n}</button>`).join("");
+  $("heatRow").innerHTML=HEATS.map(([k,n])=>`<button class="chip" data-h="${k}" aria-pressed="${fh==k}">${n}</button>`).join("");
   $("catRow").innerHTML=[["all","所有類別"]].concat(CATS).map(([k,n])=>`<button class="chip" data-c="${k}" aria-pressed="${fc==k}">${n}</button>`).join("");
 }
 function draw(){
   chips();
   $("upd").textContent="最後更新："+(DC.updated||"")+"（台灣時間）・每天早上自動更新一次";
-  const list=T.filter(t=>okSpec(t)&&(fc=="all"||fc==t.c));
+  const list=T.filter(t=>okSpec(t)&&(fc=="all"||fc==t.c)&&(t.heat||0)>=+fh);
   const fresh=list.filter(t=>t.upd==DC.run).sort((a,b)=>(b.heat||0)-(a.heat||0));
   const hot=list.filter(t=>(t.heat||0)>=2).sort((a,b)=>b.heat-a.heat).slice(0,6);
   const old=list.filter(t=>t.upd!=DC.run);
   let h="";
   if(fresh.length)h+=`<h2>最新討論<small>${md(DC.run)} 這一天有新進展，${fresh.length} 則</small></h2><div class="cards">`+fresh.map(t=>card(t,t.first==t.upd&&t.first!=T.reduce((m,x)=>x.first<m?x.first:m,"9"))).join("")+`</div>`;
-  if(hot.length)h+=`<h2>熱門討論<small>最近討論量最大的主題，點了跳到那一則</small></h2><ol class="hot">`+hot.map(t=>`<li><a href="#t-${t.id}" data-go="${t.id}">${t.h}</a><span class="dim">　${SPN[t.s]}・${STN[t.st]}${t.vol?"・"+t.vol:""}</span></li>`).join("")+`</ol>`;
+  if(hot.length)h+=`<h2>熱門討論<small>最近討論量最大的主題，點了跳到那一則</small></h2><ol class="hotlist">`+hot.map(t=>`<li><a href="#t-${t.id}" data-go="${t.id}">${t.h}</a><span class="dim">　${SPN[t.s]}・${STN[t.st]}${t.vol?"・"+t.vol:""}</span></li>`).join("")+`</ol>`;
   if(old.length){h+=`<h2>之前的討論<small>沒有新進展，內容仍然有效</small></h2>`;
     CATS.forEach(([k,n])=>{const l=old.filter(t=>t.c==k).sort((a,b)=>b.upd<a.upd?-1:1);if(!l.length)return;
       h+=`<h4>${n}</h4><div class="cards">`+l.map(t=>card(t,false)).join("")+`</div>`})}
   $("view").innerHTML=h||`<p class="empty">這個組合沒有內容，換一個篩選看看。</p>`;
 }
 $("filters").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
-  if(b.dataset.s)fs=b.dataset.s;if(b.dataset.c)fc=b.dataset.c;
-  try{localStorage.setItem("dcd_s",fs);localStorage.setItem("dcd_c",fc)}catch(e){}draw()});
+  if(b.dataset.s)fs=b.dataset.s;if(b.dataset.c)fc=b.dataset.c;if(b.dataset.h)fh=b.dataset.h;
+  try{localStorage.setItem("dcd_s",fs);localStorage.setItem("dcd_c",fc);localStorage.setItem("dcd_h",fh)}catch(e){}draw()});
 $("view").addEventListener("click",e=>{const a=e.target.closest("a[data-go]");if(!a)return;e.preventDefault();
   const el=document.getElementById("t-"+a.dataset.go);if(!el)return;const d=el.querySelector("details");if(d)d.open=true;
   el.scrollIntoView({behavior:"smooth",block:"start"});el.classList.add("flash");setTimeout(()=>el.classList.remove("flash"),1600)});
