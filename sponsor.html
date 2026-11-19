@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>贊助與翻譯費用</title>
+<style>
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;--up:#4fc46a;--down:#e06054;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:15px}
+a{color:var(--gold)}
+.wrap{max-width:820px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:19px;margin:24px 0 8px}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:14px;margin:10px 0}
+.note b{color:var(--text)}
+.kpi{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:10px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.card b{display:block;font-size:22px;color:var(--gold);font-variant-numeric:tabular-nums}
+.low b{color:var(--down)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:5px 6px;border-top:1px solid #ffffff12;text-align:left}
+th{color:var(--dim);font-weight:500;font-size:12.5px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{height:8px;background:var(--gold2);border-radius:4px;min-width:2px}
+.how p{margin:6px 0}
+</style></head><body><div class="wrap">
+<h1>贊助與翻譯費用</h1>
+<div class="dim" id="upd"></div>
+<div class="dim"><a href="index.html">← 永恆攻略中文版</a>・<a href="ah/index.html">拍賣場</a>・<a href="dc/paladin.html">聖騎 DC 重點</a></div>
+<div class="note">這個網站的攻略和新聞是機器人自動翻譯的，翻譯要付費（OpenRouter，按用量計價）。贊助的錢<b>只用來儲值翻譯額度</b>，下面的數字每小時從 OpenRouter 帳號直接讀出來，單位是美金。</div>
+<div class="kpi" id="kpi"></div>
+<h2>怎麼贊助</h2>
+<div class="card how" id="how"></div>
+<h2>每天花多少</h2>
+<div class="card"><div class="tw"><table id="days"></table></div><div class="dim" id="dnote" style="margin-top:6px"></div></div>
+</div>
+<script src="fund.js"></script>
+<script>
+(function(){var F=window.FUND;function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function usd(v){return '$'+(+v).toFixed(2)}
+if(!F){$('kpi').innerHTML='<div class="card">資料還沒產生，請晚點再來。</div>';return}
+$('upd').textContent='資料更新：'+F.updated+'（台灣時間）・翻譯模型：'+(F.model||'');
+var D=F.days||[],rows=[];for(var i=1;i<D.length;i++)rows.push({d:D[i].d,v:Math.max(0,D[i].used-D[i-1].used)});
+var last7=rows.slice(-7),avg=last7.length?last7.reduce(function(a,r){return a+r.v},0)/last7.length:0;
+var left=F.left,daysLeft=avg>0?Math.floor(left/avg):null;
+$('kpi').innerHTML='<div class="card'+(left<2?' low':'')+'">剩餘額度<b>'+usd(left)+'</b><span class="dim">'+(daysLeft!=null?'照最近的用量約可用 '+daysLeft+' 天':'用量資料累積中')+'</span></div>'+
+ '<div class="card">累計已使用<b>'+usd(F.used)+'</b><span class="dim">從開站到現在</span></div>'+
+ '<div class="card">累計儲值<b>'+usd(F.total)+'</b><span class="dim">含站長自己付的和大家贊助的</span></div>'+
+ '<div class="card">最近每天平均<b>'+(last7.length?usd(avg):'—')+'</b><span class="dim">'+(last7.length?'最近 '+last7.length+' 天':'明天起才有')+'</span></div>';
+$('how').innerHTML=F.note?F.note.split(/\n+/).map(function(l){return '<p>'+esc(l)+'</p>'}).join(''):'<p>贊助方式請看公會 Discord 的公告，或直接私訊站長。</p>';
+if(!rows.length){$('days').innerHTML='<tr><td class="dim">今天才開始記錄，明天起會列出每天的花費。</td></tr>'}
+else{var mx=Math.max.apply(null,rows.map(function(r){return r.v}))||1;
+ $('days').innerHTML='<tr><th>日期</th><th class="n">當天花費</th><th style="width:50%"></th></tr>'+rows.slice(-30).reverse().map(function(r){return '<tr><td>'+r.d+'</td><td class="n">'+usd(r.v)+'</td><td><div class="bar" style="width:'+Math.round(r.v/mx*100)+'%"></div></td></tr>'}).join('')}
+$('dnote').textContent='當天花費＝當天最後一次讀到的累計使用，減掉前一天的。機器人有一天沒開的話，那天的花費會併到隔天。';
+})();
+</script></body></html>
