@@ -2,8 +2,8 @@
 window.DC={
  "name": "術士",
  "source": "Warlock Classic（約 8.8 萬人）",
- "updated": "2026-11-19 23:40",
- "run": "2026-11-19",
+ "updated": "2026-11-20 08:10",
+ "run": "2026-11-20",
  "kw": {},
  "topics": [
   {
@@ -161,13 +161,13 @@ window.DC={
    "c": "quest",
    "s": "any",
    "st": "warn",
-   "d": "11/19",
+   "d": "11/19～11/20",
    "ch": "forever-chatting",
    "h": "恐懼戰馬：材料很貴，可以分攤或直接買進度",
    "p": "60 等史詩坐騎「恐懼戰馬」要先做前置任務，最後一步是買一堆很貴的商人材料，進厄運之槌做儀式。可以自己全包、找已經有材料的術士一起做，也可以直接買別人做好的副本進度。學到後會給這隻坐騎用的騎術，不用另外花 800 金學史詩騎術。",
-   "det": "<ul><li>做完儀式學技能時會給騎術，所以可以騎恐懼戰馬；但有人說目前有 bug，學了以後不能騎其他史詩坐騎，下一級騎術還是要自己買。</li><li>也有人說恐懼戰馬任務不給騎術但還是能用，說法不一，請以遊戲內為準。</li><li>「賣副本進度」：做過的副本進度會保留，加入別人的隊伍就會進到同一個進度，戰馬那一步可以直接跳過。</li><li>想保留儀式後的進度：別自己退隊，等其他人都退，隊長會自動轉給你。</li></ul>",
+   "det": "<ul><li>11/20：有人說儀式那段很難，一直同時來 4 隻惡魔守衛，問是不是正常；目前沒人回答。也有人在 PvP 伺服器徵求代做。</li><li>做完儀式學技能時會給騎術，所以可以騎恐懼戰馬；但有人說目前有 bug，學了以後不能騎其他史詩坐騎，下一級騎術還是要自己買。</li><li>也有人說恐懼戰馬任務不給騎術但還是能用，說法不一，請以遊戲內為準。</li><li>「賣副本進度」：做過的副本進度會保留，加入別人的隊伍就會進到同一個進度，戰馬那一步可以直接跳過。</li><li>想保留儀式後的進度：別自己退隊，等其他人都退，隊長會自動轉給你。</li></ul>",
    "first": "2026-11-19",
-   "upd": "2026-11-19",
+   "upd": "2026-11-20",
    "heat": 2,
    "vol": "今天聊天頻道問了好幾次"
   },
@@ -221,13 +221,13 @@ window.DC={
    "c": "talent",
    "s": "any",
    "st": "ok",
-   "d": "11/19",
+   "d": "11/19～11/20",
    "ch": "forever-pvp 釘選",
    "h": "PvP 天賦五套＋團隊前 PvP 裝",
    "p": "版主釘選了 60 等 PvP 配點：SM/SL（戰場推薦）、惡魔契印／痛苦（單挑、野外 PvP 最好）、惡魔契印／暗影灼燒、SL／焚燒兩種、三系混點，前提是命中接近 4%。也做了團隊前的 PvP 地城裝（Sixty Upgrades 連結，英文）和主動使用道具清單。",
-   "det": "<ul><li>痛苦／惡魔裝：<a href=\"https://sixtyupgrades.com/forever/set/ku46gtbMvoQXcgfUommN1F\" target=\"_blank\" rel=\"noopener\">Sixty Upgrades 配裝（英文）</a>，萬用、暗影強度高。</li><li>毀滅裝：<a href=\"https://sixtyupgrades.com/forever/set/6debUWURHGNNFPCsLGwMjJ\" target=\"_blank\" rel=\"noopener\">Sixty Upgrades 配裝（英文）</a>，靠 T0 三件套效果，堆通用法術強度。</li><li>主動道具：末日之顱、工程反射器、地精迫擊砲、地精火箭靴（會壞）、地精火箭頭盔、熊怪藥袋、侏儒捕網器、蜘蛛腰帶、六魔包、碼錶。</li><li>今天頻道在抱怨長讀條法術打出來不夠痛，沒「啟示」觸發時不要硬讀暗影箭。</li></ul>",
+   "det": "<ul><li>痛苦／惡魔裝：<a href=\"https://sixtyupgrades.com/forever/set/ku46gtbMvoQXcgfUommN1F\" target=\"_blank\" rel=\"noopener\">Sixty Upgrades 配裝（英文）</a>，萬用、暗影強度高。</li><li>毀滅裝：<a href=\"https://sixtyupgrades.com/forever/set/6debUWURHGNNFPCsLGwMjJ\" target=\"_blank\" rel=\"noopener\">Sixty Upgrades 配裝（英文）</a>，靠 T0 三件套效果，堆通用法術強度。</li><li>主動道具：末日之顱、工程反射器、地精迫擊砲、地精火箭靴（會壞）、地精火箭頭盔、熊怪藥袋、侏儒捕網器、蜘蛛腰帶、六魔包、碼錶。</li><li>今天頻道在抱怨長讀條法術打出來不夠痛，沒「啟示」觸發時不要硬讀暗影箭。</li><li>11/20：有人被增強薩滿雙風怒秒掉，建議是別讓對方近身，搶先手；用疲勞詛咒拉開距離，42 等拿到死亡纏繞後會好打很多，但別把死亡纏繞丟進根基圖騰。</li></ul>",
    "first": "2026-11-19",
-   "upd": "2026-11-19",
+   "upd": "2026-11-20",
    "heat": 1,
    "vol": "PvP 頻道日常"
   },
@@ -260,6 +260,21 @@ window.DC={
    "upd": "2026-11-19",
    "heat": 1,
    "vol": "偶爾有人問"
+  },
+  {
+   "id": "lock-podcast",
+   "c": "state",
+   "s": "any",
+   "st": "wait",
+   "d": "11/20",
+   "ch": "forever-chatting",
+   "h": "官方 Podcast 沒談到術士，有人不滿",
+   "p": "官方 Podcast 最新一集談職業和裝備，聊天頻道有人抱怨術士沒得到多少篇幅，也有人反問術士現在明明玩得很正常、到底哪裡有問題。同一集設計師說想淡化 BiS，最佳裝備會隨首領的環境和怪物種類改變。",
+   "det": "<ul><li>下週感恩節沒有新一集，再下一集會談團本。</li><li>報導：<a href=\"https://www.wowhead.com/forever/news/blizzard-wants-to-get-rid-of-bis-in-wow-forever-383931\" target=\"_blank\" rel=\"noopener\">Wowhead 新聞（英文）</a>。</li></ul>",
+   "first": "2026-11-20",
+   "upd": "2026-11-20",
+   "heat": 1,
+   "vol": "聊天頻道零星幾則"
   }
  ]
 };
