@@ -93,12 +93,15 @@ function planFor(D,need,near,more){
  var lf=need,fu=Math.floor(need/rep),t=fu*a;lf-=fu*rep;
  var srt=top.slice().sort(function(x,y){return x.per-y.per});for(var q=0;q<srt.length&&lf>0;q++){t+=Math.max(0,srt[q].net);lf-=srt[q].rep}
  return {days:Math.ceil(need/rep),tot:t,n:top.length,day:a}}
+function ladder(need,near){var by={};[false,true].forEach(function(mo){for(var d=1;d<=21;d++){var p=planFor(d,need,near,mo);if(!p)continue;p.want=d;p.mo=mo;if(!by[p.days]||p.tot<by[p.days].tot)by[p.days]=p}});
+ var rows=Object.keys(by).map(Number).sort(function(a,b){return a-b}).map(function(k){return by[k]});
+ return rows.filter(function(p){return !rows.some(function(q){return q.days<p.days&&q.tot<=p.tot})})}
+function budgetPick(rows){var bud=parseFloat($('bud').value);if(isNaN(bud)||bud<=0||!rows.length)return null;var bcp=bud*10000,best=null,cheap=null;
+ rows.forEach(function(p){if(!cheap||p.tot<cheap.tot)cheap=p;if(p.tot<=bcp&&(!best||p.days<best.days||(p.days==best.days&&p.tot<best.tot)))best=p});
+ return {bud:bud,best:best,cheap:cheap,pick:best||cheap}}
 function choiceTable(need,near,more,D){
  if(need<=0)return '';var bud=parseFloat($('bud').value),hasB=!isNaN(bud)&&bud>0,bcp=hasB?bud*10000:0;
- var by={};[false,true].forEach(function(mo){for(var d=1;d<=21;d++){var p=planFor(d,need,near,mo);if(!p)continue;p.want=d;p.mo=mo;if(!by[p.days]||p.tot<by[p.days].tot)by[p.days]=p}});
- var rows=Object.keys(by).map(Number).sort(function(a,b){return a-b}).map(function(k){return by[k]});
- // 天數多又比較貴的不列（多花錢又更慢，沒人會選）
- rows=rows.filter(function(p){return !rows.some(function(q){return q.days<p.days&&q.tot<=p.tot})});
+ var rows=ladder(need,near);
  if(!rows.length)return '';
  var best=null;if(hasB)rows.forEach(function(p){if(p.tot>bcp)return;if(!best||p.days<best.days||(p.days==best.days&&p.tot<best.tot))best=p});
  var cheap=rows.reduce(function(m,p){return !m||p.tot<m.tot?p:m},null);
@@ -110,6 +113,8 @@ function choiceTable(need,near,more,D){
  return h+'</table>'}
 function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=true,near=$('near').checked,more=$('more').checked,D=Math.min(30,Math.max(1,Math.round(+$('days').value||7)));
  var need=Math.max(0,9000-cur-(lab?0:2000)),toF=Math.max(0,3000-cur-(lab?0:2000));
+ // 11/20 有填預算：自動改成預算內最快的那一種（天數、要不要順路多交），上面的欄位也跟著改
+ var BP=null;if(need>0){BP=budgetPick(ladder(need,near));if(BP){D=BP.pick.want;more=BP.pick.mo;$('days').value=D;$('more').checked=more}}
  var bc=CRATES[0],ec=emptyCrate();
  var favCost=bc&&bc.pf!=null?bc.pf:null,ecp=ec?ec.m:null;
  var first=lab?0:(bc&&bc.tot!=null?bc.tot:null); // 第一箱（觸發出貨標籤 +2,000）
@@ -136,7 +141,7 @@ function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=true,near=$
  var bTot=(rcpt!=null&&first!=null)?first+fCost+nR*rcpt:null;
  // 圖紙要的青睞（兩條路都要，另外算；第一箱會先給一些青睞）
  var favLeft=Math.max(0,fav-(lab||!bc?0:bc.fav+50)),nP=bc?Math.ceil(favLeft/bc.fav):0,pTot=(bc&&bc.tot!=null)?nP*bc.tot:null;
- var h='<div class="kpi">'+
+ var h=(BP?'<div class="note" style="border-left-color:#4fc46a">'+(BP.best?'照你填的預算 <b>'+BP.bud+' 金</b>，已自動選預算內最快的：<b>'+BP.best.days+' 天</b>、約 '+money(BP.best.tot)+(BP.best.mo?'（含順路多交）':'（不含順路多交）')+'，下面全部照這個排。想自己挑天數，把預算清空。':'<b>預算 '+BP.bud+' 金不夠</b>：最便宜的走法也要約 '+money(BP.cheap.tot)+'（'+BP.cheap.days+' 天），下面先照這個排。'+(near?'取消「只挑飛行點附近」會更便宜。':''))+'</div>':'')+'<div class="kpi">'+
   '<div class="card">到尊敬還差<b>'+need.toLocaleString()+' 聲望</b><span class="dim">（尊敬＝累計 9,000；目前聲望預設 2,000，就是大家都會先拿的出貨標籤）</span></div>'+
   '<div class="card">路線一：交令狀（推薦）<b>'+money(aTot)+'</b><span class="dim">'+(days==null?'—':days+' 天')+'・每 1,000 聲望 '+money(wRep?wAvg/wRep*1000:null)+'</span></div>'+
   '<div class="card">路線二：一天衝完<b>'+money(bTot)+'</b><span class="dim">每 1,000 聲望 '+money(rcpt!=null?rcpt*20:null)+'（'+(function(){if(!wRep||!rcpt||!wAvg)return '—';var x=rcpt*20/(wAvg/wRep*1000);return x>=1.5?'比路線一貴約 '+Math.round(x)+' 倍':x>=0.8?'跟路線一差不多':'比路線一便宜'})()+'）</span></div>'+
