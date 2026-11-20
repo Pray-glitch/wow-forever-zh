@@ -48,7 +48,7 @@ label{font-size:14px;color:var(--dim);margin-right:14px;white-space:nowrap}
 <div class="dim"><a href="index.html">← 拍賣場</a>・<a href="craft.html">專業獲利表</a></div>
 <div class="note">艾澤拉斯商業管理局（赤脊山・三角路口）：<b>聲望</b>決定能不能買圖紙（不會扣），<b>商人青睞</b>是錢（買東西會扣）。
 聲望靠「工匠令狀」或「空箱子＋偽造收據」；青睞只能靠交填好的運送箱。價格都是拍賣場最新的最低價，每小時更新。</div>
-<div class="bar"><label>目前聲望 <input type="number" id="cur" value="2000" min="0" step="100"></label><label>還要的青睞 <input type="number" id="fav" value="630" min="0" step="10"></label><label>想幾天到尊敬 <input type="number" id="days" value="7" min="1" max="30" step="1"></label><label><input type="checkbox" id="near" checked> 只挑飛行點附近的顧客（下飛機騎 1 分鐘內）</label><label><input type="checkbox" id="more" checked> 順路多交：路線上要去的區域裡，離飛行點 1 分鐘內的令狀也一起交</label></div>
+<div class="bar"><label>目前聲望 <input type="number" id="cur" value="2000" min="0" step="100"></label><label>還要的青睞 <input type="number" id="fav" value="630" min="0" step="10"></label><label>想幾天到尊敬 <input type="number" id="days" value="7" min="1" max="30" step="1"></label><label>預算 <input type="number" id="bud" placeholder="不限" min="0" step="1" style="width:6em"> 金</label><label><input type="checkbox" id="near" checked> 只挑飛行點附近的顧客（下飛機騎 1 分鐘內）</label><label><input type="checkbox" id="more" checked> 順路多交：路線上要去的區域裡，離飛行點 1 分鐘內的令狀也一起交</label></div>
 <div class="tabs" id="tabs"><span class="chip on" data-t="sum">怎麼衝最划算</span><span class="chip" data-t="writ">令狀（依區域）</span><span class="chip" data-t="crate">青睞：填箱子</span></div>
 <div id="view"></div>
 </div>
@@ -84,6 +84,30 @@ function init(){A=window.AH;if(!A){$('view').innerHTML='<div class="dim">拍賣�
  CRATES=CR.map(function(c){var cp=price(c[2]),mp=price(c[3]);var tot=(cp!=null&&mp!=null)?cp+mp*c[4]:null;return {zh:c[0],fav:c[1],en:c[2],mat:c[3],matzh:(BY[c[3]]||{}).n||c[3],q:c[4],cp:cp,mp:mp,tot:tot,pf:tot!=null?tot/c[1]:null,avail:BY[c[3]]?BY[c[3]].t:0,cn:BY[c[2]]?BY[c[2]].t:0}}).sort(function(a,b){return (a.pf==null?1e12:a.pf)-(b.pf==null?1e12:b.pf)});
  draw()}
 function emptyCrate(){var best=null;A.items.forEach(function(it){if(it.e&&it.e.indexOf('Waylaid Crate:')==0&&it.m>0&&(!best||it.m<best.m))best=it});return best}
+// 11/20 使用者要自己挑「幾天、花多少金」：每個天數各算一次路線一，列成表，可填預算
+function planFor(D,need,near,more){
+ var good=WR.filter(function(r){return r.per!=null&&(!near||(r.d!=null&&r.d<=NEARYD))}).sort(function(a,b){return a.per-b.per});
+ var per=Math.ceil(need/D),rr=0,top=[];for(var i=0;i<good.length&&rr<per;i++){top.push(good[i]);rr+=good[i].rep}
+ if(more){var zin={};top.forEach(function(r){zin[r.z]=1});top=top.concat(WR.filter(function(r){return r.per!=null&&r.d!=null&&r.d<=NEARYD&&zin[r.z]&&top.indexOf(r)<0}))}
+ var a=0,rep=0;top.forEach(function(r){a+=Math.max(0,r.net);rep+=r.rep});if(!rep)return null;
+ var lf=need,fu=Math.floor(need/rep),t=fu*a;lf-=fu*rep;
+ var srt=top.slice().sort(function(x,y){return x.per-y.per});for(var q=0;q<srt.length&&lf>0;q++){t+=Math.max(0,srt[q].net);lf-=srt[q].rep}
+ return {days:Math.ceil(need/rep),tot:t,n:top.length,day:a}}
+function choiceTable(need,near,more,D){
+ if(need<=0)return '';var bud=parseFloat($('bud').value),hasB=!isNaN(bud)&&bud>0,bcp=hasB?bud*10000:0;
+ var by={};for(var d=1;d<=21;d++){var p=planFor(d,need,near,more);if(!p)continue;p.want=d;if(!by[p.days]||p.tot<by[p.days].tot)by[p.days]=p}
+ var rows=Object.keys(by).map(Number).sort(function(a,b){return a-b}).map(function(k){return by[k]});
+ // 天數多又比較貴的不列（多花錢又更慢，沒人會選）
+ rows=rows.filter(function(p){return !rows.some(function(q){return q.days<p.days&&q.tot<=p.tot})});
+ if(!rows.length)return '';
+ var best=null;rows.forEach(function(p){if(hasB&&p.tot>bcp)return;if(!best||p.days<best.days||(p.days==best.days&&p.tot<best.tot))best=p});
+ var cheap=rows.reduce(function(m,p){return !m||p.tot<m.tot?p:m},null);
+ var h='<h2>天數和花費自己挑</h2><div class="note">同樣的勾選條件下，每個天數各算一次「路線一」。天數越長，每天交的越少、只交最便宜的，總花費越低。點一列就會照那個天數排下面的清單。'+
+  (hasB?(best?'<br>預算 <b>'+bud+' 金</b>內最快：<b>'+best.days+' 天</b>，約 '+money(best.tot)+'（標 ★）。':'<br><b>預算 '+bud+' 金不夠</b>，最便宜也要 '+money(cheap.tot)+'（'+cheap.days+' 天）。'):'<br>上面填「預算」會標出預算內最快的那一列。')+'</div>';
+ h+='<table class="ct"><tr><th>天數</th><th class="n">總花費</th><th class="n">每天花</th><th class="n">每天交</th><th></th></tr>';
+ rows.forEach(function(p){var over=hasB&&p.tot>bcp;
+  h+='<tr data-d="'+p.want+'" style="cursor:pointer'+(over?';opacity:.4':'')+(p.want==D?';background:#2b2014':'')+'"><td><b>'+p.days+' 天</b></td><td class="n">'+money(p.tot)+'</td><td class="n">'+money(p.day)+'</td><td class="n">'+p.n+' 張</td><td>'+(best&&p===best?'★ 預算內最快':'')+(p===cheap?' 最省':'')+(over?' 超過預算':'')+(p.want==D?' ← 目前':'')+'</td></tr>'});
+ return h+'</table>'}
 function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=true,near=$('near').checked,more=$('more').checked,D=Math.min(30,Math.max(1,Math.round(+$('days').value||7)));
  var need=Math.max(0,9000-cur-(lab?0:2000)),toF=Math.max(0,3000-cur-(lab?0:2000));
  var bc=CRATES[0],ec=emptyCrate();
@@ -117,6 +141,7 @@ function sum(){var cur=+$('cur').value||0,fav=+$('fav').value||0,lab=true,near=$
   '<div class="card">路線一：交令狀（推薦）<b>'+money(aTot)+'</b><span class="dim">'+(days==null?'—':days+' 天')+'・每 1,000 聲望 '+money(wRep?wAvg/wRep*1000:null)+'</span></div>'+
   '<div class="card">路線二：一天衝完<b>'+money(bTot)+'</b><span class="dim">每 1,000 聲望 '+money(rcpt!=null?rcpt*20:null)+'（'+(function(){if(!wRep||!rcpt||!wAvg)return '—';var x=rcpt*20/(wAvg/wRep*1000);return x>=1.5?'比路線一貴約 '+Math.round(x)+' 倍':x>=0.8?'跟路線一差不多':'比路線一便宜'})()+'）</span></div>'+
   '<div class="card">圖紙要的 '+fav+' 青睞<b>'+money(pTot)+'</b><span class="dim">兩條路都要另外買（'+nP+' 個'+(bc?esc(bc.zh)+'箱':'')+'）</span></div></div>';
+ h+=choiceTable(need,near,more,D);
  h+='<h2>路線一（推薦）：每天交最便宜的 '+top.length+' 張令狀'+(near?'（只挑飛行點附近）':'')+'</h2><div class="note">照你填的 '+D+' 天排：每天交到約 '+Math.ceil(need/D).toLocaleString()+' 聲望就停，只交最便宜的那幾張。天數拉長，貴的令狀就不用交，總花費會少很多；改上面的天數就會重算。'+(days!=null&&days>D?'<br><b>附近的令狀不夠多，最快也要 '+days+' 天。</b>':'')+(extra.length?'<br>另外<b>順路多交 '+extra.length+' 張</b>（標「順路」的）：路線上已經要飛去的區域裡、下飛機 1 分鐘內就到的顧客。每天多 '+extra.reduce(function(a,r){return a+r.rep},0).toLocaleString()+' 聲望、多花約 '+money(extra.reduce(function(a,r){return a+Math.max(0,r.net)},0))+'，所以比 '+D+' 天更快到。不想多花就取消上面「順路多交」的勾。':'')+'</div>'+(near?'<div class="note">只列下飛機騎 1 分鐘內（離飛行點 '+NEARYD+' 碼內）的顧客，像塵泥沼澤、淒涼之地、費伍德森林南邊這種離飛行點很遠的不列。取消上面的勾選就回到全部的令狀裡挑。顧客位置是用 Questie 永恆資料庫算的，資料庫還沒有的顧客（例如 Riverglades 的 Spek）算位置不明、不列。'+(alt&&bT!=null?'<br>代價：不挑地點的話 '+alt.days+' 天、約 '+money(alt.tot)+'；只挑飛行點附近要 '+bD+' 天、約 '+money(bT)+'，多花約 '+money(bT-alt.tot)+'，換不用騎遠路。'+(extra.length&&aTot!=null?'再加上順路多交：'+(days==null?'—':days+' 天')+'、約 '+money(aTot)+'。':''):'')+'</div>':'')+'<ol class="steps">';
  if(!lab)h+='<li>先填 1 個運送箱交出去（最便宜的是'+(bc?esc(bc.zh)+'箱 '+money(bc.tot):'—')+'），觸發<b>出貨標籤</b>任務：+2,000 聲望、+50 青睞。</li>';
  h+='<li>每天把下面 '+top.length+' 張交一輪：<b>'+wRep.toLocaleString()+' 聲望</b>，約 '+money(wAvg)+'。同一張訂單一天只能交一次，隔天再交同一批。</li>';
@@ -169,11 +194,12 @@ function routeMap(list){var by={};list.forEach(function(r){(by[r.z]=by[r.z]||[])
  var h='<h2>跑單路線圖</h2><div class="note">從赤脊山的貿易局營地出發，照號碼跑。括號是那一站要交幾張；'+(hasEK&&hasK?'東部王國跑完到米奈希爾港坐船去塞拉摩，再跑卡林多。':'')+'地圖是示意圖，位置大概就好；顧客在區域裡的位置用 <b>/tar 顧客英文名</b> 找。飛行點是經典版的，永恆可能有新增。</div>'+s;
  h+='<ol class="route">'+seq.map(function(z,i){return '<li><b>'+(i+1)+'. '+esc(ZN[z]||z)+'</b> <span class="dim">'+esc(z)+'・飛行點：'+esc(FP[z]||'—')+'</span><ul>'+by[z].map(function(r){return '<li><span class="t t'+r.t+'">'+TN[r.t]+'</span>'+esc(r.zh)+(r.extra?' <span class="t" style="color:#6cb4e0">順路</span>':'')+' → <b>'+esc(r.npc)+'</b> <span class="dim">'+dtxt(r)+'・'+esc(r.en)+'・先付 '+money(r.pay)+'（令狀＋物品），交完拿回 '+money(r.back)+'，淨 '+money(r.net)+'</span></li>'}).join('')+'</ul></li>'}).join('')+'</ol>';
  return h}
+document.addEventListener('click',function(e){var tr=e.target.closest&&e.target.closest('table.ct tr[data-d]');if(!tr)return;$('days').value=tr.getAttribute('data-d');try{localStorage.setItem('rep_days',$('days').value)}catch(x){}draw();var h=document.querySelector('#view h2:nth-of-type(2)');if(h)h.scrollIntoView({behavior:'smooth'})});
 function draw(){[].forEach.call($('tabs').querySelectorAll('.chip'),function(x){x.classList.toggle('on',x.getAttribute('data-t')==TAB)});
  $('view').innerHTML=TAB=='sum'?sum():TAB=='writ'?writs():crates()}
 $('tabs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;TAB=t.getAttribute('data-t');draw()};
 $('view').onclick=function(e){var t=e.target.closest('.hd');if(!t)return;var tb=$('z'+t.getAttribute('data-z'));tb.style.display=tb.style.display=='none'?'table':'none'};
-['cur','fav','near','more','days'].forEach(function(i){$(i).oninput=$(i).onchange=function(){try{localStorage.setItem('rep_'+i,$(i).type=='checkbox'?($(i).checked?'1':''):$(i).value)}catch(e){}if(TAB=='sum')draw()}});
-try{['cur','fav','days'].forEach(function(i){var v=localStorage.getItem('rep_'+i);if(v!=null&&v!==''&&!(i=='cur'&&+v<2000))$(i).value=v});if(localStorage.getItem('rep_near')==='')$('near').checked=false;if(localStorage.getItem('rep_more')==='')$('more').checked=false}catch(e){}
+['cur','fav','near','more','days','bud'].forEach(function(i){$(i).oninput=$(i).onchange=function(){try{localStorage.setItem('rep_'+i,$(i).type=='checkbox'?($(i).checked?'1':''):$(i).value)}catch(e){}if(TAB=='sum')draw()}});
+try{['cur','fav','days','bud'].forEach(function(i){var v=localStorage.getItem('rep_'+i);if(v!=null&&v!==''&&!(i=='cur'&&+v<2000))$(i).value=v});if(localStorage.getItem('rep_near')==='')$('near').checked=false;if(localStorage.getItem('rep_more')==='')$('more').checked=false}catch(e){}
 load()})();
 </script></body></html>
