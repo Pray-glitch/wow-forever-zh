@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>暗影牧師 團隊前 BiS</title>
+<style>
+/* 跟拍賣場／聲望頁同一套深色金色樣式；單欄，上方篩選，下面依類別分段，每個主題一張卡 */
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;--up:#4fc46a;--down:#e06054;--blue:#9fd3ff;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:15px}
+a{color:var(--gold);word-break:break-word}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:19px;margin:24px 0 8px}
+h2 small{color:var(--dim);font-size:13px;font-weight:400;margin-left:8px}
+h3{color:var(--gold);font-size:16px;margin:0;line-height:1.45}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
+.note b{color:var(--text)}
+.filters{padding:6px 0;margin:6px 0 0}
+.tabs{position:sticky;top:0;z-index:5;background:#0d0b0af2;padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:8px}
+.tabc{font-weight:700;font-size:15px}
+.desc{margin:6px 0 10px}
+.pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px 0 0}
+.chip:disabled{opacity:.35;cursor:default}
+.cards h4{grid-column:1/-1;margin:8px 0 0}
+.row{display:flex;gap:8px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;user-select:none;white-space:nowrap}
+.chip[aria-pressed="true"]{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.chip:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.card p{margin:6px 0 0}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:12px;margin-bottom:6px}
+.tag,.st{display:inline-block;border:1px solid currentColor;border-radius:4px;padding:0 6px;white-space:nowrap}
+.tag{color:var(--blue)}
+.st.ok{color:var(--up)}.st.warn{color:#ffb35c}.st.wait{color:#c79bff}
+.when{color:var(--dim)}
+details{margin-top:8px;border-top:1px solid #ffffff12;padding-top:6px}
+summary{cursor:pointer;color:var(--gold);font-size:13.5px}
+.det{font-size:14px;padding-top:4px}
+.det p{margin:8px 0 4px}
+.det ul,.det ol{margin:4px 0;padding-left:20px}
+.det li{margin:4px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{padding:5px 6px;border-top:1px solid #ffffff12;text-align:left;vertical-align:top;white-space:nowrap}
+th{color:var(--dim);font-weight:500;font-size:12.5px}
+td.w{white-space:normal;min-width:160px}
+td.n,th.n{text-align:right}
+code{background:#0b0907;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-size:12.5px;word-break:break-all}
+.links{display:flex;flex-direction:column;gap:4px}
+.empty{color:var(--dim);text-align:center;padding:24px 0}
+footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:12px;margin-top:24px}
+@media (max-width:700px){.cards{grid-template-columns:1fr}}
+h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.st.new{color:#0d0b0a;background:var(--gold);border-color:var(--gold);font-weight:700}
+.st.hot{color:var(--down)}
+.hotlist{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.hotlist li{margin:6px 0}
+.card{scroll-margin-top:70px}
+.card.flash{border-color:var(--gold)}
+</style>
+</head>
+<body><div class="wrap">
+<h1>暗影牧師 團隊前 BiS（第一階段）</h1>
+<div class="dim"><a href="priest.html">← 回牧師 DC 重點</a></div>
+<div class="note">Priest Classic 的暗影頻道釘選（11/15 發、11/19 最後修改）和 Shadow Priest Classic 的 FAQ 用的是同一份清單：兩套 WoWSims 模擬配裝。FAQ 寫明每天晚上檢查一次、有新東西就更新。綠字附魔是目前遊戲裡有的附魔。<br><b>原始清單（英文模擬器）：</b><a href="https://tinyurl.com/trueprebisshadowv4" target="_blank" rel="noopener">真・團隊前 BiS</a>・<a href="https://tinyurl.com/achieveableprebisshadowv4" target="_blank" rel="noopener">好拿版團隊前 BiS</a>（點進去是 WoWSims，可以換自己的裝備模擬）</div>
+<div class="row" id="bt">
+<button class="chip" data-k="true" aria-pressed="true">真・團隊前 BiS（要拚）</button>
+<button class="chip" data-k="ach" aria-pressed="false">好拿版（刷副本就好）</button>
+</div>
+<div class="bl" data-k="true"><h2>真・團隊前 BiS <small>True Pre-BIS・要刷「暗影之怒」後綴綠裝、稀有裁縫圖樣</small></h2><div class="dim">需要刷副本找「暗影之怒」後綴的裝備、做很稀有的裁縫紫裝，還要 T0.5 肩膀和奧特蘭克山谷聲望。</div>
+<div class="tw"><table><tr><th>部位</th><th>裝備</th><th>附魔</th><th>怎麼拿</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22267" target="_blank" rel="noopener">魔法編織者的頭巾</a><div class="dim">Spellweaver&#x27;s Turban</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：達基薩斯將軍（黑石塔上層）</td></tr>
+<tr><td>項鍊</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22403" target="_blank" rel="noopener">珍珠光彩貝殼項鍊</a><div class="dim">Nacreous Shell Necklace</div></td><td>法術強度 +6</td><td class="w">掉落：砲手威利（斯坦索姆）</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226955" target="_blank" rel="noopener">善潔肩冑</a><div class="dim">Virtuous Epaulets</div></td><td>—</td><td class="w">T0.5 任務線完成後，向莫克瓦（奧格瑪）／德莉娜（鐵爐堡）購買</td></tr>
+<tr><td>披風</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272411" target="_blank" rel="noopener">奧紋披風</a><div class="dim">Arcanoweave Cloak</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>胸</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=14136" target="_blank" rel="noopener">冬夜法袍</a><div class="dim">Robe of Winter Night</div></td><td>法術強度 +6、護甲 +40</td><td class="w">裁縫製作（圖樣：冬夜法袍，要用紡織輪）</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13409" target="_blank" rel="noopener">淚泉護腕（暗影之怒）</a><div class="dim">Tearfall Bracers of Shadow Wrath</div></td><td>法術強度 +16</td><td class="w">掉落：不可寬恕者（斯坦索姆）</td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=14146" target="_blank" rel="noopener">法術專精手套</a><div class="dim">Gloves of Spell Mastery</div></td><td>法術強度 +6、護甲 +40</td><td class="w">裁縫製作（圖樣：法術專精手套，很稀有的圖樣）</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18405" target="_blank" rel="noopener">大法師腰帶</a><div class="dim">Belt of the Archmage</div></td><td>—</td><td class="w">裁縫製作（圖樣：大法師腰帶，很稀有的圖樣）</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=10252" target="_blank" rel="noopener">大師護腿（暗影之怒）</a><div class="dim">Master&#x27;s Leggings of Shadow Wrath</div></td><td>治療和法術傷害 +8</td><td class="w">世界掉落（隨機屬性，要找「暗影之怒」後綴）</td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=10247" target="_blank" rel="noopener">大師長靴（暗影之怒）</a><div class="dim">Master&#x27;s Boots of Shadow Wrath</div></td><td>法術強度 +6、護甲 +40</td><td class="w">世界掉落（隨機屬性，要找「暗影之怒」後綴）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=12543" target="_blank" rel="noopener">鐵爐堡歌唱石</a><div class="dim">Songstone of Ironforge</div></td><td>—</td><td class="w">任務：語出驚人的公主（聯盟）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22433" target="_blank" rel="noopener">唐·馬里喬的統禦之戒</a><div class="dim">Don Mauricio&#x27;s Band of Domination</div></td><td>—</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272438" target="_blank" rel="noopener">弱點分析器</a><div class="dim">Weakness Analyzer</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13968" target="_blank" rel="noopener">比斯巨獸之眼</a><div class="dim">Eye of the Beast</div></td><td>—</td><td class="w">任務：達基薩斯將軍之死（聯盟）／為部落而戰！（部落）</td></tr>
+<tr><td>主手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13349" target="_blank" rel="noopener">邪惡權杖</a><div class="dim">Scepter of the Unholy</div></td><td>啟示（Revelation）</td><td class="w">掉落：瑞文戴爾男爵（斯坦索姆）</td></tr>
+<tr><td>副手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=19309" target="_blank" rel="noopener">暗影力量寶典</a><div class="dim">Tome of Shadow Force</div></td><td>智力 +6、精神 +5</td><td class="w">奧特蘭克山谷聲望商人購買</td></tr>
+<tr><td>魔杖</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13396" target="_blank" rel="noopener">斯庫爾的蒼白之觸</a><div class="dim">Skul&#x27;s Ghastly Touch</div></td><td>—</td><td class="w">掉落：斯庫爾（斯坦索姆稀有）</td></tr>
+</table></div></div>
+<div class="bl" data-k="ach" hidden><h2>好拿版團隊前 BiS <small>Achievable Pre-BIS・不用稀有圖樣和後綴裝</small></h2><div class="dim">拿掉難刷的暗影之怒裝和需要稀有圖樣的紫裝，主要靠刷副本。</div>
+<div class="tw"><table><tr><th>部位</th><th>裝備</th><th>附魔</th><th>怎麼拿</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22267" target="_blank" rel="noopener">魔法編織者的頭巾</a><div class="dim">Spellweaver&#x27;s Turban</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：達基薩斯將軍（黑石塔上層）</td></tr>
+<tr><td>項鍊</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22403" target="_blank" rel="noopener">珍珠光彩貝殼項鍊</a><div class="dim">Nacreous Shell Necklace</div></td><td>法術強度 +6</td><td class="w">掉落：砲手威利（斯坦索姆）</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=19050" target="_blank" rel="noopener">木喉襯肩</a><div class="dim">Mantle of the Timbermaw</div></td><td>—</td><td class="w">裁縫製作（圖樣：木喉襯肩）</td></tr>
+<tr><td>披風</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272411" target="_blank" rel="noopener">奧紋披風</a><div class="dim">Arcanoweave Cloak</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>胸</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=14136" target="_blank" rel="noopener">冬夜法袍</a><div class="dim">Robe of Winter Night</div></td><td>法術強度 +6、護甲 +40</td><td class="w">裁縫製作（圖樣：冬夜法袍，要用紡織輪）</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=254067" target="_blank" rel="noopener">虛空珍珠腕輪</a><div class="dim">Netherpearl Cuffs</div></td><td>法術強度 +16</td><td class="w">裁縫製作（圖樣：虛空珍珠腕輪，永恆新圖樣）</td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18407" target="_blank" rel="noopener">惡魔布手套</a><div class="dim">Felcloth Gloves</div></td><td>法術強度 +6、護甲 +40</td><td class="w">裁縫製作（圖樣：惡魔布手套）</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11662" target="_blank" rel="noopener">奧科索爾腰帶</a><div class="dim">Ban&#x27;thok Sash</div></td><td>—</td><td class="w">掉落：破壞者奧科索爾（黑石塔下層稀有）</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22342" target="_blank" rel="noopener">折磨護腿</a><div class="dim">Leggings of Torment</div></td><td>治療和法術傷害 +8</td><td class="w">掉落：瓦薩拉克（黑石塔上層，要召喚）</td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=11822" target="_blank" rel="noopener">全法長靴</a><div class="dim">Omnicast Boots</div></td><td>法術強度 +6、護甲 +40</td><td class="w">掉落：傀儡統帥阿格曼奇（黑石深淵）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=12543" target="_blank" rel="noopener">鐵爐堡歌唱石</a><div class="dim">Songstone of Ironforge</div></td><td>—</td><td class="w">任務：語出驚人的公主（聯盟）</td></tr>
+<tr><td>戒指</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=22433" target="_blank" rel="noopener">唐·馬里喬的統禦之戒</a><div class="dim">Don Mauricio&#x27;s Band of Domination</div></td><td>—</td><td class="w">掉落：黑暗院長加丁（通靈學院）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13968" target="_blank" rel="noopener">比斯巨獸之眼</a><div class="dim">Eye of the Beast</div></td><td>—</td><td class="w">任務：達基薩斯將軍之死（聯盟）／為部落而戰！（部落）</td></tr>
+<tr><td>飾品</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=272438" target="_blank" rel="noopener">弱點分析器</a><div class="dim">Weakness Analyzer</div></td><td>—</td><td class="w">掉落：Pix Xizzix（永恆新首領）</td></tr>
+<tr><td>主手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13349" target="_blank" rel="noopener">邪惡權杖</a><div class="dim">Scepter of the Unholy</div></td><td>啟示（Revelation）</td><td class="w">掉落：瑞文戴爾男爵（斯坦索姆）</td></tr>
+<tr><td>副手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=18316" target="_blank" rel="noopener">黑曜石權杖</a><div class="dim">Obsidian Bauble</div></td><td>智力 +6、精神 +5</td><td class="w">掉落：普希林（厄運之槌）</td></tr>
+<tr><td>魔杖</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=13396" target="_blank" rel="noopener">斯庫爾的蒼白之觸</a><div class="dim">Skul&#x27;s Ghastly Touch</div></td><td>—</td><td class="w">掉落：斯庫爾（斯坦索姆稀有）</td></tr>
+</table></div></div>
+<h2>重點</h2><ul>
+<li>兩套都共用：魔法編織者的頭巾、珍珠光彩貝殼項鍊、奧紋披風、冬夜法袍、鐵爐堡歌唱石、唐·馬里喬的統禦之戒、弱點分析器＋比斯巨獸之眼、邪惡權杖（附魔「啟示」）、斯庫爾的蒼白之觸。</li>
+<li>兩套都沒有堆命中：團隊前離命中上限還差約 7%，頻道說 1% 命中大約等於 10 法術強度，有人自己做了堆滿命中的一套，模擬反而比較差。</li>
+<li>沒放進清單的：權勢護符（不確定能不能拿，能拿的話會比龍人能量徽章好）、導魔師戒指和巫術符文指環（跟現有戒指差不多，可以替換鐵爐堡歌唱石／唐·馬里喬的統禦之戒）、愛德華之手（只比邪惡權杖多 2 法術強度，貴就不用買）。</li>
+<li>雙手武器沒列：附魔「法術爆發」要用聯結水晶，太貴。真的要拚可以考慮細碎法杖或巨魔法師魔棒。鐵皮法杖要阿拉希盆地、戰歌峽谷聲望，很慢，12 月前拿得到才划算。</li>
+<li>自己的裝備要不要換：裝 WoWSims Exporter 插件，在遊戲裡匯出、貼進模擬器，換掉一件再按模擬比較。</li>
+</ul>
+<footer>整理時間：2026/11/20。裝備中文名稱用台服正式名稱，查不到的保留英文；來源以 Wowhead 永恆資料庫為準。</footer>
+<script>document.getElementById("bt").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;document.querySelectorAll("#bt .chip").forEach(x=>x.setAttribute("aria-pressed",x==b));document.querySelectorAll(".bl").forEach(d=>d.hidden=d.dataset.k!=b.dataset.k)});</script></div></body></html>
