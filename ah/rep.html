@@ -48,7 +48,7 @@ label{font-size:14px;color:var(--dim);margin-right:14px;white-space:nowrap}
 <div class="dim"><a href="index.html">← 拍賣場</a>・<a href="craft.html">專業獲利表</a></div>
 <div class="note">艾澤拉斯商業管理局（赤脊山・三角路口）：<b>聲望</b>決定能不能買圖紙（不會扣），<b>商人青睞</b>是錢（買東西會扣）。
 聲望靠「工匠令狀」或「空箱子＋偽造收據」；青睞只能靠交填好的運送箱。價格都是拍賣場最新的最低價，每小時更新。</div>
-<div class="bar"><label>目前聲望 <input type="number" id="cur" value="2000" min="0" step="100"></label><label>還要的青睞 <input type="number" id="fav" value="630" min="0" step="10"></label><label>想幾天到尊敬 <input type="number" id="days" value="7" min="1" max="30" step="1"></label><label>預算 <input type="number" id="bud" placeholder="不限" min="0" step="1" style="width:6em"> 金</label><label><input type="checkbox" id="near" checked> 只挑飛行點附近的顧客（下飛機騎 1 分鐘內）</label><label><input type="checkbox" id="more" checked> 順路多交：路線上要去的區域裡，離飛行點 1 分鐘內的令狀也一起交</label></div>
+<div class="bar"><label>目前聲望 <input type="number" id="cur" value="2000" readonly tabindex="-1" style="opacity:.55;pointer-events:none"></label><label>還要的青睞 <input type="number" id="fav" value="630" readonly tabindex="-1" style="opacity:.55;pointer-events:none"></label><label>想幾天到尊敬 <input type="number" id="days" value="7" min="1" max="30" step="1"></label><label>預算 <input type="number" id="bud" placeholder="不限" min="0" step="1" style="width:6em"> 金</label><label><input type="checkbox" id="near" checked> 只挑飛行點附近的顧客（下飛機騎 1 分鐘內）</label><label><input type="checkbox" id="more" checked> 順路多交：路線上要去的區域裡，離飛行點 1 分鐘內的令狀也一起交</label></div>
 <div class="tabs" id="tabs"><span class="chip on" data-t="sum">怎麼衝最划算</span><span class="chip" data-t="writ">令狀（依區域）</span><span class="chip" data-t="crate">青睞：填箱子</span></div>
 <div id="view"></div>
 </div>
@@ -204,7 +204,7 @@ function draw(){[].forEach.call($('tabs').querySelectorAll('.chip'),function(x){
  $('view').innerHTML=TAB=='sum'?sum():TAB=='writ'?writs():crates()}
 $('tabs').onclick=function(e){var t=e.target.closest('.chip');if(!t)return;TAB=t.getAttribute('data-t');draw()};
 $('view').onclick=function(e){var t=e.target.closest('.hd');if(!t)return;var tb=$('z'+t.getAttribute('data-z'));tb.style.display=tb.style.display=='none'?'table':'none'};
-['cur','fav','near','more','days','bud'].forEach(function(i){$(i).oninput=$(i).onchange=function(){try{localStorage.setItem('rep_'+i,$(i).type=='checkbox'?($(i).checked?'1':''):$(i).value)}catch(e){}if(TAB=='sum')draw()}});
-try{['cur','fav','days','bud'].forEach(function(i){var v=localStorage.getItem('rep_'+i);if(v!=null&&v!==''&&!(i=='cur'&&+v<2000))$(i).value=v});if(localStorage.getItem('rep_near')==='')$('near').checked=false;if(localStorage.getItem('rep_more')==='')$('more').checked=false}catch(e){}
+['near','more','days','bud'].forEach(function(i){$(i).oninput=$(i).onchange=function(){if(i=='days'&&$('bud').value){$('bud').value='';try{localStorage.setItem('rep_bud','')}catch(x){}}try{localStorage.setItem('rep_'+i,$(i).type=='checkbox'?($(i).checked?'1':''):$(i).value)}catch(e){}if(TAB=='sum')draw()}});
+try{['days','bud'].forEach(function(i){var v=localStorage.getItem('rep_'+i);if(v!=null&&v!=='')$(i).value=v});if(localStorage.getItem('rep_near')==='')$('near').checked=false;if(localStorage.getItem('rep_more')==='')$('more').checked=false}catch(e){}
 load()})();
 </script></body></html>
