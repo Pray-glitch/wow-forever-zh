@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>聖騎士 T0.5 魂鑄套（三個版本）</title>
+<style>
+/* 跟拍賣場／聲望頁同一套深色金色樣式；單欄，上方篩選，下面依類別分段，每個主題一張卡 */
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;--up:#4fc46a;--down:#e06054;--blue:#9fd3ff;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:15px}
+a{color:var(--gold);word-break:break-word}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:19px;margin:24px 0 8px}
+h2 small{color:var(--dim);font-size:13px;font-weight:400;margin-left:8px}
+h3{color:var(--gold);font-size:16px;margin:0;line-height:1.45}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
+.note b{color:var(--text)}
+.filters{padding:6px 0;margin:6px 0 0}
+.tabs{position:sticky;top:0;z-index:5;background:#0d0b0af2;padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:8px}
+.tabc{font-weight:700;font-size:15px}
+.desc{margin:6px 0 10px}
+.pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px 0 0}
+.chip:disabled{opacity:.35;cursor:default}
+.cards h4{grid-column:1/-1;margin:8px 0 0}
+.row{display:flex;gap:8px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;user-select:none;white-space:nowrap}
+.chip[aria-pressed="true"]{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.chip:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.card p{margin:6px 0 0}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:12px;margin-bottom:6px}
+.tag,.st{display:inline-block;border:1px solid currentColor;border-radius:4px;padding:0 6px;white-space:nowrap}
+.tag{color:var(--blue)}
+.st.ok{color:var(--up)}.st.warn{color:#ffb35c}.st.wait{color:#c79bff}
+.when{color:var(--dim)}
+details{margin-top:8px;border-top:1px solid #ffffff12;padding-top:6px}
+summary{cursor:pointer;color:var(--gold);font-size:13.5px}
+.det{font-size:14px;padding-top:4px}
+.det p{margin:8px 0 4px}
+.det ul,.det ol{margin:4px 0;padding-left:20px}
+.det li{margin:4px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{padding:5px 6px;border-top:1px solid #ffffff12;text-align:left;vertical-align:top;white-space:nowrap}
+th{color:var(--dim);font-weight:500;font-size:12.5px}
+td.w{white-space:normal;min-width:160px}
+td.n,th.n{text-align:right}
+code{background:#0b0907;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-size:12.5px;word-break:break-all}
+.links{display:flex;flex-direction:column;gap:4px}
+.empty{color:var(--dim);text-align:center;padding:24px 0}
+footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:12px;margin-top:24px}
+@media (max-width:700px){.cards{grid-template-columns:1fr}}
+h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.st.new{color:#0d0b0a;background:var(--gold);border-color:var(--gold);font-weight:700}
+.st.hot{color:var(--down)}
+.hotlist{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.hotlist li{margin:6px 0}
+.card{scroll-margin-top:70px}
+.card.flash{border-color:var(--gold)}
+</style>
+</head>
+<body><div class="wrap">
+<h1>聖騎士 T0.5 魂鑄套（坦克／懲戒／治療）</h1>
+<div class="dim"><a href="paladin.html">← 回聖騎 DC 重點</a></div>
+<div class="note">永恆的魂鑄套每個部位都有三個版本，做任務時自己挑一件。三個版本是同一套，件數一起算，所以可以混搭（例如肩、腰、手拿懲戒版，護腕、腿、腳拿坦克版）。屬性是 11/20 查 Wowhead 永恆繁中資料庫的數字，遊戲改版可能會變，以遊戲內為準。</div>
+<div class="row" id="bt">
+<button class="chip" data-k="tank" aria-pressed="true">坦克版（防禦）</button>
+<button class="chip" data-k="ret" aria-pressed="false">懲戒版（力量）</button>
+<button class="chip" data-k="holy" aria-pressed="false">治療版（精神、治療量）</button>
+</div>
+<div class="bl" data-k="tank"><h2>坦克版 <small>8 件防禦合計 +37</small></h2><div class="dim">主屬性是耐力和防禦，沒有力量。肩、手、胸還有格擋、招架或降低被閃躲／招架的效果。</div>
+<div class="tw"><table><tr><th>部位</th><th>裝備</th><th>屬性</th><th>任務</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226989" target="_blank" rel="noopener">魂鑄面甲</a></td><td class="w">耐力 33、智力 18<div class="dim">防禦 +4；法傷／治療 +13</div></td><td class="w">最後的獎賞</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226987" target="_blank" rel="noopener">魂鑄肩鎧</a></td><td class="w">耐力 18、智力 12<div class="dim">防禦 +5、盾牌格擋率 +1%；法傷／治療 +9</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+<tr><td>胸</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226992" target="_blank" rel="noopener">魂鑄護胸</a></td><td class="w">耐力 29、智力 18<div class="dim">防禦 +5、被閃躲／招架機率 -1.2%；法傷／治療 +14</div></td><td class="w">最後的獎賞</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226985" target="_blank" rel="noopener">魂鑄腕甲</a></td><td class="w">耐力 16、智力 8<div class="dim">防禦 +3；法傷／治療 +6</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84150" target="_blank" rel="noopener">誠摯的建議</a></td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226990" target="_blank" rel="noopener">魂鑄手甲</a></td><td class="w">耐力 15、智力 11<div class="dim">防禦 +5、招架率 +0.8%；法傷／治療 +12</div></td><td class="w">公平的補償</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226986" target="_blank" rel="noopener">魂鑄護腰</a></td><td class="w">耐力 18、智力 13<div class="dim">防禦 +3；法傷／治療 +12</div></td><td class="w">公平的補償</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226988" target="_blank" rel="noopener">魂鑄腿甲</a></td><td class="w">耐力 24、智力 16、格擋值 14<div class="dim">防禦 +9；法傷／治療 +16</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226991" target="_blank" rel="noopener">魂鑄脛甲</a></td><td class="w">耐力 26、智力 12<div class="dim">防禦 +3；法傷／治療 +8</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+</table></div></div>
+<div class="bl" data-k="ret" hidden><h2>懲戒版 <small>力量／耐力／智力</small></h2><div class="dim">頭、胸、手各有致命一擊 +1%，腰帶有命中 +1%，肩有被閃躲／招架機率 -1%。</div>
+<div class="tw"><table><tr><th>部位</th><th>裝備</th><th>屬性</th><th>任務</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226976" target="_blank" rel="noopener">魂鑄巨盔</a></td><td class="w">力量 16、耐力 17、智力 17<div class="dim">致命一擊 +1%、每 5 秒回 2 法力；法傷／治療 +14</div></td><td class="w">最後的獎賞</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226969" target="_blank" rel="noopener">魂鑄肩甲</a></td><td class="w">力量 10、耐力 11、智力 11<div class="dim">被閃躲／招架機率 -1%；法傷／治療 +8</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+<tr><td>胸</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226973" target="_blank" rel="noopener">魂鑄胸甲</a></td><td class="w">力量 16、耐力 17、智力 17<div class="dim">致命一擊 +1%；法傷／治療 +18</div></td><td class="w">最後的獎賞</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226970" target="_blank" rel="noopener">魂鑄護腕</a></td><td class="w">力量 9、耐力 10、智力 9<div class="dim">法傷／治療 +9</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84150" target="_blank" rel="noopener">誠摯的建議</a></td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226975" target="_blank" rel="noopener">魂鑄護手</a></td><td class="w">力量 9、耐力 10、智力 10<div class="dim">致命一擊 +1%；法傷／治療 +9</div></td><td class="w">公平的補償</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226971" target="_blank" rel="noopener">魂鑄腰帶</a></td><td class="w">力量 10、耐力 11、智力 11<div class="dim">命中 +1%；法傷／治療 +8</div></td><td class="w">公平的補償</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226972" target="_blank" rel="noopener">魂鑄腿鎧</a></td><td class="w">力量 17、耐力 17、智力 19<div class="dim">法傷／治療 +11</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226974" target="_blank" rel="noopener">魂鑄戰靴</a></td><td class="w">力量 12、耐力 13、智力 12<div class="dim">每 5 秒回 4 法力；法傷／治療 +13</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+</table></div></div>
+<div class="bl" data-k="holy" hidden><h2>治療版 <small>精神＋治療量</small></h2><div class="dim">治療量最高的是胸（37）、頭（33）、腿（31）。</div>
+<div class="tw"><table><tr><th>部位</th><th>裝備</th><th>屬性</th><th>任務</th></tr>
+<tr><td>頭</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226981" target="_blank" rel="noopener">魂鑄之冠</a></td><td class="w">耐力 16、智力 17、精神 16<div class="dim">致命一擊 +1%；治療 33／法傷 11</div></td><td class="w">最後的獎賞</td></tr>
+<tr><td>肩</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226979" target="_blank" rel="noopener">魂鑄肩冑</a></td><td class="w">耐力 12、智力 13、精神 12<div class="dim">治療 22／法傷 7</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+<tr><td>胸</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226984" target="_blank" rel="noopener">魂鑄之擁</a></td><td class="w">耐力 23、智力 16、精神 15<div class="dim">治療 37／法傷 12</div></td><td class="w">最後的獎賞</td></tr>
+<tr><td>護腕</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226977" target="_blank" rel="noopener">魂鑄束腕</a></td><td class="w">耐力 8、智力 9、精神 11<div class="dim">治療 18／法傷 6</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84150" target="_blank" rel="noopener">誠摯的建議</a></td></tr>
+<tr><td>手</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226982" target="_blank" rel="noopener">魂鑄之拳</a></td><td class="w">耐力 10、智力 11、精神 18<div class="dim">治療 24／法傷 8</div></td><td class="w">公平的補償</td></tr>
+<tr><td>腰</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226978" target="_blank" rel="noopener">魂鑄之索</a></td><td class="w">耐力 12、智力 13、精神 12<div class="dim">致命一擊 +0.5%；治療 18／法傷 6</div></td><td class="w">公平的補償</td></tr>
+<tr><td>腿</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226980" target="_blank" rel="noopener">魂鑄護腿</a></td><td class="w">耐力 15、智力 16、精神 18<div class="dim">治療 31／法傷 10</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+<tr><td>腳</td><td class="w"><a href="https://www.wowhead.com/forever/tw/item=226983" target="_blank" rel="noopener">魂鑄足靴</a></td><td class="w">耐力 11、智力 13、精神 20<div class="dim">每 5 秒回 2 法力；治療 20／法傷 7</div></td><td class="w"><a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></td></tr>
+</table></div></div>
+<h2>套裝效果（三個版本一起算）</h2><ul>
+<li>2 件：所有魔法抗性 +8</li>
+<li>3 件：每 5 秒回 8 點法力</li>
+<li>4 件：近戰自動攻擊和施法時有機率觸發，法傷和治療量 +65，持續 10 秒</li>
+<li>5 件：被有害法術打中時，有 7% 機率讓施法者沉默 3 秒（每 60 秒最多一次）</li>
+<li>6 件：法傷和治療量 +23</li>
+</ul>
+<h2>哪個任務換哪件</h2><ul>
+<li>護腕：<a href="https://www.wowhead.com/forever/tw/quest=84150" target="_blank" rel="noopener">誠摯的建議</a>（58 級找德莉娜／莫克瓦，交 15 個冬泉谷血樣本、20 金和地城套裝 1 的護腕）</li>
+<li>腰、手：公平的補償（交地城套裝 1 的腰帶／手套）</li>
+<li>肩、腿、腳：<a href="https://www.wowhead.com/forever/tw/quest=84182" target="_blank" rel="noopener">安希恩的離別感言</a></li>
+<li>頭、胸：最後的獎賞（整條任務線最後一步）</li>
+<li>護腕、腰、肩、腿、胸的任務對照是 Sixty Upgrades 列的；頭、手、腳是照經典版的任務對照推的，實際以遊戲內任務獎勵為準。完整任務順序看聖騎 DC 重點的魂鑄卡。</li>
+</ul>
+<footer>整理時間：2026/11/20。裝備名稱和屬性：Wowhead 永恆繁中資料庫；版本和任務：Sixty Upgrades。</footer>
+<script>document.getElementById("bt").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;document.querySelectorAll("#bt .chip").forEach(x=>x.setAttribute("aria-pressed",x==b));document.querySelectorAll(".bl").forEach(d=>d.hidden=d.dataset.k!=b.dataset.k)});</script></div></body></html>
