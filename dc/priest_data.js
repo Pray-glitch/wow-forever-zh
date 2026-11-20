@@ -2,7 +2,7 @@
 window.DC={
  "name": "牧師",
  "source": "Priest Classic（約 6.1 萬人）＋ Shadow Priest Classic（約 1.9 萬人）",
- "updated": "2026-11-20 08:40",
+ "updated": "2026-11-20 08:55",
  "run": "2026-11-20",
  "kw": {
   "bis": 18119,
@@ -166,7 +166,7 @@ window.DC={
    "st": "ok",
    "ch": "general-forever",
    "h": "T0.5 套裝任務線 58 級開始",
-   "p": "T0.5 是一條很長的任務線，58 級才能接，第一步是「<a href=\"https://www.wowhead.com/forever/tw/quest=84151\" target=\"_blank\" rel=\"noopener\">An Earnest Proposition</a>」。解到一定進度後，可以向莫克瓦（奧格瑪）或德莉娜（鐵爐堡）買其他部位，暗影的團隊前 BiS 已經用到 T0.5 肩膀善潔肩冑。",
+   "p": "T0.5 是一條很長的任務線，58 級才能接，第一步是「<a href=\"https://www.wowhead.com/forever/tw/quest=84151\" target=\"_blank\" rel=\"noopener\">誠摯的建議</a>」（牧師版：交 15 個冬泉谷血樣本、20 金和地城套裝 1 的護腕）。解到一定進度後，可以向莫克瓦（奧格瑪）或德莉娜（鐵爐堡）買其他部位，暗影的團隊前 BiS 已經用到 T0.5 肩膀善潔肩冑。",
    "det": "<ul><li>11/19 有人說插件把季節版（探索賽季）的任務資訊抓錯，要看 Wowhead 永恆版的頁面。</li><li>有人遇到德莉娜不能對話，是因為還沒解到那一步。</li></ul>",
    "heat": 1,
    "vol": "11/19 幾個人在問",
