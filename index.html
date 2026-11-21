@@ -43,6 +43,19 @@ main .tw{overflow-x:auto;max-width:100%;margin:10px 0;-webkit-overflow-scrolling
 main table{border-collapse:collapse;margin:0;font-size:14px}
 main th{background:var(--panel);text-align:left}
 main td,main th{border:1px solid var(--line);padding:6px 10px}
+.tips{display:flex;flex-wrap:wrap;gap:16px;margin:16px 0;align-items:flex-start}
+.whtip{display:flex;gap:8px;align-items:flex-start;width:100%;max-width:372px}
+.whtip .tic{width:40px;height:40px;border-radius:6px;border:1px solid #6b6b6b;flex:none}
+.whtip .tt{flex:1;min-width:0;background:#070c21;border:1px solid #a5a5a5;border-radius:5px;padding:8px 11px;font-size:14px;line-height:1.55;color:#fff}
+main .whtip table{width:100%;border-collapse:collapse;margin:0;font-size:14px}
+main .whtip td,main .whtip th{border:0;padding:0;background:none;font-weight:400;color:inherit;vertical-align:top}
+main .whtip th{text-align:right;white-space:nowrap;padding-left:12px}
+.whtip a{text-decoration:none}.whtip a:hover{text-decoration:underline}
+.whtip b{font-size:16px}
+.whtip .q{color:#ffd100}.whtip .q0{color:#9d9d9d}.whtip .q1{color:#fff}.whtip .q2{color:#1eff00}.whtip .q3{color:#0070dd}.whtip .q4{color:#a335ee}.whtip .q5{color:#ff8000}
+.whtip .craft{color:#86f6f0}.whtip .toycolor{color:#66bbff}.whtip .c11{color:#ff7d0a}.whtip .c1{color:#c79c6e}.whtip .c2{color:#f58cba}.whtip .c3{color:#abd473}.whtip .c4{color:#fff569}.whtip .c5{color:#fff}.whtip .c7{color:#0070de}.whtip .c8{color:#69ccf0}.whtip .c9{color:#9482c9}
+.whtip .gap{height:8px}
+.whtip .moneygold::after{content:"金 ";color:#ffd100}.whtip .moneysilver::after{content:"銀 ";color:#c7c7cf}.whtip .moneycopper::after{content:"銅";color:#eda55f}
 main blockquote{border-left:3px solid var(--accent);margin:10px 0;padding:4px 14px;color:var(--muted)}
 .home .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0;cursor:pointer}
 .home .card:hover{border-color:var(--accent)}
@@ -149,7 +162,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=4540b38a"></script>
+<script src="data.js?v=1e8551a9"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -468,6 +481,15 @@ details.sec.sub>.body{padding:0 12px 6px}
         const shot = (f, i) => { const nm = curTab || (g.shotNames||[])[i] || ''; html += '<img class="shot" src="img/' + f + '?v=' + encodeURIComponent(g.updated || '') + (g.shotVer || '') + '" loading="lazy"><div class="cap">天賦配點' + (nm ? '：' + esc(nm) : '') + '</div>'; };
         if (sm[1] !== undefined) { const i = +sm[1]; if ((g.shots||[])[i]) shot(g.shots[i], i); else html += '<p class="cap">（天賦樹請看原文）</p>'; }
         else { (g.shots || []).forEach(shot); if (!(g.shots||[]).length) html += '<p class="cap">（天賦樹請看原文）</p>'; }
+        continue;
+      }
+      if ((sm = l.match(/^\[\[TIP:([\d,]+)\]\]$/))) {
+        // 物品說明框：照 Wowhead 的樣子一行一行、分顏色（資料在 g.tips，Go 端 tips.go 產生）
+        flushP(); closeList(); closeTable();
+        const T = g.tips || {};
+        const cards = sm[1].split(',').map(id => { const t = T[id]; if (!t) return '<div class="whtip"><div class="tt"><a class="q1" href="https://www.wowhead.com/forever/tw/item=' + id + '" target="_blank" rel="noopener">物品 #' + id + '（點這裡看 Wowhead）</a></div></div>';
+          return '<div class="whtip">' + (t.i ? '<img class="tic" src="https://wow.zamimg.com/images/wow/icons/medium/' + t.i + '.jpg" alt="" loading="lazy">' : '') + '<div class="tt">' + t.h + '</div></div>'; });
+        html += '<div class="tips">' + cards.join('') + '</div>';
         continue;
       }
       if (!l) { flushP(); closeList(); closeTable(); continue; }
