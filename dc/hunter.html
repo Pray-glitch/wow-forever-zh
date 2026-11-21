@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永恆獵人 DC 重點</title>
+<style>
+/* 跟拍賣場／聲望頁同一套深色金色樣式；單欄，上方篩選，下面依類別分段，每個主題一張卡 */
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;--up:#4fc46a;--down:#e06054;--blue:#9fd3ff;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.6;font-size:15px}
+a{color:var(--gold);word-break:break-word}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:19px;margin:24px 0 8px}
+h2 small{color:var(--dim);font-size:13px;font-weight:400;margin-left:8px}
+h3{color:var(--gold);font-size:16px;margin:0;line-height:1.45}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
+.note b{color:var(--text)}
+.filters{padding:6px 0;margin:6px 0 0}
+.tabs{position:sticky;top:0;z-index:5;background:#0d0b0af2;padding:8px 0;border-bottom:1px solid var(--line);margin-bottom:8px}
+.tabc{font-weight:700;font-size:15px}
+.desc{margin:6px 0 10px}
+.pager{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:16px 0 0}
+.chip:disabled{opacity:.35;cursor:default}
+.cards h4{grid-column:1/-1;margin:8px 0 0}
+.row{display:flex;gap:8px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;user-select:none;white-space:nowrap}
+.chip[aria-pressed="true"]{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.chip:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0}
+.card p{margin:6px 0 0}
+.tags{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:12px;margin-bottom:6px}
+.tag,.st{display:inline-block;border:1px solid currentColor;border-radius:4px;padding:0 6px;white-space:nowrap}
+.tag{color:var(--blue)}
+.st.ok{color:var(--up)}.st.warn{color:#ffb35c}.st.wait{color:#c79bff}
+.when{color:var(--dim)}
+details{margin-top:8px;border-top:1px solid #ffffff12;padding-top:6px}
+summary{cursor:pointer;color:var(--gold);font-size:13.5px}
+.det{font-size:14px;padding-top:4px}
+.det p{margin:8px 0 4px}
+.det ul,.det ol{margin:4px 0;padding-left:20px}
+.det li{margin:4px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:8px}
+th,td{padding:5px 6px;border-top:1px solid #ffffff12;text-align:left;vertical-align:top;white-space:nowrap}
+th{color:var(--dim);font-weight:500;font-size:12.5px}
+td.w{white-space:normal;min-width:160px}
+td.n,th.n{text-align:right}
+code{background:#0b0907;border:1px solid var(--line);padding:1px 5px;border-radius:4px;font-size:12.5px;word-break:break-all}
+.links{display:flex;flex-direction:column;gap:4px}
+.empty{color:var(--dim);text-align:center;padding:24px 0}
+footer{color:var(--dim);font-size:13px;border-top:1px solid var(--line);padding-top:12px;margin-top:24px}
+@media (max-width:700px){.cards{grid-template-columns:1fr}}
+h4{color:var(--dim);font-size:14px;font-weight:500;margin:16px 0 6px;border-bottom:1px solid var(--line);padding-bottom:4px}
+.st.new{color:#0d0b0a;background:var(--gold);border-color:var(--gold);font-weight:700}
+.st.hot{color:var(--down)}
+.hotlist{margin:0;padding:8px 12px 8px 34px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.hotlist li{margin:6px 0}
+.card{scroll-margin-top:70px}
+.card.flash{border-color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>永恆 DC 重點整理：<span id="clsmenu"></span></h1>
+<script src="menu.js"></script>
+<div class="dim" id="upd"></div>
+<div class="dim"><a href="../index.html">← 永恆攻略中文版</a>・<a href="../ah/index.html">拍賣場</a></div>
+<div class="note">把大型職業 Discord 的討論分類、摘要成中文。每張卡先看摘要，想看細節點「詳細說明」。<br><b>來源：</b>Classic Hunter Lodge 的永恆頻道（約 7.4 萬人，經典版和永恆最大的獵人 Discord）。主要內容在 forever-pve 的釘選；野獸、射擊、生存三個專精頻道的釘選都叫大家去看 forever-pve。每天自動更新。遊戲剛開，很多結論還會變；標「爭論中」「待確認」的請當參考。</div>
+
+<div class="filters" id="filters">
+  <div class="row" id="specRow" role="group" aria-label="專精"></div>
+  <div class="row" id="catRow" role="group" aria-label="類別"></div>
+  <div class="row" id="heatRow" role="group" aria-label="熱門度"></div>
+</div>
+<div class="row tabs" id="tabRow" role="group" aria-label="分頁選單"></div>
+<main id="view"></main>
+<footer>內容是討論的中文摘要，不是原文。技能和裝備用台服正式名稱，查不到的保留英文。裝備屬性與來源取自 Wowhead WoW Forever 資料庫；</footer>
+</div>
+
+<script src="hunter_data.js"></script>
+<script>
+const CATS=[["gear","配裝與 BiS"],["stats","屬性與數值"],["talent","天賦"],["play","手法與打法"],["quest","任務與入手"],["state","現況與改動"],["tools","工具與資源"]];
+const SPECS=[["all","全部"],["sv","生存"],["mm","射擊"],["bm","野獸"],["any","通用"]];
+const SPN={sv:"生存",mm:"射擊",bm:"野獸",any:"通用"},STN={ok:"有共識",warn:"爭論中",wait:"待確認"},HN=["","","熱門","很熱門"];
+const DC=window.DC||{topics:[]},T=DC.topics;
+let fs="all",fc="all",fh="0";const HEATS=[["0","不限熱度"],["2","熱門以上"],["3","只看很熱門"]];
+try{fs=localStorage.getItem("dch_s")||"all";fc=localStorage.getItem("dch_c")||"all";fh=localStorage.getItem("dch_h")||"0"}catch(e){}
+const $=id=>document.getElementById(id);
+const md=d=>{const p=(d||"").split("-");return p.length==3?(+p[1])+"/"+(+p[2]):d};
+const okSpec=t=>fs=="all"||t.s==fs||(t.s=="any"&&fs!="any");
+function card(t,isNew){return `<article class="card" id="t-${t.id}"><div class="tags">${isNew?'<span class="st new">新</span>':''}<span class="tag">${SPN[t.s]}</span><span class="st ${t.st}">${STN[t.st]}</span>${t.heat>=2?`<span class="st hot">${HN[t.heat]}</span>`:''}<span class="when">${t.d}・${t.ch}</span></div><h3>${t.h}</h3><p>${t.p}</p>${t.det?`<details><summary>詳細說明</summary><div class="det">${t.det}</div></details>`:""}</article>`}
+function chips(){
+  $("specRow").innerHTML=SPECS.map(([k,n])=>`<button class="chip" data-s="${k}" aria-pressed="${fs==k}">${n}</button>`).join("");
+  $("heatRow").innerHTML=HEATS.map(([k,n])=>`<button class="chip" data-h="${k}" aria-pressed="${fh==k}">${n}</button>`).join("");
+  $("catRow").innerHTML=[["all","所有類別"]].concat(CATS).map(([k,n])=>`<button class="chip" data-c="${k}" aria-pressed="${fc==k}">${n}</button>`).join("");
+}
+const PER=6;let tab="new",pg=1;
+try{tab=localStorage.getItem("dch_t")||"new"}catch(e){}
+function draw(){
+  chips();
+  $("upd").textContent="最後更新："+(DC.updated||"")+"（台灣時間）・每天早上自動更新一次";
+  const list=T.filter(t=>okSpec(t)&&(fc=="all"||fc==t.c)&&(t.heat||0)>=+fh);
+  const first0=T.reduce((m,x)=>x.first<m?x.first:m,"9");
+  const sets={new:list.filter(t=>t.upd==DC.run).sort((a,b)=>(b.heat||0)-(a.heat||0)),
+    hot:list.filter(t=>(t.heat||0)>=2).sort((a,b)=>b.heat-a.heat||(b.upd>a.upd?1:-1)),
+    old:list.filter(t=>t.upd!=DC.run).sort((a,b)=>CATS.findIndex(c=>c[0]==a.c)-CATS.findIndex(c=>c[0]==b.c)||(b.upd>a.upd?1:-1))};
+  const TABS=[["new","最新討論"],["hot","熱門討論"],["old","之前的討論"]];
+  const DESC={new:md(DC.run)+" 這一天有新進展的主題",hot:"最近討論量最大的主題，越上面越熱",old:"沒有新進展、內容仍然有效，依類別排"};
+  $("tabRow").innerHTML=TABS.map(([k,n])=>`<button class="chip tabc" data-t="${k}" aria-pressed="${tab==k}">${n} ${sets[k].length}</button>`).join("");
+  const cur=sets[tab]||[],pages=Math.max(1,Math.ceil(cur.length/PER));if(pg>pages)pg=pages;
+  const part=cur.slice((pg-1)*PER,pg*PER);
+  let h=`<div class="dim desc">${DESC[tab]}${cur.length?`・第 ${pg}／${pages} 頁`:""}</div>`;
+  if(!cur.length)h+=`<p class="empty">這個組合沒有內容，換一個分頁或篩選看看。</p>`;
+  else{let last="";h+=`<div class="cards">`+part.map(t=>{let hd="";if(tab=="old"&&t.c!=last){last=t.c;hd=`<h4>${(CATS.find(c=>c[0]==t.c)||[0,""])[1]}</h4>`}
+      return hd+card(t,t.first==t.upd&&t.first!=first0)}).join("")+`</div>`;
+    if(pages>1){h+=`<nav class="pager" aria-label="分頁"><button class="chip" data-p="${pg-1}" ${pg<=1?"disabled":""}>← 上一頁</button>`;
+      for(let i=1;i<=pages;i++)h+=`<button class="chip" data-p="${i}" aria-pressed="${i==pg}">${i}</button>`;
+      h+=`<button class="chip" data-p="${pg+1}" ${pg>=pages?"disabled":""}>下一頁 →</button></nav>`}}
+  $("view").innerHTML=h;
+}
+function goTop(){const el=$("tabRow");if(el)el.scrollIntoView({block:"start"})}
+$("tabRow").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;tab=b.dataset.t;pg=1;try{localStorage.setItem("dch_t",tab)}catch(e){}draw()});
+$("view").addEventListener("click",e=>{const b=e.target.closest("button[data-p]");if(!b||b.disabled)return;pg=+b.dataset.p;draw();goTop()});
+$("filters").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
+  if(b.dataset.s)fs=b.dataset.s;if(b.dataset.c)fc=b.dataset.c;if(b.dataset.h)fh=b.dataset.h;
+  try{localStorage.setItem("dch_s",fs);localStorage.setItem("dch_c",fc);localStorage.setItem("dch_h",fh)}catch(e){}pg=1;draw()});
+draw();
+</script>
+</body>
+</html>
