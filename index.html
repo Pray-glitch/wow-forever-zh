@@ -162,7 +162,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=838710b5"></script>
+<script src="data.js?v=9a1fe6d3"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -825,6 +825,10 @@ details.sec.sub>.body{padding:0 12px 6px}
       if (/(^|\n)\s*#{1,4}\s/.test(pt)) junk.push('#');
       if (/<\/?(br|p|div|span|a|b|img)\b/i.test(pt)) junk.push('HTML 標籤');
       if (junk.length) add('畫面上露出符號：' + junk.join(' '));
+      // 11/22：模型對話（「還沒貼上要翻譯的內容…照你的規則」）、原站拖曳說明、中文中間夾英文小字（大廳now成為）
+      { const cm = pt.match(/[^。\n]{0,12}(還沒貼上|貼上要翻譯|貼過來|照你的規則|請提供要翻譯|以下(是|為)完整譯文|system prompt)[^。\n]{0,12}/); if (cm) add('畫面上有模型對話：' + cm[0].trim()); }
+      if (/拖曳.{0,15}空白鍵|空白鍵.{0,40}Esc(ape)? ?取消/.test(pt)) add('畫面上露出原站拖曳操作說明');
+      { const sm = pt.match(/[一-鿿](now|also|really|the|and|with)[一-鿿]/); if (sm) add('中文中間夾英文字：' + sm[0]); }
       let en = 0, ex = '';
       plain.querySelectorAll('p,li,td,h2,h3,h4,blockquote').forEach(el => {
         if (el.querySelector('p,li,td')) return;
