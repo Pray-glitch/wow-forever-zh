@@ -149,7 +149,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=ed4d7214"></script>
+<script src="data.js?v=7e39080f"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -190,6 +190,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     if (ITEMS[key] || ITEMS[(txt||'').trim()]) return QCOL[1];
     return '';
   }
+  function sfxBase(k){ const m = (k || '').match(/^(.+?) of (?:the )?[A-Z][A-Za-z']+(?: [A-Z][A-Za-z']+)?$/); const v = m ? (ICONS[m[1]] || '') : ''; return /^inv_/.test(v.split('|')[0] || '') || /\/icons\/items\//.test(v.split('|')[2] || '') ? m[1] : ''; } // 只認物品本體，技能（Judgement of Fury）不套
   function widget(txt){
     // 星號配錯對、把一整句包成粗體的（含句讀又很長）→ 當一般文字
     if (txt.length > 18 && /[，。；]/.test(txt) && !/（[A-Za-z][^）]*）\s*$/.test(txt)) return txt;
@@ -200,7 +201,9 @@ details.sec.sub>.body{padding:0 12px 6px}
     if (m && /[\u4e00-\u9fff]/.test(m[1]) && /^[A-Za-z]/.test(txt)) key = txt.slice(0, txt.indexOf(m[0])).trim();
     // 只寫中文沒附英文（「求生意志」「強韌（被動）」）→ 用中英對照找英文
     if (!ICONS[key] && !ICONS[txt.trim()]) { const z = txt.replace(/（(被動|Passive)）/g, '').replace(/\*\*/g, '').trim(); if (ZHEN[z]) key = ZHEN[z]; }
-    const v = ICONS[key] || ICONS[txt.trim()] || '';
+    // 11/21 畫面檢查：隨機詞綴裝（Master's Hat of Shadow Wrath）圖示表只有本體（Master's Hat）→ 用本體的圖
+    const sb = (!ICONS[key] && !ICONS[txt.trim()] && !ITEMS[key]) ? sfxBase(key) : '';
+    const v = ICONS[key] || ICONS[txt.trim()] || (sb ? ICONS[sb] : '') || '';
     const item = ITEMS[key] || ITEMS[txt.trim()];
     const whq = !item && (WHQ.has(key) || WHQ.has(txt.trim())) ? (WHQ.has(key) ? key : txt.trim()) : '';
     if (noLink(key)) return '<b>' + txt + '</b>';
@@ -210,7 +213,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     if (zhref) return aTag(zhref, txt, 'w zone');
     if (!v && !item && !whq) return '<b>' + txt + '</b>';
     let [icon, col] = v.split('|');
-    const kc = kindColor(key, txt);
+    const kc = kindColor(key, txt) || (sb ? kindColor(sb, sb) : '');
     // 11/15 夜間驗收：Mobalytics 預設的金色（#f2bf43）不是品質色 → 永恆新物品（inv_ 圖示、語庫沒有品質）用白色；沒圖示的（首領名）不上色
     if (!kc && /^#f2bf43$/i.test(col || '')) { if (/^inv_/.test(icon || '') || /\/icons\/items\//.test(v.split('|')[2] || '')) col = QCOL[1]; /* 11/17：原站物品路徑的圖示（Riptear's Spare Arm 用 spell_ 圖）也算物品 */ else if (!icon) col = ''; }
     col = kc || col;
