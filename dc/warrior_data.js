@@ -2,8 +2,8 @@
 window.DC={
  "name": "戰士",
  "source": "Fight Club（約 9.7 萬人）",
- "updated": "2026-11-20 19:50",
- "run": "2026-11-20",
+ "updated": "2026-11-21 08:20",
+ "run": "2026-11-21",
  "kw": {},
  "topics": [
   {
@@ -14,12 +14,12 @@ window.DC={
    "ch": "forever-fury 釘選（11/17，11/20 更新）",
    "h": "狂怒團隊前 BiS：模擬器連結＋替代品",
    "p": "狂怒頻道釘選了一套完整的團隊前 BiS，直接開模擬器就能看。武器兩種組合：單體用刺錘（Persuader，新鍛造武器）配風暴戰斧，4 隻以上用鐵敵之錘配刺錘；兩組差距很小，重點是要做刺錘。惡魔之擊評價普通。",
-   "det": "<ul><li><a href=\"https://www.wowsims.com/forever/warrior/dps/?i=g#eJyrYJJayb2BmUmAUaqci43jQZLEe2EuZo7NFVzMHP9TuNg55l0QkPhszcXOcWQLv8RjPi42jo5Uibsg+nqpRL8DFwvH5AsCXGwc10pBOtk5Vr7hlbjPx8XMsSqNi4Xj7zRGLhaOjesYuZg5enO52Dk+rGOUeAPS/ZwNRDNzvE7SamCVYOLawcQwCsgCQgdGg45CYLWUlYuBEBQaTacUgdF0ykApAABFfCo6\" target=\"_blank\" rel=\"noopener\">狂怒團隊前 BiS（WoWSims 模擬器，開了就是整套）</a>（英文）</li><li>頭：做<a href=\"https://www.wowhead.com/forever/tw/item=12640\" target=\"_blank\" rel=\"noopener\">獅心頭盔</a>，沒錢就先用<a href=\"https://www.wowhead.com/forever/tw/item=20521\" target=\"_blank\" rel=\"noopener\">怒火面甲</a>，有人說藍裝那頂差不多。</li><li>肩：<a href=\"https://www.wowhead.com/forever/tw/item=12927\" target=\"_blank\" rel=\"noopener\">強擊護肩</a>。胸：<a href=\"https://www.wowhead.com/forever/tw/item=11726\" target=\"_blank\" rel=\"noopener\">野蠻角鬥士鏈甲</a>可以。</li><li>手腕：沒有戰歌峽谷聲望就用<a href=\"https://www.wowhead.com/forever/tw/item=12936\" target=\"_blank\" rel=\"noopener\">雷德的護腕</a>。</li><li>沒有戰場聲望的部位先用魔暴龍套（之後還是該去刷戰場）。真的不想解 T0.5 才用血鏈甲。</li><li>釘選原話：奧特蘭克山谷崇拜「沒有藉口不拿」。</li><li>飾品：<a href=\"https://www.wowhead.com/forever/tw/item=22321\" target=\"_blank\" rel=\"noopener\">維姆薩拉克之心</a>長時間戰鬥比較好，<a href=\"https://www.wowhead.com/forever/tw/item=11815\" target=\"_blank\" rel=\"noopener\">正義之手</a>、<a href=\"https://www.wowhead.com/forever/tw/item=13965\" target=\"_blank\" rel=\"noopener\">黑手飾物</a>也行，看戰鬥長度。</li><li>遠程：<a href=\"https://www.wowhead.com/forever/tw/item=18323\" target=\"_blank\" rel=\"noopener\">薩特強弓</a>或<a href=\"https://www.wowhead.com/forever/tw/item=19107\" target=\"_blank\" rel=\"noopener\">覓血者</a>都可以。</li><li>沒有刺錘的過渡：11/20 有人模擬<a href=\"https://www.wowhead.com/forever/tw/item=12940\" target=\"_blank\" rel=\"noopener\">雷德的神聖控訴者</a>＋<a href=\"https://www.wowhead.com/forever/tw/item=17705\" target=\"_blank\" rel=\"noopener\">痛擊之刃</a>很有競爭力；剛 60 可以先用痛擊之刃＋<a href=\"https://www.wowhead.com/forever/tw/item=15806\" target=\"_blank\" rel=\"noopener\">米拉之歌</a>。</li><li>11/19 模擬器已內建狂怒團隊前 BiS 預設（含 1 件 PvP 聲望裝），武器團隊前 BiS 之後補。</li></ul>",
+   "det": "<ul><li>11/21：有人算整套團隊前要約 2500 金。最貴的兩件是<a href=\"https://www.wowhead.com/forever/tw/item=22384\" target=\"_blank\" rel=\"noopener\">刺錘</a>和<a href=\"https://www.wowhead.com/forever/tw/item=12640\" target=\"_blank\" rel=\"noopener\">獅心頭盔</a>，現在各約 900 金；也有人問魔暴龍套。頻道立場很直接：這裡是拚極限的 DC，「BiS 就是 BiS」，硬派公會不會把裝備分給還穿第三順位藍裝的人。賺錢建議：練小號、刷副本。</li><li><a href=\"https://www.wowsims.com/forever/warrior/dps/?i=g#eJyrYJJayb2BmUmAUaqci43jQZLEe2EuZo7NFVzMHP9TuNg55l0QkPhszcXOcWQLv8RjPi42jo5Uibsg+nqpRL8DFwvH5AsCXGwc10pBOtk5Vr7hlbjPx8XMsSqNi4Xj7zRGLhaOjesYuZg5enO52Dk+rGOUeAPS/ZwNRDNzvE7SamCVYOLawcQwCsgCQgdGg45CYLWUlYuBEBQaTacUgdF0ykApAABFfCo6\" target=\"_blank\" rel=\"noopener\">狂怒團隊前 BiS（WoWSims 模擬器，開了就是整套）</a>（英文）</li><li>頭：做<a href=\"https://www.wowhead.com/forever/tw/item=12640\" target=\"_blank\" rel=\"noopener\">獅心頭盔</a>，沒錢就先用<a href=\"https://www.wowhead.com/forever/tw/item=20521\" target=\"_blank\" rel=\"noopener\">怒火面甲</a>，有人說藍裝那頂差不多。</li><li>肩：<a href=\"https://www.wowhead.com/forever/tw/item=12927\" target=\"_blank\" rel=\"noopener\">強擊護肩</a>。胸：<a href=\"https://www.wowhead.com/forever/tw/item=11726\" target=\"_blank\" rel=\"noopener\">野蠻角鬥士鏈甲</a>可以。</li><li>手腕：沒有戰歌峽谷聲望就用<a href=\"https://www.wowhead.com/forever/tw/item=12936\" target=\"_blank\" rel=\"noopener\">雷德的護腕</a>。</li><li>沒有戰場聲望的部位先用魔暴龍套（之後還是該去刷戰場）。真的不想解 T0.5 才用血鏈甲。</li><li>釘選原話：奧特蘭克山谷崇拜「沒有藉口不拿」。</li><li>飾品：<a href=\"https://www.wowhead.com/forever/tw/item=22321\" target=\"_blank\" rel=\"noopener\">維姆薩拉克之心</a>長時間戰鬥比較好，<a href=\"https://www.wowhead.com/forever/tw/item=11815\" target=\"_blank\" rel=\"noopener\">正義之手</a>、<a href=\"https://www.wowhead.com/forever/tw/item=13965\" target=\"_blank\" rel=\"noopener\">黑手飾物</a>也行，看戰鬥長度。</li><li>遠程：<a href=\"https://www.wowhead.com/forever/tw/item=18323\" target=\"_blank\" rel=\"noopener\">薩特強弓</a>或<a href=\"https://www.wowhead.com/forever/tw/item=19107\" target=\"_blank\" rel=\"noopener\">覓血者</a>都可以。</li><li>沒有刺錘的過渡：11/20 有人模擬<a href=\"https://www.wowhead.com/forever/tw/item=12940\" target=\"_blank\" rel=\"noopener\">雷德的神聖控訴者</a>＋<a href=\"https://www.wowhead.com/forever/tw/item=17705\" target=\"_blank\" rel=\"noopener\">痛擊之刃</a>很有競爭力；剛 60 可以先用痛擊之刃＋<a href=\"https://www.wowhead.com/forever/tw/item=15806\" target=\"_blank\" rel=\"noopener\">米拉之歌</a>。</li><li>11/19 模擬器已內建狂怒團隊前 BiS 預設（含 1 件 PvP 聲望裝），武器團隊前 BiS 之後補。</li></ul>",
    "heat": 3,
-   "vol": "11/20 狂怒頻道一直有人問清單和武器",
+   "vol": "狂怒頻道每天都有人問",
    "first": "2026-11-20",
-   "upd": "2026-11-20",
-   "d": "11/20",
+   "upd": "2026-11-21",
+   "d": "11/20～11/21",
    "kw": []
   },
   {
@@ -245,6 +245,22 @@ window.DC={
    "upd": "2026-11-20",
    "d": "11/20",
    "kw": []
+  },
+  {
+   "id": "war-crafted-tier",
+   "c": "gear",
+   "s": "any",
+   "st": "warn",
+   "ch": "forever-prot",
+   "h": "製作版團本套曝光：戰士套效果「魯莽冷卻減 30 秒」被嫌弱",
+   "p": "第一個團本的製作版套裝數值曝光，防護頻道吐槽戰士套的效果只是讓魯莽冷卻少 30 秒。有人說官方講暫定只是安撫；也有人提醒 Podcast 幾週前就說過戰士這套會改。另外有人預期團本若像黑石塔上層，坦克要先堆滿 440 防禦。",
+   "det": "<ul><li>有人引述內部測試時魯莽的冷卻短很多，後來被拉長。</li><li>防護頻道對「看挖出來的資料就做 BiS 清單」很反感，管理層會刪不實資訊，看到截圖別全信。</li><li>報導重點：第一個團本 12/9 全球開放，製作版的套裝數值因為熱修正已經可以在遊戲裡看到（官方確認是故意公開的），但<b>套裝效果是暫定</b>，之後會改。每件都有「工匠套裝」的唯一限制，報導推測同一團本的製作版一次只能穿一件。測試時配方是用<a href=\"https://www.wowhead.com/forever/tw/item=274030\" target=\"_blank\" rel=\"noopener\">延展自然精華</a>向商人買，正式版目前已經沒在賣，之後怎麼拿還不知道。例：<a href=\"https://www.wowhead.com/forever/tw/item=273986\" target=\"_blank\" rel=\"noopener\">設計圖：正義肩鎧</a>。</li><li><a href=\"https://www.wowhead.com/forever/news/itemization-of-crafted-tier-sets-revealed-in-wow-forevers-first-raid-tier-383946\" target=\"_blank\" rel=\"noopener\">Wowhead 新聞（英文）</a></li></ul>",
+   "heat": 2,
+   "vol": "防護頻道一晚上十幾則",
+   "kw": [],
+   "first": "2026-11-21",
+   "upd": "2026-11-21",
+   "d": "11/21"
   }
  ]
 };
