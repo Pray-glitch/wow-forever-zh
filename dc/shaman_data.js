@@ -2,18 +2,21 @@
 window.DC={
  "name": "薩滿",
  "source": "Shaman Classic（約 9 萬人）",
- "updated": "2026-11-20 08:10",
- "run": "2026-11-20",
+ "updated": "2026-11-21 08:20",
+ "run": "2026-11-21",
  "kw": {
-  "bis": 3962,
-  "mcp": 1065,
-  "spellhance": 1448,
-  "windfury": 4806,
-  "maelstrom": 2008,
-  "warden": 409,
-  "mana tide": 716,
+  "bis": 4167,
+  "mcp": 1071,
+  "spellhance": 1469,
+  "windfury": 4915,
+  "maelstrom": 2051,
+  "warden": 419,
+  "mana tide": 722,
   "reagent economy": 9,
-  "podcast": 882
+  "podcast": 918,
+  "lava burst": 2157,
+  "set bonus": 590,
+  "wowsims": 239
  },
  "topics": [
   {
@@ -37,15 +40,15 @@ window.DC={
    "c": "gear",
    "s": "enh",
    "st": "warn",
-   "d": "11/16～11/17",
+   "d": "11/16～11/21",
    "ch": "enhorsement 釘選",
    "h": "增強團隊前 BiS：三種版本（還在調整）",
    "p": "頻道成員整理了三份增強團隊前清單，都用 WoWSims 模擬：完整版（含 T0.5 和奧特蘭克崇拜錘）、不用打 PvP 版、不用 T0.5 的平價版。平價版大約少 20～30 DPS，但省很多金。作者強調是半成品，建議自己丟模擬器比。",
-   "det": "<ul><li><b>完整版</b>：T0.5 加奧特蘭克山谷崇拜的雙手錘。不想刷奧山聲望的話，次佳武器是 Flameslash Crescent Axe。</li><li><b>不打 PvP 版</b>：保留 T0.5，武器換成 PvE 來源。</li><li><b>平價版</b>：不用昂貴的 T0.5，用了兩件製作裝，模擬約少 20～30 DPS。</li><li>開怪時仍建議先拿<a href=\"https://www.wowhead.com/forever/tw/item=9449\" target=\"_blank\" rel=\"noopener\">手動懲戒錘</a>（MCP）開場再換武器。</li><li>三份清單都是 WoWSims 連結（英文介面），沒有固定表格可翻；等作者定稿後再整理成中文表。</li></ul>",
+   "det": "<ul><li>11/21：頻道成員說 WoWSims 上的 BiS 套裝已經更新（還是模擬器連結，沒有固定表格）。有人提醒 WoWSims 的 4 件和 5 件套裝效果跟遊戲裡相反，模擬數字會不準。<a href=\"https://www.wowhead.com/forever/tw/item=11815\" target=\"_blank\" rel=\"noopener\">正義之手</a>有人 50 金買到，被說很划算。</li><li><b>完整版</b>：T0.5 加奧特蘭克山谷崇拜的雙手錘。不想刷奧山聲望的話，次佳武器是 Flameslash Crescent Axe。</li><li><b>不打 PvP 版</b>：保留 T0.5，武器換成 PvE 來源。</li><li><b>平價版</b>：不用昂貴的 T0.5，用了兩件製作裝，模擬約少 20～30 DPS。</li><li>開怪時仍建議先拿<a href=\"https://www.wowhead.com/forever/tw/item=9449\" target=\"_blank\" rel=\"noopener\">手動懲戒錘</a>（MCP）開場再換武器。</li><li>三份清單都是 WoWSims 連結（英文介面），沒有固定表格可翻；等作者定稿後再整理成中文表。</li></ul>",
    "first": "2026-11-16",
-   "upd": "2026-11-17",
+   "upd": "2026-11-21",
    "heat": 3,
-   "vol": "增強頻道最多人問的話題"
+   "vol": "關鍵字一天多 200 則"
   },
   {
    "id": "enh-weapon",
@@ -119,7 +122,7 @@ window.DC={
    "det": "<ul><li><b>10～31 級</b>：恢復 11 點（5/5 潮汐集中、3/3 正念、2/5 圖騰集中、1/1 水之盾）＋增強 11 點（5/5 雷鳴猛擊、2/2 強化幽魂之狼、3/3 心靈迅敏、1/1 薩滿之凝）。</li><li><b>31（26）級洗點後</b>：增強衝 2/2 強化風暴打擊、亂舞、2/2 思想迅捷、魂化武器、元素武器；再補恢復；最後點元素的震盪、元素破壞、烈焰召喚、元素集中、傳導、火的試煉。</li><li><b>裝備</b>：法傷和智力優先（心靈迅敏、思想迅捷會轉換），精神和力量也很好；除了敏捷，這套配法什麼屬性都吃。</li><li><b>手法</b>：大部分時間用火舌武器（灌魔和圖騰在永恆可以疊加，拿到風怒圖騰後更明顯）；挑武器 DPS 高的，雙手通常比單手好；閃電之盾或水之盾要一直掛著。</li><li><b>專業</b>：剝皮＋製皮很適合（新的製皮裝法傷多，新護甲片有法傷＋護甲）；附魔、鍊金、工程都可以；烹飪和釣魚練等必備（屬性食物多 5% 殺怪經驗）；不推薦裁縫（新裝很多是單系法傷，沒有自然傷害）。</li><li>詳細：<a href=\"https://www.wowhead.com/forever/tw/guide/classes/shaman/elemental/dps-leveling-tips\" target=\"_blank\" rel=\"noopener\">Wowhead 元素練等指南</a>（英文）。</li></ul>",
    "first": "2026-11-02",
    "upd": "2026-11-05",
-   "heat": 1,
+   "heat": 3,
    "vol": "新手常問",
    "kw": "spellhance"
   },
@@ -240,7 +243,7 @@ window.DC={
    "det": "<ul><li>主流看法：這類「特殊道具」可以存在，但不應該變成最佳解；如果變成最佳解，短期可以接受，長期應該調整。</li><li>增強清單裡仍建議開場拿 MCP（見上面的 BiS）。</li></ul>",
    "first": "2026-10-23",
    "upd": "2026-10-23",
-   "heat": 0,
+   "heat": 1,
    "vol": "",
    "kw": "mcp"
   },
@@ -286,7 +289,7 @@ window.DC={
    "det": "<ul><li>武器效果疊加規則見「武器效果怎麼疊」那張卡（釘選在坦克頻道）。</li><li>坦克相關的 FAQ 討論串（warden-forever-faq）目前沒有內容，之後有再補。</li></ul>",
    "first": "2026-11-19",
    "upd": "2026-11-19",
-   "heat": 1,
+   "heat": 2,
    "vol": "",
    "kw": "warden"
   },
@@ -327,16 +330,32 @@ window.DC={
    "c": "state",
    "s": "any",
    "st": "warn",
-   "d": "11/20",
+   "d": "11/20～11/21",
    "ch": "enhorsement、elemental",
    "h": "官方 Podcast 第 8 集：解釋風暴打擊改回 8 秒，元素幾乎沒談到",
    "p": "官方 Podcast 第 8 集（職業、裝備、BiS）講到薩滿：風暴打擊冷卻 8→6→8 秒，是因為加強後增強被推向法傷而不是雙手大武器；開放雙風怒（武器＋圖騰）讓物理屬性回來，所以加強被收回。官方說走法傷的玩法仍然可行。頻道反應很差，元素玩家更不滿這集幾乎沒談元素。",
-   "det": "<ul><li>官方說增強會繼續是雙手武器路線；生存系的終極天賦要到團本才會再調整，有人擔心增強也要等到那時。</li><li>主持人引述「每個薩滿都想要更多氣漩武器觸發」，被增強頻道大量吐槽；有人說簡單講就是「氣漩武器被削、換來雙風怒」。</li><li>元素頻道：開發者原本要講元素，被主持人說「之後再談」帶過；大家抱怨元素的核心問題是法力消耗高又回不來。有人寄望明年第一季的改版。</li><li>同一集設計師也說想淡化 BiS：團本不同區域有不同環境和怪物類型，最佳裝備會隨首領改變。</li><li>增強的實際傷害分布（頻道成員分享）：普攻約 30%、風怒武器約 25%、風怒圖騰約 8%，其餘是法術。</li><li>報導：<a href=\"https://www.wowhead.com/forever/news/wow-forever-podcast-episode-8-classes-itemization-and-bis-383926\" target=\"_blank\" rel=\"noopener\">Wowhead 新聞（英文）</a>。</li></ul>",
+   "det": "<ul><li>11/21：抱怨還在延續——有人說官方只在意「練等手感」，談增強的部分講得很亂；也有元素玩家說自己用元素天賦補完了練等所有副本，叫大家別太相信 Podcast 的說法。</li><li>官方說增強會繼續是雙手武器路線；生存系的終極天賦要到團本才會再調整，有人擔心增強也要等到那時。</li><li>主持人引述「每個薩滿都想要更多氣漩武器觸發」，被增強頻道大量吐槽；有人說簡單講就是「氣漩武器被削、換來雙風怒」。</li><li>元素頻道：開發者原本要講元素，被主持人說「之後再談」帶過；大家抱怨元素的核心問題是法力消耗高又回不來。有人寄望明年第一季的改版。</li><li>同一集設計師也說想淡化 BiS：團本不同區域有不同環境和怪物類型，最佳裝備會隨首領改變。</li><li>增強的實際傷害分布（頻道成員分享）：普攻約 30%、風怒武器約 25%、風怒圖騰約 8%，其餘是法術。</li><li>報導：<a href=\"https://www.wowhead.com/forever/news/wow-forever-podcast-episode-8-classes-itemization-and-bis-383926\" target=\"_blank\" rel=\"noopener\">Wowhead 新聞（英文）</a>。</li></ul>",
    "first": "2026-11-20",
-   "upd": "2026-11-20",
+   "upd": "2026-11-21",
    "heat": 3,
-   "vol": "增強、元素頻道一晚上幾十則",
+   "vol": "關鍵字一天又多 30 多則",
    "kw": "podcast"
+  },
+  {
+   "id": "sha-crafted-tier",
+   "c": "gear",
+   "s": "any",
+   "st": "wait",
+   "ch": "elemental、enhorsement",
+   "h": "製作版團本套曝光：元素套效果竟然還寫熔岩爆發",
+   "p": "第一個團本的製作版套裝數值曝光後，元素頻道發現元素套的效果還是「熔岩爆發冷卻減 1 秒」，可是 Lava Burst（熔岩爆發）在永恆已經拿掉了。有人說這是測試第一週就挖到的舊資料，官方也說套裝效果是暫定；頻道又重新吵起熔岩爆發該不該回來。",
+   "det": "<ul><li>增強套：有玩家引述 5 件效果是「風暴打擊冷卻減 0.5 秒」，沒有增強坦克（Warden）版。</li><li>熔岩爆發的兩派：一派說有它時整個循環都繞著它轉、而且當年強度太差，所以玩家才要求拿掉讓閃電鏈變強；另一派希望它回來當「消耗型」技能，或至少讓烈焰震擊射程跟上。也有人說給增強熔岩爆發，閃電箭就能再加強。</li><li>增強另一個願望：讓氣漩武器也能用在閃電鏈上，三隻怪的小怪群才不會耗魔又打不動。</li><li>報導重點：第一個團本 12/9 全球開放，製作版的套裝數值因為熱修正已經可以在遊戲裡看到（官方確認是故意公開的），但<b>套裝效果是暫定</b>，之後會改。每件都有「工匠套裝」的唯一限制，報導推測同一團本的製作版一次只能穿一件。測試時配方是用<a href=\"https://www.wowhead.com/forever/tw/item=274030\" target=\"_blank\" rel=\"noopener\">延展自然精華</a>向商人買，正式版目前已經沒在賣，之後怎麼拿還不知道。例：<a href=\"https://www.wowhead.com/forever/tw/item=273986\" target=\"_blank\" rel=\"noopener\">設計圖：正義肩鎧</a>。</li><li><a href=\"https://www.wowhead.com/forever/news/itemization-of-crafted-tier-sets-revealed-in-wow-forevers-first-raid-tier-383946\" target=\"_blank\" rel=\"noopener\">Wowhead 新聞（英文）</a></li></ul>",
+   "heat": 3,
+   "vol": "元素頻道一晚上上百則，頻道名稱還掛著「熔岩爆發被移除」",
+   "kw": "set bonus",
+   "first": "2026-11-21",
+   "upd": "2026-11-21",
+   "d": "11/21"
   }
  ]
 };
