@@ -1,6 +1,6 @@
 // DC 重點：職業選單（11/19）。新增職業時只要在 C 加一行，所有頁面的選單都會跟著有。
 (function(){
- var C=[["paladin.html","聖騎士"],["shaman.html","薩滿"],["warlock.html","術士"],["priest.html","牧師"],["warrior.html","戰士"]];
+ var C=[["paladin.html","聖騎士"],["shaman.html","薩滿"],["warlock.html","術士"],["priest.html","牧師"],["warrior.html","戰士"],["hunter.html","獵人"],["rogue.html","盜賊"],["druid.html","德魯伊"],["mage.html","法師"]];
  var cur=location.pathname.split('/').pop()||'index.html';
  var st=document.createElement('style');
  st.textContent='#clsmenu select{font:inherit;color:var(--gold);background:#17130f;border:1px solid var(--gold2);border-radius:8px;padding:0 6px;cursor:pointer}#clsmenu select:focus{outline:2px solid var(--gold)}';
