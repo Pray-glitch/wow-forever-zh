@@ -162,7 +162,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=1ad12131"></script>
+<script src="data.js?v=a6f2616a"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -228,7 +228,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     let [icon, col] = v.split('|');
     const kc = kindColor(key, txt) || (sb ? kindColor(sb, sb) : '');
     // 11/15 夜間驗收：Mobalytics 預設的金色（#f2bf43）不是品質色 → 永恆新物品（inv_ 圖示、語庫沒有品質）用白色；沒圖示的（首領名）不上色
-    if (!kc && /^#f2bf43$/i.test(col || '')) { if (/^inv_/.test(icon || '') || /\/icons\/items\//.test(v.split('|')[2] || '')) col = QCOL[1]; /* 11/17：原站物品路徑的圖示（Riptear's Spare Arm 用 spell_ 圖）也算物品 */ else if (!icon || /\/icons\/(bosses|npcs)\//.test(v.split('|')[2] || '')) col = ''; /* 11/23：原站首領頭像（General Drakkisath）也是預設金色 → 不上色，跟專精名分開 */ }
+    if (!kc && /^#f2bf43$/i.test(col || '')) { if (/^inv_/.test(icon || '') || /\/icons\/items\//.test(v.split('|')[2] || '')) col = QCOL[1]; /* 11/17：原站物品路徑的圖示（Riptear's Spare Arm 用 spell_ 圖）也算物品 */ else if (!icon) col = ''; }
     col = kc || col;
     // 圖示直接引用 Wowhead 圖庫（不存到本站）
     // Wowhead 圖庫沒有的（天裔精靈、坦克/輸出圖示）→ 改用原文（Mobalytics）的圖
@@ -250,7 +250,7 @@ details.sec.sub>.body{padding:0 12px 6px}
           const known = ICONS[en] || ITEMS[en] || DMAP[en] || DMAP[en.toLowerCase()] || WHQ.has(en) || zoneHref(en);
           // 語庫沒有的專有名詞（新物品、首領）：英文是「每個字大寫」的名稱 → 至少給 Wowhead 連結
           // 11/11：縮寫（PUG、PPM）、介面名稱、章節名（Spell Overview、Edit Mode、Lockpicking Cap、Notable Trash Mob Loot…）不做 Wowhead 連結
-          if (!known && (/^[A-Z]{2,5}$/.test(en) || /(?:^| )(?:Mode|Overview|Displayed|Buffs|Debuffs|Cap|Macros?|Loot|Settings|Options|Frames?|Tips|Guide|Rotation|Priority|Weights?|List|Section|Menu|Window|Panel|Tracker|Addons?|AddOns?|UI|Variants?|Economy)$/.test(en))) return m; // 11/23：Guide Variants、Reagent Economy 是章節／系統名
+          if (!known && (/^[A-Z]{2,5}$/.test(en) || /(?:^| )(?:Mode|Overview|Displayed|Buffs|Debuffs|Cap|Macros?|Loot|Settings|Options|Frames?|Tips|Guide|Rotation|Priority|Weights?|List|Section|Menu|Window|Panel|Tracker|Addons?|AddOns?|UI)$/.test(en))) return m;
           // 11/15：一般詞（畢業裝、屬性、口號、藥劑分類、見到即擊殺）不做 Wowhead 連結
           if (!known && /^(?:BiS|Hit|Hit Rating|Crit|Critical Strike|Haste|Spell Haste|Spell Power|Spellpower|Spell Damage|Hit Chance|Spell Hit|Spell Crit|Spell Critical Strike(?: Chance)?|Critical Strike Chance|Crit Chance|Attack Power|Intellect|Int|Spirit|Stamina|Agility|Strength|Armor|Expertise|Mp5|Always Be Casting|ABC|Kill on Sight|KOS|Battle Elixirs?|Guardian Elixirs?|Flasks?)$/i.test(en)) return m;
           if (!known && !/^[A-Z][A-Za-z']*(?:[ :\-]+(?:[A-Z][A-Za-z']*|of|the|and|to|in|on|a|an|for|from|with))*$/.test(en)) return m;
