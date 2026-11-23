@@ -2,8 +2,8 @@
 window.DC={
  "name": "獵人",
  "source": "Classic Hunter Lodge（約 7.4 萬人）",
- "updated": "2026-11-22 00:40",
- "run": "2026-11-22",
+ "updated": "2026-11-23 18:19",
+ "run": "2026-11-23",
  "kw": {},
  "topics": [
   {
@@ -78,12 +78,12 @@ window.DC={
    "ch": "forever-pve 釘選指南",
    "h": "消耗品：先吃敏捷，藥水喝狂暴",
    "p": "指南的消耗品順序：敏捷優先。貓鼬藥劑、厚甲蠍藥粉、Swiftstrike Steak、魂能之擊，再來強效聰穎藥劑。藥水是 Major Frenzy Potion，跟急速射擊一起喝。雙手武器上元素磨刀石。消耗品約加 243 DPS，團隊增益約加 618。",
-   "det": "<ul><li><a href=\"https://www.wowhead.com/forever/tw/item=13452\" target=\"_blank\" rel=\"noopener\">貓鼬藥劑</a>、<a href=\"https://www.wowhead.com/forever/tw/item=8412\" target=\"_blank\" rel=\"noopener\">厚甲蠍藥粉</a>、<a href=\"https://www.wowhead.com/forever/tw/item=12460\" target=\"_blank\" rel=\"noopener\">魂能之擊</a>、<a href=\"https://www.wowhead.com/forever/tw/item=9179\" target=\"_blank\" rel=\"noopener\">強效聰穎藥劑</a>、<a href=\"https://www.wowhead.com/forever/tw/item=18262\" target=\"_blank\" rel=\"noopener\">元素磨刀石</a>。</li><li>開場順序：開怪前上獵人印記、雄鷹守護 → 開怪急速射擊＋種族技能＋藥水 → 瞄準 → 毒蛇 → 奧術 → 瞄準 → 奧術 → 走進去近戰。</li><li>11/21 頻道在抱怨魔力：瞄準和多重射擊的冷卻縮短後，長戰鬥更容易沒魔；穿插的「普通版」約 3 分 45 秒會沒魔。有人希望加回蝰蛇守護。</li></ul>",
+   "det": "<ul><li><a href=\"https://www.wowhead.com/forever/tw/item=13452\" target=\"_blank\" rel=\"noopener\">貓鼬藥劑</a>、<a href=\"https://www.wowhead.com/forever/tw/item=8412\" target=\"_blank\" rel=\"noopener\">厚甲蠍藥粉</a>、<a href=\"https://www.wowhead.com/forever/tw/item=12460\" target=\"_blank\" rel=\"noopener\">魂能之擊</a>、<a href=\"https://www.wowhead.com/forever/tw/item=9179\" target=\"_blank\" rel=\"noopener\">強效聰穎藥劑</a>、<a href=\"https://www.wowhead.com/forever/tw/item=18262\" target=\"_blank\" rel=\"noopener\">元素磨刀石</a>。</li><li>開場順序：開怪前上獵人印記、雄鷹守護 → 開怪急速射擊＋種族技能＋藥水 → 瞄準 → 毒蛇 → 奧術 → 瞄準 → 奧術 → 走進去近戰。</li><li>11/21 頻道在抱怨魔力：瞄準和多重射擊的冷卻縮短後，長戰鬥更容易沒魔；穿插的「普通版」約 3 分 45 秒會沒魔。有人希望加回蝰蛇守護。</li><li><b>11/23：</b>有人問 WoWSims 顯示精煉和藥劑可以同時吃；另外詛咒之地的<a href=\"https://www.wowhead.com/forever/tw/item=8412\" target=\"_blank\" rel=\"noopener\">厚甲蠍藥粉</a>能不能跟<a href=\"https://www.wowhead.com/forever/tw/item=13452\" target=\"_blank\" rel=\"noopener\">貓鼬藥劑</a>疊，因為永恆改過藥劑規則，目前還不確定。</li></ul>",
    "heat": 1,
    "vol": "11/21",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-23",
+   "d": "11/21～11/23",
    "kw": []
   },
   {
@@ -148,6 +148,21 @@ window.DC={
    "upd": "2026-11-22",
    "d": "11/21",
    "kw": []
+  },
+  {
+   "st": "wait",
+   "heat": 2,
+   "id": "hun-dungeon",
+   "c": "talent",
+   "s": "sv",
+   "ch": "forever-pve",
+   "h": "地城流派：射擊＋生存混搭，陷阱加亂射清小怪",
+   "p": "PvE 頻道說現在地城的主流是 0/28/23（射擊＋生存）：開怪丟爆炸陷阱觸發誘捕定住怪，再亂射，必要時假死。生存天賦能讓陷阱少 60% 法力。全射擊單體比較高，但清整個副本慢很多，有人實測全射擊的朋友輸出更低、還更常沒魔。",
+   "det": "<ul><li><b>爆炸陷阱</b>＋<b>誘捕</b>＋<b>亂射</b>是核心；有人會先近戰一下再放陷阱，也有人改點驅散射擊、把亂射天賦點滿。</li><li>有人說這套可能連團本都是 BiS，還沒定論。</li><li>模擬器不顯示獵人沒魔的時間，但加了回魔增益數字會變，代表其實有算。</li></ul>",
+   "vol": "11/23 PvE 頻道一小時二十幾則",
+   "first": "2026-11-23",
+   "upd": "2026-11-23",
+   "d": "11/23"
   }
  ]
 };
