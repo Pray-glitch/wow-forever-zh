@@ -2,8 +2,8 @@
 window.DC={
  "name": "德魯伊",
  "source": "Druid Classic（約 8.1 萬人）",
- "updated": "2026-11-22 00:40",
- "run": "2026-11-22",
+ "updated": "2026-11-23 18:19",
+ "run": "2026-11-23",
  "kw": {},
  "topics": [
   {
@@ -46,12 +46,12 @@ window.DC={
    "ch": "forever-bear-compendium",
    "h": "熊坦技巧：手動懲戒錘、開怪前先存怒氣",
    "p": "熊整理頻道的進階技巧：主武器秒傷低於約 64 時，開場用手動懲戒錘再換回主武器有一點點增益（最多約 1.8%）。開怪前用狼頭之盔＋Enraged Idol 搭配狂怒，再喝強效怒氣藥水，幾乎可以滿怒開怪。",
-   "det": "<ul><li><a href=\"https://www.wowhead.com/forever/tw/item=9449\" target=\"_blank\" rel=\"noopener\">手動懲戒錘</a>：換武器會重置揮擊，最後一次用完要盡快換回去；有 64 DPS 以上的武器就不用了。</li><li>開怪前 10 秒放狂怒（+30）、<a href=\"https://www.wowhead.com/forever/tw/item=8345\" target=\"_blank\" rel=\"noopener\">狼頭之盔</a>（+5）、Enraged Idol（+10），馬上換回原本的頭和神像。</li><li><a href=\"https://www.wowhead.com/forever/tw/item=4264\" target=\"_blank\" rel=\"noopener\">野人腰帶</a>有 30 怒氣、5 分鐘冷卻，也可以拿來用。</li><li>巨集：熊貓人共用一鍵（<code>/cast [form:1] 熊技能; [form:3] 貓技能; 人形技能</code>）、潛行時貓躍、旅行形態、變形換形、標記骷髏＋ping。</li><li>顯示仇恨百分比：<code>/console threatShowNumeric 1</code>。</li><li>戰士 DC 那邊抱怨熊仇恨太高、雙坦搶不過熊（熊形態仇恨加成 115%）。</li></ul>",
-   "heat": 1,
-   "vol": "整理頻道",
+   "det": "<ul><li><a href=\"https://www.wowhead.com/forever/tw/item=9449\" target=\"_blank\" rel=\"noopener\">手動懲戒錘</a>：換武器會重置揮擊，最後一次用完要盡快換回去；有 64 DPS 以上的武器就不用了。</li><li>開怪前 10 秒放狂怒（+30）、<a href=\"https://www.wowhead.com/forever/tw/item=8345\" target=\"_blank\" rel=\"noopener\">狼頭之盔</a>（+5）、Enraged Idol（+10），馬上換回原本的頭和神像。</li><li><a href=\"https://www.wowhead.com/forever/tw/item=4264\" target=\"_blank\" rel=\"noopener\">野人腰帶</a>有 30 怒氣、5 分鐘冷卻，也可以拿來用。</li><li>巨集：熊貓人共用一鍵（<code>/cast [form:1] 熊技能; [form:3] 貓技能; 人形技能</code>）、潛行時貓躍、旅行形態、變形換形、標記骷髏＋ping。</li><li>顯示仇恨百分比：<code>/console threatShowNumeric 1</code>。</li><li>戰士 DC 那邊抱怨熊仇恨太高、雙坦搶不過熊（熊形態仇恨加成 115%）。</li><li><b>11/23：</b>坦克頻道：割裂值得點 1 點，疊到 5 層後單體比揮擊強，之後空檔再用揮擊補。很多人覺得熊坦仇恨比防騎還穩，打黑石塔上層常常搶走聖騎的仇恨。有人自我增益後 7.7k 血、9k 護甲。</li><li><b>11/23：</b>還沒答案的問題：60 級屬性優先順序、要不要堆防禦、T0.5 值不值得。</li></ul>",
+   "heat": 2,
+   "vol": "11/23 坦克頻道一小時十幾則",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-23",
+   "d": "11/21～11/23",
    "kw": []
   },
   {
@@ -62,12 +62,12 @@ window.DC={
    "ch": "forever-boomkin-compendium（11/6 更新）",
    "h": "鳥德 FAQ：憤怒不再弱、DoT 要放、荊棘吃法傷",
    "p": "鳥整理頻道的 FAQ：測試早期憤怒很弱，現在已經正常，「等於免費的傷害」。DoT（含蟲群）值得放。日蝕 3/3：每次憤怒施放完成給 2 層（最多 4 層），每層讓星火快 0.5 秒。",
-   "det": "<ul><li>荊棘在永恆是動態吃法傷（不是放的當下鎖定），係數 6%，所以鳥德是最適合幫人上荊棘的。</li><li>精靈之火不跟詛咒疊、破甲和暴露不疊，但兩組之間可以疊。</li><li>什麼時候開始放星火：保險的說法是 5/5 強化星火＋3/3 日蝕之後，但更早就值得放。</li><li>練功：貓最快（迅捷豹天賦現在室內也有效），鳥練也沒問題，看喜好。</li><li>60 級最佳天賦還不確定，要看裝備、魔力和仇恨。</li><li>模擬器只認 WoWSims；在頻道引用沒核可的模擬器算散播錯誤資訊，會被禁言。</li></ul>",
+   "det": "<ul><li>荊棘在永恆是動態吃法傷（不是放的當下鎖定），係數 6%，所以鳥德是最適合幫人上荊棘的。</li><li>精靈之火不跟詛咒疊、破甲和暴露不疊，但兩組之間可以疊。</li><li>什麼時候開始放星火：保險的說法是 5/5 強化星火＋3/3 日蝕之後，但更早就值得放。</li><li>練功：貓最快（迅捷豹天賦現在室內也有效），鳥練也沒問題，看喜好。</li><li>60 級最佳天賦還不確定，要看裝備、魔力和仇恨。</li><li>模擬器只認 WoWSims；在頻道引用沒核可的模擬器算散播錯誤資訊，會被禁言。</li><li><b>11/23：</b>頻道提到 Podcast：鳥德可能會有一些改動，但不影響滿級。</li></ul>",
    "heat": 1,
    "vol": "整理頻道",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-23",
+   "d": "11/21～11/23",
    "kw": []
   },
   {
@@ -78,12 +78,12 @@ window.DC={
    "ch": "forever-resto-compendium（11/16 更新）",
    "h": "恢復練功三套天賦，裝備看 Wowhead 清單",
    "p": "恢復整理頻道 11/16 給了三套練功天賦：純恢復（只想補）、Hots'n'Dots（想用鳥單練又能補）、Restocat（想用貓單練又能補）。專精其實影響不大，換裝就能補；補不動再拿 Bloom 或迅癒。",
-   "det": "<ul><li><a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh55002001--5553005103113051_t0/0A2ADcchggccmKcnPgRsgg0Ebbbhbb2B\" target=\"_blank\" rel=\"noopener\">純恢復</a>（英文）、<a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh5530203110021--505300510311103_t0/0A2ADcch0EbbbhGbjbCpN2cccgmKgngggprrr\" target=\"_blank\" rel=\"noopener\">Hots'n'Dots</a>（英文）、<a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh-55200032123012125001-05333001001_t0/1AC2BDeeh1bbbHjKMpQrSgTzbb2ecccm1gg\" target=\"_blank\" rel=\"noopener\">Restocat</a>（英文）。</li><li>團隊前 BiS：<a href=\"https://www.wowhead.com/forever/guide/classes/druid/restoration/bis-gear\" target=\"_blank\" rel=\"noopener\">Wowhead 恢復德 BiS</a>（英文）。</li><li>練功比裝備的 Pawn 權重：治療 1、每 5 秒回魔 3、致命 10、精神 2、智力 1；分數接近時拿治療量高的。</li><li>迅癒不能吃別的德魯伊的 HoT，要自己的。治療之觸還有用，但降級施法有懲罰，經典版那套打法會少很多。</li><li>內建的冷卻管理（CDM）可以取代 WeakAuras 主群組，用插件改外觀。</li></ul>",
+   "det": "<ul><li><a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh55002001--5553005103113051_t0/0A2ADcchggccmKcnPgRsgg0Ebbbhbb2B\" target=\"_blank\" rel=\"noopener\">純恢復</a>（英文）、<a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh5530203110021--505300510311103_t0/0A2ADcch0EbbbhGbjbCpN2cccgmKgngggprrr\" target=\"_blank\" rel=\"noopener\">Hots'n'Dots</a>（英文）、<a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh-55200032123012125001-05333001001_t0/1AC2BDeeh1bbbHjKMpQrSgTzbb2ecccm1gg\" target=\"_blank\" rel=\"noopener\">Restocat</a>（英文）。</li><li>團隊前 BiS：<a href=\"https://www.wowhead.com/forever/guide/classes/druid/restoration/bis-gear\" target=\"_blank\" rel=\"noopener\">Wowhead 恢復德 BiS</a>（英文）。</li><li>練功比裝備的 Pawn 權重：治療 1、每 5 秒回魔 3、致命 10、精神 2、智力 1；分數接近時拿治療量高的。</li><li>迅癒不能吃別的德魯伊的 HoT，要自己的。治療之觸還有用，但降級施法有懲罰，經典版那套打法會少很多。</li><li>內建的冷卻管理（CDM）可以取代 WeakAuras 主群組，用插件改外觀。</li><li><b>11/23：</b>新手補師問降級施法要做到多細：老手說地城只要放 1 級回春就夠，不用一排不同等級；也有人平常用降級的主治療，大傷再用最高級。目前沒有專門的降級指南。</li></ul>",
    "heat": 1,
-   "vol": "整理頻道",
+   "vol": "11/23 恢復頻道十幾則",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-23",
+   "d": "11/21～11/23",
    "kw": []
   },
   {
@@ -100,6 +100,36 @@ window.DC={
    "upd": "2026-11-22",
    "d": "11/21",
    "kw": []
+  },
+  {
+   "st": "ok",
+   "heat": 1,
+   "id": "dru-thorns",
+   "c": "play",
+   "s": "bear",
+   "ch": "forever-general",
+   "h": "熊別玩荊棘法傷刷怪：荊棘不快照，揮擊吃攻強",
+   "p": "有人想學聖騎和法師用荊棘、法傷裝 AOE 刷怪。頻道回答：荊棘是即時計算、不會鎖住施放時的法傷，熊的揮擊現在吃攻強、比較強，所以不用為了荊棘換法傷裝。結論是熊目前不太適合 4 隻以上的 AOE 刷怪。",
+   "det": "<ul><li>有人提到官方一直在砍副本刷金法，野外刷法太誇張也會很快被修。</li><li>另一個分享：黑石塔下層的蜘蛛王和狼王可以單刷拿 T0 部位，蜘蛛約 12 分鐘、狼約 30 分鐘一輪，作者說會出影片。</li></ul>",
+   "vol": "11/23 一般頻道幾十則（還吵了一下）",
+   "first": "2026-11-23",
+   "upd": "2026-11-23",
+   "d": "11/23"
+  },
+  {
+   "st": "wait",
+   "heat": 1,
+   "id": "dru-weapon",
+   "c": "gear",
+   "s": "cat",
+   "ch": "forever-feral-dps",
+   "h": "練功武器：57 級海加爾任務長柄，比武器看權重表",
+   "p": "野性頻道整理練功武器：克洛達克之後，57 級海加爾任務的長柄<a href=\"https://www.wowhead.com/forever/tw/item=281588\" target=\"_blank\" rel=\"noopener\">自然天擇</a>是穩定能拿的升級；55 級左右也能拿 Shaper's Terrace 的武器。地城（阿爾卡茲島、沉沒神廟、黑石深淵前段）也有不錯的藍武。",
+   "det": "<ul><li>56～57 級在海加爾練到 60 只要幾小時。</li><li>比武器可以用頻道釘選的屬性權重，但權重不算觸發和使用效果，那種要丟模擬器。</li><li>有人問牛頭人和另一個種族的數值差多少，目前沒人有數字。</li></ul>",
+   "vol": "11/23 野性頻道十幾則",
+   "first": "2026-11-23",
+   "upd": "2026-11-23",
+   "d": "11/23"
   }
  ]
 };
