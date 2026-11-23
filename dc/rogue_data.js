@@ -2,8 +2,8 @@
 window.DC={
  "name": "盜賊",
  "source": "Rogue Classic（約 4.7 萬人）",
- "updated": "2026-11-22 00:40",
- "run": "2026-11-22",
+ "updated": "2026-11-23 18:19",
+ "run": "2026-11-23",
  "kw": {},
  "topics": [
   {
@@ -30,12 +30,12 @@ window.DC={
    "ch": "forever-faq-guides「Pre-Raid BIS」（11/21 更新）",
    "h": "團隊前 BiS：先做闇影套（T0.5），刺殺要雷暴",
    "p": "FAQ 的團隊前 BiS 重點（前提是命中已過 8%）：11/20 熱修後，Mutilate 還是要雷暴套；其他天賦改用闇影套（T0.5）、魔暴龍、Dawn Armor 胸、Reals Belt，不用雷暴。沒有闇影套就先穿迅影套。",
-   "det": "<ul><li>Mutilate：雷暴胸＋闇影褲只比雷暴褲少約 1%，還是比完全不穿雷暴好。</li><li>項鍊：弗丁印記或 Ogre Might；披風：Howler 或<a href=\"https://www.wowhead.com/forever/tw/item=13340\" target=\"_blank\" rel=\"noopener\">黑爵士的斗篷</a>。</li><li>戒指：<a href=\"https://www.wowhead.com/forever/tw/item=19325\" target=\"_blank\" rel=\"noopener\">胡力歐指環</a>＋Cutthroat's Signet；還沒崇拜前用<a href=\"https://www.wowhead.com/forever/tw/item=17713\" target=\"_blank\" rel=\"noopener\">黑石戒指</a>或<a href=\"https://www.wowhead.com/forever/tw/item=18500\" target=\"_blank\" rel=\"noopener\">暗淡的精靈戒指</a>。</li><li>遠程：薩特強弓（<a href=\"https://www.wowhead.com/forever/tw/item=18323\" target=\"_blank\" rel=\"noopener\">薩特強弓</a>），只差 1 DPS 才需要 Calibrated Boom。</li><li>飾品很多都差不多：<a href=\"https://www.wowhead.com/forever/tw/item=11815\" target=\"_blank\" rel=\"noopener\">正義之手</a>、<a href=\"https://www.wowhead.com/forever/tw/item=13965\" target=\"_blank\" rel=\"noopener\">黑手飾物</a>、<a href=\"https://www.wowhead.com/forever/tw/item=18537\" target=\"_blank\" rel=\"noopener\">反擊磁石</a>、<a href=\"https://www.wowhead.com/forever/tw/item=22321\" target=\"_blank\" rel=\"noopener\">維姆薩拉克之心</a>等；厄運之槌書的任務飾品只有對人型怪有用；聯盟可以拿 Highborne Research Tablet。</li><li>非匕首主手：<a href=\"https://www.wowhead.com/forever/tw/item=13033\" target=\"_blank\" rel=\"noopener\">狂熱之刃</a>或<a href=\"https://www.wowhead.com/forever/tw/item=11684\" target=\"_blank\" rel=\"noopener\">鐵敵之錘</a>；有錢上<a href=\"https://www.wowhead.com/forever/tw/item=1728\" target=\"_blank\" rel=\"noopener\">提布的熾炎長劍</a>。副手非匕首：<a href=\"https://www.wowhead.com/forever/tw/item=871\" target=\"_blank\" rel=\"noopener\">風暴戰斧</a>，買不起就用<a href=\"https://www.wowhead.com/forever/tw/item=18392\" target=\"_blank\" rel=\"noopener\">混亂匕首</a>。</li><li>匕首主手：<a href=\"https://www.wowhead.com/forever/tw/item=12590\" target=\"_blank\" rel=\"noopener\">惡魔之擊</a>（Hemo 也偏好它）；匕首副手：混亂匕首（主手是匕首時幾乎都用它）。</li><li>FAQ 特別提醒：永恆隨時會改，團本開前這份清單一定還會變。</li></ul>",
+   "det": "<ul><li>Mutilate：雷暴胸＋闇影褲只比雷暴褲少約 1%，還是比完全不穿雷暴好。</li><li>項鍊：弗丁印記或 Ogre Might；披風：Howler 或<a href=\"https://www.wowhead.com/forever/tw/item=13340\" target=\"_blank\" rel=\"noopener\">黑爵士的斗篷</a>。</li><li>戒指：<a href=\"https://www.wowhead.com/forever/tw/item=19325\" target=\"_blank\" rel=\"noopener\">胡力歐指環</a>＋Cutthroat's Signet；還沒崇拜前用<a href=\"https://www.wowhead.com/forever/tw/item=17713\" target=\"_blank\" rel=\"noopener\">黑石戒指</a>或<a href=\"https://www.wowhead.com/forever/tw/item=18500\" target=\"_blank\" rel=\"noopener\">暗淡的精靈戒指</a>。</li><li>遠程：薩特強弓（<a href=\"https://www.wowhead.com/forever/tw/item=18323\" target=\"_blank\" rel=\"noopener\">薩特強弓</a>），只差 1 DPS 才需要 Calibrated Boom。</li><li>飾品很多都差不多：<a href=\"https://www.wowhead.com/forever/tw/item=11815\" target=\"_blank\" rel=\"noopener\">正義之手</a>、<a href=\"https://www.wowhead.com/forever/tw/item=13965\" target=\"_blank\" rel=\"noopener\">黑手飾物</a>、<a href=\"https://www.wowhead.com/forever/tw/item=18537\" target=\"_blank\" rel=\"noopener\">反擊磁石</a>、<a href=\"https://www.wowhead.com/forever/tw/item=22321\" target=\"_blank\" rel=\"noopener\">維姆薩拉克之心</a>等；厄運之槌書的任務飾品只有對人型怪有用；聯盟可以拿 Highborne Research Tablet。</li><li>非匕首主手：<a href=\"https://www.wowhead.com/forever/tw/item=13033\" target=\"_blank\" rel=\"noopener\">狂熱之刃</a>或<a href=\"https://www.wowhead.com/forever/tw/item=11684\" target=\"_blank\" rel=\"noopener\">鐵敵之錘</a>；有錢上<a href=\"https://www.wowhead.com/forever/tw/item=1728\" target=\"_blank\" rel=\"noopener\">提布的熾炎長劍</a>。副手非匕首：<a href=\"https://www.wowhead.com/forever/tw/item=871\" target=\"_blank\" rel=\"noopener\">風暴戰斧</a>，買不起就用<a href=\"https://www.wowhead.com/forever/tw/item=18392\" target=\"_blank\" rel=\"noopener\">混亂匕首</a>。</li><li>匕首主手：<a href=\"https://www.wowhead.com/forever/tw/item=12590\" target=\"_blank\" rel=\"noopener\">惡魔之擊</a>（Hemo 也偏好它）；匕首副手：混亂匕首（主手是匕首時幾乎都用它）。</li><li>FAQ 特別提醒：永恆隨時會改，團本開前這份清單一定還會變。</li><li><b>11/23：</b>有人算了新戰場肩：就算勝率 100%、一場 10 分鐘、排 5 分鐘，也要約 60 小時。戰鬥剛 60 的人先買兩件魔暴龍，接下來買什麼的順序還沒人回答。</li></ul>",
    "heat": 3,
    "vol": "11/21 才剛更新",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-23",
+   "d": "11/21～11/23",
    "kw": []
   },
   {
@@ -94,12 +94,12 @@ window.DC={
    "ch": "forever-pve",
    "h": "11/21 頻道：Mutilate 模擬掉分、敏銳打起來卡",
    "p": "11/21 有人發現 Mutilate 團隊前 BiS 模擬從 950 掉到 870，疑似被調整。敏銳玩家抱怨第二次伏擊很難打出來，打精英和多隻怪不如戰鬥；而且很多匕首被改成法系武器，好匕首變少。",
-   "det": "<ul><li>有人問刺殺是不是主手還是放致命毒藥、立即毒藥有沒有持續時間影響 Mutilate 加成，還沒有人回答。</li><li>練功心得：49 級在祖爾法拉克整場約 181 DPS，部分拉怪 300 以上。</li></ul>",
-   "heat": 1,
-   "vol": "11/21",
+   "det": "<ul><li>有人問刺殺是不是主手還是放致命毒藥、立即毒藥有沒有持續時間影響 Mutilate 加成，還沒有人回答。</li><li>練功心得：49 級在祖爾法拉克整場約 181 DPS，部分拉怪 300 以上。</li><li><b>11/23：</b>PvE 頻道：模擬器 3 分鐘戰鬥矮人比地精好一點，但也有人說就算差 50% 也要玩地精。截肢（刺殺）手感討論：不用狂按、要注意能量，切割的維持比較輕鬆；匕首選擇多，拿不到最好的也有腦葉切除器、黑石深淵匕首、厄運之槌西區副手。</li><li><b>11/23：</b>地城裡戰鬥比較好，60 級王死很快、專精差距不大；毒藥有人主手致命疊 5 層、副手速效，怪會跑就換致殘。</li><li><b>11/23：</b>52 級的盜賊擔心找不到地城隊伍（坦克想帶熊和戰士），頻道有人有同感。</li></ul>",
+   "heat": 2,
+   "vol": "11/23 PvE 頻道幾十則",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-23",
+   "d": "11/21～11/23",
    "kw": []
   },
   {
