@@ -2,8 +2,8 @@
 window.DC={
  "name": "牧師",
  "source": "Priest Classic（約 6.1 萬人）＋ Shadow Priest Classic（約 1.9 萬人）",
- "updated": "2026-11-21 08:20",
- "run": "2026-11-21",
+ "updated": "2026-11-23 18:19",
+ "run": "2026-11-23",
  "kw": {
   "bis": 18150,
   "discipline": 1051,
@@ -44,12 +44,12 @@ window.DC={
    "ch": "healing-forever",
    "h": "治療沒有釘選的 BiS 清單",
    "p": "治療頻道這兩天一直有人問團隊前 BiS，但沒有官方整理。老玩家的回答是：治療牧師不太需要追 BiS，重點是治療量跟回魔的平衡，常常沒魔就多帶回魔飾品和精神。釘選有一份社群做的牧師試算表（含屬性權重）可以參考。",
-   "det": "<ul><li><a href=\"https://docs.google.com/spreadsheets/d/19SaCaDQJzhMFL-nIW4ryzFwI53FmsnDvaxRfLbvM-CE/edit?usp=sharing\" target=\"_blank\" rel=\"noopener\">社群牧師試算表（beta 時期做的）</a>（英文）：有屬性權重，11/17 還有人在問裡面的權重怎麼看。</li><li><a href=\"https://foreverhealing-tc.netlify.app/\" target=\"_blank\" rel=\"noopener\">ForeverHealing-TC 治療模擬</a>（英文）：成員自己做的，每個治療法術每個等級的每秒治療、每點法力治療量都算出來，四個治療職業並排比較，還能模擬整場團隊戰。作者說牧師測得最多，60 級的數字還有很多待確認。</li><li>有人問 50 級以上要多少治療量才算能進團，目前沒有標準答案。</li></ul>",
-   "heat": 0,
-   "vol": "11/19 治療頻道至少五六個人在問",
+   "det": "<ul><li><a href=\"https://docs.google.com/spreadsheets/d/19SaCaDQJzhMFL-nIW4ryzFwI53FmsnDvaxRfLbvM-CE/edit?usp=sharing\" target=\"_blank\" rel=\"noopener\">社群牧師試算表（beta 時期做的）</a>（英文）：有屬性權重，11/17 還有人在問裡面的權重怎麼看。</li><li><a href=\"https://foreverhealing-tc.netlify.app/\" target=\"_blank\" rel=\"noopener\">ForeverHealing-TC 治療模擬</a>（英文）：成員自己做的，每個治療法術每個等級的每秒治療、每點法力治療量都算出來，四個治療職業並排比較，還能模擬整場團隊戰。作者說牧師測得最多，60 級的數字還有很多待確認。</li><li>有人問 50 級以上要多少治療量才算能進團，目前沒有標準答案。</li><li><b>11/23：</b>還是沒有釘選清單。頻道在討論：<a href=\"https://www.wowhead.com/forever/tw/item=272439\" target=\"_blank\" rel=\"noopener\">平靜力場</a>（希利蘇斯的商人 Pix Xizzix 賣，要刷一大堆怪換材料）、懺悔束帶和<a href=\"https://www.wowhead.com/forever/tw/item=18327\" target=\"_blank\" rel=\"noopener\">刺藤腰帶</a>怎麼選（看重精神選前者）。</li><li><b>11/23：</b>有人做了三套 T0.5 後覺得太貴、開始後悔；暗影 DC 也有人說木喉肩和 T0.5 肩不值得，買<a href=\"https://www.wowhead.com/forever/tw/item=14256\" target=\"_blank\" rel=\"noopener\">惡魔布</a>類的裝就好。月布一天漲了 50%。</li></ul>",
+   "heat": 1,
+   "vol": "11/23 幾則",
    "first": "2026-11-20",
-   "upd": "2026-11-20",
-   "d": "11/20",
+   "upd": "2026-11-23",
+   "d": "11/20～11/23",
    "kw": "stat weights"
   },
   {
@@ -91,12 +91,12 @@ window.DC={
    "ch": "healing-forever、general-forever",
    "h": "戒律：懺悟被削，可能改成輔助專精",
    "p": "大家覺得戒律天賦樹拿到懺悟之後就沒什麼好點的，懺悟本身也被削過。常見點法是 21 戒律拿懺悟、其餘點神聖；也有人覺得戒律打五人本很順、常被搶著組。開發者 podcast 說戒律可能重做成偏輔助的專精，討論分兩派。",
-   "det": "<ul><li>11/21：有人在研究「懺悟＋吸血鬼的擁抱」的混搭；常見回答仍是點到懺悟、其餘點神聖拿靈性治療。</li><li>好評：懺悟回血很省魔，真言術：盾＋懺悟＋快速治療＋真言術：盾可以連著補同一個目標；冥想對任何專精的治療都很有幫助。</li><li>負評：注入能量在近戰多的隊伍沒用；有人在黑石深淵用戒律補，3 小時喝掉 60 瓶水。</li><li>「戒律」在遊戲裡不是一個法術系別，命中、法術強度、抗性都照神聖系算。</li></ul>",
-   "heat": 3,
-   "vol": "懺悟關鍵字一天多約 30 則",
+   "det": "<ul><li>11/21：有人在研究「懺悟＋吸血鬼的擁抱」的混搭；常見回答仍是點到懺悟、其餘點神聖拿靈性治療。</li><li>好評：懺悟回血很省魔，真言術：盾＋懺悟＋快速治療＋真言術：盾可以連著補同一個目標；冥想對任何專精的治療都很有幫助。</li><li>負評：注入能量在近戰多的隊伍沒用；有人在黑石深淵用戒律補，3 小時喝掉 60 瓶水。</li><li>「戒律」在遊戲裡不是一個法術系別，命中、法術強度、抗性都照神聖系算。</li><li><b>11/23：</b>治療頻道：60 級玩戒律的人說懺悟太弱要改神聖；多數人覺得神聖現在比較強，但永恆的內容不難，兩個都能用。</li><li><b>11/23：</b>真言術：盾 點滿 3 點天賦，效率從約 2.17 升到 2.73，還是很多人不想用。</li></ul>",
+   "heat": 2,
+   "vol": "11/23 治療頻道二十幾則",
    "first": "2026-11-20",
-   "upd": "2026-11-21",
-   "d": "11/20～11/21",
+   "upd": "2026-11-23",
+   "d": "11/20～11/23",
    "kw": "penance"
   },
   {
@@ -137,12 +137,12 @@ window.DC={
    "ch": "Shadow Priest Classic FAQ",
    "h": "練功天賦：三種路線，28 或 36 級轉暗影",
    "p": "暗影 DC 的 FAQ 列三種練功點法：一開始就全點暗影；先點魔杖專精、28 級轉暗影；想一直能補人的到 36 級再轉。不建議等到 40 級才轉暗影，永恆提早轉暗影比較快。",
-   "det": "<ul><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=C2222200044abb77deee4iig46mmmmmpA2222266666bbb9Cccccc\" target=\"_blank\" rel=\"noopener\">全暗影路線</a>（英文）：40 級剛好 4/5 強化心靈震爆。20 級大約 45 法術強度以上，精神鞭笞就比魔杖好。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=A1122256666bbb92268\" target=\"_blank\" rel=\"noopener\">中間路線</a>（英文）：先拿魔杖專精，28 級轉成上面那套（要花 1 金洗點）。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=A1122256666bbb9226888hC22222\" target=\"_blank\" rel=\"noopener\">想補人的路線</a>（英文）：36 級拿到 3 級精神鞭笞再轉。懺悟 1 級被削得很弱，可以早一級點精神分流。</li><li>精神分流不管哪條路線都很強；昏厥在 PvP 伺服器很好用，但不建議一開始就點滿。</li><li>Priest Classic 也有人建議：低等級神聖之火很爛，用心靈震爆→上 DoT→魔杖就好，40 級前記得換魔杖。</li></ul>",
-   "heat": 2,
+   "det": "<ul><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=C2222200044abb77deee4iig46mmmmmpA2222266666bbb9Cccccc\" target=\"_blank\" rel=\"noopener\">全暗影路線</a>（英文）：40 級剛好 4/5 強化心靈震爆。20 級大約 45 法術強度以上，精神鞭笞就比魔杖好。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=A1122256666bbb92268\" target=\"_blank\" rel=\"noopener\">中間路線</a>（英文）：先拿魔杖專精，28 級轉成上面那套（要花 1 金洗點）。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=A1122256666bbb9226888hC22222\" target=\"_blank\" rel=\"noopener\">想補人的路線</a>（英文）：36 級拿到 3 級精神鞭笞再轉。懺悟 1 級被削得很弱，可以早一級點精神分流。</li><li>精神分流不管哪條路線都很強；昏厥在 PvP 伺服器很好用，但不建議一開始就點滿。</li><li>Priest Classic 也有人建議：低等級神聖之火很爛，用心靈震爆→上 DoT→魔杖就好，40 級前記得換魔杖。</li><li><b>11/23：</b>暗影 DC 練功心得：40 前帶吸血鬼的擁抱，昏厥 3/5 練功和 PvP 都好用；40 後先拿神聖的暮光集中再點戒律。有人說 40～50 打一隻喝一次，到 53 級幾乎不缺魔了。</li></ul>",
+   "heat": 1,
    "vol": "每天都有人問練功點法",
    "first": "2026-11-20",
-   "upd": "2026-11-20",
-   "d": "11/20",
+   "upd": "2026-11-23",
+   "d": "11/20～11/23",
    "kw": "twilight focus"
   },
   {
@@ -212,12 +212,12 @@ window.DC={
    "ch": "暗影頻道",
    "h": "命中：團隊前差約 7%，先別硬堆",
    "p": "法術命中上限大約 16～17%，團隊前清單離上限差約 7%。指南作者模擬下來 1% 命中約等於 10 法術強度（約 6 DPS），有人自己做了命中堆滿的一套，模擬反而更差。結論是先堆法術強度。",
-   "det": "<ul><li>11/21：暗影 DC 還是天天有人問「清單只有約 9% 命中會不會太少」、「怎麼那麼多裝來自黑石深淵」。回答一樣：命中佔的裝備預算很高，堆滿命中的套裝模擬反而比較差。FAQ 最新仍是 11/17 的 1.6 版。</li><li>矮人現在有 1% 命中的種族天賦（工匠的精準）。</li><li>有人擔心之後要精神控制敵人時需要命中，目前沒有定論。</li><li>經典版要到安其拉前後才堆得到命中上限，暗影 DC 的老玩家說不用急。</li></ul>",
+   "det": "<ul><li>11/21：暗影 DC 還是天天有人問「清單只有約 9% 命中會不會太少」、「怎麼那麼多裝來自黑石深淵」。回答一樣：命中佔的裝備預算很高，堆滿命中的套裝模擬反而比較差。FAQ 最新仍是 11/17 的 1.6 版。</li><li>矮人現在有 1% 命中的種族天賦（工匠的精準）。</li><li>有人擔心之後要精神控制敵人時需要命中，目前沒有定論。</li><li>經典版要到安其拉前後才堆得到命中上限，暗影 DC 的老玩家說不用急。</li><li><b>11/23：</b>又有人問：清單上只有 8～9% 命中，團本不是要 17%？回答：命中在團本以外沒用，現在也沒有「唯一」的 BiS，很多裝差不多，往哪個方向配都行。</li></ul>",
    "heat": 1,
    "vol": "11/16～11/19 一直有人問清單為什麼沒命中",
    "first": "2026-11-20",
-   "upd": "2026-11-21",
-   "d": "11/20～11/21",
+   "upd": "2026-11-23",
+   "d": "11/20～11/23",
    "kw": "hit cap"
   },
   {
@@ -263,9 +263,10 @@ window.DC={
    "heat": 2,
    "vol": "小爭論",
    "first": "2026-11-20",
-   "upd": "2026-11-20",
-   "d": "11/20",
-   "kw": "twilight focus"
+   "upd": "2026-11-23",
+   "d": "11/20～11/23",
+   "kw": "twilight focus",
+   "det": "<ul><li><b>11/23：</b>新問題：隊上有聖騎的專注光環（防施法被打斷）時，暮光集中還要點超過 1 點嗎？還沒定論。</li></ul>"
   },
   {
    "id": "pri-pvp",
@@ -341,6 +342,21 @@ window.DC={
    "first": "2026-11-21",
    "upd": "2026-11-21",
    "d": "11/21"
+  },
+  {
+   "st": "wait",
+   "heat": 2,
+   "id": "pri-shadow-heal",
+   "c": "play",
+   "s": "shadow",
+   "ch": "shadow-check-pins-for-prebis、forever-pve（暗影DC）",
+   "h": "暗影其實是最好的地城治療？40 後很多人用暗影補五人本",
+   "p": "頻道玩笑說暗影「技術上是最好的地城治療專精」：40 級後不少人用暗影形態上 DoT、靠吸血鬼的擁抱回血，再穿插恢復和治療；機制重的王才脫暗影形態。建議另外準備一套治療裝，並先跟隊友說要喝水。",
+   "det": "<ul><li>有人的配點：40 前用混搭天賦練功，買了雙天賦再一個全暗影、一個留著補五人本。</li><li>建議 50 級前（打黑石深淵前）就買雙天賦，之後副本變難。</li><li>裝備小提醒：補師骰法傷裝會被術士質疑，但暗影補的確用得到法傷。</li></ul>",
+   "vol": "11/22～11/23 兩個 DC 幾十則",
+   "first": "2026-11-23",
+   "upd": "2026-11-23",
+   "d": "11/23"
   }
  ]
 };
