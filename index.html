@@ -162,7 +162,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=94f9392b"></script>
+<script src="data.js?v=a314b090"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -560,7 +560,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     let h = '';
     const item = g => '<a href="#' + g.slug + '" class="' + (cur===g.slug?'on':'') + '">' + esc(g.title.replace(/（Progress[^）]*）/,'')) + '<span class="d">' + esc(g.date||'') + '</span></a>';
     menu.forEach(m => {
-      if (m.home) { h += '<a href="#" class="top ' + (cur ? '' : 'on') + '">' + m.i + ' ' + m.t + '</a><a href="dc/index.html" class="top">💬 DC 重點</a><a href="ah/index.html" class="top">💰 拍賣場</a><a href="tools/index.html" class="top">🧰 翻譯工具</a>'; return; }
+      if (m.home) { h += '<a href="#" class="top ' + (cur ? '' : 'on') + '">' + m.i + ' ' + m.t + '</a><a href="dc/index.html" class="top">💬 DC 重點</a><a href="podcast/index.html" class="top">🎙️ 官方 Podcast</a><a href="ah/index.html" class="top">💰 拍賣場</a><a href="tools/index.html" class="top">🧰 翻譯工具</a>'; return; }
       const list = m.cat ? (cats[m.cat] || []) : [];
       if (!list.length) { if (!m.cat) h += '<a href="' + m.ext + '" class="top ext" target="_blank" rel="noopener">' + m.i + ' ' + m.t + ' <span class="d">英文 ↗</span></a>'; return; }
       const open = m.cat === curCat;
@@ -692,6 +692,7 @@ details.sec.sub>.body{padding:0 12px 6px}
         + '<a class="card tile dcard" href="ah/index.html"><span class="ti">💰</span><b>拍賣場</b><span class="c">美服拍賣場價格</span></a>'
         + '<a class="card tile dcard" href="tools/index.html"><span class="ti">🧰</span><b>美服翻譯工具</b><span class="c">遊戲聊天、DC 語音的英文變中文；下載、丟進 AddOns、貼金鑰就能用</span></a>'
         + '<a class="card tile dcard" href="dc/index.html"><span class="ti">💬</span><b>DC 重點</b><span class="c">國外職業 Discord 的討論中文摘要，每天更新；上方選單切換職業（九個職業）</span></a>'
+        + '<a class="card tile dcard" href="podcast/index.html"><span class="ti">🎙️</span><b>官方 Podcast 重點</b><span class="c">暴雪每週的 WoW: Forever Podcast 中文重點，設計師怎麼回答玩家問題</span></a>'
         + '</div>';
       h += '<h2>攻略分類</h2><div class="grid sec">';
       SECTIONS.forEach(x => { const n = (cats[x.cat]||[]).length; if (!n && !(x.cat === '地城' && DN)) return; const cnt = n ? n + ' 篇' : DN + ' 副本'; const d = x.cat === '地城' && DN ? '地城攻略 ' + n + ' 篇＋' + DN + ' 個副本首領掉落' : x.d; h += '<div class="card tile" onclick="location.hash=\'k:' + x.cat + '\'"><span class="ti">' + x.i + '</span><b>' + esc(x.t) + '</b><span class="n">' + cnt + '</span>' + (d ? '<div class="c">' + esc(d) + '</div>' : '') + '</div>'; });
