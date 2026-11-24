@@ -34,6 +34,13 @@ h2{color:var(--gold);font-size:19px;margin:26px 0 4px}
 .up{color:var(--up)}.down{color:var(--down)}
 .g{color:#ffd700}.s{color:#c7c7cf}.c{color:#d18a52}
 .warn{color:#e8a33d}
+.lv{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px}
+.lv .hd{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.lv .hd b{font-size:20px;font-variant-numeric:tabular-nums}
+.lv summary{cursor:pointer;color:var(--gold);font-size:13px;margin-top:6px}
+.lv table{border-collapse:collapse;width:100%;font-size:13px;margin-top:6px}
+.lv td{padding:2px 6px;border-bottom:1px solid #241c14}
+.lv td.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 ul.pl{margin:6px 0;padding-left:20px;color:var(--dim);font-size:13.5px}
 ul.pl li{margin:3px 0}
 ul.pl b{color:var(--text);font-weight:500}
@@ -46,6 +53,10 @@ ul.pl b{color:var(--text);font-weight:500}
 <h2>哪個專業最划算</h2>
 <p class="sub">每個專業取冷卻製作裡每天賺最多的那一項。三個專業的冷卻互不影響，分身可以都練。</p>
 <div class="best" id="best"></div>
+<h2>練到能做要花多少</h2>
+<p class="sub">從 1 練到能做冷卻製作那一級，材料全部在拍賣場買的花費（用現在的行情價）。練法照 <a href="https://www.wow-professions.com/forever" target="_blank" rel="noopener">wow-professions.com 永恆版攻略</a>的最省路線。三個專業都要角色 35 等才能學到最高一階。</p>
+<div id="lvl"></div>
+<div class="note">沒算進去的：訓練師學費、做出來的東西賣商店拿回的錢（實際會比這裡便宜一些）、自己採集或剝皮省下的材料。升級有運氣成分，攻略的數量是估計值，多備一成比較保險。</div>
 <h2>排名：平均每天淨賺</h2>
 <p class="sub">冷卻 23 小時以上的製作，由高到低。</p>
 <div id="rank"></div>
@@ -55,7 +66,7 @@ ul.pl b{color:var(--text);font-weight:500}
 <h2>怎麼開始</h2>
 <ul class="pl">
 <li><b>鍊金轉化</b>：鍊金術 275（鐵變金、秘銀變真銀 225），背包要有點金石（鍊金 225 自己做，拾取綁定）。轉化共用一個冷卻，一次只能挑一種：做了奧金，軍團鋼錠要等 47 小時才能做（遊戲裡確認過）；精華轉化據玩家回報也算在同一個冷卻裡。鐵變金、秘銀變真銀是另外算的 1 小時冷卻。</li>
-<li><b>月布</b>：裁縫，圖樣在冬泉谷永望鎮的商人買（限量）。要站在月井旁邊才能做，2 個惡魔布做 1 個。</li>
+<li><b>月布</b>：裁縫 230，圖樣在冬泉谷永望鎮的商人買（限量）。要站在月井旁邊才能做，2 個惡魔布做 1 個。</li>
 <li><b>精煉石中鹽</b>：製皮 250，用篩鹽器（工程學做的，拍賣場買得到，可以重複用）把石中鹽變成精煉石中鹽。冷卻在篩鹽器上。</li>
 </ul>
 <div class="note">提醒：「每天約賣幾個」很少的東西，大家一起做價格會掉。行情價是當下的價格，不保證賣得掉。</div>
@@ -88,6 +99,27 @@ var CDS=[
  {src:'tailoring',prof:'裁縫',recipe:'Mooncloth',h:95,extra:'要在月井旁邊做'},
  {salt:1,prof:'製皮',h:71,out:15409,mat:8150,tool:15846,lv:250}
 ];
+// 練到能做冷卻製作的材料清單（11/24，照 wow-professions.com/forever 攻略的主路線；[物品ID,數量]）。fix=固定要買的配方（銅）。
+var LV=[
+ {prof:'製皮',to:250,what:'精煉石中鹽',mats:[[2934,105],[2318,247],[783,10],[2319,152],[4232,20],[4235,25],[4234,292],[7071,10],[4304,614],[8170,144],[4289,105],[2320,124],[2321,122],[4340,20],[4291,198],[2325,18],[14341,18],[15846,1]],
+  fix:[['圖樣：邪惡皮革護手（商人）',12000]],tip:'235 到 250 做邪惡皮革護手，數量取攻略 235-265 的一半。含 1 個篩鹽器。'},
+ {prof:'裁縫',to:230,what:'月布',mats:[[2589,60],[2592,111],[4306,812],[4234,30],[4338,720],[14047,120],[2320,28],[2321,122],[6260,10],[2604,108],[4291,100],[8343,44],[14341,8]],
+  tip:'永恆版月布只要裁縫 230（經典版是 250）。225 到 230 做符文布腰帶約 8 條。月布圖樣要另外在冬泉谷買（限量），沒算在內。'},
+ {prof:'鍊金術',to:275,what:'奧金錠／軍團鋼錠',mats:[[765,54],[2447,83],[785,50],[2449,56],[2450,60],[3820,108],[6359,40],[3371,152],[3356,51],[3357,62],[3372,160],[3358,25],[8839,25],[13422,47],[8925,35],[8838,10],[12958,1],[3575,4],[9262,1],[8831,4],[4625,4]],
+  fix:[['配方：自然防護藥水（商人）',2000],['配方：超強防禦藥劑（商人）',13000]],tip:'265 到 275 做強效防禦藥劑約 10 瓶。含合成奧金配方和做點金石的材料（鐵錠、黑色硫酸鹽、紫蓮花、火焰花）；點金石配方在塔納利斯買，沒算在內。'}
+];
+function lvl(all){
+ var A=window.AH,by={};if(!A)return;A.items.forEach(function(i){by[i.id]=i});
+ var best={};all.forEach(function(x){if(x.h>=23&&(!best[x.prof]||x.day>best[x.prof].day))best[x.prof]=x});
+ var rows=LV.map(function(L){var tot=0,miss=[],ls=[];
+  L.mats.forEach(function(m){var it=by[m[0]];if(!it||!(it.k>0)){miss.push(it?it.n:'#'+m[0]);return}var c=it.k*m[1];tot+=c;ls.push({n:it.n,q:m[1],c:c})});
+  (L.fix||[]).forEach(function(f){tot+=f[1];ls.push({n:f[0],q:1,c:f[1]})});
+  ls.sort(function(a,b){return b.c-a.c});return {L:L,tot:tot,miss:miss,ls:ls,b:best[L.prof]}}).sort(function(a,b){return a.tot-b.tot});
+ $('lvl').innerHTML=rows.map(function(r){var d=r.b&&r.b.day>0?Math.ceil(r.tot/r.b.day):0;
+  return '<div class="lv"><div class="hd"><span class="nm">'+esc(r.L.prof)+' 1 → '+r.L.to+'<span class="tag">做'+esc(r.L.what)+'</span></span><span><b>'+money(r.tot)+'</b></span></div>'+
+  '<div class="nums" style="margin-top:2px">'+(d?'<span>靠「'+esc(r.b.item)+'」每天賺 <b>'+gday(r.b.day)+'</b>，約 <b>'+d+'</b> 天回本</span>':'<span class="warn">現在的價格做冷卻製作不賺，回不了本</span>')+'</div>'+
+  '<div class="mats" style="margin-top:2px">'+esc(r.L.tip)+(r.miss.length?'・<span class="warn">拍賣場現在沒貨、沒算到：'+esc(r.miss.join('、'))+'</span>':'')+'</div>'+
+  '<details><summary>材料明細（花最多的排前面）</summary><table>'+r.ls.map(function(z){return '<tr><td>'+esc(z.n)+'</td><td class="r">×'+z.q+'</td><td class="r">'+money(z.c)+'</td></tr>'}).join('')+'</table></details></div>'}).join('')}
 var loaded=0,files=['craft_alchemy.js','craft_tailoring.js','data.js'];
 function done(){if(++loaded>=files.length)init()}
 files.forEach(function(f){var s=document.createElement('script');s.src=f+'?'+Date.now();s.onload=done;s.onerror=done;document.body.appendChild(s)});
@@ -117,6 +149,7 @@ function init(){
  var L=all.filter(function(x){return x.h>=23}).sort(function(a,b){return b.day-a.day});
  var S=all.filter(function(x){return x.h<23}).sort(function(a,b){return b.p-a.p});
  $('rank').innerHTML=L.map(function(x,i){return card(x,i,1)}).join('');
+ lvl(all);
  $('short').innerHTML=S.map(function(x,i){return card(x,i,0)}).join('')||'<div class="dim">沒有資料</div>';
  var bp={};L.forEach(function(x){if(!bp[x.prof]||x.day>bp[x.prof].day)bp[x.prof]=x});
  var B=Object.keys(bp).map(function(k){return bp[k]}).sort(function(a,b){return b.day-a.day});
