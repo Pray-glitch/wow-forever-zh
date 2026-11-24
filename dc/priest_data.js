@@ -2,8 +2,8 @@
 window.DC={
  "name": "牧師",
  "source": "Priest Classic（約 6.1 萬人）＋ Shadow Priest Classic（約 1.9 萬人）",
- "updated": "2026-11-23 18:19",
- "run": "2026-11-23",
+ "updated": "2026-11-24 15:25",
+ "run": "2026-11-24",
  "kw": {
   "bis": 18150,
   "discipline": 1051,
@@ -43,13 +43,13 @@ window.DC={
    "st": "wait",
    "ch": "healing-forever",
    "h": "治療沒有釘選的 BiS 清單",
-   "p": "治療頻道這兩天一直有人問團隊前 BiS，但沒有官方整理。老玩家的回答是：治療牧師不太需要追 BiS，重點是治療量跟回魔的平衡，常常沒魔就多帶回魔飾品和精神。釘選有一份社群做的牧師試算表（含屬性權重）可以參考。",
-   "det": "<ul><li><a href=\"https://docs.google.com/spreadsheets/d/19SaCaDQJzhMFL-nIW4ryzFwI53FmsnDvaxRfLbvM-CE/edit?usp=sharing\" target=\"_blank\" rel=\"noopener\">社群牧師試算表（beta 時期做的）</a>（英文）：有屬性權重，11/17 還有人在問裡面的權重怎麼看。</li><li><a href=\"https://foreverhealing-tc.netlify.app/\" target=\"_blank\" rel=\"noopener\">ForeverHealing-TC 治療模擬</a>（英文）：成員自己做的，每個治療法術每個等級的每秒治療、每點法力治療量都算出來，四個治療職業並排比較，還能模擬整場團隊戰。作者說牧師測得最多，60 級的數字還有很多待確認。</li><li>有人問 50 級以上要多少治療量才算能進團，目前沒有標準答案。</li><li><b>11/23：</b>還是沒有釘選清單。頻道在討論：<a href=\"https://www.wowhead.com/forever/tw/item=272439\" target=\"_blank\" rel=\"noopener\">平靜力場</a>（希利蘇斯的商人 Pix Xizzix 賣，要刷一大堆怪換材料）、懺悔束帶和<a href=\"https://www.wowhead.com/forever/tw/item=18327\" target=\"_blank\" rel=\"noopener\">刺藤腰帶</a>怎麼選（看重精神選前者）。</li><li><b>11/23：</b>有人做了三套 T0.5 後覺得太貴、開始後悔；暗影 DC 也有人說木喉肩和 T0.5 肩不值得，買<a href=\"https://www.wowhead.com/forever/tw/item=14256\" target=\"_blank\" rel=\"noopener\">惡魔布</a>類的裝就好。月布一天漲了 50%。</li></ul>",
-   "heat": 1,
-   "vol": "11/23 幾則",
+   "p": "治療還是沒有公認 BiS。11/24 大家建議用指南作者試算表裡的 3 套配裝和權重自己挑；T0.5 比較釘在治療頻道。",
+   "det": "<ul><li><b>11/24：</b>有人問治療團隊前 BiS 是 T0.5 還是一堆藍裝：回答是看目標（要血量、精神還是回魔），等團本出來才能反推。一位治療指南作者的試算表有 3 套配裝和屬性權重可以比；T0.5 跟其他裝的比較釘在治療頻道。<a href=\"https://www.wowhead.com/forever/tw/item=18386\" target=\"_blank\" rel=\"noopener\">教士長褲</a>刷 15 次沒掉其實機率約一成，不算倒楣。</li><li><a href=\"https://docs.google.com/spreadsheets/d/19SaCaDQJzhMFL-nIW4ryzFwI53FmsnDvaxRfLbvM-CE/edit?usp=sharing\" target=\"_blank\" rel=\"noopener\">社群牧師試算表（beta 時期做的）</a>（英文）：有屬性權重，11/17 還有人在問裡面的權重怎麼看。</li><li><a href=\"https://foreverhealing-tc.netlify.app/\" target=\"_blank\" rel=\"noopener\">ForeverHealing-TC 治療模擬</a>（英文）：成員自己做的，每個治療法術每個等級的每秒治療、每點法力治療量都算出來，四個治療職業並排比較，還能模擬整場團隊戰。作者說牧師測得最多，60 級的數字還有很多待確認。</li><li>有人問 50 級以上要多少治療量才算能進團，目前沒有標準答案。</li><li><b>11/23：</b>還是沒有釘選清單。頻道在討論：<a href=\"https://www.wowhead.com/forever/tw/item=272439\" target=\"_blank\" rel=\"noopener\">平靜力場</a>（希利蘇斯的商人 Pix Xizzix 賣，要刷一大堆怪換材料）、懺悔束帶和<a href=\"https://www.wowhead.com/forever/tw/item=18327\" target=\"_blank\" rel=\"noopener\">刺藤腰帶</a>怎麼選（看重精神選前者）。</li><li><b>11/23：</b>有人做了三套 T0.5 後覺得太貴、開始後悔；暗影 DC 也有人說木喉肩和 T0.5 肩不值得，買<a href=\"https://www.wowhead.com/forever/tw/item=14256\" target=\"_blank\" rel=\"noopener\">惡魔布</a>類的裝就好。月布一天漲了 50%。</li></ul>",
+   "heat": 2,
+   "vol": "11/24 治療頻道近百則",
    "first": "2026-11-20",
-   "upd": "2026-11-23",
-   "d": "11/20～11/23",
+   "upd": "2026-11-24",
+   "d": "11/20～11/24",
    "kw": "stat weights"
   },
   {
@@ -137,12 +137,12 @@ window.DC={
    "ch": "Shadow Priest Classic FAQ",
    "h": "練功天賦：三種路線，28 或 36 級轉暗影",
    "p": "暗影 DC 的 FAQ 列三種練功點法：一開始就全點暗影；先點魔杖專精、28 級轉暗影；想一直能補人的到 36 級再轉。不建議等到 40 級才轉暗影，永恆提早轉暗影比較快。",
-   "det": "<ul><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=C2222200044abb77deee4iig46mmmmmpA2222266666bbb9Cccccc\" target=\"_blank\" rel=\"noopener\">全暗影路線</a>（英文）：40 級剛好 4/5 強化心靈震爆。20 級大約 45 法術強度以上，精神鞭笞就比魔杖好。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=A1122256666bbb92268\" target=\"_blank\" rel=\"noopener\">中間路線</a>（英文）：先拿魔杖專精，28 級轉成上面那套（要花 1 金洗點）。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=A1122256666bbb9226888hC22222\" target=\"_blank\" rel=\"noopener\">想補人的路線</a>（英文）：36 級拿到 3 級精神鞭笞再轉。懺悟 1 級被削得很弱，可以早一級點精神分流。</li><li>精神分流不管哪條路線都很強；昏厥在 PvP 伺服器很好用，但不建議一開始就點滿。</li><li>Priest Classic 也有人建議：低等級神聖之火很爛，用心靈震爆→上 DoT→魔杖就好，40 級前記得換魔杖。</li><li><b>11/23：</b>暗影 DC 練功心得：40 前帶吸血鬼的擁抱，昏厥 3/5 練功和 PvP 都好用；40 後先拿神聖的暮光集中再點戒律。有人說 40～50 打一隻喝一次，到 53 級幾乎不缺魔了。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>40 級暗影形態是最大的強度跳躍，很多人說之後一次拉三隻也不用魔杖。48 級雙天賦想補五人本的人，深神聖用癒合禱言配 1 級次級治療術很省魔。暗影 DC 建議練等屬性：法傷 > 精神 > 智力，而且只學真的會用的技能，存錢買坐騎。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=C2222200044abb77deee4iig46mmmmmpA2222266666bbb9Cccccc\" target=\"_blank\" rel=\"noopener\">全暗影路線</a>（英文）：40 級剛好 4/5 強化心靈震爆。20 級大約 45 法術強度以上，精神鞭笞就比魔杖好。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=A1122256666bbb92268\" target=\"_blank\" rel=\"noopener\">中間路線</a>（英文）：先拿魔杖專精，28 級轉成上面那套（要花 1 金洗點）。</li><li><a href=\"https://www.warcrafttavern.com/forever/tools/talent-calculator/priest#?t=A1122256666bbb9226888hC22222\" target=\"_blank\" rel=\"noopener\">想補人的路線</a>（英文）：36 級拿到 3 級精神鞭笞再轉。懺悟 1 級被削得很弱，可以早一級點精神分流。</li><li>精神分流不管哪條路線都很強；昏厥在 PvP 伺服器很好用，但不建議一開始就點滿。</li><li>Priest Classic 也有人建議：低等級神聖之火很爛，用心靈震爆→上 DoT→魔杖就好，40 級前記得換魔杖。</li><li><b>11/23：</b>暗影 DC 練功心得：40 前帶吸血鬼的擁抱，昏厥 3/5 練功和 PvP 都好用；40 後先拿神聖的暮光集中再點戒律。有人說 40～50 打一隻喝一次，到 53 級幾乎不缺魔了。</li></ul>",
    "heat": 1,
    "vol": "每天都有人問練功點法",
    "first": "2026-11-20",
-   "upd": "2026-11-23",
-   "d": "11/20～11/23",
+   "upd": "2026-11-24",
+   "d": "11/20～11/24",
    "kw": "twilight focus"
   },
   {
@@ -183,12 +183,12 @@ window.DC={
    "ch": "Shadow Priest Classic FAQ、Priest Classic 暗影頻道釘選",
    "h": "暗影輸出手法：DoT 先上、精神鞭笞不要斷",
    "p": "優先順序：暗言術：痛 → 噬靈瘟疫 → 心靈震爆 → 暗言術：死 → 精神鞭笞。暗言術：死大約每 24 秒放一次。因為強化精神鞭笞的設計，精神鞭笞要讀完不要中斷（以前的斷鞭打法沒用了）。",
-   "det": "<ul><li>強化心靈震爆點 4/5 剛好卡循環，網路不好可以點滿 5/5，不建議低於 4/5。</li><li>60 級團隊天賦不點精神分流：靠消耗品和團隊增益（如智慧審判）不會缺魔，而且團隊裡很難觸發。</li><li>加速只影響心靈震爆和公共冷卻，DoT 和精神鞭笞不會變快。</li><li>所有效果都即時更新，沒有「快照」：增益掉了，DoT 傷害也跟著掉。</li><li>心靈專注：用在 DoT 只省魔、不加致命；用在精神鞭笞整段都吃到致命加成。</li><li>不要用「不中斷引導」巨集，每次會多延遲約兩倍網路延遲；想要類似功能改用遊戲內建的按住施法。</li><li>吞噬疫病擴散會優先找沒中的目標，一次可以擴散好幾隻，也會傳到還沒進戰鬥的怪。</li><li>漸隱術是暫時扣仇恨，可以讓你開場仇恨變負的。</li><li>法術抵抗改成 10%／20%／30% 三段（像巫妖王版本），不是經典版的 25%／50%／75%。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>疊暗影之波的開場：心靈震爆 → 暗言術：痛 → 噬靈瘟疫 → 暗言術：死 → 精神鞭笞，很快就疊滿 5 層；打首領時心靈震爆要開怪一瞬間就打到（預讀）。</li><li>強化心靈震爆點 4/5 剛好卡循環，網路不好可以點滿 5/5，不建議低於 4/5。</li><li>60 級團隊天賦不點精神分流：靠消耗品和團隊增益（如智慧審判）不會缺魔，而且團隊裡很難觸發。</li><li>加速只影響心靈震爆和公共冷卻，DoT 和精神鞭笞不會變快。</li><li>所有效果都即時更新，沒有「快照」：增益掉了，DoT 傷害也跟著掉。</li><li>心靈專注：用在 DoT 只省魔、不加致命；用在精神鞭笞整段都吃到致命加成。</li><li>不要用「不中斷引導」巨集，每次會多延遲約兩倍網路延遲；想要類似功能改用遊戲內建的按住施法。</li><li>吞噬疫病擴散會優先找沒中的目標，一次可以擴散好幾隻，也會傳到還沒進戰鬥的怪。</li><li>漸隱術是暫時扣仇恨，可以讓你開場仇恨變負的。</li><li>法術抵抗改成 10%／20%／30% 三段（像巫妖王版本），不是經典版的 25%／50%／75%。</li></ul>",
    "heat": 1,
    "vol": "FAQ 常駐內容",
    "first": "2026-11-20",
-   "upd": "2026-11-20",
-   "d": "11/20"
+   "upd": "2026-11-24",
+   "d": "11/20～11/24"
   },
   {
    "id": "pri-blackout",
@@ -212,12 +212,12 @@ window.DC={
    "ch": "暗影頻道",
    "h": "命中：團隊前差約 7%，先別硬堆",
    "p": "法術命中上限大約 16～17%，團隊前清單離上限差約 7%。指南作者模擬下來 1% 命中約等於 10 法術強度（約 6 DPS），有人自己做了命中堆滿的一套，模擬反而更差。結論是先堆法術強度。",
-   "det": "<ul><li>11/21：暗影 DC 還是天天有人問「清單只有約 9% 命中會不會太少」、「怎麼那麼多裝來自黑石深淵」。回答一樣：命中佔的裝備預算很高，堆滿命中的套裝模擬反而比較差。FAQ 最新仍是 11/17 的 1.6 版。</li><li>矮人現在有 1% 命中的種族天賦（工匠的精準）。</li><li>有人擔心之後要精神控制敵人時需要命中，目前沒有定論。</li><li>經典版要到安其拉前後才堆得到命中上限，暗影 DC 的老玩家說不用急。</li><li><b>11/23：</b>又有人問：清單上只有 8～9% 命中，團本不是要 17%？回答：命中在團本以外沒用，現在也沒有「唯一」的 BiS，很多裝差不多，往哪個方向配都行。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>暗影 DC：兩套團隊前清單命中都只有 9%，命中上限是 17%，但命中裝法傷太少，所以不值得堆滿。</li><li>11/21：暗影 DC 還是天天有人問「清單只有約 9% 命中會不會太少」、「怎麼那麼多裝來自黑石深淵」。回答一樣：命中佔的裝備預算很高，堆滿命中的套裝模擬反而比較差。FAQ 最新仍是 11/17 的 1.6 版。</li><li>矮人現在有 1% 命中的種族天賦（工匠的精準）。</li><li>有人擔心之後要精神控制敵人時需要命中，目前沒有定論。</li><li>經典版要到安其拉前後才堆得到命中上限，暗影 DC 的老玩家說不用急。</li><li><b>11/23：</b>又有人問：清單上只有 8～9% 命中，團本不是要 17%？回答：命中在團本以外沒用，現在也沒有「唯一」的 BiS，很多裝差不多，往哪個方向配都行。</li></ul>",
    "heat": 1,
    "vol": "11/16～11/19 一直有人問清單為什麼沒命中",
    "first": "2026-11-20",
-   "upd": "2026-11-23",
-   "d": "11/20～11/23",
+   "upd": "2026-11-24",
+   "d": "11/20～11/24",
    "kw": "hit cap"
   },
   {
@@ -306,12 +306,12 @@ window.DC={
    "ch": "各頻道釘選",
    "h": "指南與工具總整理",
    "p": "兩個 DC 推薦的資源：Warcraft Tavern 的練功指南和暗影一頁式指南（作者就是暗影 DC 的指南作者）、YouTube 練功影片、WoWSims 模擬器、天賦模擬器、治療模擬器。暗影 DC 版主 11/17 特別說 Wowhead 的永恆指南不可信。",
-   "det": "<ul><li>指南：<a href=\"https://www.warcrafttavern.com/forever/guides/priest-leveling/\" target=\"_blank\" rel=\"noopener\">牧師練功指南</a>（英文）、<a href=\"https://www.warcrafttavern.com/forever/guides/shadow-priest/\" target=\"_blank\" rel=\"noopener\">暗影一頁式指南（60 級天賦、手法、屬性、種族、專業）</a>（英文）、YouTube：<a href=\"https://youtu.be/-aVVDuVST1c\" target=\"_blank\" rel=\"noopener\">1～60 暗影練功</a>（英文）、<a href=\"https://www.youtube.com/watch?v=wVU59PWpeMc\" target=\"_blank\" rel=\"noopener\">1～60 練功深入解析</a>（英文）。</li><li>模擬：<a href=\"https://www.wowsims.com/forever/priest/dps/\" target=\"_blank\" rel=\"noopener\">WoWSims 暗影 DPS 模擬</a>（英文）、<a href=\"https://foreverhealing-tc.netlify.app/\" target=\"_blank\" rel=\"noopener\">ForeverHealing-TC 治療模擬</a>（英文）。</li><li>天賦：<a href=\"https://www.wowhead.com/forever/tw/talent-calc/priest\" target=\"_blank\" rel=\"noopener\">Wowhead 天賦模擬（中文介面）</a>、<a href=\"https://nikftw.github.io/forevertalent/priest/\" target=\"_blank\" rel=\"noopener\">社群天賦模擬</a>（英文）、<a href=\"https://priestforever-talenteditor.netlify.app/\" target=\"_blank\" rel=\"noopener\">天賦重做提案編輯器</a>（英文）。</li><li>回報 bug：<a href=\"https://github.com/ClassicWoWCommunity/forever-bugs/issues\" target=\"_blank\" rel=\"noopener\">社群 bug 回報區（GitHub）</a>（英文），只放 bug，建議請到官方論壇。</li><li>Priest Classic 有提到「Talents Forever」網站的數字有時候不準，要以遊戲內為準。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>暗影 DC：WoWSims 今天更新後，消耗品說明也跟著更新，篩選更好，也解釋了消耗品和團隊增益怎麼疊。</li><li>指南：<a href=\"https://www.warcrafttavern.com/forever/guides/priest-leveling/\" target=\"_blank\" rel=\"noopener\">牧師練功指南</a>（英文）、<a href=\"https://www.warcrafttavern.com/forever/guides/shadow-priest/\" target=\"_blank\" rel=\"noopener\">暗影一頁式指南（60 級天賦、手法、屬性、種族、專業）</a>（英文）、YouTube：<a href=\"https://youtu.be/-aVVDuVST1c\" target=\"_blank\" rel=\"noopener\">1～60 暗影練功</a>（英文）、<a href=\"https://www.youtube.com/watch?v=wVU59PWpeMc\" target=\"_blank\" rel=\"noopener\">1～60 練功深入解析</a>（英文）。</li><li>模擬：<a href=\"https://www.wowsims.com/forever/priest/dps/\" target=\"_blank\" rel=\"noopener\">WoWSims 暗影 DPS 模擬</a>（英文）、<a href=\"https://foreverhealing-tc.netlify.app/\" target=\"_blank\" rel=\"noopener\">ForeverHealing-TC 治療模擬</a>（英文）。</li><li>天賦：<a href=\"https://www.wowhead.com/forever/tw/talent-calc/priest\" target=\"_blank\" rel=\"noopener\">Wowhead 天賦模擬（中文介面）</a>、<a href=\"https://nikftw.github.io/forevertalent/priest/\" target=\"_blank\" rel=\"noopener\">社群天賦模擬</a>（英文）、<a href=\"https://priestforever-talenteditor.netlify.app/\" target=\"_blank\" rel=\"noopener\">天賦重做提案編輯器</a>（英文）。</li><li>回報 bug：<a href=\"https://github.com/ClassicWoWCommunity/forever-bugs/issues\" target=\"_blank\" rel=\"noopener\">社群 bug 回報區（GitHub）</a>（英文），只放 bug，建議請到官方論壇。</li><li>Priest Classic 有提到「Talents Forever」網站的數字有時候不準，要以遊戲內為準。</li></ul>",
    "heat": 1,
    "vol": "常駐釘選",
    "first": "2026-11-20",
-   "upd": "2026-11-20",
-   "d": "11/20"
+   "upd": "2026-11-24",
+   "d": "11/20～11/24"
   },
   {
    "id": "pri-sources",
@@ -357,6 +357,38 @@ window.DC={
    "first": "2026-11-23",
    "upd": "2026-11-23",
    "d": "11/23"
+  },
+  {
+   "id": "pri-hot-mana",
+   "c": "state",
+   "s": "holy",
+   "st": "wait",
+   "d": "11/24",
+   "ch": "healing-forever、德魯伊 DC",
+   "h": "疑似 bug：持續治療每跳一次就扣魔",
+   "p": "11/24 德魯伊 DC 有人回報回春術、癒合每跳一次就扣魔，說牧師 DC 也有人遇到。有人發現拿掉某件裝備後就正常，原因還不確定。",
+   "det": "<ul><li>目前沒有官方回應，遇到可以先脫裝備測試、回報 bug。</li></ul>",
+   "first": "2026-11-24",
+   "upd": "2026-11-24",
+   "heat": 1,
+   "vol": "11/24 兩個 DC 各幾則",
+   "kw": []
+  },
+  {
+   "id": "pri-gold",
+   "c": "play",
+   "s": "any",
+   "st": "ok",
+   "d": "11/24",
+   "ch": "general-forever",
+   "h": "牧師怎麼賺錢：傳承天賦點釣魚、撿垃圾賣",
+   "p": "11/24 有人問牧師不是刷怪職業怎麼賺錢。熱門做法：傳承天賦點專業樹（豐收 5 點＋釣魚 2 點），釣魚會多撈出殘骸箱，裡面有布、皮和綠裝；也有人單純撿垃圾、賣裝綁裝和高等草藥存到 900 金。",
+   "det": "<ul><li>傳承天賦查詢：<a href=\"https://wowforevertalents.com/legacy/\" target=\"_blank\" rel=\"noopener\">WoW Forever Legacy Tree</a>（英文）。</li><li>練小號到 10 級學便宜的專業也能多拿傳承點數。</li></ul>",
+   "first": "2026-11-24",
+   "upd": "2026-11-24",
+   "heat": 1,
+   "vol": "11/24 一般頻道十幾則",
+   "kw": []
   }
  ]
 };
