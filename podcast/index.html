@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>永恆官方 Podcast 中文重點</title>
+<style>
+:root{--bg:#0d0b0a;--panel:#17130f;--line:#3a2e20;--gold:#e8c26b;--gold2:#b8913f;--text:#ece3d2;--dim:#a8998a;color-scheme:dark}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) radial-gradient(ellipse at top,#2a1d10 0,#0d0b0a 60%) fixed;color:var(--text);font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.65;font-size:15px}
+a{color:var(--gold)}
+.wrap{max-width:860px;margin:0 auto;padding:16px 16px 60px}
+h1{color:var(--gold);margin:6px 0 2px;font-size:28px}
+h2{color:var(--gold);font-size:21px;margin:18px 0 2px}
+h3{color:var(--gold);font-size:16.5px;margin:0}
+.dim{color:var(--dim);font-size:13px}
+.note{background:#17130f;border-left:3px solid var(--gold2);padding:8px 12px;border-radius:4px;color:var(--dim);font-size:13.5px;margin:10px 0}
+.row{display:flex;gap:8px;overflow-x:auto;padding:8px 0;scrollbar-width:none}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#1f1913;color:var(--dim);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{border-color:var(--gold2);color:var(--gold);background:#2b2014}
+.chip:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:10px 0}
+.card.top{border-color:var(--gold2)}
+.hd{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.hd a{font-size:13px;white-space:nowrap;text-decoration:none}
+ul{margin:6px 0 2px;padding-left:20px}
+li{margin:5px 0}
+li b{color:#fff3d6;font-weight:700}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.toc a{border:1px solid var(--line);border-radius:6px;padding:2px 9px;font-size:13px;text-decoration:none;background:#1f1913}
+</style></head><body><div class="wrap">
+<div class="dim"><a href="../index.html">← 永恆攻略網</a>　<a href="../dc/index.html">DC 重點</a>　<a href="../ah/index.html">拍賣場</a></div>
+<h1>永恆官方 Podcast 中文重點</h1>
+<div class="dim" id="upd"></div>
+<div class="note">暴雪每週四（美國時間）出一集 WoW: Forever Podcast，設計師直接回答玩家問題。這裡把每集整理成中文重點，不是逐字翻譯。內容是照英文自動字幕整理的，技能和裝備名稱可能跟遊戲內中文不完全一樣，有疑問以影片為準；點每段右邊的時間可以直接跳到影片那一段。</div>
+<div class="row" id="eps"></div>
+<div id="ep"></div>
+</div>
+<script src="data.js"></script>
+<script>
+(function(){
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function rich(s){return esc(s).replace(/&lt;(\/?)b&gt;/g,'<$1b>')}
+function tm(x){var m=Math.floor(x/60),s=x%60;return (m>=60?Math.floor(m/60)+':'+('0'+m%60).slice(-2):m)+':'+('0'+s).slice(-2)}
+var P=window.POD||{eps:[]},E=P.eps,cur=0;
+var h=parseInt((location.hash||'').replace('#ep',''),10);E.forEach(function(e,i){if(e.n===h)cur=i});
+document.getElementById('upd').textContent=P.updated?'更新：'+P.updated+'・共 '+E.length+' 集':'';
+function draw(){
+ document.getElementById('eps').innerHTML=E.map(function(e,i){return '<button class="chip" aria-pressed="'+(i==cur)+'" data-i="'+i+'">第 '+e.n+' 集・'+esc(e.title)+'</button>'}).join('');
+ var e=E[cur];if(!e){document.getElementById('ep').innerHTML='<p class="dim">還沒有資料</p>';return}
+ var y='https://www.youtube.com/watch?v='+e.yt;
+ var o='<h2>第 '+e.n+' 集：'+esc(e.title)+'</h2><div class="dim">'+esc(e.en)+'・'+esc(e.date)+'・'+esc(e.len)+'・<a href="'+y+'" target="_blank" rel="noopener">看影片 ↗</a></div><div class="dim">'+esc(e.who)+'</div>';
+ o+='<div class="card top"><h3>先看這幾點</h3><ul>'+e.tldr.map(function(t){return '<li>'+rich(t)+'</li>'}).join('')+'</ul>'+(e.next?'<div class="dim">'+esc(e.next)+'</div>':'')+'</div>';
+ o+='<div class="toc">'+e.s.map(function(x,i){return '<a href="#s'+i+'" data-s="'+i+'">'+esc(x.t)+'</a>'}).join('')+'</div>';
+ o+=e.s.map(function(x,i){return '<div class="card" id="s'+i+'"><div class="hd"><h3>'+esc(x.t)+'</h3><a href="'+y+'&t='+x.at+'s" target="_blank" rel="noopener">▶ '+tm(x.at)+'</a></div><ul>'+x.p.map(function(t){return '<li>'+rich(t)+'</li>'}).join('')+'</ul></div>'}).join('');
+ document.getElementById('ep').innerHTML=o}
+document.addEventListener('click',function(ev){var b=ev.target.closest('.chip');if(b){cur=+b.dataset.i;history.replaceState(null,'','#ep'+E[cur].n);draw();return}
+ var a=ev.target.closest('.toc a');if(a){ev.preventDefault();var el=document.getElementById('s'+a.dataset.s);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}});
+draw();
+})();
+</script></body></html>
