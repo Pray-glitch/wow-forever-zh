@@ -2,8 +2,8 @@
 window.DC={
  "name": "獵人",
  "source": "Classic Hunter Lodge（約 7.4 萬人）",
- "updated": "2026-11-23 18:19",
- "run": "2026-11-23",
+ "updated": "2026-11-24 15:25",
+ "run": "2026-11-24",
  "kw": {},
  "topics": [
   {
@@ -14,12 +14,12 @@ window.DC={
    "ch": "forever-pve 釘選（11/19 模擬）",
    "h": "60 級打王排行：生存近戰穿插第一，新手先玩射擊站樁",
    "p": "釘選的獵人指南用模擬器排了 7 種打法（3 分鐘戰鬥）。第一名是生存「近戰穿插」（Weave）約 1253 DPS，但難度高；第二名射擊站樁（點狙擊射擊、不帶寵物）約 1141，最簡單。新手建議先玩射擊站樁，熟了再改生存穿插。",
-   "det": "<ul><li>排名：1 生存穿插（孤狼、不帶寵物）1253；2 射擊站樁（狙擊射擊、不帶寵物）1141；3 射擊帶寵物 1065；4 野獸站樁 1014；5 生存純近戰 985；6 生存站樁 978；7 生存近戰＋孤狼 955。</li><li>生存穿插天賦 0/20/31：<a href=\"https://toxickevinferm.github.io/hunter-guide/guide/\" target=\"_blank\" rel=\"noopener\">指南網站（可一鍵複製天賦）</a>（英文）。</li><li>戰鬥只有 1.5 分鐘或 5 分鐘時排名會變，網站上可以切換。</li><li>種族差距很小：六個種族都在 1% 以內，玩喜歡的就好；生存穿插要拚最後 1% 選夜精靈。</li></ul>",
-   "heat": 3,
-   "vol": "每天都有人問「現在最強是哪個專精」",
+   "det": "<ul><li><b>11/24：</b>不想近戰穿插的話，釘選建議玩射擊站樁；野獸「可以玩」但比射擊弱，團本裡寵物容易死、要定位寵物時很麻煩。射擊最大的問題是很快沒魔，大家擔心團本戰鬥時間長撐不住。</li><li>排名：1 生存穿插（孤狼、不帶寵物）1253；2 射擊站樁（狙擊射擊、不帶寵物）1141；3 射擊帶寵物 1065；4 野獸站樁 1014；5 生存純近戰 985；6 生存站樁 978；7 生存近戰＋孤狼 955。</li><li>生存穿插天賦 0/20/31：<a href=\"https://toxickevinferm.github.io/hunter-guide/guide/\" target=\"_blank\" rel=\"noopener\">指南網站（可一鍵複製天賦）</a>（英文）。</li><li>戰鬥只有 1.5 分鐘或 5 分鐘時排名會變，網站上可以切換。</li><li>種族差距很小：六個種族都在 1% 以內，玩喜歡的就好；生存穿插要拚最後 1% 選夜精靈。</li></ul>",
+   "heat": 2,
+   "vol": "11/24 pve 頻道近百則",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-24",
+   "d": "11/21～11/24",
    "kw": []
   },
   {
@@ -62,12 +62,12 @@ window.DC={
    "ch": "forever-pve 釘選（11/19 模擬）",
    "h": "生存穿插團隊前 BiS：黑石切割者＋覓血者",
    "p": "釘選網站逐格列出團隊前 BiS（生存穿插、拚到奧山崇拜的版本約 1246 DPS）。武器是黑石塔下層 Spirestone Battle Lord 掉的 The Blackrock Slicer（雙手）配任務弓覓血者。命中先堆到 8%，生存有天賦給 3%，裝備只要 3～5%。",
-   "det": "<ul><li>頭 Black Dragonscale Helm（製皮）；項鍊<a href=\"https://www.wowhead.com/forever/tw/item=15411\" target=\"_blank\" rel=\"noopener\">弗丁印記</a>；肩 Premier 鎖甲肩（PvP）；披風<a href=\"https://www.wowhead.com/forever/tw/item=13340\" target=\"_blank\" rel=\"noopener\">黑爵士的斗篷</a>；胸 Dawn Armor（製皮）。</li><li>護腕<a href=\"https://www.wowhead.com/forever/tw/item=18375\" target=\"_blank\" rel=\"noopener\">日蝕護腕</a>；手<a href=\"https://www.wowhead.com/forever/tw/item=15063\" target=\"_blank\" rel=\"noopener\">魔暴龍皮手套</a>；腰 Ranger's Belt（荊棘谷商人 Pix Xizzix）；腿<a href=\"https://www.wowhead.com/forever/tw/item=15062\" target=\"_blank\" rel=\"noopener\">魔暴龍皮護腿</a>；腳 Premier 鎖甲靴（PvP）。</li><li>戒指 Cutthroat's Signet（同一個商人）、<a href=\"https://www.wowhead.com/forever/tw/item=19325\" target=\"_blank\" rel=\"noopener\">胡力歐指環</a>；飾品<a href=\"https://www.wowhead.com/forever/tw/item=22321\" target=\"_blank\" rel=\"noopener\">維姆薩拉克之心</a>、<a href=\"https://www.wowhead.com/forever/tw/item=13965\" target=\"_blank\" rel=\"noopener\">黑手飾物</a>。</li><li>武器替代：黑石切割者配 Deep Jungle Rifle、<a href=\"https://www.wowhead.com/forever/tw/item=12784\" target=\"_blank\" rel=\"noopener\">奧金斧</a>、<a href=\"https://www.wowhead.com/forever/tw/item=13040\" target=\"_blank\" rel=\"noopener\">覓心弩</a>都只差 2～3 DPS。</li><li>屬性價值（以敏捷 1 為基準）：命中（到 8%）1.43、致命 0.83、加速 0.82、智力 0.44、力量 0.22、攻強 0.2。</li><li><a href=\"https://toxickevinferm.github.io/hunter-guide/prebis-new\" target=\"_blank\" rel=\"noopener\">完整清單（含站樁、近戰版本）</a>（英文）</li></ul>",
-   "heat": 3,
+   "det": "<ul><li><b>11/24：</b>很多人認為魔暴龍套幾乎是必拿的團隊前，取得也容易。有人問遠程武器 +2% 暴擊的<a href=\"https://www.wowhead.com/forever/tw/item=279272\" target=\"_blank\" rel=\"noopener\">SAF-T究極精確瞄準鏡</a>：據說是拾取綁定的工程結構圖，來源還沒人確認。</li><li>頭 Black Dragonscale Helm（製皮）；項鍊<a href=\"https://www.wowhead.com/forever/tw/item=15411\" target=\"_blank\" rel=\"noopener\">弗丁印記</a>；肩 Premier 鎖甲肩（PvP）；披風<a href=\"https://www.wowhead.com/forever/tw/item=13340\" target=\"_blank\" rel=\"noopener\">黑爵士的斗篷</a>；胸 Dawn Armor（製皮）。</li><li>護腕<a href=\"https://www.wowhead.com/forever/tw/item=18375\" target=\"_blank\" rel=\"noopener\">日蝕護腕</a>；手<a href=\"https://www.wowhead.com/forever/tw/item=15063\" target=\"_blank\" rel=\"noopener\">魔暴龍皮手套</a>；腰 Ranger's Belt（荊棘谷商人 Pix Xizzix）；腿<a href=\"https://www.wowhead.com/forever/tw/item=15062\" target=\"_blank\" rel=\"noopener\">魔暴龍皮護腿</a>；腳 Premier 鎖甲靴（PvP）。</li><li>戒指 Cutthroat's Signet（同一個商人）、<a href=\"https://www.wowhead.com/forever/tw/item=19325\" target=\"_blank\" rel=\"noopener\">胡力歐指環</a>；飾品<a href=\"https://www.wowhead.com/forever/tw/item=22321\" target=\"_blank\" rel=\"noopener\">維姆薩拉克之心</a>、<a href=\"https://www.wowhead.com/forever/tw/item=13965\" target=\"_blank\" rel=\"noopener\">黑手飾物</a>。</li><li>武器替代：黑石切割者配 Deep Jungle Rifle、<a href=\"https://www.wowhead.com/forever/tw/item=12784\" target=\"_blank\" rel=\"noopener\">奧金斧</a>、<a href=\"https://www.wowhead.com/forever/tw/item=13040\" target=\"_blank\" rel=\"noopener\">覓心弩</a>都只差 2～3 DPS。</li><li>屬性價值（以敏捷 1 為基準）：命中（到 8%）1.43、致命 0.83、加速 0.82、智力 0.44、力量 0.22、攻強 0.2。</li><li><a href=\"https://toxickevinferm.github.io/hunter-guide/prebis-new\" target=\"_blank\" rel=\"noopener\">完整清單（含站樁、近戰版本）</a>（英文）</li></ul>",
+   "heat": 2,
    "vol": "一直有人問 prebis",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-24",
+   "d": "11/21～11/24",
    "kw": []
   },
   {
@@ -163,6 +163,22 @@ window.DC={
    "first": "2026-11-23",
    "upd": "2026-11-23",
    "d": "11/23"
+  },
+  {
+   "id": "hun-pvp",
+   "c": "play",
+   "s": "any",
+   "st": "ok",
+   "d": "11/24",
+   "ch": "forever-pve",
+   "h": "PvP：獵人單挑打不過法師牧師，奧特蘭克山谷部落很強",
+   "p": "11/24 頻道聊 PvP：獵人單挑常被法師、牧師、術士壓，團體戰才吃香；冰霜陷阱配天賦很好用。多人覺得奧特蘭克山谷現在明顯偏部落。",
+   "det": "<ul><li>新的寵物指令 petmoveto 可以更精準地移動寵物，之後應該會有自己的按鈕。</li><li>練功問題：獵人 6～30 級不慢；狐狸是新寵物家族。</li></ul>",
+   "first": "2026-11-24",
+   "upd": "2026-11-24",
+   "heat": 1,
+   "vol": "11/24 十幾則",
+   "kw": []
   }
  ]
 };
