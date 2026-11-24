@@ -54,9 +54,9 @@ ul.pl b{color:var(--text);font-weight:500}
 <p class="sub">每個專業取冷卻製作裡每天賺最多的那一項。三個專業的冷卻互不影響，分身可以都練。</p>
 <div class="best" id="best"></div>
 <h2>練到能做要花多少</h2>
-<p class="sub">從 1 練到能做冷卻製作那一級，材料全部在拍賣場買的花費（用現在的行情價）。練法照 <a href="https://www.wow-professions.com/forever" target="_blank" rel="noopener">wow-professions.com 永恆版攻略</a>的最省路線。三個專業都要角色 35 等才能學到最高一階。</p>
+<p class="sub">從 1 練到能做冷卻製作那一級的實際花費：材料全部在拍賣場買（現在的行情價），再扣掉做出來的東西賣商店拿回的錢。練法照 <a href="https://www.wow-professions.com/forever" target="_blank" rel="noopener">wow-professions.com 永恆版攻略</a>的最省路線。三個專業都要角色 35 等才能學到最高一階。</p>
 <div id="lvl"></div>
-<div class="note">沒算進去的：訓練師學費、做出來的東西賣商店拿回的錢（實際會比這裡便宜一些）、自己採集或剝皮省下的材料。升級有運氣成分，攻略的數量是估計值，多備一成比較保險。</div>
+<div class="note">沒算進去的：訓練師學費、自己採集或剝皮省下的材料。成品一律用商店價算（確定拿得到）；拍賣價比較高的另外列出，但練功裝很多人在丟，不一定賣得掉。升級有運氣成分，攻略的數量是估計值，多備一成比較保險。</div>
 <h2>排名：平均每天淨賺</h2>
 <p class="sub">冷卻 23 小時以上的製作，由高到低。</p>
 <div id="rank"></div>
@@ -102,11 +102,11 @@ var CDS=[
 // 練到能做冷卻製作的材料清單（11/24，照 wow-professions.com/forever 攻略的主路線；[物品ID,數量]）。fix=固定要買的配方（銅）。
 var LV=[
  {prof:'製皮',to:250,what:'精煉石中鹽',mats:[[2934,105],[2318,247],[783,10],[2319,152],[4232,20],[4235,25],[4234,292],[7071,10],[4304,614],[8170,144],[4289,105],[2320,124],[2321,122],[4340,20],[4291,198],[2325,18],[14341,18],[15846,1]],
-  fix:[['圖樣：邪惡皮革護手（商人）',12000]],tip:'235 到 250 做邪惡皮革護手，數量取攻略 235-265 的一半。含 1 個篩鹽器。'},
+  fix:[['圖樣：邪惡皮革護手（商人）',12000]],src:'leatherworking',sell:[['Embossed Leather Gloves',30],['Embossed Leather Pants',10],['Fine Leather Belt',2],['Dark Leather Belt',20],["Hillman's Leather Gloves",8],['Barbaric Shoulders',15],['Guardian Gloves',10],['Barbaric Harness',10],['Nightscape Headband',22],['Nightscape Pants',36],['Wicked Leather Gauntlets',18]],tip:'235 到 250 做邪惡皮革護手，數量取攻略 235-265 的一半。含 1 個篩鹽器。'},
  {prof:'裁縫',to:230,what:'月布',mats:[[2589,60],[2592,111],[4306,812],[4234,30],[4338,720],[14047,120],[2320,28],[2321,122],[6260,10],[2604,108],[4291,100],[8343,44],[14341,8]],
-  tip:'永恆版月布只要裁縫 230（經典版是 250）。225 到 230 做符文布腰帶約 8 條。月布圖樣要另外在冬泉谷買（限量），沒算在內。'},
+  src:'tailoring',sell:[['Linen Belt',28],['Woolen Cape',22],['Double-stitched Woolen Shoulders',5],['Azure Silk Hood',5],['Small Silk Pack',15],['Crimson Silk Vest',20],['Crimson Silk Pantaloons',17],['Black Mageweave Leggings',22],['Black Mageweave Shoulders',5],['Red Mageweave Bag',17],['Runecloth Belt',8]],tip:'永恆版月布只要裁縫 230（經典版是 250）。225 到 230 做符文布腰帶約 8 條。月布圖樣要另外在冬泉谷買（限量），沒算在內。'},
  {prof:'鍊金術',to:275,what:'奧金錠／軍團鋼錠',mats:[[765,54],[2447,83],[785,50],[2449,56],[2450,60],[3820,108],[6359,40],[3371,152],[3356,51],[3357,62],[3372,160],[3358,25],[8839,25],[13422,47],[8925,35],[8838,10],[12958,1],[3575,4],[9262,1],[8831,4],[4625,4]],
-  fix:[['配方：自然防護藥水（商人）',2000],['配方：超強防禦藥劑（商人）',13000]],tip:'265 到 275 做強效防禦藥劑約 10 瓶。含合成奧金配方和做點金石的材料（鐵錠、黑色硫酸鹽、紫蓮花、火焰花）；點金石配方在塔納利斯買，沒算在內。'}
+  fix:[['配方：自然防護藥水（商人）',2000],['配方：超強防禦藥劑（商人）',13000]],src:'alchemy',sell:[['Elixir of Minor Force',9],['Elixir of Minor Defense',45],['Minor Mana Potion',10],['Elixir of Minor Fortitude',28],['Elixir of Wisdom',30],['Lesser Mana Potion',10],['Fire Oil',10],['Elixir of Fire Power',15],['Mana Potion',36],['Nature Protection Potion',62],['Elixir of Greater Intellect',25],['Stonescale Oil',74],['Elixir of Greater Defense',10]],tip:'265 到 275 做強效防禦藥劑約 10 瓶。多做的石鱗魚油和火焰之油算賣掉。含合成奧金配方和做點金石的材料（鐵錠、黑色硫酸鹽、紫蓮花、火焰花）；點金石配方在塔納利斯買，沒算在內。'}
 ];
 function lvl(all){
  var A=window.AH,by={};if(!A)return;A.items.forEach(function(i){by[i.id]=i});
@@ -114,13 +114,20 @@ function lvl(all){
  var rows=LV.map(function(L){var tot=0,miss=[],ls=[];
   L.mats.forEach(function(m){var it=by[m[0]];if(!it||!(it.k>0)){miss.push(it?it.n:'#'+m[0]);return}var c=it.k*m[1];tot+=c;ls.push({n:it.n,q:m[1],c:c})});
   (L.fix||[]).forEach(function(f){tot+=f[1];ls.push({n:f[0],q:1,c:f[1]})});
-  ls.sort(function(a,b){return b.c-a.c});return {L:L,tot:tot,miss:miss,ls:ls,b:best[L.prof]}}).sort(function(a,b){return a.tot-b.tot});
- $('lvl').innerHTML=rows.map(function(r){var d=r.b&&r.b.day>0?Math.ceil(r.tot/r.b.day):0;
-  return '<div class="lv"><div class="hd"><span class="nm">'+esc(r.L.prof)+' 1 → '+r.L.to+'<span class="tag">做'+esc(r.L.what)+'</span></span><span><b>'+money(r.tot)+'</b></span></div>'+
+  ls.sort(function(a,b){return b.c-a.c});
+  // 做出來的東西賣掉拿回的錢：sell=[配方英文名,賣掉幾個]；商店價確定拿得到，拍賣價只算有成交紀錄而且扣 5% 後比商店高的
+  var C=(window.CRAFTS||{})[L.src],rb={},vend=0,ahx=0,sl=[],nos=[];if(C)C.rows.forEach(function(z){rb[z.recipe]=z});
+  (L.sell||[]).forEach(function(x){var z=rb[x[0]];if(!z){nos.push(x[0]);return}var q=z.qty||1,v=(z.vendor||0)/q*x[1],a=(z.sold>0&&z.ah>0)?z.ah*0.95*x[1]:0,ex=a>v?a-v:0;vend+=v;ahx+=ex;sl.push({n:z.item,q:x[1],v:v,a:ex>0?a:0})});
+  sl.sort(function(a,b){return b.v-a.v});
+  return {L:L,tot:tot,miss:miss,ls:ls,b:best[L.prof],vend:vend,ahx:ahx,sl:sl,nos:nos,net:tot-vend}}).sort(function(a,b){return a.net-b.net});
+ $('lvl').innerHTML=rows.map(function(r){var d=r.b&&r.b.day>0?Math.ceil(r.net/r.b.day):0;
+  return '<div class="lv"><div class="hd"><span class="nm">'+esc(r.L.prof)+' 1 → '+r.L.to+'<span class="tag">做'+esc(r.L.what)+'</span></span><span class="dim">實際花費 <b style="color:var(--text)">'+money(r.net)+'</b></span></div>'+
+  '<div class="nums" style="margin-top:2px"><span>買材料 <b>'+money(r.tot)+'</b></span><span>成品賣商店拿回 <b class="up">'+money(r.vend)+'</b></span>'+(r.ahx>0?'<span>改掛拍賣最多再多拿 <b>'+money(r.ahx)+'</b>（不一定賣得掉）</span>':'')+'</div>'+
   '<div class="nums" style="margin-top:2px">'+(d?'<span>靠「'+esc(r.b.item)+'」每天賺 <b>'+gday(r.b.day)+'</b>，約 <b>'+d+'</b> 天回本</span>':'<span class="warn">現在的價格做冷卻製作不賺，回不了本</span>')+'</div>'+
-  '<div class="mats" style="margin-top:2px">'+esc(r.L.tip)+(r.miss.length?'・<span class="warn">拍賣場現在沒貨、沒算到：'+esc(r.miss.join('、'))+'</span>':'')+'</div>'+
-  '<details><summary>材料明細（花最多的排前面）</summary><table>'+r.ls.map(function(z){return '<tr><td>'+esc(z.n)+'</td><td class="r">×'+z.q+'</td><td class="r">'+money(z.c)+'</td></tr>'}).join('')+'</table></details></div>'}).join('')}
-var loaded=0,files=['craft_alchemy.js','craft_tailoring.js','data.js'];
+  '<div class="mats" style="margin-top:2px">'+esc(r.L.tip)+(r.miss.length?'・<span class="warn">拍賣場現在沒貨、沒算到：'+esc(r.miss.join('、'))+'</span>':'')+(r.nos.length?'・<span class="warn">查不到賣價、沒扣到：'+esc(r.nos.join('、'))+'</span>':'')+'</div>'+
+  '<details><summary>材料明細（花最多的排前面）</summary><table>'+r.ls.map(function(z){return '<tr><td>'+esc(z.n)+'</td><td class="r">×'+z.q+'</td><td class="r">'+money(z.c)+'</td></tr>'}).join('')+'</table></details>'+
+  '<details><summary>做出來賣掉的東西（商店價；拍賣比較貴的另外標）</summary><table>'+r.sl.map(function(z){return '<tr><td>'+esc(z.n)+'</td><td class="r">×'+z.q+'</td><td class="r">'+money(z.v)+(z.a?' <span class="dim">拍賣 '+money(z.a).replace(/<[^>]+>/g,'')+'</span>':'')+'</td></tr>'}).join('')+'</table></details></div>'}).join('')}
+var loaded=0,files=['craft_alchemy.js','craft_tailoring.js','craft_leatherworking.js','data.js'];
 function done(){if(++loaded>=files.length)init()}
 files.forEach(function(f){var s=document.createElement('script');s.src=f+'?'+Date.now();s.onload=done;s.onerror=done;document.body.appendChild(s)});
 function build(){
