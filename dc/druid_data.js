@@ -2,8 +2,8 @@
 window.DC={
  "name": "德魯伊",
  "source": "Druid Classic（約 8.1 萬人）",
- "updated": "2026-11-23 18:19",
- "run": "2026-11-23",
+ "updated": "2026-11-24 15:25",
+ "run": "2026-11-24",
  "kw": {},
  "topics": [
   {
@@ -14,12 +14,12 @@ window.DC={
    "ch": "forever-feral-dps、forever-feral-tank 釘選（11/16、11/18）",
    "h": "熊貓不出 BiS 清單：用模擬器權重＋Sixty Upgrades 自己比",
    "p": "野性的模擬器作者明說「沒有打算出 prebis 或 BiS 清單」，改提供模擬出來的屬性權重，搭配 Sixty Upgrades 比任何裝備。貓和熊各一組 Pawn 字串。",
-   "det": "<ul><li>貓的權重：致命 7.08、命中 5.21、熟練 4.9、加速 3.93、敏捷 0.65、力量 0.59、攻強 0.24（命中、致命這些是每 1% 的價值）。</li><li>熊的權重：熟練 17.76、命中 6.88、致命 5.09、加速 3.58、閃躲 1.29、耐力 1、防禦 0.88、力量 0.49、敏捷 0.43、護甲 0.17。熊非常吃熟練。</li><li><a href=\"https://sixtyupgrades.com/forever/ep/import?name=Feral%20Bear%20WoWSims%20Weights&strength=0.486&agility=0.433&stamina=1.003&attackPower=0.221&hit=6.879&crit=5.086&haste=3.581&expertise=17.76\" target=\"_blank\" rel=\"noopener\">熊的 Sixty Upgrades 權重</a>（英文）、<a href=\"https://sixtyupgrades.com/forever/ep/import?name=Feral%20Cat%20WoWSims%20Weights&strength=0.594&agility=0.655&attackPower=0.244&hit=5.212&crit=7.080&haste=3.931&expertise=4.904&physicalDamage=1.863&dps=2.142\" target=\"_blank\" rel=\"noopener\">貓的 Sixty Upgrades 權重</a>（英文）。</li><li>熊坦頻道 11/21 有人給的幾件好拿的：海加爾項鍊、黑石山任務戒指、徽章飾品、黑石山的熟練長柄武器、厄運之槌貢品的 Unyielding 錘。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>野性 DPS 頻道有人說自己模擬 1100、盜賊朋友只有 800，大家擔心被削；也有人說盜賊單體是靠雷暴和闇影套，雷暴被削後掉很多。某件木喉胸甲數值很好，有人猜會跟 T1 一起穿。</li><li>貓的權重：致命 7.08、命中 5.21、熟練 4.9、加速 3.93、敏捷 0.65、力量 0.59、攻強 0.24（命中、致命這些是每 1% 的價值）。</li><li>熊的權重：熟練 17.76、命中 6.88、致命 5.09、加速 3.58、閃躲 1.29、耐力 1、防禦 0.88、力量 0.49、敏捷 0.43、護甲 0.17。熊非常吃熟練。</li><li><a href=\"https://sixtyupgrades.com/forever/ep/import?name=Feral%20Bear%20WoWSims%20Weights&strength=0.486&agility=0.433&stamina=1.003&attackPower=0.221&hit=6.879&crit=5.086&haste=3.581&expertise=17.76\" target=\"_blank\" rel=\"noopener\">熊的 Sixty Upgrades 權重</a>（英文）、<a href=\"https://sixtyupgrades.com/forever/ep/import?name=Feral%20Cat%20WoWSims%20Weights&strength=0.594&agility=0.655&attackPower=0.244&hit=5.212&crit=7.080&haste=3.931&expertise=4.904&physicalDamage=1.863&dps=2.142\" target=\"_blank\" rel=\"noopener\">貓的 Sixty Upgrades 權重</a>（英文）。</li><li>熊坦頻道 11/21 有人給的幾件好拿的：海加爾項鍊、黑石山任務戒指、徽章飾品、黑石山的熟練長柄武器、厄運之槌貢品的 Unyielding 錘。</li></ul>",
    "heat": 2,
    "vol": "每天有人問 BiS",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-24",
+   "d": "11/21～11/24",
    "kw": []
   },
   {
@@ -30,12 +30,12 @@ window.DC={
    "ch": "forever-feral-tank、forever-feral-dps 釘選（11/21）",
    "h": "野性消耗品清單（11/21 釘選）",
    "p": "模擬器作者 11/21 釘選的熊貓消耗品，分成增益、精煉／食物／磨刀石（各選一）、戰鬥中、炸藥、詛咒之地三件、功能藥水。",
-   "det": "<ul><li>增益：<a href=\"https://www.wowhead.com/forever/tw/item=9088\" target=\"_blank\" rel=\"noopener\">阿薩斯的禮物</a>、<a href=\"https://www.wowhead.com/forever/tw/item=12451\" target=\"_blank\" rel=\"noopener\">魂能之力</a>、<a href=\"https://www.wowhead.com/forever/tw/item=12460\" target=\"_blank\" rel=\"noopener\">魂能之擊</a>、Elixir of Cunning（敏捷＋智力各 25）、Elixir of Sages（精神 25＋2% 致命）、Elixir of the Phalanx（400 血＋500 護甲）、強效法力之血藥劑、Elixir of Minor Force。</li><li>精煉擇一：Flask of Natural Aggression（耐力 30＋2% 致命，只在海加爾）或 Flask of Natural Precision（耐力 30＋降低被閃躲招架 2%，只在海加爾）。食物：Swiftstrike Steak（敏捷 20）或 Dirge’s Chimaerok Chops（耐力 25）。武器：<a href=\"https://www.wowhead.com/forever/tw/item=12643\" target=\"_blank\" rel=\"noopener\">緻密平衡石</a>或<a href=\"https://www.wowhead.com/forever/tw/item=18262\" target=\"_blank\" rel=\"noopener\">元素磨刀石</a>。</li><li>戰鬥中：<a href=\"https://www.wowhead.com/forever/tw/item=13455\" target=\"_blank\" rel=\"noopener\">強效石盾藥水</a>、<a href=\"https://www.wowhead.com/forever/tw/item=7676\" target=\"_blank\" rel=\"noopener\">菊花茶</a>、特效治療石、<a href=\"https://www.wowhead.com/forever/tw/item=13442\" target=\"_blank\" rel=\"noopener\">強效怒氣藥水</a>（熊形態加 45～75 怒氣）、特效法力藥水、惡魔符文。</li><li>詛咒之地三件都帶：<a href=\"https://www.wowhead.com/forever/tw/item=8412\" target=\"_blank\" rel=\"noopener\">厚甲蠍藥粉</a>、<a href=\"https://www.wowhead.com/forever/tw/item=8410\" target=\"_blank\" rel=\"noopener\">土狼興奮劑</a>、<a href=\"https://www.wowhead.com/forever/tw/item=8411\" target=\"_blank\" rel=\"noopener\">肺片雞尾酒</a>（同時只能有一個）。</li><li>功能：<a href=\"https://www.wowhead.com/forever/tw/item=5634\" target=\"_blank\" rel=\"noopener\">自由行動藥劑</a>、<a href=\"https://www.wowhead.com/forever/tw/item=9030\" target=\"_blank\" rel=\"noopener\">滋補藥水</a>、有限無敵藥水。茶、符文、治療石共用冷卻；炸藥共用冷卻。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>釘選的貓消耗品改了：從「靈巧＋賢者」兩瓶改成只喝<a href=\"https://www.wowhead.com/forever/tw/item=13452\" target=\"_blank\" rel=\"noopener\">貓鼬藥劑</a>（只佔一格，也比較省錢）。有人懷疑貓鼬和獸群領袖的暴擊會互相覆蓋、模擬器可能高估，還在等人實測；也有人說卷軸和同屬性藥劑不能疊。</li><li>增益：<a href=\"https://www.wowhead.com/forever/tw/item=9088\" target=\"_blank\" rel=\"noopener\">阿薩斯的禮物</a>、<a href=\"https://www.wowhead.com/forever/tw/item=12451\" target=\"_blank\" rel=\"noopener\">魂能之力</a>、<a href=\"https://www.wowhead.com/forever/tw/item=12460\" target=\"_blank\" rel=\"noopener\">魂能之擊</a>、Elixir of Cunning（敏捷＋智力各 25）、Elixir of Sages（精神 25＋2% 致命）、Elixir of the Phalanx（400 血＋500 護甲）、強效法力之血藥劑、Elixir of Minor Force。</li><li>精煉擇一：Flask of Natural Aggression（耐力 30＋2% 致命，只在海加爾）或 Flask of Natural Precision（耐力 30＋降低被閃躲招架 2%，只在海加爾）。食物：Swiftstrike Steak（敏捷 20）或 Dirge’s Chimaerok Chops（耐力 25）。武器：<a href=\"https://www.wowhead.com/forever/tw/item=12643\" target=\"_blank\" rel=\"noopener\">緻密平衡石</a>或<a href=\"https://www.wowhead.com/forever/tw/item=18262\" target=\"_blank\" rel=\"noopener\">元素磨刀石</a>。</li><li>戰鬥中：<a href=\"https://www.wowhead.com/forever/tw/item=13455\" target=\"_blank\" rel=\"noopener\">強效石盾藥水</a>、<a href=\"https://www.wowhead.com/forever/tw/item=7676\" target=\"_blank\" rel=\"noopener\">菊花茶</a>、特效治療石、<a href=\"https://www.wowhead.com/forever/tw/item=13442\" target=\"_blank\" rel=\"noopener\">強效怒氣藥水</a>（熊形態加 45～75 怒氣）、特效法力藥水、惡魔符文。</li><li>詛咒之地三件都帶：<a href=\"https://www.wowhead.com/forever/tw/item=8412\" target=\"_blank\" rel=\"noopener\">厚甲蠍藥粉</a>、<a href=\"https://www.wowhead.com/forever/tw/item=8410\" target=\"_blank\" rel=\"noopener\">土狼興奮劑</a>、<a href=\"https://www.wowhead.com/forever/tw/item=8411\" target=\"_blank\" rel=\"noopener\">肺片雞尾酒</a>（同時只能有一個）。</li><li>功能：<a href=\"https://www.wowhead.com/forever/tw/item=5634\" target=\"_blank\" rel=\"noopener\">自由行動藥劑</a>、<a href=\"https://www.wowhead.com/forever/tw/item=9030\" target=\"_blank\" rel=\"noopener\">滋補藥水</a>、有限無敵藥水。茶、符文、治療石共用冷卻；炸藥共用冷卻。</li></ul>",
    "heat": 2,
-   "vol": "釘選",
+   "vol": "11/24 野性頻道",
    "first": "2026-11-22",
-   "upd": "2026-11-22",
-   "d": "11/21",
+   "upd": "2026-11-24",
+   "d": "11/21～11/24",
    "kw": []
   },
   {
@@ -46,12 +46,12 @@ window.DC={
    "ch": "forever-bear-compendium",
    "h": "熊坦技巧：手動懲戒錘、開怪前先存怒氣",
    "p": "熊整理頻道的進階技巧：主武器秒傷低於約 64 時，開場用手動懲戒錘再換回主武器有一點點增益（最多約 1.8%）。開怪前用狼頭之盔＋Enraged Idol 搭配狂怒，再喝強效怒氣藥水，幾乎可以滿怒開怪。",
-   "det": "<ul><li><a href=\"https://www.wowhead.com/forever/tw/item=9449\" target=\"_blank\" rel=\"noopener\">手動懲戒錘</a>：換武器會重置揮擊，最後一次用完要盡快換回去；有 64 DPS 以上的武器就不用了。</li><li>開怪前 10 秒放狂怒（+30）、<a href=\"https://www.wowhead.com/forever/tw/item=8345\" target=\"_blank\" rel=\"noopener\">狼頭之盔</a>（+5）、Enraged Idol（+10），馬上換回原本的頭和神像。</li><li><a href=\"https://www.wowhead.com/forever/tw/item=4264\" target=\"_blank\" rel=\"noopener\">野人腰帶</a>有 30 怒氣、5 分鐘冷卻，也可以拿來用。</li><li>巨集：熊貓人共用一鍵（<code>/cast [form:1] 熊技能; [form:3] 貓技能; 人形技能</code>）、潛行時貓躍、旅行形態、變形換形、標記骷髏＋ping。</li><li>顯示仇恨百分比：<code>/console threatShowNumeric 1</code>。</li><li>戰士 DC 那邊抱怨熊仇恨太高、雙坦搶不過熊（熊形態仇恨加成 115%）。</li><li><b>11/23：</b>坦克頻道：割裂值得點 1 點，疊到 5 層後單體比揮擊強，之後空檔再用揮擊補。很多人覺得熊坦仇恨比防騎還穩，打黑石塔上層常常搶走聖騎的仇恨。有人自我增益後 7.7k 血、9k 護甲。</li><li><b>11/23：</b>還沒答案的問題：60 級屬性優先順序、要不要堆防禦、T0.5 值不值得。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>熊坦釘選有「純熊」和「混合熊」兩套配裝：純熊給整場都在熊形態的戰鬥，混合熊給可以切貓打輸出的戰鬥。奧特蘭克山谷崇拜的錘子附魔選十字軍比 25 敏捷好（力量觸發＋回血）。</li><li><a href=\"https://www.wowhead.com/forever/tw/item=9449\" target=\"_blank\" rel=\"noopener\">手動懲戒錘</a>：換武器會重置揮擊，最後一次用完要盡快換回去；有 64 DPS 以上的武器就不用了。</li><li>開怪前 10 秒放狂怒（+30）、<a href=\"https://www.wowhead.com/forever/tw/item=8345\" target=\"_blank\" rel=\"noopener\">狼頭之盔</a>（+5）、Enraged Idol（+10），馬上換回原本的頭和神像。</li><li><a href=\"https://www.wowhead.com/forever/tw/item=4264\" target=\"_blank\" rel=\"noopener\">野人腰帶</a>有 30 怒氣、5 分鐘冷卻，也可以拿來用。</li><li>巨集：熊貓人共用一鍵（<code>/cast [form:1] 熊技能; [form:3] 貓技能; 人形技能</code>）、潛行時貓躍、旅行形態、變形換形、標記骷髏＋ping。</li><li>顯示仇恨百分比：<code>/console threatShowNumeric 1</code>。</li><li>戰士 DC 那邊抱怨熊仇恨太高、雙坦搶不過熊（熊形態仇恨加成 115%）。</li><li><b>11/23：</b>坦克頻道：割裂值得點 1 點，疊到 5 層後單體比揮擊強，之後空檔再用揮擊補。很多人覺得熊坦仇恨比防騎還穩，打黑石塔上層常常搶走聖騎的仇恨。有人自我增益後 7.7k 血、9k 護甲。</li><li><b>11/23：</b>還沒答案的問題：60 級屬性優先順序、要不要堆防禦、T0.5 值不值得。</li></ul>",
    "heat": 2,
    "vol": "11/23 坦克頻道一小時十幾則",
    "first": "2026-11-22",
-   "upd": "2026-11-23",
-   "d": "11/21～11/23",
+   "upd": "2026-11-24",
+   "d": "11/21～11/24",
    "kw": []
   },
   {
@@ -62,12 +62,12 @@ window.DC={
    "ch": "forever-boomkin-compendium（11/6 更新）",
    "h": "鳥德 FAQ：憤怒不再弱、DoT 要放、荊棘吃法傷",
    "p": "鳥整理頻道的 FAQ：測試早期憤怒很弱，現在已經正常，「等於免費的傷害」。DoT（含蟲群）值得放。日蝕 3/3：每次憤怒施放完成給 2 層（最多 4 層），每層讓星火快 0.5 秒。",
-   "det": "<ul><li>荊棘在永恆是動態吃法傷（不是放的當下鎖定），係數 6%，所以鳥德是最適合幫人上荊棘的。</li><li>精靈之火不跟詛咒疊、破甲和暴露不疊，但兩組之間可以疊。</li><li>什麼時候開始放星火：保險的說法是 5/5 強化星火＋3/3 日蝕之後，但更早就值得放。</li><li>練功：貓最快（迅捷豹天賦現在室內也有效），鳥練也沒問題，看喜好。</li><li>60 級最佳天賦還不確定，要看裝備、魔力和仇恨。</li><li>模擬器只認 WoWSims；在頻道引用沒核可的模擬器算散播錯誤資訊，會被禁言。</li><li><b>11/23：</b>頻道提到 Podcast：鳥德可能會有一些改動，但不影響滿級。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>鳥德：有一套「不做 T0.5」的配裝效果差不多，不用硬刷。飾品模擬起來都差不多，<a href=\"https://www.wowhead.com/forever/tw/item=272438\" target=\"_blank\" rel=\"noopener\">弱點分析器</a>加任一個都行；<a href=\"https://www.wowhead.com/forever/tw/item=13965\" target=\"_blank\" rel=\"noopener\">黑手飾物</a>反而是唯一比較低的。</li><li>荊棘在永恆是動態吃法傷（不是放的當下鎖定），係數 6%，所以鳥德是最適合幫人上荊棘的。</li><li>精靈之火不跟詛咒疊、破甲和暴露不疊，但兩組之間可以疊。</li><li>什麼時候開始放星火：保險的說法是 5/5 強化星火＋3/3 日蝕之後，但更早就值得放。</li><li>練功：貓最快（迅捷豹天賦現在室內也有效），鳥練也沒問題，看喜好。</li><li>60 級最佳天賦還不確定，要看裝備、魔力和仇恨。</li><li>模擬器只認 WoWSims；在頻道引用沒核可的模擬器算散播錯誤資訊，會被禁言。</li><li><b>11/23：</b>頻道提到 Podcast：鳥德可能會有一些改動，但不影響滿級。</li></ul>",
    "heat": 1,
    "vol": "整理頻道",
    "first": "2026-11-22",
-   "upd": "2026-11-23",
-   "d": "11/21～11/23",
+   "upd": "2026-11-24",
+   "d": "11/21～11/24",
    "kw": []
   },
   {
@@ -78,12 +78,12 @@ window.DC={
    "ch": "forever-resto-compendium（11/16 更新）",
    "h": "恢復練功三套天賦，裝備看 Wowhead 清單",
    "p": "恢復整理頻道 11/16 給了三套練功天賦：純恢復（只想補）、Hots'n'Dots（想用鳥單練又能補）、Restocat（想用貓單練又能補）。專精其實影響不大，換裝就能補；補不動再拿 Bloom 或迅癒。",
-   "det": "<ul><li><a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh55002001--5553005103113051_t0/0A2ADcchggccmKcnPgRsgg0Ebbbhbb2B\" target=\"_blank\" rel=\"noopener\">純恢復</a>（英文）、<a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh5530203110021--505300510311103_t0/0A2ADcch0EbbbhGbjbCpN2cccgmKgngggprrr\" target=\"_blank\" rel=\"noopener\">Hots'n'Dots</a>（英文）、<a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh-55200032123012125001-05333001001_t0/1AC2BDeeh1bbbHjKMpQrSgTzbb2ecccm1gg\" target=\"_blank\" rel=\"noopener\">Restocat</a>（英文）。</li><li>團隊前 BiS：<a href=\"https://www.wowhead.com/forever/guide/classes/druid/restoration/bis-gear\" target=\"_blank\" rel=\"noopener\">Wowhead 恢復德 BiS</a>（英文）。</li><li>練功比裝備的 Pawn 權重：治療 1、每 5 秒回魔 3、致命 10、精神 2、智力 1；分數接近時拿治療量高的。</li><li>迅癒不能吃別的德魯伊的 HoT，要自己的。治療之觸還有用，但降級施法有懲罰，經典版那套打法會少很多。</li><li>內建的冷卻管理（CDM）可以取代 WeakAuras 主群組，用插件改外觀。</li><li><b>11/23：</b>新手補師問降級施法要做到多細：老手說地城只要放 1 級回春就夠，不用一排不同等級；也有人平常用降級的主治療，大傷再用最高級。目前沒有專門的降級指南。</li></ul>",
+   "det": "<ul><li><b>11/24：</b>恢復：釘選的 BiS 偏向精神，因為還不知道團本要多少治療；降級施法看個人，有人整場只用 R7 癒合、R2 野性痊癒。<a href=\"https://www.wowhead.com/forever/tw/item=812\" target=\"_blank\" rel=\"noopener\">亮木法杖</a>＋100 治療附魔和單手＋副手比，多數人認為單手副手較好。另有人回報持續治療每跳都扣魔的 bug。</li><li><a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh55002001--5553005103113051_t0/0A2ADcchggccmKcnPgRsgg0Ebbbhbb2B\" target=\"_blank\" rel=\"noopener\">純恢復</a>（英文）、<a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh5530203110021--505300510311103_t0/0A2ADcch0EbbbhGbjbCpN2cccgmKgngggprrr\" target=\"_blank\" rel=\"noopener\">Hots'n'Dots</a>（英文）、<a href=\"https://www.wowhead.com/forever/talent-calc/druid/vkndmh-55200032123012125001-05333001001_t0/1AC2BDeeh1bbbHjKMpQrSgTzbb2ecccm1gg\" target=\"_blank\" rel=\"noopener\">Restocat</a>（英文）。</li><li>團隊前 BiS：<a href=\"https://www.wowhead.com/forever/guide/classes/druid/restoration/bis-gear\" target=\"_blank\" rel=\"noopener\">Wowhead 恢復德 BiS</a>（英文）。</li><li>練功比裝備的 Pawn 權重：治療 1、每 5 秒回魔 3、致命 10、精神 2、智力 1；分數接近時拿治療量高的。</li><li>迅癒不能吃別的德魯伊的 HoT，要自己的。治療之觸還有用，但降級施法有懲罰，經典版那套打法會少很多。</li><li>內建的冷卻管理（CDM）可以取代 WeakAuras 主群組，用插件改外觀。</li><li><b>11/23：</b>新手補師問降級施法要做到多細：老手說地城只要放 1 級回春就夠，不用一排不同等級；也有人平常用降級的主治療，大傷再用最高級。目前沒有專門的降級指南。</li></ul>",
    "heat": 1,
    "vol": "11/23 恢復頻道十幾則",
    "first": "2026-11-22",
-   "upd": "2026-11-23",
-   "d": "11/21～11/23",
+   "upd": "2026-11-24",
+   "d": "11/21～11/24",
    "kw": []
   },
   {
@@ -130,6 +130,22 @@ window.DC={
    "first": "2026-11-23",
    "upd": "2026-11-23",
    "d": "11/23"
+  },
+  {
+   "id": "dru-armor-bug",
+   "c": "state",
+   "s": "any",
+   "st": "wait",
+   "d": "11/24",
+   "ch": "forever-general、forever-feral-dps",
+   "h": "bug：副本裡降護甲的減益目前沒效",
+   "p": "11/24 德魯伊頻道回報：副本裡所有降低護甲的減益（包含精靈之火、破甲）目前都沒作用，所以地城裡流血和 DoT 相對划算。",
+   "det": "<ul><li>目前沒有官方回應。</li><li>增強薩滿那邊也有人說「無視護甲」，跟這個 bug 有關。</li></ul>",
+   "first": "2026-11-24",
+   "upd": "2026-11-24",
+   "heat": 1,
+   "vol": "11/24 幾則",
+   "kw": []
   }
  ]
 };
