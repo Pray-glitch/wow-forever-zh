@@ -22,6 +22,7 @@ a{color:var(--gold)}
 .tabs{display:flex;gap:10px;margin:22px 0 0}
 .tab{flex:1;border:1px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0;background:var(--panel);color:var(--dim);padding:14px 8px;font:inherit;font-size:18px;font-weight:700;cursor:pointer}
 .tab.on{background:var(--panel2);color:var(--gold);border-color:var(--gold2)}
+.tabs{flex-wrap:wrap}.tab{min-width:150px}
 .tab span{display:block;font-size:13px;font-weight:400;color:var(--dim)}
 .pane{display:none;border:1px solid var(--gold2);border-radius:0 0 10px 10px;background:var(--panel2);padding:20px}
 .pane.on{display:block}
@@ -73,6 +74,7 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
  <div class="tabs">
   <button class="tab on" data-t="text">💬 文字翻譯<span>遊戲聊天框 英文 → 中文</span></button>
   <button class="tab" data-t="voice">🎧 語音翻譯<span>DC 語音 英文 → 中文字幕</span></button>
+  <button class="tab" data-t="names">🔤 英文名稱<span>補充：連結、說明框顯示英文</span></button>
  </div>
 
  <div class="pane on" id="text">
@@ -142,6 +144,31 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   <details><summary>我是 Windows 10</summary><p>Windows 10 沒有即時輔助字幕，要改用 Chrome：用 Chrome 開 discord.com 網頁版進語音 → Chrome 設定 → 無障礙 → 打開「即時字幕」→ WowVoiceSub 分頁 1 改選「Chrome 即時字幕」。細節看壓縮檔裡的「使用說明.txt」。</p></details>
   <details><summary>已經在用舊版，怎麼更新?</summary><p>下載新的，解壓縮蓋掉舊的 exe 就好，設定會保留。</p></details>
   <details><summary>還有其他問題</summary><p>壓縮檔裡的「使用說明.txt」有完整說明；也可以到公會 DC 的「美服環境一鍵包」頻道問。</p></details>
+ </div>
+
+ <div class="pane" id="names">
+  <p class="lead">補充用的兩個小插件，<b>不用金鑰、不用設定</b>，裝了就有。想裝哪個就裝哪個。</p>
+
+  <h2 style="margin-top:6px">① 貼出去的連結變英文（EnglishLinks）<a class="pic" href="step_e1.png" data-alt="連結轉英文 EnglishLinks 示意圖">🖼 看圖解</a></h2>
+  <p>你用 <b>Shift+左鍵</b> 把物品或專業配方貼到聊天框時，連結上的中文名字會自動換成英文，老外才看得懂你在賣什麼、要什麼。</p>
+  <ol class="steps">
+   <li><h3>下載</h3>
+    <a class="btn" href="../files/EnglishLinks.zip" download>⬇ 下載 EnglishLinks</a>
+    <p class="tip">公會自製，測試版（1.0，2026-11-24）。有連結沒變英文，請到公會 DC 回報是哪個物品。</p></li>
+   <li><h3>解壓縮，丟進 AddOns</h3>
+    <p>把解開的 <code>EnglishLinks</code> 資料夾放進 <code>World of Warcraft\_forever_\Interface\AddOns</code>。</p>
+    <p class="tip">遊戲如果開著，要<b>整個關掉再開</b>（只打 /reload 不會載入新插件）。</p></li>
+   <li><h3>直接用</h3>
+    <p>照平常 Shift+左鍵貼連結就好。想貼中文給台灣人看：<b>按住 Alt</b> 再貼。打 <code>/el</code> 可以整個開關。</p></li>
+  </ol>
+
+  <h2>② 說明框加上英文名（Hunggy's Forever English Link）<a class="pic" href="step_e2.png" data-alt="說明框加英文名 示意圖">🖼 看圖解</a></h2>
+  <p>滑鼠移到物品、技能、任務、NPC 上，中文名字下面多一行英文名。跟老外溝通、查英文攻略時不用猜英文叫什麼。它也會把 Shift+點擊貼出去的物品、任務連結變成英文。</p>
+  <p><a class="btn2" href="https://www.curseforge.com/wow/addons/hunggys-forever-english-link" target="_blank" rel="noopener">到 CurseForge 下載（作者 Hunggy）↗</a></p>
+  <p class="tip">這是別人做的插件，請到作者的頁面下載，本站不提供檔案。用 CurseForge App 安裝，或下載 zip 解壓縮後放進 AddOns。</p>
+
+  <h2>該裝哪個?</h2>
+  <details open><summary>兩個差在哪</summary><p>想<b>看</b>英文名（說明框）→ 裝 ②。<br>想讓<b>貼出去的連結</b>是英文 → ① 或 ② 都可以；① 另外會轉<b>專業配方</b>的連結（例如「鍊金術: 轉化：奧金」）。<br>兩個一起裝我們還沒完整測過，遇到問題先關掉其中一個。</p></details>
  </div>
 
  <footer>菲比鳩比公會自用工具頁 · 有問題到公會 DC 問</footer>
