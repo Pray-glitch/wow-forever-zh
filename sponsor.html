@@ -36,14 +36,14 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 <h1>贊助與翻譯費用</h1>
 <div class="dim" id="upd"></div>
 <div class="dim"><a href="index.html">← 永恆攻略中文版</a>・<a href="ah/index.html">拍賣場</a>・<a href="dc/index.html">DC 重點</a></div>
-<div class="note">這個網站的攻略和新聞是機器人自動翻譯的，翻譯要付費（OpenRouter，按用量計價）。贊助的錢<b>只用來儲值翻譯額度</b>，下面的數字每 5 分鐘從 OpenRouter 帳號直接讀一次，有變動就更新，不是手動填的。單位是美金。</div>
+<div class="note" id="srcnote">這個網站的攻略和新聞是機器人自動翻譯的，翻譯要付費（OpenRouter，按用量計價）。贊助的錢<b>只用來儲值翻譯額度</b>，下面的數字每 5 分鐘從 OpenRouter 帳號直接讀一次，有變動就更新，不是手動填的。單位是美金。</div>
 <div class="kpi" id="kpi"></div>
 <div id="actbox" style="display:none"><h2>用量圖表（最近 30 天）</h2>
-<div class="dim">直接取自 OpenRouter 帳號的活動紀錄，跟後台「Activity」頁是同一份資料。日期以 OpenRouter 的 UTC 日期為準。</div>
+<div class="dim" id="actnote">直接取自 OpenRouter 帳號的活動紀錄，跟後台「Activity」頁是同一份資料。日期以 OpenRouter 的 UTC 日期為準。</div>
 <div class="kpi" id="akpi"></div>
 <div class="card chart" id="achart"></div></div>
 <h2>最近收到的銀行轉帳</h2>
-<div class="card"><div id="inc"></div><div class="dim" style="margin-top:6px">第一銀行帳戶收到轉帳時，銀行的通知會自動記在這裡（手機轉到 Discord，機器人每 5 分鐘讀一次）。通知裡沒有金額和轉帳人，所以只顯示時間；收到的錢站長會拿去儲值，儲值後上面的「累計儲值」就會增加。LINE Pay Money 的轉帳不會出現在這裡。</div></div>
+<div class="card"><div id="inc"></div><div class="dim" style="margin-top:6px">第一銀行帳戶收到轉帳時，銀行的通知會自動記在這裡（手機轉到 Discord，機器人每 5 分鐘讀一次）。通知裡沒有金額和轉帳人，所以只顯示時間；收到的錢會用來付翻譯費。LINE Pay Money 的轉帳不會出現在這裡。</div></div>
 <h2>怎麼贊助</h2>
 <div class="card how" id="how"></div>
 <h2>圖文教學：用 LINE Pay Money 轉帳</h2>
@@ -82,13 +82,17 @@ function drawAct(A){var su=0,sr=0,st=0;A.forEach(function(a){su+=a.usd;sr+=a.req
  $('actbox').style.display=''}
 if(!F){$('kpi').innerHTML='<div class="card">資料還沒產生，請晚點再來。</div>';return}
 $('upd').textContent='資料更新：'+F.updated+'（台灣時間）・翻譯模型：'+(F.model||'');
-var D=F.days||[],rows=[],A=F.act||[];
-if(A.length){rows=A.map(function(a){return {d:a.d,v:a.usd}})}else{for(var i=1;i<D.length;i++)rows.push({d:D[i].d,v:Math.max(0,D[i].used-D[i-1].used)})}
+var D=F.days||[],rows=[],A=F.act||[],CL=F.src=='claude';
+if(CL){
+ $('srcnote').innerHTML='這個網站的攻略和新聞是機器人自動翻譯的。11/25 起翻譯改用 <b>Claude API</b>（Claude Haiku），扣的是站長 Claude 方案的 API 額度，單位是美金。Claude 查不到即時餘額，所以「已使用」是機器人照每次翻譯的字數（token）和官方價格自己算的，會跟 Claude 後台差一點點；站長自己的遊戲聊天翻譯也扣同一筆額度，沒算在這裡，實際剩餘會比這裡少一些。贊助的錢<b>只用來付翻譯費</b>。';
+ $('actnote').textContent='機器人自己記的 Claude API 用量（'+(F.start||'')+' 起，台灣日期）。';
+ rows=(F.spend||[]).map(function(a){return {d:a.d,v:a.usd}});
+}else if(A.length){rows=A.map(function(a){return {d:a.d,v:a.usd}})}else{for(var i=1;i<D.length;i++)rows.push({d:D[i].d,v:Math.max(0,D[i].used-D[i-1].used)})}
 var last7=rows.slice(-7),avg=last7.length?last7.reduce(function(a,r){return a+r.v},0)/last7.length:0;
 var left=F.left,daysLeft=avg>0?Math.floor(left/avg):null;
 $('kpi').innerHTML='<div class="card'+(left<2?' low':'')+'">剩餘額度<b>'+usd(left)+'</b><span class="dim">'+(daysLeft!=null?'照最近的用量約可用 '+daysLeft+' 天':'用量資料累積中')+'</span></div>'+
- '<div class="card">累計已使用<b>'+usd(F.used)+'</b><span class="dim">從開站到現在</span></div>'+
- '<div class="card">累計儲值<b>'+usd(F.total)+'</b><span class="dim">含站長自己付的和大家贊助的</span></div>'+
+ '<div class="card">'+(CL?'已使用':'累計已使用')+'<b>'+usd(F.used)+'</b><span class="dim">'+(CL?F.start+' 改用 Claude 之後':'從開站到現在')+'</span></div>'+
+ '<div class="card">'+(CL?'Claude API 額度':'累計儲值')+'<b>'+usd(F.total)+'</b><span class="dim">'+(CL?'站長 Claude 方案的 API 額度':'含站長自己付的和大家贊助的')+'</span></div>'+
  '<div class="card">最近每天平均<b>'+(last7.length?usd(avg):'—')+'</b><span class="dim">'+(last7.length?'最近 '+last7.length+' 天':'明天起才有')+'</span></div>';
 if(A.length)drawAct(A);
 var I=F.inc||[];$('inc').innerHTML=I.length?'<table><tr><th>收到時間（台灣）</th></tr>'+I.map(function(t){return '<tr><td>'+esc(t)+'</td></tr>'}).join('')+'</table><div class="dim" style="margin-top:4px">共 '+I.length+' 筆'+(I.length>=30?'（只列最近 30 筆）':'')+'</div>':'<span class="dim">目前還沒有。</span>';
@@ -96,6 +100,6 @@ $('how').innerHTML=F.note?F.note.split(/\n+/).map(function(l){return '<p>'+esc(l
 if(!rows.length){$('days').innerHTML='<tr><td class="dim">今天才開始記錄，明天起會列出每天的花費。</td></tr>'}
 else{var mx=Math.max.apply(null,rows.map(function(r){return r.v}))||1;
  $('days').innerHTML='<tr><th>日期</th><th class="n">當天花費</th><th style="width:50%"></th></tr>'+rows.slice(-30).reverse().map(function(r){return '<tr><td>'+r.d+'</td><td class="n">'+usd(r.v)+'</td><td><div class="bar" style="width:'+Math.round(r.v/mx*100)+'%"></div></td></tr>'}).join('')}
-$('dnote').textContent=A.length?'資料來源：OpenRouter 活動紀錄（UTC 日期），今天這一列會隨用量增加。':'當天花費＝當天最後一次讀到的累計使用，減掉前一天的。機器人有一天沒開的話，那天的花費會併到隔天。';
+$('dnote').textContent=CL?'機器人自己記的每天翻譯花費（台灣日期）。11/25 以前是 OpenRouter，之後是 Claude API（用字數估算）。':A.length?'資料來源：OpenRouter 活動紀錄（UTC 日期），今天這一列會隨用量增加。':'當天花費＝當天最後一次讀到的累計使用，減掉前一天的。機器人有一天沒開的話，那天的花費會併到隔天。';
 })();
 </script></body></html>
