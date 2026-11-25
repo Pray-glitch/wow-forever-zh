@@ -45,6 +45,12 @@ details{border:1px solid var(--line);border-radius:8px;background:var(--panel);m
 summary{cursor:pointer;padding:11px 0;font-weight:700}
 details p{margin:0 0 12px;color:var(--dim);font-size:15.5px}
 h2{color:var(--gold);font-size:20px;margin:26px 0 10px}
+.pic{display:inline-block;margin-left:8px;font-size:14px;font-weight:500;color:var(--gold);border:1px solid var(--gold2);border-radius:14px;padding:1px 11px;text-decoration:none;vertical-align:middle;white-space:nowrap}
+.pic:hover{background:#e8c26b22}
+#lb{display:none;position:fixed;inset:0;background:#000d;z-index:9;align-items:center;justify-content:center;padding:12px;cursor:zoom-out}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:92vh;border-radius:8px;box-shadow:0 8px 40px #000}
+#lb span{position:fixed;top:10px;right:16px;color:#fff;font-size:15px;background:#000a;border-radius:14px;padding:3px 12px}
 footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
 @media(max-width:600px){body{font-size:16px}.pane{padding:14px}ol.steps>li{padding-left:50px}ol.steps>li::before{width:36px;height:36px;font-size:19px}.tab{font-size:16px}}
 </style>
@@ -70,22 +76,22 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   <img class="shot" src="ct_result.png" alt="聊天框裡的英文變成中文，後面標註（譯文）" loading="lazy">
   <div class="need">需要：<b>Windows 電腦</b>、<b>Google 帳號</b>（申請免費金鑰用，不用信用卡）。全部做完大約 5 分鐘。</div>
   <ol class="steps">
-   <li><h3>下載</h3>
+   <li><h3>下載 <a class="pic" href="step_t1.png" data-alt="文字翻譯 第 1 步：下載">🖼 看圖解</a></h3>
     <a class="btn" href="https://github.com/Pray-glitch/wow-forever-zh/releases/download/tools/ChatTranslate_guild.zip">⬇ 下載文字翻譯懶人包</a>
     <p class="tip">瀏覽器如果問要不要保留，選「保留」。</p></li>
-   <li><h3>解壓縮，丟進 AddOns</h3>
+   <li><h3>解壓縮，丟進 AddOns <a class="pic" href="step_t2.png" data-alt="文字翻譯 第 2 步：解壓縮，丟進 AddOns">🖼 看圖解</a></h3>
     <p>把壓縮檔解開，裡面有兩個資料夾，<b>兩個都</b>放進遊戲的插件資料夾：</p>
     <p><code>World of Warcraft\_forever_\Interface\AddOns</code></p>
     <p class="tip">是 <b>_forever_</b>，不是 _classic_ 或 _retail_。跟裝其他插件一樣。</p></li>
-   <li><h3>先把遊戲關掉，再按「一鍵設定」</h3>
+   <li><h3>先把遊戲關掉，再按「一鍵設定」 <a class="pic" href="step_t3.png" data-alt="文字翻譯 第 3 步：一鍵設定">🖼 看圖解</a></h3>
     <p>打開剛剛放進去的 <code>ChatTranslate_Setup</code> 資料夾，在 <code>一鍵設定.bat</code> 上點兩下。</p>
     <p class="tip">如果跳出藍色的「Windows 已保護您的電腦」：按「其他資訊」→「仍要執行」。第一次會自動下載需要的東西，等一兩分鐘。</p></li>
-   <li><h3>貼上金鑰</h3>
+   <li><h3>貼上金鑰 <a class="pic" href="step_t4.png" data-alt="文字翻譯 第 4 步：貼上金鑰">🖼 看圖解</a></h3>
     <p>它會自動打開 Google 的頁面：登入 → 按 <b>Create API key（建立 API 金鑰）</b> → 複製 → 回到黑色視窗按滑鼠右鍵貼上 → 按 Enter。</p>
     <p class="tip">金鑰是你自己的，不要貼給別人，也不要截圖外流。</p></li>
   </ol>
   <div class="done"><b>✅ 看到「設定完成」就好了。</b>開遊戲就能用，以後開電腦它會自己在背景待命，不用再開任何東西。</div>
-  <div class="need"><b>📌 進遊戲後要注意:公會不要翻</b><br>分頁上有「自」的(自動翻譯分頁)會翻它顯示的<b>所有頻道</b>，包括公會。懶人包只幫第一個分頁設好公會不翻;你如果自己另外開分頁(例如隊伍頁)又把公會加進去，要在<b>那個分頁按右鍵 →「設定」→「公會對話」那一列取消「自動翻譯」</b>。幹部對話也建議一起取消。</div>
+  <div class="need"><b>📌 進遊戲後要注意:公會不要翻</b><br>分頁上有「自」的(自動翻譯分頁)會翻它顯示的<b>所有頻道</b>，包括公會。懶人包只幫第一個分頁設好公會不翻;你如果自己另外開分頁(例如隊伍頁)又把公會加進去，要在<b>那個分頁按右鍵 →「設定」→「公會對話」那一列取消「自動翻譯」</b>。幹部對話也建議一起取消。 <a class="pic" href="step_guild.png" data-alt="在分頁按右鍵 → 設定，取消公會對話、幹部對話的自動翻譯">🖼 看圖解</a></div>
 
   <h2>常見問題</h2>
   <details><summary>進遊戲沒有翻譯</summary><p>先確認插件有打開：角色選擇畫面左下角「插件」，「聊天翻譯」要打勾。再到遊戲裡打 <code>/reload</code>。還是不行，打 <code>/ct</code> 開設定，按「完整檢查」，照它說的做。</p></details>
@@ -105,16 +111,16 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   <p class="lead">DC 語音裡老外講的英文，即時變成中文字幕，浮在遊戲畫面上（只有你自己看得到）。你講中文，它也能顯示英文讓你照著唸。</p>
   <div class="need">需要：<b>Windows 11</b>（Windows 10 也行，但比較麻煩，看下面常見問題）、一把<b>翻譯金鑰</b>（下面第 3 步教你申請）。</div>
   <ol class="steps">
-   <li><h3>下載</h3>
+   <li><h3>下載 <a class="pic" href="step_v1.png" data-alt="語音翻譯 第 1 步：下載">🖼 看圖解</a></h3>
     <a class="btn" href="../files/WowVoiceSub.zip" download>⬇ 下載語音翻譯 WowVoiceSub</a>
     <p class="tip">這個<b>不是插件</b>，不用放進 AddOns。瀏覽器如果問要不要保留，選「保留」。</p></li>
-   <li><h3>解壓縮，點兩下 WowVoiceSub.exe</h3>
+   <li><h3>解壓縮，點兩下 WowVoiceSub.exe <a class="pic" href="step_v2.png" data-alt="語音翻譯 第 2 步：解壓縮，點兩下">🖼 看圖解</a></h3>
     <p>解到哪裡都可以（例如桌面）。點兩下 <code>WowVoiceSub.exe</code>。</p>
     <p class="tip">如果跳出藍色的「Windows 已保護您的電腦」：按「其他資訊」→「仍要執行」。</p></li>
-   <li><h3>申請一把翻譯金鑰</h3>
+   <li><h3>申請一把翻譯金鑰 <a class="pic" href="step_v3.png" data-alt="語音翻譯 第 3 步：申請金鑰">🖼 看圖解</a></h3>
     <p>到 <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq（免費）</a> 註冊，按 <b>Create API Key</b>，把 <code>gsk_</code> 開頭那一整串複製下來。</p>
     <p class="tip">金鑰只會顯示一次，先複製好。常打團、怕免費額度不夠，可以改用 <a href="https://openrouter.ai" target="_blank" rel="noopener">OpenRouter</a>（儲值 10 美金可以用很久）。</p></li>
-   <li><h3>照設定視窗填</h3>
+   <li><h3>照設定視窗填 <a class="pic" href="step_v4.png" data-alt="語音翻譯 第 4 步：設定視窗">🖼 看圖解</a></h3>
     <p>分頁 1「聽英文」：選 <b>Windows 即時輔助字幕</b>。</p>
     <p>分頁 2「翻中文」：勾 <b>用 AI 翻譯</b>，服務選 Groq（或 OpenRouter），貼上金鑰，模型選 <code>openai/gpt-oss-120b</code>。</p>
     <p>分頁 3、4 不用動，按 <b>儲存並開始</b>。</p>
@@ -132,8 +138,13 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
 
  <footer>菲比鳩比公會自用工具頁 · 有問題到公會 DC 問</footer>
 </div>
+<div id="lb" role="dialog" aria-label="步驟圖解"><span>✕ 點任意處關閉</span><img alt=""></div>
 <script>
 (function(){
+  var lb=document.getElementById('lb'),li=lb.querySelector('img');
+  document.querySelectorAll('a.pic').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();li.src=a.getAttribute('href');li.alt=a.dataset.alt||'';lb.classList.add('on')})});
+  lb.addEventListener('click',function(){lb.classList.remove('on')});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});
   var tabs=document.querySelectorAll('.tab');
   function show(t){
     if(!document.getElementById(t)) t='text';
