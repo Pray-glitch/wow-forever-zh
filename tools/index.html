@@ -22,7 +22,8 @@ a{color:var(--gold)}
 .tabs{display:flex;gap:10px;margin:22px 0 0}
 .tab{flex:1;border:1px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0;background:var(--panel);color:var(--dim);padding:14px 8px;font:inherit;font-size:18px;font-weight:700;cursor:pointer}
 .tab.on{background:var(--panel2);color:var(--gold);border-color:var(--gold2)}
-.tabs{flex-wrap:wrap}.tab{min-width:150px}
+.tab{min-width:0}
+@media(max-width:600px){.tabs{gap:5px}.tab{font-size:15px!important;padding:10px 3px}.tab span{font-size:11.5px;line-height:1.4}}
 .tab span{display:block;font-size:13px;font-weight:400;color:var(--dim)}
 .pane{display:none;border:1px solid var(--gold2);border-radius:0 0 10px 10px;background:var(--panel2);padding:20px}
 .pane.on{display:block}
@@ -78,7 +79,7 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
  </div>
 
  <div class="pane on" id="text">
-  <p class="lead">遊戲聊天框裡老外打的英文，直接變成中文。你打中文，按 Enter 會先變成英文，再按一次 Enter 送出。</p>
+  <p class="lead">遊戲聊天框裡老外打的英文，直接變成中文。你打中文，按 Enter 會先變成英文，再按一次 Enter 送出。 <a class="pic" href="step_c1.png" data-alt="打中文，自動翻成英文送出 示意圖">🖼 看圖解</a></p>
   <img class="shot" src="ct_result.png" alt="聊天框裡的英文變成中文，後面標註（譯文）" loading="lazy">
   <div class="upd"><b>🔄 已經裝過的人：更新只要覆蓋，不用重新設定</b><span id="ctver2"></span>
    <p>關遊戲 → 重新下載 → 把裡面的 <code>ChatTranslate</code> 資料夾放進 AddOns 選「取代」→ 電腦重開機一次。金鑰和遊戲裡的設定都會留著，<b>不用再跑一鍵設定</b>。</p></div>
