@@ -51,6 +51,10 @@ h2{color:var(--gold);font-size:20px;margin:26px 0 10px}
 #lb.on{display:flex}
 #lb img{max-width:100%;max-height:92vh;border-radius:8px;box-shadow:0 8px 40px #000}
 #lb span{position:fixed;top:10px;right:16px;color:#fff;font-size:15px;background:#000a;border-radius:14px;padding:3px 12px}
+.upd{border:1px solid var(--gold);border-radius:8px;background:#2a2110;padding:12px 16px;margin:0 0 14px}
+.upd>b{color:var(--gold);font-size:18px;display:block}
+.upd span{display:block;color:var(--text);font-size:15px;margin-top:2px}
+.upd p{margin:6px 0 0;font-size:15.5px}
 footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
 @media(max-width:600px){body{font-size:16px}.pane{padding:14px}ol.steps>li{padding-left:50px}ol.steps>li::before{width:36px;height:36px;font-size:19px}.tab{font-size:16px}}
 </style>
@@ -74,6 +78,8 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
  <div class="pane on" id="text">
   <p class="lead">遊戲聊天框裡老外打的英文，直接變成中文。你打中文，按 Enter 會先變成英文，再按一次 Enter 送出。</p>
   <img class="shot" src="ct_result.png" alt="聊天框裡的英文變成中文，後面標註（譯文）" loading="lazy">
+  <div class="upd"><b>🔄 已經裝過的人：更新只要覆蓋，不用重新設定</b><span id="ctver2"></span>
+   <p>關遊戲 → 重新下載 → 把裡面的 <code>ChatTranslate</code> 資料夾放進 AddOns 選「取代」→ 電腦重開機一次。金鑰和遊戲裡的設定都會留著，<b>不用再跑一鍵設定</b>。</p></div>
   <div class="need">需要：<b>Windows 電腦</b>、<b>Google 帳號</b>（申請免費金鑰用，不用信用卡）。全部做完大約 5 分鐘。</div>
   <ol class="steps">
    <li><h3>下載 <a class="pic" href="step_t1.png" data-alt="文字翻譯 第 1 步：下載">🖼 看圖解</a></h3>
@@ -150,6 +156,8 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});
   var cv=window.CTPACK,ce=document.getElementById('ctver');
   if(cv&&cv.v&&ce){ce.textContent='目前版本：ChatTranslate '+cv.v+(cv.up?'（原作者 '+cv.up+' 發布'+(cv.built?'，本站 '+cv.built.slice(0,10)+' 更新':'')+'）':'')+'。原作者出新版，這裡會自動跟上。';}
+  var c2=document.getElementById('ctver2');
+  if(cv&&cv.v&&c2){c2.textContent='最新版本：'+cv.v+(cv.built?'　更新日期：'+cv.built.slice(0,10):'')+(cv.up?'（原作者 '+cv.up+' 發布）':'');}
   var tabs=document.querySelectorAll('.tab');
   function show(t){
     if(!document.getElementById(t)) t='text';
