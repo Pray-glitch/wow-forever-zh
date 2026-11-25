@@ -163,7 +163,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=7788ad70"></script>
+<script src="data.js?v=fb581088"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -844,7 +844,7 @@ details.sec.sub>.body{padding:0 12px 6px}
       if (/\[\[/.test(pt)) junk.push('[[');
       if (/\]\s*[（(]https?:/.test(pt)) junk.push('](網址)');
       if (/(^|\n)\s*#{1,4}\s/.test(pt)) junk.push('#');
-      if (/<\/?(br|p|div|span|a|b|img)\b/i.test(pt)) junk.push('HTML 標籤');
+      if (/<\/?(br|p|div|span|a|b|img|strong|em)\b/i.test(pt)) junk.push('HTML 標籤');
       if (junk.length) add('畫面上露出符號：' + junk.join(' '));
       // 11/22：模型對話（「還沒貼上要翻譯的內容…照你的規則」）、原站拖曳說明、中文中間夾英文小字（大廳now成為）
       { const cm = pt.match(/[^。\n]{0,12}(還沒貼上|貼上要翻譯|貼過來|照你的規則|請提供要翻譯|以下(是|為)完整譯文|system prompt)[^。\n]{0,12}/); if (cm) add('畫面上有模型對話：' + cm[0].trim()); }
