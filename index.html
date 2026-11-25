@@ -163,7 +163,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=7d802064"></script>
+<script src="data.js?v=51ecffae"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -184,8 +184,8 @@ details.sec.sub>.body{padding:0 12px 6px}
   const ZONES = new Set(["ashenvale", "tirisfal glades", "darkshore", "silverpine forest", "westfall", "ironforge", "stormwind", "stormwind city", "orgrimmar", "thunder bluff", "undercity", "darnassus", "desolace", "felwood", "dun morogh", "booty bay", "elwynn forest", "loch modan", "redridge mountains", "duskwood", "wetlands", "arathi highlands", "hillsbrad foothills", "alterac mountains", "stranglethorn vale", "swamp of sorrows", "blasted lands", "badlands", "searing gorge", "burning steppes", "western plaguelands", "eastern plaguelands", "hinterlands", "durotar", "mulgore", "barrens", "stonetalon mountains", "thousand needles", "dustwallow marsh", "tanaris", "feralas", "un'goro crater", "silithus", "winterspring", "azshara", "moonglade", "teldrassil", "deadwind pass", "lakeshire", "ratchet", "rachet", "gadgetzan", "goldshire", "moonbrook", "southshore", "tarren mill", "menethil harbor", "theramore", "astranaar", "auberdine", "darkshire", "everlook", "light's hope chapel", "steamwheedle port", "zoram strand", "lake everstill", "tinker town", "dwarven district", "whelgar's excavation site", "thandol span", "crossroads", "razor hill", "sentinel hill", "nijel's point", "camp taurajo", "brackenwall village", "kargath", "stonard", "hammerfall", "refuge pointe", "aerie peak", "revantusk village", "chillwind camp", "chillwind point", "bloodvenom post", "talonbranch glade", "cenarion hold", "marshal's refuge", "thorium point", "morgan's vigil", "flame crest", "nethergarde keep", "grom'gol base camp", "feathermoon stronghold", "camp mojache", "freewind post", "sun rock retreat", "splintertree post", "kalimdor", "eastern kingdoms", "azeroth", "nesingwary expedition", "nesingwary's expedition", "nesingwary camp", /* 11/18 夜間驗收：沒有對應副本頁的副本／團本總稱也用地點青色 */ "stratholme", "dire maul", "molten core", "blackwing lair", "onyxia's lair", "zul'gurub", "ahn'qiraj", "ruins of ahn'qiraj", "temple of ahn'qiraj", "naxxramas", "blackrock spire", "blackrock mountain", "scarlet monastery"]);
   function zoneHref(en){ const k = (en || '').trim().toLowerCase().replace(/^the /, ''); return ZONES.has(k) ? 'https://www.wowhead.com/forever/search?q=' + encodeURIComponent((en || '').trim()) : ''; }
   // 11/16：一般詞、介面選項、傳承天賦不做名詞連結（Bind on Pickup、QoL、DoT、Keeps…）；有些只在特定攻略算一般詞
-  const NOLINK = new Set(['bind on pickup','bind on equip','bop','boe','qol','dot','dots','hot','hots','wow forever','wow classic','leveling walkthrough','keeps','outposts','resource bars','aurabuff reminders','buff reminders','instant quest text','personal resource display','target of target']);
-  const NOLINK_SLUG = {'addons-and-settings': ['combat'], 'legacy-system-guide': ['field guide']};
+  const NOLINK = new Set(['bind on pickup','bind on equip','bop','boe','qol','dot','dots','hot','hots','wow forever','wow classic','leveling walkthrough','keeps','outposts','resource bars','aurabuff reminders','buff reminders','instant quest text','personal resource display','target of target','melee','spell','spellpower coefficient','retail','damage meter','nameplates','swing timer','cooldown manager','essential cooldowns','utility cooldowns','tracked buffs','tracked bars','not displayed','status text','target frame status text']); // 11/26：懲戒聖騎介面設定、一般詞
+  const NOLINK_SLUG = {'addons-and-settings': ['combat'], 'legacy-system-guide': ['field guide', 'blizzard']}; // 11/26：傳承系統的 Blizzard 指暴雪公司
   // 介面設定／插件功能名稱一大堆的攻略：語庫查不到的名詞不做 Wowhead 後備連結
   const NOFB = new Set(['addons-and-settings', 'top-10-addons-for-wow-forever-for-beginners-redcloud', 'legacy-system-guide']);
   // 同時是技能和物品、攻略裡指的是物品（施法材料）→ 物品色
@@ -320,6 +320,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     return name;
   }
   // 原站「練功路線」：一排純數字（等級欄）＋「10 偏斜」逐級清單 → 拿掉數字欄，合併成「10–14 級：偏斜 5 點」
+  // 11/26：作者寫好的「41-42：魔杖專精」（範圍）不是逐級清單，不能被當成「41 級」吃掉（冰法 Progress）
   function levelLists(md){
     const L = md.split('\n'), out = [];
     for (let i = 0; i < L.length; ) {
@@ -327,7 +328,7 @@ details.sec.sub>.body{padding:0 12px 6px}
       while (j < L.length && /^\s*[-*]\s+\d{1,2}\s*$/.test(L[j])) j++;
       if (j - i >= 3) { i = j; continue; }
       j = i; const rows = []; let m;
-      while (j < L.length && (m = L[j].match(/^\s*[-*]\s+(\d{1,2})\s*[：:.、]?\s*([^\d\s級].*)$/)) && +m[1] >= 1 && +m[1] <= 60 && (!rows.length || +m[1] === rows[rows.length - 1].lv + 1)) { rows.push({ lv: +m[1], name: m[2].trim() }); j++; }
+      while (j < L.length && (m = L[j].match(/^\s*[-*]\s+(\d{1,2})\s*[：:.、]?\s*([^\d\s級\-–].*)$/)) && +m[1] >= 1 && +m[1] <= 60 && (!rows.length || +m[1] === rows[rows.length - 1].lv + 1)) { rows.push({ lv: +m[1], name: m[2].trim() }); j++; }
       if (rows.length >= 4) {
         // 同一個分頁後面已經有作者寫好的「10–12 級：…」說明（3 行以上）→ 這份逐級清單是重複的，不要
         // （只有一兩行「40 級：…」是補充說明，不算；11/8 熊坦練功路線整份被當重複拿掉）
@@ -447,7 +448,9 @@ details.sec.sub>.body{padding:0 12px 6px}
     md = md.replace(/((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2}, \d{4})\1/g, '$1');
     md = md.replace(/^.*(作者|By)[：: ].*(更新於|Updated).*$/gm, '');
     // 11/15：作者、更新於分成兩行（插件攻略、阿爾卡茲監獄、盜賊練功）也拿掉
-    md = md.replace(/^(?:作者|By)[：:][^\n]*\n[ \t]*(?:更新於|Updated)[^\n]*$/gm, '');
+    md = md.replace(/^(?:作者|By)[：: ][^\n]*\n[ \t]*(?:更新於|Updated)[^\n]*$/gm, ''); // 11/26：「作者 xxx」沒冒號（懲戒聖騎）
+    // 11/26：「由 Mobalytics 提供　更新於…」（區域地圖），只清第一個 ## 之前的（後面的相關攻略清單不動）
+    { const h2 = md.search(/^## /m); const head = h2 < 0 ? md : md.slice(0, h2); const nh = head.replace(/^由 [^\n]*提供[\s\u3000∙·]*(?:更新於|Updated)[^\n]*$/m, ''); if (nh !== head) md = nh + md.slice(head.length); }
     md = md.replace(/^#{1,3}\s*(目錄|目次|Table of Contents|最新攻略|熱門攻略|相關攻略|推薦攻略|Trending Guides|Related Guides|Latest Guides|留言|評論|Comments)\s*$[\s\S]*?(?=^#{1,2}\s|$(?![\s\S]))/gmi, '');
     md = md.replace(/<([a-z_]*reminder|system[a-z_]*)>[\s\S]*?<\/([a-z_]*reminder|system[a-z_]*)>/g, '');
     // 修掉抓取時誤判的小標題：「### ### X」「- ### X」「| ### X |」
