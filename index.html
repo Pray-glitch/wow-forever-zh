@@ -163,7 +163,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=42063ff2"></script>
+<script src="data.js?v=40acf3f4"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -499,6 +499,8 @@ details.sec.sub>.body{padding:0 12px 6px}
         else { (g.shots || []).forEach(shot); if (!(g.shots||[]).length) html += '<p class="cap">（天賦樹請看原文）</p>'; }
         continue;
       }
+      // 11/25 晚：模型自己編出來的截圖標記（火法「[[SHOT:gameplay:0]]」，原文只有天賦截圖）不顯示
+      if (/^\[\[SHOT:[^\]]*\]\]$/.test(l)) continue;
       if ((sm = l.match(/^\[\[TIP:([\d,]+)\]\]$/))) {
         // 物品說明框：照 Wowhead 的樣子一行一行、分顏色（資料在 g.tips，Go 端 tips.go 產生）
         flushP(); closeList(); closeTable();
