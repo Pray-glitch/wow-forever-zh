@@ -78,6 +78,7 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   <ol class="steps">
    <li><h3>下載 <a class="pic" href="step_t1.png" data-alt="文字翻譯 第 1 步：下載">🖼 看圖解</a></h3>
     <a class="btn" href="https://github.com/Pray-glitch/wow-forever-zh/releases/download/tools/ChatTranslate_guild.zip">⬇ 下載文字翻譯懶人包</a>
+    <p class="tip" id="ctver"></p>
     <p class="tip">瀏覽器如果問要不要保留，選「保留」。</p></li>
    <li><h3>解壓縮，丟進 AddOns <a class="pic" href="step_t2.png" data-alt="文字翻譯 第 2 步：解壓縮，丟進 AddOns">🖼 看圖解</a></h3>
     <p>把壓縮檔解開，裡面有兩個資料夾，<b>兩個都</b>放進遊戲的插件資料夾：</p>
@@ -94,6 +95,7 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   <div class="need"><b>📌 進遊戲後要注意:公會不要翻</b><br>分頁上有「自」的(自動翻譯分頁)會翻它顯示的<b>所有頻道</b>，包括公會。懶人包只幫第一個分頁設好公會不翻;你如果自己另外開分頁(例如隊伍頁)又把公會加進去，要在<b>那個分頁按右鍵 →「設定」→「公會對話」那一列取消「自動翻譯」</b>。幹部對話也建議一起取消。 <a class="pic" href="step_guild.png" data-alt="在分頁按右鍵 → 設定，取消公會對話、幹部對話的自動翻譯">🖼 看圖解</a></div>
 
   <h2>常見問題</h2>
+  <details><summary>已經裝過了，怎麼更新到新版?</summary><p>原作者出新版後，這裡的懶人包會自動跟上（版本寫在下載按鈕下面）。更新方法：<b>先關遊戲</b> → 重新下載懶人包 → 解壓縮 → 把裡面的 <code>ChatTranslate</code> 資料夾放進 AddOns，<b>覆蓋</b>舊的 → <b>電腦重新開機一次</b>（讓背景的翻譯工具換成新版）。金鑰和設定都會保留，不用再跑一鍵設定。</p></details>
   <details><summary>進遊戲沒有翻譯</summary><p>先確認插件有打開：角色選擇畫面左下角「插件」，「聊天翻譯」要打勾。再到遊戲裡打 <code>/reload</code>。還是不行，打 <code>/ct</code> 開設定，按「完整檢查」，照它說的做。</p></details>
   <details><summary>玩到一半突然不翻了</summary><p>遊戲畫面<b>最上面那一條</b>不能被別的視窗蓋住（它靠讀畫面頂端一條很細的色塊運作）。把蓋住的視窗移開，再打 <code>/reload</code>。</p></details>
   <details><summary>提示「快取只剩幾百個」</summary><p>找個不在戰鬥的空檔打 <code>/reload</code>，就會補滿。</p></details>
@@ -104,7 +106,7 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   <details><summary>密語沒有翻譯（有裝 WIM 的人）</summary><p>WIM 設定 → 視窗 → 彈出規則，把各分頁的「僅在 WIM 中顯示」取消。</p></details>
   <details><summary>有用 EllesmereUI 的聊天框</summary><p>譯文可能不會顯示在聊天框。打 <code>/ct</code>，把「點『譯』之後」改成開翻譯視窗，或關掉 EllesmereUI 的聊天模組。</p></details>
   <details><summary>想自己調設定、想移除</summary><p>遊戲裡打 <code>/ct</code> 可以改所有設定。要移除：打開 <code>ChatTranslate\Tool\ChatTranslate.bat</code>，選「8. 解除安裝」。</p></details>
-  <p class="tip">這個插件是巴哈玩家做的 ChatTranslate（GPL-3.0），懶人包裡是原版，只多了一個幫你設定好的小工具。<a href="https://forum.gamer.com.tw/C.php?bsn=5219&snA=681644" target="_blank" rel="noopener">原作者說明（巴哈）</a></p>
+  <p class="tip">這個插件是巴哈玩家做的 ChatTranslate（GPL-3.0），懶人包裡是原作者的版本，加了一個幫你設定好的小工具，以及「AI 額度用完自動改用免費機翻」的小改動（改過的原始碼就在懶人包的 chat_translate.py 裡）。<a href="https://forum.gamer.com.tw/C.php?bsn=5219&snA=681644" target="_blank" rel="noopener">原作者說明（巴哈）</a></p>
  </div>
 
  <div class="pane" id="voice">
@@ -139,12 +141,15 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
  <footer>菲比鳩比公會自用工具頁 · 有問題到公會 DC 問</footer>
 </div>
 <div id="lb" role="dialog" aria-label="步驟圖解"><span>✕ 點任意處關閉</span><img alt=""></div>
+<script src="ct_version.js"></script>
 <script>
 (function(){
   var lb=document.getElementById('lb'),li=lb.querySelector('img');
   document.querySelectorAll('a.pic').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();li.src=a.getAttribute('href');li.alt=a.dataset.alt||'';lb.classList.add('on')})});
   lb.addEventListener('click',function(){lb.classList.remove('on')});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});
+  var cv=window.CTPACK,ce=document.getElementById('ctver');
+  if(cv&&cv.v&&ce){ce.textContent='目前版本：ChatTranslate '+cv.v+(cv.up?'（原作者 '+cv.up+' 發布'+(cv.built?'，本站 '+cv.built.slice(0,10)+' 更新':'')+'）':'')+'。原作者出新版，這裡會自動跟上。';}
   var tabs=document.querySelectorAll('.tab');
   function show(t){
     if(!document.getElementById(t)) t='text';
