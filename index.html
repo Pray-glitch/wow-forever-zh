@@ -163,7 +163,7 @@ details.sec.sub>.body{padding:0 12px 6px}
 <label>你的名字（選填）</label><input id="rpName" maxlength="40">
 <div class="rp-row"><span class="msg" id="rpMsg"></span><button id="rpCancel">取消</button><button class="go" id="rpSend">送出</button></div>
 </div></div>
-<script src="data.js?v=adb22de4"></script>
+<script src="data.js?v=b5a24d55"></script>
 <script>
 (function(){
   const G = window.GUIDES || [];
@@ -221,6 +221,7 @@ details.sec.sub>.body{padding:0 12px 6px}
     const item = ITEMS[key] || ITEMS[txt.trim()];
     const whq = !item && (WHQ.has(key) || WHQ.has(txt.trim())) ? (WHQ.has(key) ? key : txt.trim()) : '';
     if (noLink(key)) return '<b>' + txt + '</b>';
+    if (/暴雪/.test(txt) && !/暴風雪/.test(txt)) return '<b>' + txt + '</b>'; // 11/26：Blizzard 指遊戲公司（暴雪）時不掛法師技能「暴風雪」的圖示
     const dh = dungeonHref(key);
     if (dh) return aTag(dh, txt, 'w zone');
     const zhref = zoneHref(key);
