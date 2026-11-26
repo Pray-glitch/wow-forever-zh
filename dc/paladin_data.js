@@ -2,25 +2,57 @@
 window.DC={
  "name": "聖騎士",
  "source": "Paladin Forever and Classic（43,143 人）",
- "updated": "2026-11-24 15:25",
- "run": "2026-11-24",
+ "updated": "2026-11-26 14:20",
+ "run": "2026-11-26",
  "kw": {
-  "bis": 1467,
-  "soulforge": 231,
-  "unsealed wrath": 325,
-  "rotation": 997,
-  "enchant": 927,
-  "defense cap": 43,
-  "oath of light": 86,
-  "healing gear": 156,
-  "dungeon set": 59,
-  "sacred arbiter": 179,
-  "pawn string": 9,
-  "daze": 18,
-  "ret prebis": 1,
-  "crafted": 924
+  "bis": 1927,
+  "soulforge": 434,
+  "unsealed wrath": 390,
+  "rotation": 1061,
+  "enchant": 1182,
+  "defense cap": 53,
+  "oath of light": 107,
+  "healing gear": 180,
+  "dungeon set": 68,
+  "sacred arbiter": 193,
+  "pawn string": 19,
+  "daze": 20,
+  "ret prebis": 6,
+  "crafted": 1108
  },
  "topics": [
+  {
+   "id": "pal-prot-tps",
+   "c": "state",
+   "s": "prot",
+   "st": "warn",
+   "d": "11/26",
+   "ch": "wf-tank",
+   "h": "防騎現況：仇恨最低、輸出最高，現在熊坦最強",
+   "p": "坦克頻道的看法：防騎目前每秒仇恨（TPS）是坦克裡最低的，但自己打的傷害最高；吃碾壓比戰士多，但減傷比例和吸收盾比較好。現在最強的坦克是德魯伊熊（數值明顯過強）。防騎在點到聖化審判之前資源很差，沒有足夠智力也很辛苦。",
+   "det": "<ul><li>防騎裝備除了 T0.5 死骨套和製作裝之外很少；死骨套每隻王每件約 2% 掉率，有人刷了 12 次都沒看到。</li><li>法傷武器推薦：冰刃斧、風暴戰斧、通靈學院王的法傷武器或聖劍。</li><li>60Up 目前沒有防騎的「法傷等值」預設，要自己模擬；防禦和耐力很重要，不能完全換算。</li><li>40 級練功問題：40 級打剃刀高地拉 8～12 隻怪沒問題，想要更多範圍傷害就靠法傷。</li></ul>",
+   "first": "2026-11-26",
+   "upd": "2026-11-26",
+   "heat": 2,
+   "vol": "wf-tank 四十幾則",
+   "kw": []
+  },
+  {
+   "id": "pal-hotfix-1125",
+   "c": "state",
+   "s": "any",
+   "st": "ok",
+   "d": "11/26",
+   "ch": "wf-dps、wf-healing、Wowhead 新聞",
+   "h": "11/25 熱修：驅邪術能致命、聖光誓言變 60 分鐘、「啟示」被削",
+   "p": "官方 11/25 熱修對聖騎影響最大的幾條：驅邪術現在可以致命一擊；聖光誓言持續時間改成 60 分鐘；律法聖契改成也會強化命令審判；審判在怪身上剩不到 20 秒時會被攻擊刷新（修 bug）。武器附魔「啟示」被削：引導法術只吃第一跳，範圍法術每一波只判定一次。",
+   "det": "<ul><li>模擬器（WoWSims）同步更新：命令審判的武器觸發只判定一次（之前會判兩次）、律法聖契強化命令審判、聖光誓言 1 小時、盾牌之誓的神聖之盾反擊可以致命。</li><li>玩家實測整理的「每分鐘觸發率（PPM）」清單放在 WoWSims 的 GitHub 議題 #964（英文），有綠勾的是確認過的數字；聖印和審判觸發時用的是「觸發那一下」的命中判定（法術就用法術命中）。</li><li>有人貼影片懷疑「啟示」會被持續傷害（奉獻、神聖之盾）觸發，大家覺得是 bug，還沒定論。</li></ul>",
+   "first": "2026-11-26",
+   "upd": "2026-11-26",
+   "heat": 3,
+   "vol": "11/25～11/26 各頻道都在討論",
+   "kw": []
+  },
   {
    "c": "gear",
    "s": "prot",
@@ -35,7 +67,7 @@ window.DC={
    "first": "2026-11-19",
    "heat": 3,
    "kw": "bis",
-   "vol": "關鍵字一天多 100 多則"
+   "vol": "關鍵字「bis」搜尋 1927 則（上次 1467）"
   },
   {
    "c": "gear",
@@ -51,7 +83,7 @@ window.DC={
    "first": "2026-11-19",
    "heat": 2,
    "kw": "defense cap",
-   "vol": "11/23 坦克頻道一小時十幾則"
+   "vol": "關鍵字「defense cap」搜尋 53 則（上次 43）"
   },
   {
    "c": "gear",
@@ -67,39 +99,39 @@ window.DC={
    "first": "2026-11-19",
    "heat": 3,
    "kw": "soulforge",
-   "vol": "關鍵字一天多約 30 則"
+   "vol": "關鍵字「soulforge」搜尋 434 則（上次 231）"
   },
   {
    "c": "gear",
    "s": "ret",
    "st": "wait",
-   "d": "11/16～11/24",
+   "d": "11/16～11/26",
    "ch": "wf-dps",
    "h": "懲戒還沒有公認的 Pre-BiS",
    "p": "懲戒還是沒有公認的 Pre-BiS。11/24 頻道在傳一份 Wowhead 清單（法傷略優於力量、命中 9%），熟手建議再換幾件魂鑄或製作裝會更好；共識仍是數值很接近，命中補滿後自己用模擬器比。",
-   "det": "<ul><li><b>11/24：</b>輸出頻道在傳一份 Wowhead 懲戒 BiS 清單（英文）：清單認為法傷略優於力量（因為順劈），命中只堆到 9%，項鍊用<a href=\"https://www.wowhead.com/forever/tw/item=15411\" target=\"_blank\" rel=\"noopener\">弗丁印記</a>。熟手的看法：可以把頭換成魂鑄頭、腰帶換成<a href=\"https://www.wowhead.com/forever/tw/item=272404\" target=\"_blank\" rel=\"noopener\">復仇者腰帶</a>、腿換片甲腿，數值更好；也有人提醒 Wowhead 清單要看作者是誰，別全信。</li><li>常被貼的清單：<a href=\"https://wowforeverbislist.com/preraid/paladin/retribution/?o=10000h\" target=\"_blank\" rel=\"noopener\">wowforeverbislist.com 懲戒 Pre-BiS</a>。有人指出某份清單裡出現了探索賽季的附魔，要自己核對。</li><li>老手建議：現在先別花大錢，等官方把懲戒的屬性定下來，可能要換掉一半裝備。</li><li>武器：有人說快速武器的 解印之怒 或 Shockadin 目前看起來比慢速雙手強，但沒有定論。</li><li><b>11/23：</b>好拿版清單的重點：有幾件裝沒什麼替代品所以列進去；T0.5 也被推薦「至少拿來當副天賦的過渡裝」。<a href=\"https://www.wowhead.com/forever/tw/item=15411\" target=\"_blank\" rel=\"noopener\">弗丁印記</a>（The Dream 任務線）、<a href=\"https://www.wowhead.com/forever/tw/item=12632\" target=\"_blank\" rel=\"noopener\">風暴護手</a>。</li><li><b>11/23：</b>雙手武器討論：Unstoppable Force 很強但要崇拜聲望（有人估 40 小時以上）；<a href=\"https://www.wowhead.com/forever/tw/item=647\" target=\"_blank\" rel=\"noopener\">命運</a>約 200 金，PvP 也好用。</li></ul>",
+   "det": "<ul><li><b>11/26：</b>懲戒顧問 11/24 釘選了 <a href=\"https://www.wowhead.com/forever/guide/classes/paladin/retribution/bis-gear\" target=\"_blank\" rel=\"noopener\">Wowhead 懲戒 BiS 指南（英文）</a>，內容是團本（海加爾、Barrow Deeps、奧妮克希亞）的 BiS，不是團隊前。版主 11/21 的釘選仍寫「目前沒有可靠的 BiS 清單，用 60Up 自己算」。</li></ul><ul><li><b>11/24：</b>輸出頻道在傳一份 Wowhead 懲戒 BiS 清單（英文）：清單認為法傷略優於力量（因為順劈），命中只堆到 9%，項鍊用<a href=\"https://www.wowhead.com/forever/tw/item=15411\" target=\"_blank\" rel=\"noopener\">弗丁印記</a>。熟手的看法：可以把頭換成魂鑄頭、腰帶換成<a href=\"https://www.wowhead.com/forever/tw/item=272404\" target=\"_blank\" rel=\"noopener\">復仇者腰帶</a>、腿換片甲腿，數值更好；也有人提醒 Wowhead 清單要看作者是誰，別全信。</li><li>常被貼的清單：<a href=\"https://wowforeverbislist.com/preraid/paladin/retribution/?o=10000h\" target=\"_blank\" rel=\"noopener\">wowforeverbislist.com 懲戒 Pre-BiS</a>。有人指出某份清單裡出現了探索賽季的附魔，要自己核對。</li><li>老手建議：現在先別花大錢，等官方把懲戒的屬性定下來，可能要換掉一半裝備。</li><li>武器：有人說快速武器的 解印之怒 或 Shockadin 目前看起來比慢速雙手強，但沒有定論。</li><li><b>11/23：</b>好拿版清單的重點：有幾件裝沒什麼替代品所以列進去；T0.5 也被推薦「至少拿來當副天賦的過渡裝」。<a href=\"https://www.wowhead.com/forever/tw/item=15411\" target=\"_blank\" rel=\"noopener\">弗丁印記</a>（The Dream 任務線）、<a href=\"https://www.wowhead.com/forever/tw/item=12632\" target=\"_blank\" rel=\"noopener\">風暴護手</a>。</li><li><b>11/23：</b>雙手武器討論：Unstoppable Force 很強但要崇拜聲望（有人估 40 小時以上）；<a href=\"https://www.wowhead.com/forever/tw/item=647\" target=\"_blank\" rel=\"noopener\">命運</a>約 200 金，PvP 也好用。</li></ul>",
    "id": "prebis-ret",
-   "upd": "2026-11-24",
+   "upd": "2026-11-26",
    "first": "2026-11-19",
-   "heat": 2,
+   "heat": 1,
    "kw": "ret prebis",
-   "vol": "11/24 輸出頻道十幾則"
+   "vol": "關鍵字「ret prebis」搜尋 6 則（上次 1）"
   },
   {
    "c": "gear",
    "s": "holy",
    "st": "ok",
-   "d": "11/7～11/24",
+   "d": "11/7～11/26",
    "ch": "F.A.Q、wf-healing",
    "h": "治療裝：智力＋法傷／治療，護甲類型不重要",
    "p": "找智力搭配法傷或治療效果的裝備，不必堅持板甲。11/21 治療頻道吵「拿牧師的虔誠套當團隊前裝」：多數人說對聖騎很差（治療量太低、屬性浪費在精神、沒暴擊），團隊前大部分部位都免費，只有兩三件值得買。",
-   "det": "<ul><li><b>11/24：</b>治療頻道聊「環境加成」裝備：阿塔哈卡神廟職業任務的飾品在「鬧鬼」區域效果加倍（聯盟限定，部落沒有對應任務），厄運之槌的飾品在鬧鬼區也好用；很多人希望遊戲直接顯示「你在鬧鬼／山區」。另外有人分享：開怪前用 1 級聖光戒備配低等神聖震擊幾乎等於免費回魔；某件 50 金的長袍跟暴擊回魔配合很好，可能一路穿到團本。</li><li>11/21：有人 60 級 289 治療、216 智力，被說偏低，建議把附魔都換成治療。武器的推薦是斯坦索姆正門的<a href=\"https://www.wowhead.com/forever/tw/item=18717\" target=\"_blank\" rel=\"noopener\">大十字軍之錘</a>，因為能附 +100 治療。</li><li>11/20：有人比較胸甲，結論是智力很少的話換到的暴擊不多（約 50 智力才 1%），帶暴擊的副本胸甲比做出來的史詩胸甲好。</li><li>有人問要不要練鍛造：成本高、拿到的東西有限，意見偏向不划算。</li><li>副本常見抱怨：法系也會拿治療裝，說「法傷部分對我也是提升」。</li><li>聖契清單：<a href=\"https://www.wowhead.com/forever/tw/items/armor/librams\" target=\"_blank\" rel=\"noopener\">Wowhead 永恆聖契列表</a>。</li></ul>",
+   "det": "<ul><li><b>11/26：</b>雙手武器有 +100 治療的附魔（約 200 金），是目前唯一的治療武器附魔，比其他附魔強很多。飾品「平靜力場」加「洞察」觸發算出來只多約 81 點法力，幾乎可忽略；另一個聖騎飾品在「鬧鬼區域」可回約 600 法力，比較划算。治療用魂鑄 4 件套值不值得還有爭議，很多人覺得換藍裝的治療量更多。練功時懲戒兼補：智力和治療各半，40 級後五人本會補不太動，建議存錢買雙天賦。</li></ul><ul><li><b>11/24：</b>治療頻道聊「環境加成」裝備：阿塔哈卡神廟職業任務的飾品在「鬧鬼」區域效果加倍（聯盟限定，部落沒有對應任務），厄運之槌的飾品在鬧鬼區也好用；很多人希望遊戲直接顯示「你在鬧鬼／山區」。另外有人分享：開怪前用 1 級聖光戒備配低等神聖震擊幾乎等於免費回魔；某件 50 金的長袍跟暴擊回魔配合很好，可能一路穿到團本。</li><li>11/21：有人 60 級 289 治療、216 智力，被說偏低，建議把附魔都換成治療。武器的推薦是斯坦索姆正門的<a href=\"https://www.wowhead.com/forever/tw/item=18717\" target=\"_blank\" rel=\"noopener\">大十字軍之錘</a>，因為能附 +100 治療。</li><li>11/20：有人比較胸甲，結論是智力很少的話換到的暴擊不多（約 50 智力才 1%），帶暴擊的副本胸甲比做出來的史詩胸甲好。</li><li>有人問要不要練鍛造：成本高、拿到的東西有限，意見偏向不划算。</li><li>副本常見抱怨：法系也會拿治療裝，說「法傷部分對我也是提升」。</li><li>聖契清單：<a href=\"https://www.wowhead.com/forever/tw/items/armor/librams\" target=\"_blank\" rel=\"noopener\">Wowhead 永恆聖契列表</a>。</li></ul>",
    "id": "gear-holy",
-   "upd": "2026-11-24",
+   "upd": "2026-11-26",
    "first": "2026-11-19",
-   "heat": 1,
+   "heat": 3,
    "kw": "healing gear",
-   "vol": "11/24 治療頻道三十幾則"
+   "vol": "關鍵字「healing gear」搜尋 180 則（上次 156）"
   },
   {
    "c": "gear",
@@ -113,9 +145,9 @@ window.DC={
    "id": "enchant",
    "upd": "2026-11-23",
    "first": "2026-11-19",
-   "heat": 1,
+   "heat": 3,
    "kw": "enchant",
-   "vol": "11/23 兩個頻道各幾則"
+   "vol": "關鍵字「enchant」搜尋 1182 則（上次 927）"
   },
   {
    "c": "stats",
@@ -149,13 +181,13 @@ window.DC={
    "c": "stats",
    "s": "any",
    "st": "wait",
-   "d": "11/18",
+   "d": "11/18～11/26",
    "ch": "wf-dps 釘選",
    "h": "永恆的法傷係數表",
    "p": "玩家整理的技能吃法傷比例，部分還沒確認。",
-   "det": "<div class=\"tw\"><table><tr><th>技能</th><th class=\"n\">係數</th></tr>\n <tr><td>正義聖印</td><td class=\"n\">單手 10%／雙手 12%（每次命中）</td></tr>\n <tr><td>正義審判</td><td class=\"n\">43%</td></tr>\n <tr><td>命令聖印</td><td class=\"n\">20%</td></tr>\n <tr><td>命令審判</td><td class=\"n\">43%</td></tr>\n <tr><td>憤怒審判</td><td class=\"n\">43%</td></tr>\n <tr><td>奉獻</td><td class=\"n\">共 33.6%（每跳 4.2%）</td></tr>\n <tr><td>神聖震擊</td><td class=\"n\">43%</td></tr>\n <tr><td>驅邪術</td><td class=\"n\">43%</td></tr>\n <tr><td>憤怒之錘、神聖憤怒、神聖之盾、聖光術、聖光閃現、庇護祝福</td><td class=\"n\">未確認</td></tr></table></div>",
+   "det": "<ul><li><b>11/26：</b>管理員 11/26 又修訂了係數表（有「?」的是還沒確認）：正義聖印單手 10%／雙手每下 12%、正義審判 42.9%、神聖打擊 42.9%（會受武器傷害加減影響）、命令聖印 20%、命令審判 42.9%、憤怒聖印 10%、憤怒審判 42.9%、奉獻每跳 4.2%、神聖震擊 42.9%、憤怒之錘 42.9%、驅邪術 42.9%、神聖憤怒 19.05%、神聖之盾 8%、聖光術 71.4%、聖光閃現 42.9%、懲罰光環 6%。</li></ul><div class=\"tw\"><table><tr><th>技能</th><th class=\"n\">係數</th></tr>\n <tr><td>正義聖印</td><td class=\"n\">單手 10%／雙手 12%（每次命中）</td></tr>\n <tr><td>正義審判</td><td class=\"n\">43%</td></tr>\n <tr><td>命令聖印</td><td class=\"n\">20%</td></tr>\n <tr><td>命令審判</td><td class=\"n\">43%</td></tr>\n <tr><td>憤怒審判</td><td class=\"n\">43%</td></tr>\n <tr><td>奉獻</td><td class=\"n\">共 33.6%（每跳 4.2%）</td></tr>\n <tr><td>神聖震擊</td><td class=\"n\">43%</td></tr>\n <tr><td>驅邪術</td><td class=\"n\">43%</td></tr>\n <tr><td>憤怒之錘、神聖憤怒、神聖之盾、聖光術、聖光閃現、庇護祝福</td><td class=\"n\">未確認</td></tr></table></div>",
    "id": "coef",
-   "upd": "2026-11-18",
+   "upd": "2026-11-26",
    "first": "2026-11-19",
    "heat": 1
   },
@@ -171,8 +203,9 @@ window.DC={
    "id": "pawn-prot",
    "upd": "2026-11-23",
    "first": "2026-11-19",
-   "heat": 0,
-   "kw": "pawn string"
+   "heat": 2,
+   "kw": "pawn string",
+   "vol": "關鍵字「pawn string」搜尋 19 則（上次 9）"
   },
   {
    "c": "talent",
@@ -200,20 +233,21 @@ window.DC={
    "id": "sacred-arbiter",
    "upd": "2026-11-17",
    "first": "2026-11-19",
-   "heat": 1,
-   "kw": "sacred arbiter"
+   "heat": 2,
+   "kw": "sacred arbiter",
+   "vol": "關鍵字「sacred arbiter」搜尋 193 則（上次 179）"
   },
   {
    "c": "talent",
    "s": "ret",
    "st": "warn",
-   "d": "9/14～11/19",
+   "d": "9/14～11/26",
    "ch": "wf-dps",
    "h": "懲戒天賦：解印之怒 還是 Shockadin？",
    "p": "哪個輸出高還沒算清楚。測試期聽說 Shockadin 較強，但那是改成 解印之怒 之前。理論派說連 解印之怒 的最佳手法都還沒確定。",
-   "det": "<ul><li>釘選的參考配法（9 月，可能已過時）：<a href=\"https://talentsforever.com/paladin/60/50003-503-05225231201330321-AERTijlm1norstvwxpkm-4\" target=\"_blank\" rel=\"noopener\">懲戒 8/8/35</a>。</li><li>論壇區有人整理了對懲戒的改動期望：不要把聖印交替自動化，改成提供揮擊計時和提示。</li></ul>",
+   "det": "<ul><li><b>11/26：</b>「震擊騎（Shockadin）」到底行不行又吵了一輪：多數人說照 Wowhead／Icy Veins 點深懲戒最穩，但震擊騎配法傷智力裝「也完全能玩」，範圍、補血和爆發比較穩定；還有人點神聖＋防護＋懲戒的爆發混搭。結論：大家都在等版本穩定。</li></ul><ul><li>釘選的參考配法（9 月，可能已過時）：<a href=\"https://talentsforever.com/paladin/60/50003-503-05225231201330321-AERTijlm1norstvwxpkm-4\" target=\"_blank\" rel=\"noopener\">懲戒 8/8/35</a>。</li><li>論壇區有人整理了對懲戒的改動期望：不要把聖印交替自動化，改成提供揮擊計時和提示。</li></ul>",
    "id": "talent-ret",
-   "upd": "2026-11-19",
+   "upd": "2026-11-26",
    "first": "2026-11-19",
    "heat": 2,
    "vol": "每天都有人問"
@@ -272,24 +306,25 @@ window.DC={
    "id": "rotation-prot",
    "upd": "2026-11-24",
    "first": "2026-11-19",
-   "heat": 1,
-   "kw": "rotation"
+   "heat": 3,
+   "kw": "rotation",
+   "vol": "關鍵字「rotation」搜尋 1061 則（上次 997）"
   },
   {
    "c": "play",
    "s": "ret",
    "st": "warn",
-   "d": "11/18～11/24",
+   "d": "11/18～11/26",
    "ch": "wf-dps",
    "h": "解印之怒 怎麼打，大家還在摸索",
    "p": "還在摸索，但輸出頻道有了比較一致的看法：解印之怒 配越慢越好的武器。速度 3.6 以上，兩次揮擊之間能多塞一個公共冷卻，開怪換聖印才不會卡手。命令聖印不是 100% 觸發，3 層全空是正常的。",
-   "det": "<ul><li><b>11/24：</b>換聖印的節奏：主流打法是命令聖印觸發疊層後換正義聖印吃掉層數，再立刻換回命令聖印；越快換回越高傷害，但低等時法力吃緊。有人感嘆「連怎麼換聖印最好都不知道，難怪還沒有模擬器和 BiS」。</li><li>11/21：輸出頻道的新想法和抱怨——攻擊被閃躲、招架或沒打中時層數會直接消失；有人希望神聖打擊也能疊層，或讓天賦降低聖印耗魔、提高命令聖印觸發率；風怒圖騰＋解印之怒觸發命令聖印手感最好。也有人在問解印之怒流派的屬性優先順序，還沒有公認答案。</li><li>11/20 補充：上坐騎會把疊好的層數清掉。</li><li>快速武器打起來順，但兩次揮擊之間少一個公共冷卻，開場很彆扭；PvP 也偏好慢武器的爆發。</li><li>有人說打團隊長戰鬥時 解印之怒 會很好用，也有人覺得比 Shockadin 好玩又強。</li><li>追蹤層數的插件：<a href=\"https://www.curseforge.com/wow/addons/gaap-ret-timer\" target=\"_blank\" rel=\"noopener\">GAAP Ret Timer（英文）</a>、<a href=\"https://www.curseforge.com/wow/addons/foreverret\" target=\"_blank\" rel=\"noopener\">ForeverRet（英文）</a>。</li><li>想看 60 級循環可以用玩家做的<a href=\"https://wow-forever-rotation.vercel.app/sim?class=paladin&spec=retribution-paladin&target=63\" target=\"_blank\" rel=\"noopener\">循環模擬網站（英文）</a>，但有人說資料庫還不完整。</li><li>聖印傷害比較（釘選）：命令聖印每分鐘約 1.4 倍法傷；正義聖印每次普攻 0.12 倍，武器越快打越多下。</li></ul>",
+   "det": "<ul><li><b>11/26：</b>有人看了 4 小時戰鬥紀錄：解印之怒的回響不會觸發武器特效，只有普攻、命令審判和神聖打擊會；他目前用的最強武器是Blackhand Doom Saw（英文名），武器特效約佔總傷害 4.8%。另外，法術強度目前是懲戒最高收益的屬性（各技能係數看釘選的係數表）。</li></ul><ul><li><b>11/24：</b>換聖印的節奏：主流打法是命令聖印觸發疊層後換正義聖印吃掉層數，再立刻換回命令聖印；越快換回越高傷害，但低等時法力吃緊。有人感嘆「連怎麼換聖印最好都不知道，難怪還沒有模擬器和 BiS」。</li><li>11/21：輸出頻道的新想法和抱怨——攻擊被閃躲、招架或沒打中時層數會直接消失；有人希望神聖打擊也能疊層，或讓天賦降低聖印耗魔、提高命令聖印觸發率；風怒圖騰＋解印之怒觸發命令聖印手感最好。也有人在問解印之怒流派的屬性優先順序，還沒有公認答案。</li><li>11/20 補充：上坐騎會把疊好的層數清掉。</li><li>快速武器打起來順，但兩次揮擊之間少一個公共冷卻，開場很彆扭；PvP 也偏好慢武器的爆發。</li><li>有人說打團隊長戰鬥時 解印之怒 會很好用，也有人覺得比 Shockadin 好玩又強。</li><li>追蹤層數的插件：<a href=\"https://www.curseforge.com/wow/addons/gaap-ret-timer\" target=\"_blank\" rel=\"noopener\">GAAP Ret Timer（英文）</a>、<a href=\"https://www.curseforge.com/wow/addons/foreverret\" target=\"_blank\" rel=\"noopener\">ForeverRet（英文）</a>。</li><li>想看 60 級循環可以用玩家做的<a href=\"https://wow-forever-rotation.vercel.app/sim?class=paladin&spec=retribution-paladin&target=63\" target=\"_blank\" rel=\"noopener\">循環模擬網站（英文）</a>，但有人說資料庫還不完整。</li><li>聖印傷害比較（釘選）：命令聖印每分鐘約 1.4 倍法傷；正義聖印每次普攻 0.12 倍，武器越快打越多下。</li></ul>",
    "id": "unsealed-wrath",
-   "upd": "2026-11-24",
+   "upd": "2026-11-26",
    "first": "2026-11-19",
-   "heat": 1,
+   "heat": 3,
    "kw": "unsealed wrath",
-   "vol": "11/24 幾則"
+   "vol": "關鍵字「unsealed wrath」搜尋 390 則（上次 325）"
   },
   {
    "c": "play",
@@ -366,17 +401,17 @@ window.DC={
    "c": "state",
    "s": "holy",
    "st": "warn",
-   "d": "11/15～11/19",
+   "d": "11/15～11/26",
    "ch": "wf-healing",
    "h": "神聖聖騎現況：很多人不滿意",
-   "p": "抱怨集中在三點：很缺魔、聖光誓言 只照顧一個目標且只有 5 分鐘、聖光戒備 一發要 700 多魔。有人說這就是聖騎滿街跑卻缺治療的原因。也有人覺得夠用。",
-   "det": "<ul><li><b>實用打法：</b>聖光誓言 掛坦克，主力用低等級聖光閃現（有人說 2 級就夠，一發約 50 魔）；神聖震擊打在沒有 Oath 的目標上有額外 30% 暴擊。</li><li><b>有固定隊友：</b>優先點 聖光誓言 和神聖震擊。</li><li><b>屬性：</b>有人問是不是治療 > 智力 > 精神，沒有明確答案。</li><li><b>玩家提的改法：</b>給類似聖光道標的機制、延長 Oath 時間、讓部分治療分給附近隊友。</li><li>有人認為神聖是為了壓 Shockadin 而被連帶削弱，天賦之間缺乏配合。這是玩家看法，不是官方說明。</li><li>版規：wf-healing 只談治療，聊 Shockadin 會被禁言一週。</li></ul>",
+   "p": "神聖頻道持續抱怨：聖光誓言（11/25 熱修後改成 60 分鐘）只能綁一個坦，雙坦時很難用，大家寧願要「聖光信標」（後期資料片才有的技能）。聖光戒備可以讓神聖震擊重置冷卻、在 30 秒內連震 2～3 次幫全隊補血，有人覺得有趣但太貴、不像聖騎。",
+   "det": "<ul><li><b>11/26：</b>聖光誓言持續時間改 60 分鐘（熱修）。頻道對設計方向很失望：覺得官方不肯給後期資料片的技能，又沒有說清楚神聖的定位。也有人認為「啟示／洞察」加上回魔天賦，等裝備好一兩階後可能會變很強。</li></ul><ul><li><b>實用打法：</b>聖光誓言 掛坦克，主力用低等級聖光閃現（有人說 2 級就夠，一發約 50 魔）；神聖震擊打在沒有 Oath 的目標上有額外 30% 暴擊。</li><li><b>有固定隊友：</b>優先點 聖光誓言 和神聖震擊。</li><li><b>屬性：</b>有人問是不是治療 > 智力 > 精神，沒有明確答案。</li><li><b>玩家提的改法：</b>給類似聖光道標的機制、延長 Oath 時間、讓部分治療分給附近隊友。</li><li>有人認為神聖是為了壓 Shockadin 而被連帶削弱，天賦之間缺乏配合。這是玩家看法，不是官方說明。</li><li>版規：wf-healing 只談治療，聊 Shockadin 會被禁言一週。</li></ul>",
    "id": "state-holy",
-   "upd": "2026-11-19",
+   "upd": "2026-11-26",
    "first": "2026-11-19",
-   "heat": 0,
+   "heat": 3,
    "kw": "oath of light",
-   "vol": "連續幾天都在吵"
+   "vol": "關鍵字「oath of light」搜尋 107 則（上次 86）"
   },
   {
    "c": "state",
@@ -401,9 +436,9 @@ window.DC={
    "ch": "各頻道釘選",
    "h": "常用網站和插件",
    "p": "頻道裡反覆出現的工具整理在這裡。",
-   "det": "<div class=\"links\">\n <a href=\"https://foreverchanges.pro/talents/paladin\" target=\"_blank\" rel=\"noopener\">ForeverChanges 天賦模擬器</a>\n <a href=\"https://talentsforever.com/paladin/60/50003-503-05225231201330321-AERTijlm1norstvwxpkm-4\" target=\"_blank\" rel=\"noopener\">Talents Forever 天賦模擬器</a>\n <a href=\"https://sixtyupgrades.com/forever/\" target=\"_blank\" rel=\"noopener\">Sixty Upgrades 配裝工具</a>\n <a href=\"https://www.wowhead.com/forever/tw/gear-planner/paladin\" target=\"_blank\" rel=\"noopener\">Wowhead 配裝器</a>\n <a href=\"https://www.wowsims.com/forever/paladin/retribution/\" target=\"_blank\" rel=\"noopener\">WoWSims 懲戒模擬器（alpha）</a>\n <a href=\"https://wowforeverbislist.com/preraid/paladin/retribution/?o=10000h\" target=\"_blank\" rel=\"noopener\">WoW Forever BiS List（第三方清單）</a>\n <a href=\"https://www.wowhead.com/forever/tw/items/armor/librams\" target=\"_blank\" rel=\"noopener\">Wowhead 聖契列表</a>\n <a href=\"https://www.curseforge.com/wow/addons/pawn\" target=\"_blank\" rel=\"noopener\">Pawn 插件</a>\n <a href=\"https://www.curseforge.com/wow/addons/foreverret\" target=\"_blank\" rel=\"noopener\">ForeverRet 插件（測試期）</a>\n <a href=\"https://discord.gg/Bqherze\" target=\"_blank\" rel=\"noopener\">這個 DC 的邀請連結</a></div>",
+   "det": "<ul><li><b>11/26：</b>版主 11/25 釘選：「拜託不要再用 wowtbc 資料庫網站」，永恆的資料請看 Wowhead 永恆版。另外玩家實測的觸發率清單在 WoWSims GitHub 議題 #964（英文）。</li></ul><div class=\"links\">\n <a href=\"https://foreverchanges.pro/talents/paladin\" target=\"_blank\" rel=\"noopener\">ForeverChanges 天賦模擬器</a>\n <a href=\"https://talentsforever.com/paladin/60/50003-503-05225231201330321-AERTijlm1norstvwxpkm-4\" target=\"_blank\" rel=\"noopener\">Talents Forever 天賦模擬器</a>\n <a href=\"https://sixtyupgrades.com/forever/\" target=\"_blank\" rel=\"noopener\">Sixty Upgrades 配裝工具</a>\n <a href=\"https://www.wowhead.com/forever/tw/gear-planner/paladin\" target=\"_blank\" rel=\"noopener\">Wowhead 配裝器</a>\n <a href=\"https://www.wowsims.com/forever/paladin/retribution/\" target=\"_blank\" rel=\"noopener\">WoWSims 懲戒模擬器（alpha）</a>\n <a href=\"https://wowforeverbislist.com/preraid/paladin/retribution/?o=10000h\" target=\"_blank\" rel=\"noopener\">WoW Forever BiS List（第三方清單）</a>\n <a href=\"https://www.wowhead.com/forever/tw/items/armor/librams\" target=\"_blank\" rel=\"noopener\">Wowhead 聖契列表</a>\n <a href=\"https://www.curseforge.com/wow/addons/pawn\" target=\"_blank\" rel=\"noopener\">Pawn 插件</a>\n <a href=\"https://www.curseforge.com/wow/addons/foreverret\" target=\"_blank\" rel=\"noopener\">ForeverRet 插件（測試期）</a>\n <a href=\"https://discord.gg/Bqherze\" target=\"_blank\" rel=\"noopener\">這個 DC 的邀請連結</a></div>",
    "id": "tools",
-   "upd": "2026-11-18",
+   "upd": "2026-11-26",
    "first": "2026-11-19",
    "heat": 0
   },
@@ -431,27 +466,27 @@ window.DC={
    "h": "第一個團本的「製作版套裝」數值曝光，效果還是暫定",
    "p": "Wowhead 報導第一個團本（12/9 開）的製作版套裝已經看得到數值，聖騎頻道一晚上都在討論：防騎版有一點命中和減傷，每個職業的版本都帶自然抗性和對亡靈的特效；有人覺得比瑪拉頓的裝好很多。官方說套裝效果是暫定。",
    "det": "<ul><li>頻道疑問：製作版跟掉落版屬性一不一樣？一次是不是只能穿一件（「唯一」限制）？目前都還沒有確定答案。</li><li>有人想找「不用一堆裝綁製作裝」的 Shockadin 團隊前清單，目前還沒有。</li><li>報導重點：第一個團本 12/9 全球開放，製作版的套裝數值因為熱修正已經可以在遊戲裡看到（官方確認是故意公開的），但<b>套裝效果是暫定</b>，之後會改。每件都有「工匠套裝」的唯一限制，報導推測同一團本的製作版一次只能穿一件。測試時配方是用<a href=\"https://www.wowhead.com/forever/tw/item=274030\" target=\"_blank\" rel=\"noopener\">延展自然精華</a>向商人買，正式版目前已經沒在賣，之後怎麼拿還不知道。例：<a href=\"https://www.wowhead.com/forever/tw/item=273986\" target=\"_blank\" rel=\"noopener\">設計圖：正義肩鎧</a>。</li><li><a href=\"https://www.wowhead.com/forever/news/itemization-of-crafted-tier-sets-revealed-in-wow-forevers-first-raid-tier-383946\" target=\"_blank\" rel=\"noopener\">Wowhead 新聞（英文）</a></li><li><b>11/23：</b>製作版團本套需要<a href=\"https://www.wowhead.com/forever/tw/item=12360\" target=\"_blank\" rel=\"noopener\">奧金錠</a>（戰士和聖騎的套都要），轉化有冷卻，奧金錠已經被炒到很貴，大家預期團本開了會更貴。也有人在算頭盔要的<a href=\"https://www.wowhead.com/forever/tw/item=251290\" target=\"_blank\" rel=\"noopener\">軍團鋼錠</a>（隔天一根，要一個月）。</li><li><b>11/23：</b>頻道有人說：每個角色一次只能穿一件製作套，海加爾聲望到「崇敬」後可以穿兩件——這是玩家說法，官方還沒正式說明。</li></ul>",
-   "heat": 2,
-   "vol": "11/23 懲戒頻道十幾則",
+   "heat": 3,
+   "vol": "關鍵字「crafted」搜尋 1108 則（上次 924）",
    "kw": "crafted",
    "first": "2026-11-21",
    "upd": "2026-11-23",
    "d": "11/21～11/23"
   },
   {
-   "st": "wait",
-   "heat": 1,
+   "st": "ok",
+   "heat": 2,
    "id": "pal-mount-bug",
    "c": "state",
    "s": "any",
    "ch": "wf-general",
-   "h": "坐騎任務 bug：騎術沒給滿，史詩坐騎還會耗法力",
-   "p": "聖騎坐騎任務 bug：40 級和史詩坐騎任務都可能沒給該有的騎術。11/24 Wowhead 新聞說暴雪正在修聖騎和術士拿不到史詩騎術的問題，術士恐懼戰馬也一樣。",
-   "det": "<ul><li><b>11/24：</b>Wowhead 新聞：暴雪正在修「聖騎和術士做完史詩坐騎任務沒拿到史詩騎術」的問題。術士頻道也證實恐懼戰馬做完沒給 150 騎術，大家猜會像 40 級坐騎那樣用熱修正補上（重新學一次技能）。</li><li>目前沒有官方回應，先回報 bug。</li><li>術士頻道的說法：聖騎有拿到 150 騎術，所以術士那邊應該是 bug；但也有人說本來就要另外學騎術。兩邊說法不一致。</li></ul>",
-   "vol": "11/23 一般頻道幾則",
+   "h": "坐騎任務 bug 已修：做完史詩坐騎任務會直接給中級騎術",
+   "p": "11/25 熱修：聖騎的史詩坐騎任務（不死族「正義與懲罰」、人類／矮人「審判與救贖」）現在會給中級騎術。已經做完的人可以找 NPC（Danitha Morr、Lord Grayson Shadowbreaker，英文名）免費領。修好之前，任務只給一隻「快速戰馬」，其他快速坐騎還要另外花 900 金學騎術。",
+   "det": "<ul><li><b>11/26：</b>官方熱修確認修好；術士的恐懼戰馬任務同樣處理。</li></ul><ul><li><b>11/24：</b>Wowhead 新聞：暴雪正在修「聖騎和術士做完史詩坐騎任務沒拿到史詩騎術」的問題。術士頻道也證實恐懼戰馬做完沒給 150 騎術，大家猜會像 40 級坐騎那樣用熱修正補上（重新學一次技能）。</li><li>目前沒有官方回應，先回報 bug。</li><li>術士頻道的說法：聖騎有拿到 150 騎術，所以術士那邊應該是 bug；但也有人說本來就要另外學騎術。兩邊說法不一致。</li></ul>",
+   "vol": "wf-general 十幾則",
    "first": "2026-11-23",
-   "upd": "2026-11-24",
-   "d": "11/23～11/24"
+   "upd": "2026-11-26",
+   "d": "11/23～11/26"
   },
   {
    "st": "warn",
