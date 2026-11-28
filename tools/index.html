@@ -86,7 +86,7 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   <div class="need">需要：<b>Windows 電腦</b>、<b>Google 帳號</b>（申請免費金鑰用，不用信用卡）。全部做完大約 5 分鐘。</div>
   <ol class="steps">
    <li><h3>下載 <a class="pic" href="step_t1.png" data-alt="文字翻譯 第 1 步：下載">🖼 看圖解</a></h3>
-    <a class="btn" href="https://github.com/Pray-glitch/wow-forever-zh/releases/download/tools/ChatTranslate_guild.zip">⬇ 下載文字翻譯懶人包</a>
+    <a class="btn" id="ctdl" href="https://github.com/Pray-glitch/wow-forever-zh/releases/download/tools/ChatTranslate_guild.zip">⬇ 下載文字翻譯懶人包</a>
     <p class="tip" id="ctver"></p>
     <p class="tip">瀏覽器如果問要不要保留，選「保留」。</p></li>
    <li><h3>解壓縮，丟進 AddOns <a class="pic" href="step_t2.png" data-alt="文字翻譯 第 2 步：解壓縮，丟進 AddOns">🖼 看圖解</a></h3>
@@ -189,6 +189,8 @@ footer{margin-top:30px;color:var(--dim);font-size:13.5px;text-align:center}
   document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});
   var cv=window.CTPACK,ce=document.getElementById('ctver');
   if(cv&&cv.v&&ce){ce.textContent='目前版本：ChatTranslate '+cv.v+(cv.up?'（原作者 '+cv.up+' 發布'+(cv.built?'，本站 '+cv.built.slice(0,10)+' 更新':'')+'）':'')+'。原作者出新版，這裡會自動跟上。';}
+  var dl=document.getElementById('ctdl');
+  if(cv&&cv.file&&dl){dl.href='https://github.com/Pray-glitch/wow-forever-zh/releases/download/tools/'+encodeURIComponent(cv.file);dl.textContent='⬇ 下載文字翻譯懶人包（'+cv.v+'）';}
   var c2=document.getElementById('ctver2');
   if(cv&&cv.v&&c2){c2.textContent='最新版本：'+cv.v+(cv.built?'　更新日期：'+cv.built.slice(0,10):'')+(cv.up?'（原作者 '+cv.up+' 發布）':'');}
   var tabs=document.querySelectorAll('.tab');
